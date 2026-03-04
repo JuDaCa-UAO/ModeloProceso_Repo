@@ -1,0 +1,23 @@
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+html,
+body {
+  height: 100%;
+}
+
+:root {
+  --font-tech: "Chakra Petch";
+  --hud-cyan: rgba(84, 245, 255, 1);
+  --hud-cyan-soft: rgba(84, 245, 255, 0.34);
+  --hud-bg-deep: rgba(2, 12, 24, 0.84);
+  --hud-bg-mid: rgba(6, 26, 42, 0.84);
+}
+
+body {
+  margin: 0;
+  font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
+}

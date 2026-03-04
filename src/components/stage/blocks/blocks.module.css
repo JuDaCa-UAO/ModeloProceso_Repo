@@ -1,0 +1,229 @@
+/*
+ * PRESENTATION — Shared Block Styles
+ *
+ * Estilos compartidos entre todos los bloques del Stage Engine.
+ * Extraídos de app/etapa-1/etapa1.module.css para ser reutilizables
+ * por cualquier etapa del modelo (no solo etapa 1).
+ *
+ * Convención: cada bloque importa solo las clases que necesita de este módulo.
+ */
+
+/* ── Texto / Paragraphs Block ──────────────────────────────────────────────── */
+.stageCopy {
+  display: grid;
+  gap: 8px;
+}
+.stageCopy p {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: clamp(16px, 1.35vw, 19px);
+  line-height: 1.55;
+}
+
+/* ── Callout Block ─────────────────────────────────────────────────────────── */
+.callout {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(10, 6, 7, 0.64);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+}
+.calloutTitle {
+  margin: 0;
+  color: #fff;
+  font-size: 14px;
+  letter-spacing: 0.04em;
+}
+.calloutBody {
+  margin: 0;
+  color: #d1d1d1;
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ── Bullets Block ─────────────────────────────────────────────────────────── */
+.bulletBlock {
+  display: grid;
+  gap: 8px;
+}
+.bulletTitle {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: 15px;
+}
+.bulletList {
+  margin: 0;
+  padding-left: 18px;
+  display: grid;
+  gap: 8px;
+  color: #d1d1d1;
+}
+.bulletList li {
+  font-size: 14px;
+  line-height: 1.45;
+}
+
+/* ── StateCards Block ──────────────────────────────────────────────────────── */
+.stateGrid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 12px;
+}
+.stateCard {
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(8, 5, 6, 0.72);
+  padding: 16px;
+  display: grid;
+  gap: 8px;
+}
+.stateHierarchy {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: rgba(80, 6, 8, 0.2);
+  color: #fe6a6f;
+  padding: 4px 9px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.stateTitle {
+  margin: 0;
+  color: #fff;
+  font-size: 16px;
+  line-height: 1.25;
+}
+.stateDesc,
+.stateHint {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.45;
+}
+.stateDesc { color: #f4f4f4; }
+.stateHint { color: #d1d1d1; }
+
+/* ── Form / Consent Block ──────────────────────────────────────────────────── */
+.formCard {
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(9, 6, 7, 0.72);
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+.checkboxRow {
+  display: grid;
+  grid-template-columns: 18px 1fr;
+  gap: 10px;
+  align-items: start;
+  color: #f4f4f4;
+  font-size: 15px;
+  line-height: 1.45;
+}
+.checkboxRow input { margin-top: 2px; accent-color: #f82e35; }
+.fieldLabel { color: #d1d1d1; font-size: 14px; letter-spacing: 0.03em; }
+.textInput,
+.selectInput,
+.textArea {
+  width: 100%;
+  border-radius: 12px;
+  border: 1px solid rgba(248, 46, 53, 0.2);
+  background: rgba(3, 2, 2, 0.74);
+  color: #fff;
+  padding: 12px 13px;
+  font-size: 15px;
+  outline: none;
+  transition: border-color 150ms ease, box-shadow 150ms ease;
+}
+.textArea { min-height: 104px; resize: vertical; font-family: inherit; }
+.textInput::placeholder,
+.textArea::placeholder { color: #9e9e9e; }
+.textInput:focus,
+.selectInput:focus,
+.textArea:focus {
+  border-color: rgba(248, 46, 53, 0.44);
+  box-shadow: 0 0 0 3px rgba(248, 46, 53, 0.14);
+}
+.errorText { margin: 0; color: #ffd7d8; font-size: 14px; }
+.helperText { margin: 0; color: #9e9e9e; font-size: 13px; line-height: 1.4; }
+.actionRow { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ── Autodiagnostic / Embed Block ──────────────────────────────────────────── */
+.embedCard {
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(8, 5, 6, 0.74);
+  padding: 16px;
+  display: grid;
+  gap: 14px;
+}
+.embedHeader { display: flex; align-items: center; justify-content: space-between; gap: 10px; }
+.embedLabel { color: #fff; font-size: 15px; letter-spacing: 0.04em; }
+.embedStatus { color: #d1d1d1; font-size: 13px; }
+.embedViewport {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(4, 2, 3, 0.82);
+  min-height: clamp(260px, 38dvh, 430px);
+  overflow: hidden;
+  display: grid;
+  align-items: stretch;
+}
+.embedIframe { width: 100%; min-height: clamp(260px, 38dvh, 430px); border: 0; background: transparent; }
+.embedFallback { padding: 16px; display: grid; align-content: center; gap: 8px; }
+.embedFallbackTitle { margin: 0; color: #fff; font-size: 16px; }
+.embedFallbackCopy { margin: 0; color: #d1d1d1; font-size: 14px; line-height: 1.45; }
+.embedActions { display: flex; gap: 10px; flex-wrap: wrap; }
+
+/* ── Result Summary Block ──────────────────────────────────────────────────── */
+.resultGrid {
+  display: grid;
+  grid-template-columns: 1.2fr 1fr;
+  gap: 12px;
+}
+.resultCard {
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(8, 5, 6, 0.72);
+  padding: 16px;
+  display: grid;
+  gap: 10px;
+}
+.resultCardWide { grid-column: 1 / -1; }
+.resultCard h3 { margin: 0; color: #fff; font-size: 16px; }
+.metricGrid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; }
+.metricLabel { display: block; color: #9e9e9e; font-size: 13px; margin-bottom: 4px; }
+.metricValue { color: #fff; font-weight: 600; font-size: 15px; line-height: 1.35; }
+.listStack { margin: 0; padding-left: 18px; display: grid; gap: 8px; color: #d1d1d1; font-size: 14px; }
+.pill {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: rgba(80, 6, 8, 0.2);
+  color: #fe6a6f;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+/* ── Intention Form ─────────────────────────────────────────────────────────── */
+.intentGrid { display: grid; gap: 12px; }
+
+/* ── Responsive ─────────────────────────────────────────────────────────────── */
+@media (max-width: 900px) {
+  .stateGrid,
+  .resultGrid,
+  .metricGrid {
+    grid-template-columns: 1fr;
+  }
+}
+@media (max-width: 760px) {
+  .embedActions,
+  .actionRow {
+    display: grid;
+    grid-template-columns: 1fr;
+  }
+}

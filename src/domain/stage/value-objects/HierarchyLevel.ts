@@ -1,0 +1,25 @@
+/**
+ * DOMAIN — Value Object
+ *
+ * Nivel jerárquico del docente dentro del modelo de madurez GenAI.
+ * Determina el ritmo de acompañamiento, el tipo de recomendaciones y
+ * el avatar/mood de Laia (sin acoplarse a ningún componente de UI).
+ *
+ * Depende de: nada.
+ */
+
+export type HierarchyLevel = "Inicial" | "Intermedio" | "Avanzado";
+
+export type StageResultId = "inicial" | "intermedio" | "avanzado";
+
+/** Mapping canónico de resultado de diagnóstico → nivel jerárquico. */
+export const RESULT_TO_HIERARCHY: Record<StageResultId, HierarchyLevel> = {
+  inicial: "Inicial",
+  intermedio: "Intermedio",
+  avanzado: "Avanzado",
+};
+
+/** Type-guard para validar que un string arbitrario es un StageResultId válido. */
+export function isValidResultId(value: string): value is StageResultId {
+  return value === "inicial" || value === "intermedio" || value === "avanzado";
+}

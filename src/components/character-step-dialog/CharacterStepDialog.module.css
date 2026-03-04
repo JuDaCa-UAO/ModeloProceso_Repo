@@ -1,0 +1,368 @@
+.shell {
+  width: min(1100px, 100%);
+  display: grid;
+  grid-template-columns: minmax(210px, 360px) minmax(0, 1fr);
+  gap: 22px;
+  align-items: center;
+}
+
+.compact {
+  grid-template-columns: minmax(170px, 230px) minmax(0, 1fr);
+  gap: 16px;
+}
+
+.modelCenter {
+  width: min(1120px, 100%);
+  grid-template-columns: minmax(240px, 290px) minmax(0, 1fr);
+  gap: clamp(16px, 2vw, 24px);
+  justify-content: center;
+  margin-inline: auto;
+}
+
+.modelCenter.compact {
+  grid-template-columns: minmax(220px, 270px) minmax(0, 1fr);
+  gap: clamp(14px, 1.8vw, 22px);
+}
+
+.left {
+  display: grid;
+  gap: 10px;
+  justify-items: center;
+  width: 100%;
+}
+
+.avatarFrame {
+  position: relative;
+  width: 100%;
+  max-width: 320px;
+  aspect-ratio: 1 / 1;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(254, 106, 111, 0.24);
+  background: linear-gradient(
+    180deg,
+    rgba(248, 46, 53, 0.12),
+    rgba(139, 3, 4, 0.14)
+  );
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.55);
+}
+
+.compact .avatarFrame {
+  max-width: 210px;
+  border-radius: 18px;
+}
+
+.avatarImg {
+  object-fit: contain;
+  transform: scale(1.1);
+  transform-origin: center;
+}
+
+.modelCenter .avatarImg {
+  transform: scale(1.38);
+}
+
+.avatarTag {
+  border-radius: 999px;
+  border: 1px solid rgba(254, 106, 111, 0.42);
+  background: rgba(0, 0, 0, 0.46);
+  padding: 9px 14px;
+  font-size: 14px;
+  font-weight: 600;
+  color: rgba(255, 237, 238, 0.96);
+  letter-spacing: 0.06em;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.36);
+}
+
+.compact .avatarTag {
+  padding: 7px 11px;
+  font-size: 12px;
+}
+
+.avatarTagInside {
+  position: absolute;
+  left: 50%;
+  bottom: 10px;
+  transform: translateX(-50%);
+  z-index: 2;
+  backdrop-filter: blur(8px);
+}
+
+.modelCenter .avatarFrame {
+  max-width: 262px;
+  border-radius: 20px;
+}
+
+.modelCenter.compact .avatarFrame {
+  max-width: 248px;
+  border-radius: 20px;
+}
+
+.right {
+  display: grid;
+  align-items: center;
+}
+
+.dialogBox {
+  border-radius: 24px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(80, 6, 8, 0.12);
+  backdrop-filter: blur(14px);
+  box-shadow: 0 30px 120px rgba(0, 0, 0, 0.55);
+  padding: 18px 18px 14px;
+  min-height: clamp(190px, 30dvh, 240px);
+  display: grid;
+  gap: 14px;
+}
+
+.compact .dialogBox {
+  min-height: clamp(160px, 24dvh, 190px);
+  border-radius: 18px;
+  padding: 14px 14px 12px;
+}
+
+.modelCenter .dialogBox {
+  min-height: clamp(180px, 26dvh, 220px);
+}
+
+.modelCenter.compact .dialogBox {
+  min-height: clamp(170px, 25dvh, 210px);
+  padding: 16px 16px 12px;
+}
+
+.dialogText {
+  font-size: clamp(16px, 2vw, 18px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+.compact .dialogText {
+  font-size: clamp(14px, 1.7vw, 15px);
+  line-height: 1.5;
+}
+
+.cursor {
+  display: inline-block;
+  width: 0.65ch;
+  height: 1.05em;
+  margin-left: 3px;
+  vertical-align: -0.12em;
+  background: rgba(254, 106, 111, 0.95);
+  box-shadow: 0 0 12px rgba(254, 106, 111, 0.55);
+  animation: blinkCursor 840ms steps(1) infinite;
+}
+
+@keyframes blinkCursor {
+  0%,
+  50% {
+    opacity: 1;
+  }
+  51%,
+  100% {
+    opacity: 0;
+  }
+}
+
+.actions {
+  display: grid;
+  grid-template-columns: auto 1fr auto;
+  align-items: center;
+  gap: 14px;
+}
+
+.navBtn,
+.nextBtn,
+.secondaryBtn {
+  border: 1px solid rgba(248, 46, 53, 0.35);
+  background: linear-gradient(
+    90deg,
+    rgba(139, 3, 4, 0.22),
+    rgba(80, 6, 8, 0.22)
+  );
+  color: rgba(255, 234, 235, 0.95);
+  border-radius: 16px;
+  padding: 12px 14px;
+  cursor: pointer;
+  transition:
+    transform 160ms ease,
+    box-shadow 160ms ease,
+    border-color 160ms ease;
+  font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
+  letter-spacing: 0.12em;
+  font-size: 13px;
+  white-space: nowrap;
+}
+
+.navBtn {
+  border-radius: 12px;
+  padding: 10px 12px;
+  min-width: 44px;
+}
+
+.secondaryBtn {
+  border-color: rgba(255, 255, 255, 0.2);
+  background: rgba(255, 255, 255, 0.04);
+  color: rgba(255, 235, 236, 0.92);
+}
+
+.endActions {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  justify-self: end;
+}
+
+.compact .nextBtn {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.compact .secondaryBtn {
+  border-radius: 12px;
+  padding: 10px 12px;
+  font-size: 12px;
+}
+
+.compact .navBtn {
+  border-radius: 10px;
+  padding: 8px 10px;
+  min-width: 40px;
+}
+
+.navBtn:hover,
+.nextBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(254, 106, 111, 0.55);
+  box-shadow: 0 22px 80px rgba(0, 0, 0, 0.55);
+}
+
+.secondaryBtn:hover {
+  transform: translateY(-1px);
+  border-color: rgba(255, 255, 255, 0.34);
+  box-shadow: 0 18px 60px rgba(0, 0, 0, 0.46);
+}
+
+.navBtn:disabled {
+  opacity: 0.45;
+  cursor: not-allowed;
+  transform: none;
+  box-shadow: none;
+}
+
+.arrow {
+  display: inline-block;
+  margin-left: 4px;
+}
+
+.counter {
+  font-size: 12px;
+  color: rgba(255, 223, 224, 0.72);
+  letter-spacing: 0.08em;
+  font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
+  white-space: nowrap;
+  text-align: center;
+  justify-self: center;
+}
+
+.compact .counter {
+  font-size: 11px;
+}
+
+@media (max-width: 880px) {
+  .shell {
+    grid-template-columns: 1fr;
+  }
+
+  .compact {
+    grid-template-columns: 1fr;
+  }
+
+  .avatarFrame {
+    width: min(320px, 88vw);
+  }
+
+  .compact .avatarFrame {
+    max-width: min(170px, 52vw);
+  }
+
+  .modelCenter,
+  .modelCenter.compact {
+    grid-template-columns: 1fr;
+    justify-items: center;
+  }
+
+  .modelCenter .right {
+    width: min(820px, 100%);
+  }
+
+  .modelCenter .avatarFrame {
+    max-width: min(250px, 74vw);
+  }
+
+  .modelCenter.compact .avatarFrame {
+    max-width: min(232px, 72vw);
+  }
+
+  .compact .dialogBox {
+    min-height: 150px;
+    padding: 12px 12px 10px;
+  }
+
+  .compact .dialogText {
+    font-size: 14px;
+  }
+}
+
+@media (max-width: 560px) {
+  .dialogBox {
+    border-radius: 16px;
+    padding: 12px 12px 10px;
+    min-height: 140px;
+  }
+
+  .actions {
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-items: stretch;
+  }
+
+  .counter {
+    width: 100%;
+    text-align: center;
+    white-space: normal;
+    order: 3;
+  }
+
+  .nextBtn,
+  .secondaryBtn,
+  .endActions {
+    width: 100%;
+  }
+
+  .endActions {
+    display: grid;
+    grid-template-columns: 1fr;
+    gap: 10px;
+    justify-self: stretch;
+  }
+
+  .navBtn {
+    width: 100%;
+    justify-self: stretch;
+  }
+}
+
+@media (max-height: 740px) {
+  .avatarFrame {
+    max-width: 240px;
+  }
+
+  .compact .avatarFrame {
+    max-width: 160px;
+  }
+
+  .modelCenter.compact .avatarFrame {
+    max-width: 200px;
+  }
+}
