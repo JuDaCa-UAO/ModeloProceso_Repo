@@ -13,5 +13,4 @@ export type StageFlagKey =
   | "consentValidated"
   | "autodiagnosticStarted"
   | "autodiagnosticCompleted"
-  | "intentionSaved"
   | "transitionAnimationViewed";

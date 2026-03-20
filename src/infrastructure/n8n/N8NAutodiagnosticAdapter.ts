@@ -1,40 +1,18 @@
-/**
- * INFRASTRUCTURE — Adapter
- *
- * N8NAutodiagnosticAdapter: implementación concreta de IAutodiagnosticPort.
- * Maneja toda la comunicación con la instancia de N8N.
- *
- * Al ser una implementación de un Port (interfaz), puede ser sustituida
- * por un mock en tests o por otro servicio (ej: Typeform, LimeSurvey) sin
- * tocar ningún código de Application o Presentation.
- *
- * Depende de: IAutodiagnosticPort (Application), N8N_CONFIG (Infrastructure).
- */
-
 import type {
   IAutodiagnosticPort,
   AutodiagnosticCompletionPayload,
   AutodiagnosticResult,
 } from "@application/stage/ports/IAutodiagnosticPort";
-import { N8N_CONFIG } from "./n8n.config";
 import { isValidResultId } from "@domain/stage/value-objects/HierarchyLevel";
+import { N8N_CONFIG } from "./n8n.config";
 
 export class N8NAutodiagnosticAdapter implements IAutodiagnosticPort {
-  /**
-   * Retorna la URL del formulario de autodiagnóstico.
-   * En el futuro puede agregar query params de personalización (email, stageId).
-   */
-  getFormUrl(stageId: string, _email: string): string {
-    // Actualmente el formulario es el mismo para todos.
-    // Futuro: pasar parámetros para pre-rellenar el formulario.
+  getFormUrl(stageId: string, email: string): string {
     void stageId;
+    void email;
     return N8N_CONFIG.forms.autodiagnostic;
   }
 
-  /**
-   * Notifica al webhook de N8N que el docente completó el autodiagnóstico.
-   * Si el servicio no responde en 8 segundos, retorna fallback local.
-   */
   async notifyCompletion(
     payload: AutodiagnosticCompletionPayload
   ): Promise<AutodiagnosticResult> {
@@ -60,10 +38,8 @@ export class N8NAutodiagnosticAdapter implements IAutodiagnosticPort {
         return { resultId, source: "service" };
       }
 
-      // Respuesta inesperada del servicio → fallback
       return { resultId: "intermedio", source: "local-fallback" };
     } catch {
-      // Red caída, timeout o N8N no configurado → fallback silencioso
       return { resultId: "intermedio", source: "local-fallback" };
     } finally {
       window.clearTimeout(timeoutId);

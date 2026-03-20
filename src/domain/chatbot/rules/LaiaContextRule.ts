@@ -46,7 +46,6 @@ function deriveMood(
 ): LaiaMood {
   if (lastFlag === "transitionAnimationViewed") return "triumphant";
   if (lastFlag === "autodiagnosticCompleted") return "holo";
-  if (lastFlag === "intentionSaved") return "explain";
   if (completedFlags.length === 0) return "neutral";
   if (!completedFlags.includes("consentValidated")) return "explain";
   return "neutral";

@@ -1,91 +1,58 @@
-/**
- * CONTENT — Etapa 1
- *
- * Define el árbol de contenido de la Etapa 1 del modelo de proceso GenAI.
- * Este archivo es DATOS PUROS: sin lógica de negocio, sin importaciones de React,
- * sin referencias a componentes de UI.
- *
- * Las reglas de acceso (gate.requires) son evaluadas por GatingRule en el dominio.
- * Las acciones (actions) son ejecutadas por la capa de presentación.
- * Los assets de Laia se obtienen de content/shared/character-assets.ts.
- *
- * Para agregar o modificar contenido: editar solo este archivo.
- * Para agregar una nueva etapa: crear content/stages/stage-2.content.ts
- * y registrarla en StaticStageContentRepository.
- *
- * Depende de: tipos de types/stage.ts, character-assets (content/shared).
- */
-
 import type { RailPanel, SectionNode, StateCardItem } from "@/types/stage";
 import { LAIA_ASSETS } from "@/content/shared/character-assets";
 
-// ─── Constantes exportadas para uso en StageShell y StageClient ───────────────
-
 export const STAGE1_ID = "etapa-1";
-export const STAGE1_NAME = "Reconócete para avanzar";
-
-export const ALL_STAGE_NAMES = [
-  "Reconócete para avanzar",
-  "Descubre nuevas posibilidades",
-  "Diseña con propósito",
-  "Prepara el terreno para el éxito",
-  "Hazlo realidad en el aula",
-  "Reflexiona, aprende y mejora",
-] as const;
-
-// ─── Datos de modelo ───────────────────────────────────────────────────────────
+export const STAGE1_NAME = "Reconocete para avanzar";
 
 export const STATE_CARDS: StateCardItem[] = [
   {
     hierarchy: "Inicial",
     title: "Aprendiendo sin miedo",
-    description: "Primeras aproximaciones con curiosidad y necesidad de guía clara.",
+    description: "Primeras aproximaciones con curiosidad y necesidad de guia clara.",
     supportHint:
-      "Recibirás apoyo más guiado, ejemplos listos para adaptar y recomendaciones paso a paso.",
+      "Recibiras apoyo mas guiado, ejemplos listos para adaptar y recomendaciones paso a paso.",
   },
   {
     hierarchy: "Intermedio",
-    title: "Explorando con propósito",
+    title: "Explorando con proposito",
     description:
-      "Ya experimentas con intención educativa y buscas mayor coherencia pedagógica.",
+      "Ya experimentas con intencion educativa y buscas mayor coherencia pedagogica.",
     supportHint:
-      "Recibirás recomendaciones para fortalecer decisiones didácticas, críticas y éticas.",
+      "Recibiras recomendaciones para fortalecer decisiones didacticas, criticas y eticas.",
   },
   {
     hierarchy: "Avanzado",
     title: "Innovando e inspirando",
     description:
-      "Integras GenAI de forma crítica, creativa y estratégica en distintos contextos.",
+      "Integras GenAI de forma critica, creativa y estrategica en distintos contextos.",
     supportHint:
-      "Recibirás retos de mayor profundidad y oportunidades para compartir aprendizajes.",
+      "Recibiras retos de mayor profundidad y oportunidades para compartir aprendizajes.",
   },
 ];
 
 export const FACTORS = [
-  'F1 Propósito — "¿Qué actividad transformar con sentido pedagógico?"',
-  'F2 Razonamiento crítico — "¿Qué proceso cognitivo/razonamiento crítico debe hacer el estudiante?"',
-  'F3 Ética — "¿Qué consideraciones éticas y de responsabilidad hay?"',
-  'F4 Herramientas — "¿Qué herramientas se incorporan?"',
-  'F5 Reflexión — "¿Qué se aprende y mejora del proceso?"',
+  'F1 Proposito - "¿Que actividad transformar con sentido pedagogico?"',
+  'F2 Razonamiento critico - "¿Que proceso cognitivo debe hacer el estudiante?"',
+  'F3 Etica - "¿Que consideraciones eticas y de responsabilidad hay?"',
+  'F4 Herramientas - "¿Que herramientas se incorporan?"',
+  'F5 Reflexion - "¿Que se aprende y mejora del proceso?"',
 ];
-
-// ─── Rail panels del modelo de 6 etapas ───────────────────────────────────────
 
 export const RAIL_PANELS: RailPanel[] = [
   {
     id: "intro",
     kind: "intro",
-    label: "Introducción",
+    label: "Introduccion",
     title: "Recorrido del modelo",
     lines: [
       "Desliza hacia abajo para recorrer las 6 etapas del modelo.",
-      "No es un camino rígido: puedes avanzar a tu ritmo y volver cuando lo necesites.",
+      "No es un camino rigido: puedes avanzar a tu ritmo y volver cuando lo necesites.",
     ],
   },
   {
     id: "etapa-1",
     label: "Etapa 1",
-    title: "Reconócete para avanzar",
+    title: "Reconocete para avanzar",
     lines: [
       "Identifica tu punto de partida con un ejercicio individual y confidencial.",
       "No es un examen: orienta tu ruta.",
@@ -97,25 +64,25 @@ export const RAIL_PANELS: RailPanel[] = [
     title: "Descubre nuevas posibilidades",
     lines: [
       "Explora herramientas y usos educativos de GenAI.",
-      "Reconoce beneficios, límites e implicaciones éticas.",
+      "Reconoce beneficios, limites e implicaciones eticas.",
     ],
   },
   {
     id: "etapa-3",
     label: "Etapa 3",
-    title: "Diseña con propósito",
+    title: "Disena con proposito",
     lines: [
-      "Planifica una experiencia con IA justificada pedagógicamente.",
-      "Define objetivos, actividades y evaluación.",
+      "Planifica una experiencia con IA justificada pedagogicamente.",
+      "Define objetivos, actividades y evaluacion.",
     ],
   },
   {
     id: "etapa-4",
     label: "Etapa 4",
-    title: "Prepara el terreno para el éxito",
+    title: "Prepara el terreno para el exito",
     lines: [
-      "Alista herramientas, condiciones y acompañamiento.",
-      "Busca una implementación sólida y segura.",
+      "Alista herramientas, condiciones y acompanamiento.",
+      "Busca una implementacion solida y segura.",
     ],
   },
   {
@@ -123,7 +90,7 @@ export const RAIL_PANELS: RailPanel[] = [
     label: "Etapa 5",
     title: "Hazlo realidad en el aula",
     lines: [
-      "Implementa la experiencia y guía a tus estudiantes.",
+      "Implementa la experiencia y guia a tus estudiantes.",
       "Gestiona recursos y documenta el proceso.",
     ],
   },
@@ -132,178 +99,121 @@ export const RAIL_PANELS: RailPanel[] = [
     label: "Etapa 6",
     title: "Reflexiona, aprende y mejora",
     lines: [
-      "Evalúa logros y dificultades para ajustar el siguiente ciclo.",
+      "Evalua logros y dificultades para ajustar el siguiente ciclo.",
       "Mejora de forma continua.",
     ],
   },
 ];
 
-// ─── Árbol de nodos canónico de la Etapa 1 ────────────────────────────────────
-
 export const STAGE1_TREE: SectionNode[] = [
   {
-    id: "modelo-resumen",
-    title: "Resumen del modelo",
-    subtitle: "Recorrido general de las etapas antes del autodiagnóstico.",
+    id: "reconocete-para-avanzar",
+    title: "Reconocete para avanzar",
+    subtitle:
+      "Base oficial de preparacion para la siguiente implementacion de la Etapa 1.",
     surface: "plain",
     dialogue: [
       {
-        text: "Este recorrido acompaña la integración responsable de GenAI en experiencias de aprendizaje. Avanzarás por etapas conectadas, de forma progresiva y reflexiva.",
+        text: "Esta etapa te ubica dentro del modelo y prepara el autodiagnostico que orientara el resto del recorrido.",
         imgSrc: LAIA_ASSETS.neutral,
-        imgAlt: "Laia introduce el recorrido",
-      },
-      {
-        text: "Desliza hacia abajo para recorrer cada etapa.",
-        imgSrc: LAIA_ASSETS.explain,
-        imgAlt: "Laia invita a recorrer las etapas",
+        imgAlt: "Laia presenta la etapa 1",
       },
     ],
-    content: [{ type: "horizontal-rail", panels: RAIL_PANELS }],
+    content: [],
     children: [
       {
-        id: "animacion-estado",
-        title: "Activación del estado de Etapa 1",
+        id: "presentacion-modelo",
+        title: "Presentacion amplia del modelo",
         subtitle:
-          "La animación debe verse completa antes de avanzar al resto de la etapa.",
+          "La presentacion inicial debe verse completa antes de habilitar el resto del recorrido.",
         surface: "plain",
         content: [{ type: "stage1-animation" }],
         gate: { completionFlag: "stage1AnimationViewed" },
         children: [
           {
-            id: "estados",
-            title: "Estados del recorrido",
-            subtitle: "Jerarquía y efecto en el flujo de acompañamiento.",
+            id: "ubicacion-modelo",
+            title: "Donde estas dentro del modelo",
+            subtitle:
+              "Primero se aclara la posicion actual del docente dentro de la espiral.",
             surface: "plain",
+            gate: { requires: ["stage1AnimationViewed"] },
             dialogue: [
               {
-                text: "Los estados no son etiquetas ni juicios; solo ajustan recomendaciones y apoyos para acompañarte mejor.",
+                text: "Antes de recorrer todas las etapas, conviene entender que papel cumple esta primera parada dentro de la espiral.",
                 imgSrc: LAIA_ASSETS.explain,
-                imgAlt: "Laia aclara el uso de los estados",
+                imgAlt: "Laia explica la ubicacion actual en el modelo",
               },
             ],
-            gate: { requires: ["stage1AnimationViewed"] },
             content: [
               {
                 type: "paragraphs",
                 paragraphs: [
-                  "No son etiquetas ni juicios.",
-                  "No bloquea contenido: ajusta ritmo, ayuda y recomendaciones.",
+                  "Etapa 1 abre el recorrido con una lectura de punto de partida, no con una evaluacion.",
+                  "La ubicacion inicial ayuda a interpretar con calma el resto de la espiral y a entender que acompanamiento necesitara el docente.",
                 ],
               },
-              { type: "state-cards", items: STATE_CARDS },
             ],
             children: [
               {
-                id: "encuadre",
-                title: "Encuadre de la Etapa 1",
+                id: "rail-etapas",
+                title: "Recorrido general de las 6 etapas",
                 subtitle:
-                  "Por qué el recorrido inicia con autodiagnóstico y cómo se orienta la experiencia.",
+                  "Resumen breve del modelo, ahora ubicado despues de la explicacion de contexto.",
                 surface: "plain",
-                dialogue: [
-                  {
-                    text: "Antes de explorar herramientas o diseñar actividades, conviene reconocer desde dónde se empieza. Esta etapa propone un autodiagnóstico para orientar el recorrido.",
-                    imgSrc: LAIA_ASSETS.explain,
-                    imgAlt: "Laia encuadra la etapa 1",
-                  },
-                ],
                 gate: { requires: ["stage1AnimationViewed"] },
-                content: [
-                  {
-                    type: "paragraphs",
-                    paragraphs: [
-                      "El recorrido avanza por etapas conectadas y puede recorrerse de forma progresiva, volviendo cuando sea necesario.",
-                      "Los factores rectores ayudan a tomar decisiones formativas coherentes sin convertir el proceso en un examen.",
-                    ],
-                  },
-                  { type: "bullets", title: "Factores del modelo", items: FACTORS },
-                ],
+                content: [{ type: "horizontal-rail", panels: RAIL_PANELS }],
                 children: [
                   {
-                    id: "consentimiento",
-                    title: "Confianza y consentimiento",
+                    id: "estados-recorrido",
+                    title: "Estados del recorrido",
                     subtitle:
-                      "Validación mínima antes de habilitar el autodiagnóstico.",
+                      "Los estados orientan el acompanamiento y no funcionan como etiquetas ni juicios.",
                     surface: "plain",
+                    gate: { requires: ["stage1AnimationViewed"] },
                     dialogue: [
                       {
-                        text: "Este ejercicio es individual, objetivo y confidencial. No tiene efectos administrativos. Su único propósito es orientar el camino formativo.",
+                        text: "Los estados ayudan a modular apoyos y recomendaciones. No bloquean contenido ni clasifican a nadie de forma definitiva.",
                         imgSrc: LAIA_ASSETS.explain,
-                        imgAlt: "Laia explica confidencialidad",
+                        imgAlt: "Laia explica los estados del recorrido",
                       },
                     ],
-                    content: [{ type: "consent-form" }],
+                    content: [
+                      {
+                        type: "paragraphs",
+                        paragraphs: [
+                          "El autodiagnostico busca ubicar tu punto de partida con claridad y sin convertirlo en un examen.",
+                          "Los factores del modelo ayudan a interpretar ese punto de partida con criterio pedagogico, critico y etico.",
+                        ],
+                      },
+                      { type: "state-cards", items: STATE_CARDS },
+                      { type: "bullets", title: "Factores del modelo", items: FACTORS },
+                    ],
                     children: [
                       {
-                        id: "autodiagnostico",
-                        title: "Autodiagnóstico",
+                        id: "consentimiento",
+                        title: "Confianza y consentimiento",
                         subtitle:
-                          "Completa el módulo para identificar tu punto de partida.",
+                          "Validacion minima antes de habilitar el autodiagnostico embebido.",
                         surface: "plain",
-                        gate: {
-                          requires: ["consentValidated", "autodiagnosticStarted"],
-                        },
-                        content: [{ type: "autodiagnostic-module" }],
+                        dialogue: [
+                          {
+                            text: "Este ejercicio es individual, objetivo y confidencial. No tiene efectos administrativos. Su unico proposito es orientar el camino formativo.",
+                            imgSrc: LAIA_ASSETS.explain,
+                            imgAlt: "Laia explica confidencialidad",
+                          },
+                        ],
+                        content: [{ type: "consent-form" }],
                         children: [
                           {
-                            id: "resultado",
-                            title: "Resultado",
+                            id: "autodiagnostico",
+                            title: "Autodiagnostico",
                             subtitle:
-                              "Lectura de tu punto de partida y recomendaciones iniciales.",
+                              "Completa el modulo para identificar tu punto de partida.",
                             surface: "plain",
-                            gate: { requires: ["autodiagnosticCompleted"] },
-                            dialogue: [
-                              {
-                                text: "Este resultado no define capacidades; orienta condiciones de partida. El valor está en tomar decisiones formativas más coherentes.",
-                                imgSrc: LAIA_ASSETS.explain,
-                                imgAlt: "Laia presenta el resultado",
-                              },
-                            ],
-                            content: [{ type: "result-summary" }],
-                            children: [
-                              {
-                                id: "intencion",
-                                title: "Intención personal",
-                                subtitle:
-                                  "Registro breve para acompañar tu recorrido.",
-                                surface: "plain",
-                                gate: { requires: ["autodiagnosticCompleted"] },
-                                dialogue: [
-                                  {
-                                    text: "Registrar tu intención ayuda a revisar, más adelante, cómo evolucionó tu experiencia a lo largo de la espiral.",
-                                    imgSrc: LAIA_ASSETS.explain,
-                                    imgAlt: "Laia invita a registrar intención",
-                                  },
-                                ],
-                                content: [{ type: "intention-form" }],
-                                children: [
-                                  {
-                                    id: "transicion-etapa-2",
-                                    title: "Transición a la Etapa 2",
-                                    subtitle:
-                                      "Visualiza la transición completa para habilitar el avance.",
-                                    surface: "plain",
-                                    gate: { requires: ["intentionSaved"] },
-                                    dialogue: [
-                                      {
-                                        text: "Con tu punto de partida identificado, el siguiente paso es explorar posibilidades reales de GenAI para fortalecer actividades concretas de aprendizaje.",
-                                        imgSrc: LAIA_ASSETS.explain,
-                                        imgAlt: "Laia enlaza con la etapa 2",
-                                      },
-                                    ],
-                                    content: [{ type: "transition-animation" }],
-                                    actions: [
-                                      {
-                                        type: "navigate",
-                                        label: "Continuar a Etapa 2",
-                                        href: "/etapa/etapa-2",
-                                        variant: "primary",
-                                        requires: ["transitionAnimationViewed"],
-                                      },
-                                    ],
-                                  },
-                                ],
-                              },
-                            ],
+                            gate: {
+                              requires: ["consentValidated", "autodiagnosticStarted"],
+                            },
+                            content: [{ type: "autodiagnostic-module" }],
                           },
                         ],
                       },

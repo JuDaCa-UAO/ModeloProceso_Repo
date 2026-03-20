@@ -27,12 +27,6 @@ export type Stage1ProgressState = {
   autodiagnosticCompleted: boolean;
   /** ID del nivel jerárquico resultante del diagnóstico. */
   resultStateId: StageResultId;
-  /** Texto libre de intención personal del docente para el recorrido. */
-  intentionText: string;
-  /** Emoción seleccionada al iniciar (opcional). */
-  emotion: string;
-  /** La intención fue guardada explícitamente por el docente. */
-  intentionSaved: boolean;
   /** La animación de transición E1→E2 fue vista completa. */
   transitionAnimationViewed: boolean;
 };
@@ -47,9 +41,6 @@ export const STAGE1_PROGRESS_DEFAULT: Stage1ProgressState = {
   autodiagnosticStarted: false,
   autodiagnosticCompleted: false,
   resultStateId: "intermedio",
-  intentionText: "",
-  emotion: "",
-  intentionSaved: false,
   transitionAnimationViewed: false,
 };
 
@@ -75,9 +66,6 @@ export function coerceStage1Progress(raw: unknown): Stage1ProgressState {
       v.resultStateId === "avanzado"
         ? v.resultStateId
         : "intermedio",
-    intentionText: typeof v.intentionText === "string" ? v.intentionText : "",
-    emotion: typeof v.emotion === "string" ? v.emotion : "",
-    intentionSaved: Boolean(v.intentionSaved),
     transitionAnimationViewed: Boolean(v.transitionAnimationViewed),
   };
 }

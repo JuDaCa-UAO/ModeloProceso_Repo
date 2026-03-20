@@ -11,21 +11,21 @@ type AutodiagnosticBlockProps = {
 };
 
 /**
- * Bloque del módulo de autodiagnóstico.
+ * Bloque del modulo de autodiagnostico.
  *
- * Mejoras vs implementación anterior:
+ * Mejoras vs implementacion anterior:
  *  1. La URL del formulario viene de N8N_CONFIG (Infrastructure), no hardcodeada.
  *  2. El timeout de fallback es configurable.
- *  3. El bloque es independiente — se puede renderizar en cualquier etapa.
+ *  3. El bloque es independiente y se puede renderizar en cualquier etapa.
  *
- * Cuando el docente confirma que completó el formulario, llama onUpdate.
- * En el futuro, esta acción puede invocar CompleteAutodiagnosticUseCase
+ * Cuando el docente confirma que completo el formulario, llama onUpdate.
+ * En el futuro, esta accion puede invocar CompleteAutodiagnosticUseCase
  * para notificar al webhook de N8N y obtener el resultado real.
  */
 export default function AutodiagnosticBlock({ ctx }: AutodiagnosticBlockProps) {
   const [iframeLoaded, setIframeLoaded] = useState(false);
   const [showFallback, setShowFallback] = useState(false);
-  const { state, onUpdate, onScrollTo } = ctx;
+  const { state, onUpdate } = ctx;
 
   const formUrl = N8N_CONFIG.forms.autodiagnostic || "";
 
@@ -38,7 +38,7 @@ export default function AutodiagnosticBlock({ ctx }: AutodiagnosticBlockProps) {
   return (
     <div className={styles.embedCard}>
       <div className={styles.embedHeader}>
-        <span className={styles.embedLabel}>Autodiagnóstico</span>
+        <span className={styles.embedLabel}>Autodiagnostico</span>
         <span className={styles.embedStatus}>
           {state.autodiagnosticCompleted ? "Completado" : "Pendiente"}
         </span>
@@ -48,7 +48,7 @@ export default function AutodiagnosticBlock({ ctx }: AutodiagnosticBlockProps) {
         {!showFallback || iframeLoaded ? (
           <iframe
             src={formUrl || undefined}
-            title="Autodiagnóstico etapa 1"
+            title="Autodiagnostico etapa 1"
             className={styles.embedIframe}
             loading="lazy"
             sandbox="allow-forms allow-scripts allow-same-origin"
@@ -59,12 +59,14 @@ export default function AutodiagnosticBlock({ ctx }: AutodiagnosticBlockProps) {
           />
         ) : (
           <div className={styles.embedFallback}>
-            <h3 className={styles.embedFallbackTitle}>Módulo en implementación</h3>
+            <h3 className={styles.embedFallbackTitle}>Modulo en implementacion</h3>
             <p className={styles.embedFallbackCopy}>
-              Puedes continuar con el recorrido usando la simulación de resultado disponible en esta etapa.
+              Puedes continuar con el recorrido usando el embebido como base de la
+              siguiente iteracion de Etapa 1.
             </p>
             <p className={styles.embedFallbackCopy}>
-              Cuando el módulo esté disponible, podrás completar aquí tu autodiagnóstico individual y confidencial.
+              Cuando el modulo este disponible, podras completar aqui tu
+              autodiagnostico individual y confidencial.
             </p>
           </div>
         )}
@@ -75,22 +77,22 @@ export default function AutodiagnosticBlock({ ctx }: AutodiagnosticBlockProps) {
           type="button"
           className={stageStyles.buttonSecondary}
           disabled={state.autodiagnosticCompleted}
-          onClick={() => {
+          onClick={() =>
             onUpdate({
               autodiagnosticCompleted: true,
               resultStateId: state.resultStateId || "intermedio",
-            });
-            window.setTimeout(() => onScrollTo("resultado"), 120);
-          }}
+            })
+          }
         >
           {state.autodiagnosticCompleted
-            ? "Autodiagnóstico completado"
-            : "He completado el autodiagnóstico"}
+            ? "Autodiagnostico completado"
+            : "He completado el autodiagnostico"}
         </button>
       </div>
 
       <p className={styles.helperText}>
-        Durante este paso la navegación queda libre, y el acompañamiento de Laia se retoma al presentar el resultado.
+        Durante este paso el foco queda en el embebido y el avance se conserva
+        localmente para la siguiente iteracion del flujo.
       </p>
     </div>
   );

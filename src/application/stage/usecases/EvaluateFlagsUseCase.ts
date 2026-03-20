@@ -31,7 +31,6 @@ export function evaluateFlags(
     consentValidated: evaluateConsent(state),
     autodiagnosticStarted: state.autodiagnosticStarted,
     autodiagnosticCompleted: state.autodiagnosticCompleted,
-    intentionSaved: state.intentionSaved,
     transitionAnimationViewed: state.transitionAnimationViewed,
   };
 }

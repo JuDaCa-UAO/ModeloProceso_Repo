@@ -11,7 +11,6 @@ export type StageFlagKey =
   | "consentValidated"
   | "autodiagnosticStarted"
   | "autodiagnosticCompleted"
-  | "intentionSaved"
   | "transitionAnimationViewed";
 
 export type DialogueStepConfig = {
@@ -65,8 +64,6 @@ export type SectionContentBlock =
   | { type: "stage1-animation" }
   | { type: "consent-form" }
   | { type: "autodiagnostic-module" }
-  | { type: "result-summary" }
-  | { type: "intention-form" }
   | { type: "transition-animation" }
   | { type: "custom"; renderKey: string };
 
