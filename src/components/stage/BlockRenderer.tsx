@@ -22,6 +22,7 @@ import HorizontalRailBlock from "./blocks/HorizontalRailBlock";
 import AnimationBlock from "./blocks/AnimationBlock";
 import ConsentFormBlock from "./blocks/ConsentFormBlock";
 import AutodiagnosticBlock from "./blocks/AutodiagnosticBlock";
+import ScaffoldPanelBlock from "./blocks/ScaffoldPanelBlock";
 import TransitionAnimationBlock from "./blocks/TransitionAnimationBlock";
 
 const MODEL_INTRO_VIDEO_URL = "/videos/intro-modelo.mp4";
@@ -114,6 +115,18 @@ export default function BlockRenderer({
 
           case "transition-animation":
             return <TransitionAnimationBlock key={key} ctx={ctx} />;
+
+          case "scaffold-panel":
+            return (
+              <ScaffoldPanelBlock
+                key={key}
+                label={block.label}
+                body={block.body}
+                items={block.items}
+                actions={block.actions}
+                tone={block.tone}
+              />
+            );
 
           case "custom":
             return renderCustom ? renderCustom(block.renderKey, section) : null;

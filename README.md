@@ -13,13 +13,14 @@ Plataforma interactiva basada en **Next.js 16 App Router** para acompanar a doce
 7. [Variables de entorno](#variables-de-entorno)
 8. [Flujo de Etapa 1](#flujo-de-etapa-1)
 9. [Limpieza preparatoria de Etapa 1](#limpieza-preparatoria-de-etapa-1)
-10. [Como agregar una nueva etapa](#como-agregar-una-nueva-etapa)
-11. [Como agregar un nuevo bloque de contenido](#como-agregar-un-nuevo-bloque-de-contenido)
-12. [Integracion con N8N](#integracion-con-n8n)
-13. [Chatbot Laia](#chatbot-laia)
-14. [Testing](#testing)
-15. [Seguridad](#seguridad)
-16. [Decisiones de arquitectura](#decisiones-de-arquitectura)
+10. [Esqueleto estructural de Etapa 1](#esqueleto-estructural-de-etapa-1)
+11. [Como agregar una nueva etapa](#como-agregar-una-nueva-etapa)
+12. [Como agregar un nuevo bloque de contenido](#como-agregar-un-nuevo-bloque-de-contenido)
+13. [Integracion con N8N](#integracion-con-n8n)
+14. [Chatbot Laia](#chatbot-laia)
+15. [Testing](#testing)
+16. [Seguridad](#seguridad)
+17. [Decisiones de arquitectura](#decisiones-de-arquitectura)
 
 ## Referencias oficiales
 
@@ -172,6 +173,7 @@ Los bloques actualmente soportados por `BlockRenderer` son:
 - `consent-form`
 - `autodiagnostic-module`
 - `transition-animation`
+- `scaffold-panel`
 - `custom`
 
 ## Flujo de comunicacion entre capas
@@ -233,22 +235,31 @@ El flujo definitivo de Etapa 1 no se define ya por el estado heredado del codigo
 
 ### Base oficial actual en codigo
 
-Despues de la limpieza preparatoria, `src/content/stages/stage-1.content.ts` queda como base oficial temporal para la siguiente implementacion. Su orden actual es:
+`src/content/stages/stage-1.content.ts` queda ahora como esqueleto estructural oficial de Etapa 1. Su secuencia actual es:
 
-1. `Reconocete para avanzar`
-2. `Presentacion amplia del modelo`
-3. `Donde estas dentro del modelo`
-4. `Recorrido general de las 6 etapas`
-5. `Estados del recorrido`
-6. `Confianza y consentimiento`
-7. `Autodiagnostico`
+1. `Entrada de Etapa 1`
+2. `Presentacion inicial del modelo`
+3. `Progresion dentro del modelo`
+4. `Laia como guia del recorrido`
+5. `Scroll vertical y reveal acumulativo`
+6. `Botones de continuidad y navegacion`
+7. `Explicacion del modelo`
+8. `Rail de etapas`
+9. `Estados del docente`
+10. `Consentimiento`
+11. `Chatbot contextual`
+12. `Autodiagnostico embebido`
+13. `Cierre de la etapa`
+14. `Video final`
+15. `Transicion a la Etapa 2`
 
 ### Rol actual del viewer 3D
 
 - el mini viewer se conserva
 - ya no aparece antes de completar la presentacion amplia
 - se mantiene desacoplado del sistema de continuidad
-- hoy solo funciona como orientacion visual de la etapa
+- ya tiene su lugar estructural dentro del bloque de progresion del modelo
+- sigue funcionando como orientacion visual persistente de la etapa
 
 ### Diferencia entre "Ir a etapas" y "Continuar"
 
@@ -258,13 +269,15 @@ Estado actual:
 
 - `Continuar` usa `src/lib/progress.ts` y recuerda `lastRoute`
 - no reconstruye aun el bloque exacto dentro de la etapa
-- el desbloqueo del boton global para ir a cualquier etapa sigue pendiente de la implementacion definitiva
+- el desbloqueo del boton global para ir a cualquier etapa ya tiene seccion propia dentro del esqueleto
+- el comportamiento fino de esos botones sigue pendiente de la implementacion definitiva
 
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
 - los dialogos viven en `content/`
 - la logica de mood sigue preparada en dominio/aplicacion
+- ya existe una seccion estructural propia para su papel de guia, texto y futuro audio
 - durante el autodiagnostico el foco queda en el embebido; la minimizacion formal de Laia se implementara en la siguiente iteracion
 
 ### Multimedia hardcodeado en esta fase
@@ -327,9 +340,56 @@ Se mantiene como base reutilizable y util:
 
 Desde esta limpieza:
 
-- `src/content/stages/stage-1.content.ts` es la base oficial temporal de Etapa 1 en codigo
+- `src/content/stages/stage-1.content.ts` es la base oficial del esqueleto de Etapa 1 en codigo
 - el documento **"Flujo de diseno - Etapa 1"** es la referencia definitiva del flujo
 - cualquier nueva implementacion de bloques grandes debe partir de esta base limpia, no de los pasos eliminados
+
+## Esqueleto estructural de Etapa 1
+
+### Que se creo
+
+Se creo un esqueleto completo de secciones para Etapa 1 sin cerrar todavia el comportamiento fino de cada bloque.
+
+Nuevas piezas estructurales:
+
+- bloque reusable `scaffold-panel` en `src/types/stage.ts`
+- componente reusable [`src/components/stage/blocks/ScaffoldPanelBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/ScaffoldPanelBlock.tsx)
+- reorganizacion completa de [`src/content/stages/stage-1.content.ts`](/e:/ModeloProceso/ModeloProceso_Repo/src/content/stages/stage-1.content.ts)
+
+### Como quedo organizado
+
+El esqueleto sigue este orden logico:
+
+1. entrada
+2. progresion
+3. Laia
+4. scroll
+5. botones
+6. explicacion del modelo
+7. rail
+8. estados
+9. consentimiento
+10. chatbot
+11. embebido
+12. salida
+13. video final
+14. transicion a Etapa 2
+
+### Criterio de implementacion
+
+- el scroll vertical sigue siendo el mecanismo principal
+- cada bloque tiene su propio slot en `content/`
+- `StageShell` sigue resolviendo el viewer persistente sin meter logica de flujo dentro del contenido
+- los placeholders estructurales usan `scaffold-panel` para no inventar UI final prematura
+- la etapa sigue siendo independiente de las demas aunque ya reserve el espacio de la transicion
+
+### Que sigue pendiente
+
+- desbloqueo real de `Ir a etapas`
+- continuidad exacta por bloque o hito
+- comportamiento fino del chatbot
+- cierre narrativo y visual detallado
+- CTA real de transicion a Etapa 2
 
 ## Como agregar una nueva etapa
 

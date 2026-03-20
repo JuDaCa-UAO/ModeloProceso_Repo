@@ -34,6 +34,12 @@ export type StateCardItem = {
   supportHint: string;
 };
 
+export type ScaffoldActionItem = {
+  label: string;
+  detail?: string;
+  state?: "ready" | "locked" | "future";
+};
+
 export type SectionAction =
   | {
       type: "scroll-to";
@@ -65,6 +71,14 @@ export type SectionContentBlock =
   | { type: "consent-form" }
   | { type: "autodiagnostic-module" }
   | { type: "transition-animation" }
+  | {
+      type: "scaffold-panel";
+      label?: string;
+      body: string;
+      items?: string[];
+      actions?: ScaffoldActionItem[];
+      tone?: "neutral" | "accent";
+    }
   | { type: "custom"; renderKey: string };
 
 export type SectionNode = {
