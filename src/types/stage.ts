@@ -71,6 +71,14 @@ export type SectionContentBlock =
       characterSrc: string;
       characterAlt?: string;
     }
+  | {
+      type: "stage-header";
+      title: string;
+      subtitle: string;
+      stageChip?: string;
+      continuityLabel?: string;
+      currentStageLabel?: string;
+    }
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "callout"; title?: string; body: string }
   | { type: "bullets"; title?: string; items: string[] }

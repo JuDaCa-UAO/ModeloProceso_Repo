@@ -1,6 +1,6 @@
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import StageShell from "@/components/stage/StageShell";
 import ProgressiveSection from "@/components/stage/ProgressiveSection";
@@ -42,6 +42,7 @@ export default function StageClient({
 }: StageClientProps) {
   const router = useRouter();
   const { flags, state, update } = useStageProgress(stageId);
+  const restoredHashRef = useRef("");
 
   const allIds = useMemo(() => flatIds(initialTree), [initialTree]);
   const { activeId, revealed, registerSectionRef } = useProgressiveReveal({
@@ -51,8 +52,29 @@ export default function StageClient({
   });
 
   useEffect(() => {
-    writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
-  }, [stageId]);
+    const targetSectionId = activeId || "entrada-etapa-1";
+    writeProgress({
+      hasStarted: true,
+      lastRoute: `/etapa/${stageId}#${targetSectionId}`,
+      lastStageId: stageId,
+      lastSectionId: targetSectionId,
+    });
+  }, [activeId, stageId]);
+
+  useEffect(() => {
+    if (typeof window === "undefined") return;
+
+    const hash = window.location.hash.replace(/^#/, "");
+    if (!hash || restoredHashRef.current === hash) return;
+
+    const target = document.getElementById(hash);
+    if (!target) return;
+
+    restoredHashRef.current = hash;
+    window.requestAnimationFrame(() => {
+      target.scrollIntoView({ behavior: "smooth", block: "start" });
+    });
+  }, [flags, initialTree]);
 
   const onScrollTo = useCallback((id: string) => {
     document.getElementById(id)?.scrollIntoView({
@@ -74,10 +96,15 @@ export default function StageClient({
     [flags, onNavigate, onScrollTo, stageId, state, update]
   );
 
+  const currentStageMeta = STAGE_META.find((item) => item.id === stageId);
+  const stageLabel = currentStageMeta
+    ? `Etapa ${currentStageMeta.order}: ${currentStageMeta.name}`
+    : stageName;
+
   const viewerStatus = {
     label: flags.transitionAnimationViewed
       ? "Lista para siguiente etapa"
-      : "Etapa actual resaltada",
+      : "Activa",
     tone: flags.transitionAnimationViewed ? ("done" as const) : ("active" as const),
   };
 
@@ -168,11 +195,19 @@ export default function StageClient({
 
   return (
     <StageShell
-      viewerTitle={stageName}
+      viewerTitle={stageLabel}
       viewerStatusLabel={viewerStatus.label}
       viewerStatusTone={viewerStatus.tone}
-      viewerMeta={[{ label: "Etapa", value: stageName }]}
-      viewerEnabled={false}
+      viewerMeta={[
+        {
+          label: "Etapa actual",
+          value: currentStageMeta
+            ? `Etapa ${currentStageMeta.order} activa`
+            : `${stageName} activa`,
+        },
+        { label: "Continuidad", value: "Se conserva por seccion" },
+      ]}
+      viewerEnabled={flags.stage1AnimationViewed}
       globalStageButtonVisible={flags.stage1AnimationViewed}
       globalStageItems={STAGE_META.map((item) => ({
         id: item.id,

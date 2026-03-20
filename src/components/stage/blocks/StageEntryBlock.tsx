@@ -1,6 +1,7 @@
 "use client";
 
 import Image from "next/image";
+import { useProgress } from "@/lib/useProgress";
 import stageStyles from "@/components/stage/stage.module.css";
 import styles from "./blocks.module.css";
 import type { BlockContext } from "./BlockContext";
@@ -24,6 +25,13 @@ export default function StageEntryBlock({
   characterAlt,
   ctx,
 }: StageEntryBlockProps) {
+  const { progress } = useProgress();
+  const hasResumePoint =
+    progress.hasStarted &&
+    progress.lastStageId === ctx.stageId &&
+    progress.lastSectionId &&
+    progress.lastSectionId !== targetId;
+
   return (
     <section className={styles.entryHero}>
       <div className={styles.entryCopy}>
@@ -42,6 +50,16 @@ export default function StageEntryBlock({
           >
             {ctaLabel}
           </button>
+
+          {hasResumePoint ? (
+            <button
+              type="button"
+              className={stageStyles.buttonSecondary}
+              onClick={() => ctx.onScrollTo(progress.lastSectionId)}
+            >
+              Continuar donde iba
+            </button>
+          ) : null}
         </div>
       </div>
 

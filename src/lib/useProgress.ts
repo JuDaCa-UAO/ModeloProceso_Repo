@@ -8,6 +8,8 @@ const PROGRESS_EVENT = "ai-tech-ed-progress-changed";
 const SERVER_SNAPSHOT: ProgressState = {
   hasStarted: false,
   lastRoute: "/etapa/etapa-1",
+  lastStageId: "etapa-1",
+  lastSectionId: "entrada-etapa-1",
   updatedAt: 0,
 };
 
@@ -19,6 +21,8 @@ function readProgressSnapshot(): ProgressState {
   if (
     cachedProgressSnapshot.hasStarted === next.hasStarted &&
     cachedProgressSnapshot.lastRoute === next.lastRoute &&
+    cachedProgressSnapshot.lastStageId === next.lastStageId &&
+    cachedProgressSnapshot.lastSectionId === next.lastSectionId &&
     cachedProgressSnapshot.updatedAt === next.updatedAt
   ) {
     return cachedProgressSnapshot;

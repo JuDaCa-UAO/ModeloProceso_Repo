@@ -164,6 +164,8 @@ UI, hooks y stores.
 
 Los bloques actualmente soportados por `BlockRenderer` son:
 
+- `stage-entry`
+- `stage-header`
 - `paragraphs`
 - `callout`
 - `bullets`
@@ -239,19 +241,20 @@ El flujo definitivo de Etapa 1 no se define ya por el estado heredado del codigo
 
 1. `Entrada de Etapa 1`
 2. `Presentacion inicial del modelo`
-3. `Progresion dentro del modelo`
-4. `Laia como guia del recorrido`
-5. `Scroll vertical y reveal acumulativo`
-6. `Botones de continuidad y navegacion`
-7. `Explicacion del modelo`
-8. `Rail de etapas`
-9. `Estados del docente`
-10. `Consentimiento`
-11. `Chatbot contextual`
-12. `Autodiagnostico embebido`
-13. `Cierre de la etapa`
-14. `Video final`
-15. `Transicion a la Etapa 2`
+3. `Encabezado del stage`
+4. `Progresion dentro del modelo`
+5. `Laia como guia del recorrido`
+6. `Scroll vertical y reveal acumulativo`
+7. `Botones de continuidad y navegacion`
+8. `Explicacion del modelo`
+9. `Rail de etapas`
+10. `Estados del docente`
+11. `Consentimiento`
+12. `Chatbot contextual`
+13. `Autodiagnostico embebido`
+14. `Cierre de la etapa`
+15. `Video final`
+16. `Transicion a la Etapa 2`
 
 ### Entrada implementada
 
@@ -260,29 +263,30 @@ La primera parte del flujo ya tiene implementacion funcional:
 - pantalla inicial dentro de la Etapa 1
 - presencia visible de Laia
 - CTA principal para iniciar
+- boton de continuar exacto desde la entrada cuando existe progreso guardado
 - animacion amplia del modelo en modo protagonista
 - desbloqueo del boton global `Ir a etapas` al terminar la animacion
 
-El CTA de entrada desplaza al usuario hacia la presentacion amplia sin romper el sistema de continuidad global existente.
+El CTA de entrada desplaza al usuario hacia la presentacion amplia sin romper el sistema de continuidad global existente. Si el usuario ya habia avanzado dentro de la etapa, la entrada tambien ofrece continuar exactamente en la ultima seccion guardada.
 
 ### Rol actual del viewer 3D
 
-- en este bloque el viewer solo aparece en modo protagonista dentro de la animacion amplia
-- al terminar la animacion deja de ser el foco principal del stage
-- el viewer persistente en la esquina superior derecha queda pendiente para el siguiente bloque
+- durante la animacion inicial el viewer funciona en modo protagonista
+- al terminar la animacion se reduce y queda fijo en la esquina superior derecha
+- el viewer muestra la etapa actual como activa y usa la mejor senal visual disponible sin depender del sistema de continuidad
 - se mantiene desacoplado del sistema de continuidad
+- su responsabilidad es orientar visualmente la etapa actual, no recordar la seccion exacta del recorrido
 
 ### Diferencia entre "Ir a etapas" y "Continuar"
 
-Todavia no esta implementada la continuidad exacta por bloque o hito del documento definitivo.
-
 Estado actual:
 
-- `Continuar` usa `src/lib/progress.ts` y recuerda `lastRoute`
-- no reconstruye aun el bloque exacto dentro de la etapa
+- `Continuar` usa `src/lib/progress.ts` y recuerda `lastRoute`, `lastStageId` y `lastSectionId`
+- `Continuar` ya puede retomar la seccion exacta guardada dentro de la etapa usando hash de seccion
 - el desbloqueo del boton global para ir a cualquier etapa ocurre cuando se activa `stage1AnimationViewed`
 - el boton ya existe y abre la navegacion global de etapas
-- el comportamiento fino de etapas futuras sigue pendiente de la implementacion definitiva
+- el viewer solo indica etapa activa; no guarda checkpoints ni reemplaza la continuidad
+- la navegacion final de etapas futuras sigue limitada por las etapas publicadas en `STAGE_META`
 
 ### Papel de Laia
 
@@ -365,7 +369,11 @@ Se creo un esqueleto completo de secciones para Etapa 1 sin cerrar todavia el co
 Nuevas piezas estructurales:
 
 - bloque reusable `scaffold-panel` en `src/types/stage.ts`
+- bloque reusable `stage-entry` para la pantalla inicial
+- bloque reusable `stage-header` para el encabezado funcional del stage
 - componente reusable [`src/components/stage/blocks/ScaffoldPanelBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/ScaffoldPanelBlock.tsx)
+- componente reusable [`src/components/stage/blocks/StageEntryBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/StageEntryBlock.tsx)
+- componente reusable [`src/components/stage/blocks/StageHeaderBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/StageHeaderBlock.tsx)
 - reorganizacion completa de [`src/content/stages/stage-1.content.ts`](/e:/ModeloProceso/ModeloProceso_Repo/src/content/stages/stage-1.content.ts)
 
 ### Como quedo organizado
@@ -398,11 +406,11 @@ El esqueleto sigue este orden logico:
 ### Que sigue pendiente
 
 - navegacion final hacia etapas futuras cuando su contenido este publicado
-- continuidad exacta por bloque o hito
 - comportamiento fino del chatbot
 - cierre narrativo y visual detallado
 - CTA real de transicion a Etapa 2
-- viewer 3D persistente en la esquina superior derecha despues de la animacion inicial
+- implementacion real del rail del modelo
+- implementacion real de los estados del docente
 
 ## Como agregar una nueva etapa
 

@@ -1,7 +1,9 @@
 export type ProgressState = {
   hasStarted: boolean;
-  lastRoute: string;      // a dónde “Continuar”
-  updatedAt: number;      // timestamp
+  lastRoute: string;
+  lastStageId: string;
+  lastSectionId: string;
+  updatedAt: number;
 };
 
 const STORAGE_KEY = "ai-tech-ed-progress";
@@ -9,6 +11,8 @@ const STORAGE_KEY = "ai-tech-ed-progress";
 const DEFAULT_STATE: ProgressState = {
   hasStarted: false,
   lastRoute: "/etapa/etapa-1",
+  lastStageId: "etapa-1",
+  lastSectionId: "entrada-etapa-1",
   updatedAt: 0,
 };
 
@@ -23,6 +27,8 @@ export function readProgress(): ProgressState {
     return {
       hasStarted: Boolean(parsed.hasStarted ?? DEFAULT_STATE.hasStarted),
       lastRoute: String(parsed.lastRoute ?? DEFAULT_STATE.lastRoute),
+      lastStageId: String(parsed.lastStageId ?? DEFAULT_STATE.lastStageId),
+      lastSectionId: String(parsed.lastSectionId ?? DEFAULT_STATE.lastSectionId),
       updatedAt: Number(parsed.updatedAt ?? DEFAULT_STATE.updatedAt),
     };
   } catch {

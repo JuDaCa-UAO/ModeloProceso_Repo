@@ -16,6 +16,7 @@ import type { ReactNode } from "react";
 import type { SectionContentBlock, SectionNode } from "@/types/stage";
 import type { BlockContext } from "./blocks/BlockContext";
 import StageEntryBlock from "./blocks/StageEntryBlock";
+import StageHeaderBlock from "./blocks/StageHeaderBlock";
 import ParagraphsBlock from "./blocks/ParagraphsBlock";
 import BulletsBlock from "./blocks/BulletsBlock";
 import StateCardsBlock from "./blocks/StateCardsBlock";
@@ -58,6 +59,18 @@ export default function BlockRenderer({
                 characterSrc={block.characterSrc}
                 characterAlt={block.characterAlt}
                 ctx={ctx}
+              />
+            );
+
+          case "stage-header":
+            return (
+              <StageHeaderBlock
+                key={key}
+                title={block.title}
+                subtitle={block.subtitle}
+                stageChip={block.stageChip}
+                continuityLabel={block.continuityLabel}
+                currentStageLabel={block.currentStageLabel}
               />
             );
 
