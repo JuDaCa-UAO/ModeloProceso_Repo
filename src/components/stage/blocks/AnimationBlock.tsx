@@ -9,28 +9,27 @@ type AnimationBlockProps = {
   flagToSet: "stage1AnimationViewed" | "transitionAnimationViewed";
   blockAdvance?: boolean;
   onPlayStart?: () => void;
+  title?: string;
+  description?: string;
+  variant?: "default" | "hero";
 };
 
-/**
- * Bloque de animación de video con control de completion.
- * Al completarse, llama a ctx.onUpdate para actualizar el flag correspondiente.
- *
- * El flag a activar es configurable (no hardcodeado) para reutilizar este
- * bloque en la animación de intro y en la de transición E1→E2.
- */
 export default function AnimationBlock({
   ctx,
   videoSrc,
   flagToSet,
   blockAdvance = false,
   onPlayStart,
+  title = "",
+  description = "",
+  variant = "default",
 }: AnimationBlockProps) {
   const completed = ctx.flags[flagToSet];
 
   return (
     <AnimationCard
-      title=""
-      description=""
+      title={title}
+      description={description}
       videoSrc={videoSrc}
       completed={completed}
       onPlayStart={
@@ -46,9 +45,10 @@ export default function AnimationBlock({
       blockAdvanceUntilComplete={blockAdvance}
       blockedAdvanceMessage={
         blockAdvance
-          ? "Para continuar con la etapa, primero debes reproducir y completar esta animación. Hasta entonces no se habilita el resto del contenido."
+          ? "Para continuar con la etapa, primero debes reproducir y completar esta animacion. Hasta entonces no se habilita el resto del contenido."
           : undefined
       }
+      variant={variant}
     />
   );
 }

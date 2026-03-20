@@ -7,6 +7,7 @@ import ProgressiveSection from "@/components/stage/ProgressiveSection";
 import DialogueBlock from "@/components/stage/DialogueBlock";
 import BlockRenderer from "@/components/stage/BlockRenderer";
 import stageStyles from "@/components/stage/stage.module.css";
+import { STAGE_META } from "@/content/stages";
 import { useStageProgress } from "@/hooks/domain/useStageProgress";
 import { useProgressiveReveal } from "@/hooks/ui/useProgressiveReveal";
 import { hasRequiredFlags } from "@domain/stage/rules/GatingRule";
@@ -171,7 +172,16 @@ export default function StageClient({
       viewerStatusLabel={viewerStatus.label}
       viewerStatusTone={viewerStatus.tone}
       viewerMeta={[{ label: "Etapa", value: stageName }]}
-      viewerEnabled={flags.stage1AnimationViewed}
+      viewerEnabled={false}
+      globalStageButtonVisible={flags.stage1AnimationViewed}
+      globalStageItems={STAGE_META.map((item) => ({
+        id: item.id,
+        name: item.name,
+        href: item.href,
+        available: item.available,
+      }))}
+      currentStageId={stageId}
+      onGlobalStageNavigate={onNavigate}
     >
       {initialTree.map((node) => renderNode(node))}
     </StageShell>

@@ -253,13 +253,24 @@ El flujo definitivo de Etapa 1 no se define ya por el estado heredado del codigo
 14. `Video final`
 15. `Transicion a la Etapa 2`
 
+### Entrada implementada
+
+La primera parte del flujo ya tiene implementacion funcional:
+
+- pantalla inicial dentro de la Etapa 1
+- presencia visible de Laia
+- CTA principal para iniciar
+- animacion amplia del modelo en modo protagonista
+- desbloqueo del boton global `Ir a etapas` al terminar la animacion
+
+El CTA de entrada desplaza al usuario hacia la presentacion amplia sin romper el sistema de continuidad global existente.
+
 ### Rol actual del viewer 3D
 
-- el mini viewer se conserva
-- ya no aparece antes de completar la presentacion amplia
+- en este bloque el viewer solo aparece en modo protagonista dentro de la animacion amplia
+- al terminar la animacion deja de ser el foco principal del stage
+- el viewer persistente en la esquina superior derecha queda pendiente para el siguiente bloque
 - se mantiene desacoplado del sistema de continuidad
-- ya tiene su lugar estructural dentro del bloque de progresion del modelo
-- sigue funcionando como orientacion visual persistente de la etapa
 
 ### Diferencia entre "Ir a etapas" y "Continuar"
 
@@ -269,8 +280,9 @@ Estado actual:
 
 - `Continuar` usa `src/lib/progress.ts` y recuerda `lastRoute`
 - no reconstruye aun el bloque exacto dentro de la etapa
-- el desbloqueo del boton global para ir a cualquier etapa ya tiene seccion propia dentro del esqueleto
-- el comportamiento fino de esos botones sigue pendiente de la implementacion definitiva
+- el desbloqueo del boton global para ir a cualquier etapa ocurre cuando se activa `stage1AnimationViewed`
+- el boton ya existe y abre la navegacion global de etapas
+- el comportamiento fino de etapas futuras sigue pendiente de la implementacion definitiva
 
 ### Papel de Laia
 
@@ -385,11 +397,12 @@ El esqueleto sigue este orden logico:
 
 ### Que sigue pendiente
 
-- desbloqueo real de `Ir a etapas`
+- navegacion final hacia etapas futuras cuando su contenido este publicado
 - continuidad exacta por bloque o hito
 - comportamiento fino del chatbot
 - cierre narrativo y visual detallado
 - CTA real de transicion a Etapa 2
+- viewer 3D persistente en la esquina superior derecha despues de la animacion inicial
 
 ## Como agregar una nueva etapa
 

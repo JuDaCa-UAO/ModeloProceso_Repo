@@ -22,6 +22,7 @@ type AnimationCardProps = {
   blockAdvanceUntilComplete?: boolean;
   blockedAdvanceMessage?: string;
   onPlayStart?: () => void;
+  variant?: "default" | "hero";
 };
 
 function usePrefersReducedMotion() {
@@ -51,6 +52,7 @@ export default function AnimationCard({
   blockAdvanceUntilComplete = false,
   blockedAdvanceMessage = "Debes reproducir y completar este video para continuar con la siguiente parte de la etapa.",
   onPlayStart,
+  variant = "default",
 }: AnimationCardProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const rootRef = useRef<HTMLDivElement | null>(null);
@@ -181,19 +183,31 @@ export default function AnimationCard({
   return (
     <div
       ref={rootRef}
-      className={`${styles.animationCard} ${completed ? styles.animationCardDone : ""}`}
+      className={`${styles.animationCard} ${
+        variant === "hero" ? styles.animationCardHero : ""
+      } ${completed ? styles.animationCardDone : ""}`.trim()}
     >
       <div className={styles.animationHead}>
-        <div>
-          <h3 className={styles.animationTitle}>{title}</h3>
-          <p className={styles.animationDescription}>{description}</p>
-        </div>
+        {title || description ? (
+          <div>
+            {title ? <h3 className={styles.animationTitle}>{title}</h3> : null}
+            {description ? (
+              <p className={styles.animationDescription}>{description}</p>
+            ) : null}
+          </div>
+        ) : (
+          <div />
+        )}
         <span className={`${styles.statusChip} ${completed ? styles.statusChipDone : ""}`}>
           {statusLabel}
         </span>
       </div>
 
-      <div className={styles.animationViewport}>
+      <div
+        className={`${styles.animationViewport} ${
+          variant === "hero" ? styles.animationViewportHero : ""
+        }`.trim()}
+      >
         {prefersReducedMotion ? (
           <div className={styles.reducedMotionFallback}>
             <div className={styles.reducedMotionFrame} />
@@ -204,7 +218,9 @@ export default function AnimationCard({
         ) : (
           <video
             ref={videoRef}
-            className={styles.animationVideo}
+            className={`${styles.animationVideo} ${
+              variant === "hero" ? styles.animationVideoHero : ""
+            }`.trim()}
             src={videoSrc}
             playsInline
             controls={false}

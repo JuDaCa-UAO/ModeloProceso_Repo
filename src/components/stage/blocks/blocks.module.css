@@ -261,6 +261,76 @@
   flex-wrap: wrap;
 }
 
+.entryHero {
+  display: grid;
+  grid-template-columns: minmax(0, 1.2fr) minmax(260px, 360px);
+  gap: clamp(18px, 3vw, 36px);
+  align-items: center;
+  min-height: min(74dvh, 820px);
+  border-radius: 24px;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background:
+    radial-gradient(circle at 14% 18%, rgba(254, 106, 111, 0.12), transparent 42%),
+    linear-gradient(180deg, rgba(10, 6, 7, 0.82), rgba(5, 3, 4, 0.92));
+  padding: clamp(18px, 3vw, 34px);
+}
+
+.entryCopy {
+  display: grid;
+  gap: 18px;
+}
+
+.entryEyebrow {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: rgba(80, 6, 8, 0.18);
+  color: #fe6a6f;
+  padding: 5px 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.entryActions {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.entryCharacter {
+  display: grid;
+  gap: 12px;
+  justify-items: center;
+}
+
+.entryCharacterFrame {
+  position: relative;
+  width: min(100%, 320px);
+  aspect-ratio: 4 / 5;
+  border-radius: 24px;
+  overflow: hidden;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background:
+    radial-gradient(circle at 50% 28%, rgba(254, 106, 111, 0.14), transparent 42%),
+    rgba(3, 2, 3, 0.76);
+  box-shadow: 0 20px 42px rgba(0, 0, 0, 0.28);
+}
+
+.entryCharacterImg {
+  object-fit: contain;
+  object-position: center bottom;
+}
+
+.entryCharacterNote {
+  margin: 0;
+  color: #d1d1d1;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
+  max-width: 30ch;
+}
+
 .scaffoldPanel {
   border-radius: 16px;
   border: 1px dashed rgba(248, 46, 53, 0.26);
@@ -444,6 +514,10 @@
 }
 
 @media (max-width: 900px) {
+  .entryHero {
+    grid-template-columns: 1fr;
+  }
+
   .stateGrid,
   .resultGrid,
   .metricGrid {

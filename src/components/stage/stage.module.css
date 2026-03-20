@@ -48,6 +48,123 @@
   padding-right: 0;
 }
 
+.stageHubButton {
+  position: fixed;
+  top: 14px;
+  right: 14px;
+  z-index: 6;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.34);
+  background: rgba(8, 5, 6, 0.9);
+  color: #fff;
+  padding: 11px 16px;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  box-shadow: 0 14px 32px rgba(0, 0, 0, 0.35);
+}
+
+.stageHubOverlay {
+  position: fixed;
+  inset: 0;
+  z-index: 7;
+  background: rgba(2, 1, 2, 0.68);
+  backdrop-filter: blur(8px);
+  display: grid;
+  justify-items: end;
+  padding: 66px 14px 14px;
+}
+
+.stageHubPanel {
+  width: min(440px, 100%);
+  border-radius: 22px;
+  border: 1px solid rgba(248, 46, 53, 0.24);
+  background: linear-gradient(180deg, rgba(10, 6, 7, 0.95), rgba(5, 3, 4, 0.96));
+  box-shadow: 0 22px 64px rgba(0, 0, 0, 0.46);
+  display: grid;
+  gap: 16px;
+  padding: 18px;
+}
+
+.stageHubHeader {
+  display: flex;
+  justify-content: space-between;
+  gap: 12px;
+  align-items: start;
+}
+
+.stageHubEyebrow {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 11px;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+}
+
+.stageHubTitle {
+  margin: 4px 0 0;
+  font-size: clamp(22px, 2vw, 28px);
+}
+
+.stageHubClose {
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.04);
+  color: #fff;
+  padding: 8px 12px;
+  cursor: pointer;
+}
+
+.stageHubGrid {
+  display: grid;
+  gap: 10px;
+}
+
+.stageHubCard {
+  border-radius: 16px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(4, 2, 3, 0.78);
+  color: #fff;
+  padding: 14px;
+  display: grid;
+  gap: 8px;
+  text-align: left;
+  cursor: pointer;
+}
+
+.stageHubCard:disabled {
+  opacity: 0.7;
+  cursor: not-allowed;
+}
+
+.stageHubCardCurrent {
+  border-color: rgba(248, 46, 53, 0.28);
+}
+
+.stageHubCardTag {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background: rgba(80, 6, 8, 0.18);
+  color: var(--uao-red-7);
+  padding: 4px 8px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stageHubCardTitle {
+  font-size: 16px;
+  line-height: 1.25;
+}
+
+.stageHubCardCopy {
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .viewerDock {
   position: fixed;
   right: 14px;
@@ -572,6 +689,13 @@
   padding: 14px;
 }
 
+.animationCardHero {
+  min-height: min(82dvh, 860px);
+  align-content: start;
+  gap: 18px;
+  padding: clamp(18px, 2.4vw, 28px);
+}
+
 .animationCardDone {
   border-color: rgba(248, 46, 53, 0.34);
   box-shadow: inset 0 0 0 1px rgba(248, 46, 53, 0.08);
@@ -622,6 +746,10 @@
   overflow: hidden;
 }
 
+.animationViewportHero {
+  min-height: min(66dvh, 720px);
+}
+
 .animationVideo {
   width: 100%;
   aspect-ratio: 16 / 9;
@@ -629,6 +757,10 @@
   object-fit: contain;
   background: rgba(0, 0, 0, 0.5);
   display: block;
+}
+
+.animationVideoHero {
+  max-height: min(66dvh, 720px);
 }
 
 .reducedMotionFallback {
@@ -711,6 +843,14 @@
     top: 10px;
   }
 
+  .stageHubOverlay {
+    justify-items: stretch;
+  }
+
+  .stageHubPanel {
+    width: 100%;
+  }
+
   .viewerCanvasWrap {
     height: 150px;
   }
@@ -727,6 +867,16 @@
 
   .mainNoViewer {
     padding: 20px 10px 34px;
+  }
+
+  .stageHubButton {
+    top: 10px;
+    left: 10px;
+    right: 10px;
+  }
+
+  .stageHubOverlay {
+    padding: 60px 10px 10px;
   }
 
   .surfaceCard .header {

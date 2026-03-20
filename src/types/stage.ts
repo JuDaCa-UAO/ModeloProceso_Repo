@@ -62,6 +62,15 @@ export type SectionGate = {
 };
 
 export type SectionContentBlock =
+  | {
+      type: "stage-entry";
+      eyebrow?: string;
+      copy: string[];
+      ctaLabel: string;
+      targetId: string;
+      characterSrc: string;
+      characterAlt?: string;
+    }
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "callout"; title?: string; body: string }
   | { type: "bullets"; title?: string; items: string[] }

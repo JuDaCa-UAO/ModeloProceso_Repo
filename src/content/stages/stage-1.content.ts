@@ -110,54 +110,20 @@ export const STAGE1_TREE: SectionNode[] = [
     id: "entrada-etapa-1",
     title: STAGE1_NAME,
     subtitle:
-      "Entrada oficial de la Etapa 1. Este bloque expone el titulo del stage y abre el recorrido.",
+      "Pantalla inicial de la Etapa 1 con Laia y CTA principal de inicio.",
     surface: "plain",
-    dialogue: [
-      {
-        text: "Bienvenida a la Etapa 1. Aqui comienza la lectura de tu punto de partida dentro del modelo espiral GenAI.",
-        imgSrc: LAIA_ASSETS.neutral,
-        imgAlt: "Laia da la bienvenida a la etapa 1",
-      },
-      {
-        text: "Primero veras una presentacion amplia del modelo. Despues quedara disponible el marco general del recorrido para seguir avanzando con scroll vertical.",
-        imgSrc: LAIA_ASSETS.explain,
-        imgAlt: "Laia anticipa la estructura del recorrido",
-      },
-    ],
     content: [
       {
-        type: "paragraphs",
-        paragraphs: [
-          "Esta pantalla funciona como entrada estructural de la etapa: titulo visible, contexto inicial y primer punto de orientacion.",
-          "El objetivo de este esqueleto es dejar listo el lugar de cada bloque antes de completar el comportamiento fino del flujo definitivo.",
+        type: "stage-entry",
+        eyebrow: "Etapa 1",
+        copy: [
+          "Bienvenida al punto de entrada del recorrido. Aqui empezamos por reconocer en que lugar de la espiral te encuentras antes de abrir el resto del modelo.",
+          "Laia presenta esta etapa y el CTA principal te lleva a la animacion amplia que activa el acceso global a etapas.",
         ],
-      },
-      {
-        type: "scaffold-panel",
-        label: "Entrada",
-        body:
-          "Aqui se concentraran la bienvenida, la introduccion breve de Laia y la decision de iniciar o retomar la etapa sin alterar el resto de la arquitectura.",
-        actions: [
-          {
-            label: "Iniciar recorrido",
-            detail: "Dispara el paso hacia la presentacion amplia del modelo.",
-            state: "ready",
-          },
-          {
-            label: "Continuar donde iba",
-            detail: "Queda reservado para la continuidad exacta por bloque o hito.",
-            state: "future",
-          },
-        ],
-        tone: "accent",
-      },
-    ],
-    actions: [
-      {
-        type: "scroll-to",
-        label: "Ir a la presentacion del modelo",
+        ctaLabel: "Iniciar recorrido",
         targetId: "presentacion-inicial-modelo",
-        variant: "primary",
+        characterSrc: LAIA_ASSETS.neutral,
+        characterAlt: "Laia da la bienvenida a la etapa 1",
       },
     ],
     children: [

@@ -1,9 +1,16 @@
 "use client";
 
-import type { ReactNode } from "react";
+import { useState, type ReactNode } from "react";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
 import styles from "./stage.module.css";
+
+type StageNavItem = {
+  id: string;
+  name: string;
+  href: string;
+  available: boolean;
+};
 
 type StageShellProps = {
   children: ReactNode;
@@ -12,6 +19,10 @@ type StageShellProps = {
   viewerStatusTone?: "active" | "done";
   viewerMeta?: Array<{ label: string; value: string }>;
   viewerEnabled?: boolean;
+  globalStageButtonVisible?: boolean;
+  globalStageItems?: StageNavItem[];
+  currentStageId?: string;
+  onGlobalStageNavigate?: (href: string) => void;
 };
 
 export default function StageShell({
@@ -21,10 +32,91 @@ export default function StageShell({
   viewerStatusTone = "active",
   viewerMeta = [],
   viewerEnabled = true,
+  globalStageButtonVisible = false,
+  globalStageItems = [],
+  currentStageId,
+  onGlobalStageNavigate,
 }: StageShellProps) {
+  const [stagePanelOpen, setStagePanelOpen] = useState(false);
+
+  const handleNavigate = (href: string) => {
+    onGlobalStageNavigate?.(href);
+    setStagePanelOpen(false);
+  };
+
   return (
     <div className={styles.stageRoot}>
       <TechTrailBackground className={styles.techBackground} />
+
+      {globalStageButtonVisible ? (
+        <>
+          <button
+            type="button"
+            className={styles.stageHubButton}
+            onClick={() => setStagePanelOpen((current) => !current)}
+            aria-expanded={stagePanelOpen}
+            aria-controls="stage-hub-panel"
+          >
+            Ir a etapas
+          </button>
+
+          {stagePanelOpen ? (
+            <div className={styles.stageHubOverlay} onClick={() => setStagePanelOpen(false)}>
+              <aside
+                id="stage-hub-panel"
+                className={styles.stageHubPanel}
+                aria-label="Navegacion global de etapas"
+                onClick={(event) => event.stopPropagation()}
+              >
+                <div className={styles.stageHubHeader}>
+                  <div>
+                    <p className={styles.stageHubEyebrow}>Navegacion global</p>
+                    <h2 className={styles.stageHubTitle}>Etapas del recorrido</h2>
+                  </div>
+                  <button
+                    type="button"
+                    className={styles.stageHubClose}
+                    onClick={() => setStagePanelOpen(false)}
+                  >
+                    Cerrar
+                  </button>
+                </div>
+
+                <div className={styles.stageHubGrid}>
+                  {globalStageItems.map((item) => {
+                    const isCurrent = item.id === currentStageId;
+                    return (
+                      <button
+                        key={item.id}
+                        type="button"
+                        className={`${styles.stageHubCard} ${
+                          isCurrent ? styles.stageHubCardCurrent : ""
+                        }`.trim()}
+                        disabled={!item.available || isCurrent}
+                        onClick={() => handleNavigate(item.href)}
+                      >
+                        <span className={styles.stageHubCardTag}>
+                          {isCurrent
+                            ? "Actual"
+                            : item.available
+                            ? "Disponible"
+                            : "Pendiente"}
+                        </span>
+                        <strong className={styles.stageHubCardTitle}>{item.name}</strong>
+                        <span className={styles.stageHubCardCopy}>
+                          {item.available
+                            ? "Abrir etapa"
+                            : "La navegacion global ya esta desbloqueada, pero esta etapa aun no esta publicada."}
+                        </span>
+                      </button>
+                    );
+                  })}
+                </div>
+              </aside>
+            </div>
+          ) : null}
+        </>
+      ) : null}
 
       {viewerEnabled ? (
         <aside className={styles.viewerDock} aria-label="Visor del modelo 3D">

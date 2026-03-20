@@ -15,6 +15,7 @@
 import type { ReactNode } from "react";
 import type { SectionContentBlock, SectionNode } from "@/types/stage";
 import type { BlockContext } from "./blocks/BlockContext";
+import StageEntryBlock from "./blocks/StageEntryBlock";
 import ParagraphsBlock from "./blocks/ParagraphsBlock";
 import BulletsBlock from "./blocks/BulletsBlock";
 import StateCardsBlock from "./blocks/StateCardsBlock";
@@ -46,6 +47,20 @@ export default function BlockRenderer({
         const key = `${section.id}-${block.type}-${i}`;
 
         switch (block.type) {
+          case "stage-entry":
+            return (
+              <StageEntryBlock
+                key={key}
+                eyebrow={block.eyebrow}
+                copy={block.copy}
+                ctaLabel={block.ctaLabel}
+                targetId={block.targetId}
+                characterSrc={block.characterSrc}
+                characterAlt={block.characterAlt}
+                ctx={ctx}
+              />
+            );
+
           case "paragraphs":
             return <ParagraphsBlock key={key} paragraphs={block.paragraphs} />;
 
@@ -104,6 +119,9 @@ export default function BlockRenderer({
                 videoSrc={MODEL_INTRO_VIDEO_URL}
                 flagToSet="stage1AnimationViewed"
                 blockAdvance
+                title="Ubicacion en la espiral"
+                description="La presentacion amplia muestra el punto actual del recorrido y desbloquea el acceso global a etapas cuando termina."
+                variant="hero"
               />
             );
 
