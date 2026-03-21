@@ -332,6 +332,14 @@ En el flujo definitivo, el usuario primero entiende su lugar en el modelo y lueg
 - el boton del consentimiento marca `autodiagnosticStarted` para dejar listo el tramo operativo posterior
 - el chatbot contextual aparece despues de este acuerdo y el embebido sigue dependiendo de `consentValidated` junto con `autodiagnosticStarted`
 
+### Chatbot contextual
+
+- aparece despues del consentimiento y antes del embebido, como una ayuda opcional integrada al scroll principal
+- Laia explica para que sirve, cuando puede ayudar y recuerda que el usuario puede continuar aunque no lo use
+- en esta version el bloque ofrece preguntas sugeridas con respuestas hardcodeadas dentro de la misma pagina
+- el bloque no funciona como overlay ni bloquea el flujo: incluye un CTA directo para continuar al autodiagnostico
+- el contexto visual de Laia ya usa la base de `BuildLaiaContextUseCase`, pero las respuestas del chatbot siguen siendo provisionales
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
@@ -423,6 +431,7 @@ Nuevas piezas estructurales:
 - implementacion real del rail de etapas con 6 paneles resumidos y Etapa 1 marcada como actual
 - implementacion real del bloque de estados del docente antes del consentimiento
 - refactor del bloque de consentimiento para reforzar confidencialidad, proposito formativo y gating del flujo
+- implementacion del chatbot contextual como ayuda opcional previa al embebido
 
 ### Como quedo organizado
 
@@ -454,7 +463,7 @@ El esqueleto sigue este orden logico:
 ### Que sigue pendiente
 
 - navegacion final hacia etapas futuras cuando su contenido este publicado
-- comportamiento fino del chatbot
+- integracion del chatbot real con backend o motor conversacional
 - cierre narrativo y visual detallado
 - CTA real de transicion a Etapa 2
 

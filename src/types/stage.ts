@@ -41,6 +41,12 @@ export type ScaffoldActionItem = {
   state?: "ready" | "locked" | "future";
 };
 
+export type ChatbotPromptItem = {
+  id: string;
+  label: string;
+  response: string;
+};
+
 export type SectionAction =
   | {
       type: "scroll-to";
@@ -91,6 +97,13 @@ export type SectionContentBlock =
       intro?: string;
       note?: string;
       continueHint?: string;
+    }
+  | {
+      type: "contextual-chatbot";
+      title: string;
+      intro: string;
+      prompts: ChatbotPromptItem[];
+      continueLabel?: string;
     }
   | { type: "stage1-animation" }
   | { type: "consent-form" }

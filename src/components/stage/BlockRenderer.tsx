@@ -20,6 +20,7 @@ import StageHeaderBlock from "./blocks/StageHeaderBlock";
 import ParagraphsBlock from "./blocks/ParagraphsBlock";
 import BulletsBlock from "./blocks/BulletsBlock";
 import StateCardsBlock from "./blocks/StateCardsBlock";
+import ContextualChatbotBlock from "./blocks/ContextualChatbotBlock";
 import HorizontalRailBlock from "./blocks/HorizontalRailBlock";
 import AnimationBlock from "./blocks/AnimationBlock";
 import ConsentFormBlock from "./blocks/ConsentFormBlock";
@@ -130,6 +131,18 @@ export default function BlockRenderer({
                 intro={block.intro}
                 note={block.note}
                 continueHint={block.continueHint}
+              />
+            );
+
+          case "contextual-chatbot":
+            return (
+              <ContextualChatbotBlock
+                key={key}
+                title={block.title}
+                intro={block.intro}
+                prompts={block.prompts}
+                continueLabel={block.continueLabel}
+                ctx={ctx}
               />
             );
 

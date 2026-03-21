@@ -100,6 +100,27 @@ const STATE_CARDS = [
   },
 ];
 
+const CHATBOT_PROMPTS = [
+  {
+    id: "expectativas",
+    label: "No se que esperar del autodiagnostico",
+    response:
+      "El autodiagnostico no busca evaluarte. Sirve para reconocer tu punto de partida y ajustar mejor las orientaciones del recorrido.",
+  },
+  {
+    id: "confidencialidad",
+    label: "Quiero confirmar que esto sigue siendo confidencial",
+    response:
+      "Si. Este apoyo y el ejercicio posterior se mantienen dentro de un marco confidencial y con proposito formativo, no administrativo.",
+  },
+  {
+    id: "continuar",
+    label: "Prefiero seguir sin usar esta ayuda",
+    response:
+      "Tambien esta bien. Este bloque es opcional: puedes continuar directamente al embebido cuando te sientas listo o lista.",
+  },
+];
+
 export const STAGE1_TREE: SectionNode[] = [
   {
     id: "entrada-etapa-1",
@@ -363,24 +384,22 @@ export const STAGE1_TREE: SectionNode[] = [
                                                   "Apoyo no bloqueante para consultas o acompanamiento puntual.",
                                                 surface: "plain",
                                                 gate: { requires: ["consentValidated"] },
+                                                dialogue: [
+                                                  {
+                                                    text: "Si quieres, aqui puedo ayudarte a despejar dudas antes del embebido. Es una ayuda opcional: sirve cuando necesitas claridad extra, pero puedes continuar aunque no la uses.",
+                                                    imgSrc: LAIA_ASSETS.explain,
+                                                    imgAlt: "Laia presenta el chatbot contextual",
+                                                  },
+                                                ],
                                                 content: [
                                                   {
-                                                    type: "scaffold-panel",
-                                                    label: "Chatbot",
-                                                    body:
-                                                      "Este bloque deja reservado el espacio del chatbot como apoyo contextual. Su presencia no bloquea el flujo principal ni sustituye la narracion de Laia.",
-                                                    actions: [
-                                                      {
-                                                        label: "Ayuda contextual",
-                                                        detail: "Aparecera como apoyo lateral o puntual.",
-                                                        state: "future",
-                                                      },
-                                                      {
-                                                        label: "Flujo principal",
-                                                        detail: "Se mantiene independiente del chatbot.",
-                                                        state: "ready",
-                                                      },
-                                                    ],
+                                                    type: "contextual-chatbot",
+                                                    title: "Ayuda contextual antes del autodiagnostico",
+                                                    intro:
+                                                      "Este bloque te ofrece aclaraciones breves en el mismo recorrido. Puede ayudarte si quieres confirmar para que sirve el paso siguiente, revisar dudas puntuales o seguir con mas seguridad.",
+                                                    prompts: CHATBOT_PROMPTS,
+                                                    continueLabel:
+                                                      "Continuar al autodiagnostico",
                                                   },
                                                 ],
                                                 children: [
