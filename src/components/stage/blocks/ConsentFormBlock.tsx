@@ -10,25 +10,23 @@ type ConsentFormBlockProps = {
 };
 
 /**
- * Bloque de formulario de consentimiento.
- * Extraído de Etapa1Client.tsx (God Component) como componente independiente.
+ * Bloque de consentimiento previo al autodiagnostico.
  *
- * Responsabilidades: UI del formulario + validación de interacción.
- * La validación de negocio (consentValid) viene de ctx.flags.consentValidated
- * calculado por EvaluateFlagsUseCase en la capa Application.
+ * Mantiene la validacion real derivada desde Application/Domain
+ * y se limita a presentar la UI, reforzar el contexto y destrabar
+ * el siguiente tramo del flujo cuando el acuerdo es valido.
  */
 export default function ConsentFormBlock({ ctx }: ConsentFormBlockProps) {
   const [touched, setTouched] = useState(false);
   const { state, flags, onUpdate, onScrollTo } = ctx;
+  const isReady = flags.consentValidated;
 
   return (
-    <form
-      className={styles.formCard}
-      onSubmit={(event) => event.preventDefault()}
-    >
+    <form className={styles.formCard} onSubmit={(event) => event.preventDefault()}>
       <div className={styles.stageCopy}>
-        <p>Este ejercicio es individual, objetivo y confidencial.</p>
-        <p>No tiene efectos administrativos. Su único propósito es orientar el camino formativo.</p>
+        <p>Este ejercicio es individual y confidencial.</p>
+        <p>No tiene un fin punitivo ni efectos administrativos sobre tu labor docente.</p>
+        <p>Su proposito es formativo: orientar el acompanamiento dentro de la cartilla.</p>
       </div>
 
       <label className={styles.checkboxRow}>
@@ -37,7 +35,7 @@ export default function ConsentFormBlock({ ctx }: ConsentFormBlockProps) {
           checked={state.consentAdmin}
           onChange={(event) => onUpdate({ consentAdmin: event.target.checked })}
         />
-        <span>Entiendo que no es una evaluación administrativa.</span>
+        <span>Entiendo que este ejercicio no se usa para evaluacion administrativa ni sancionatoria.</span>
       </label>
 
       <label className={styles.checkboxRow}>
@@ -46,11 +44,14 @@ export default function ConsentFormBlock({ ctx }: ConsentFormBlockProps) {
           checked={state.consentUsage}
           onChange={(event) => onUpdate({ consentUsage: event.target.checked })}
         />
-        <span>Acepto que mis respuestas se usen para generar mi resultado y recomendaciones.</span>
+        <span>
+          Acepto que mis respuestas se usen para construir una lectura formativa y
+          recomendaciones de acompanamiento.
+        </span>
       </label>
 
       <label className={styles.fieldLabel} htmlFor="consent-email">
-        Correo para enviarte el resultado
+        Correo para compartirte tu resultado
       </label>
       <input
         id="consent-email"
@@ -62,9 +63,21 @@ export default function ConsentFormBlock({ ctx }: ConsentFormBlockProps) {
         autoComplete="email"
       />
 
-      {touched && !flags.consentValidated ? (
+      <div className={styles.consentSummary}>
+        <span className={styles.consentSummaryLabel}>
+          {isReady ? "Consentimiento listo" : "Consentimiento pendiente"}
+        </span>
+        <p className={styles.consentSummaryText}>
+          {isReady
+            ? "Ya puedes continuar al siguiente tramo del flujo. Este acuerdo habilita el paso posterior y prepara la apertura del autodiagnostico."
+            : "Para continuar, debes confirmar ambos acuerdos y registrar un correo valido. El resto del flujo depende de este paso previo."}
+        </p>
+      </div>
+
+      {touched && !isReady ? (
         <p className={styles.errorText}>
-          Completa los dos consentimientos, una dirección de correo válida y la animación inicial para continuar.
+          Completa los dos acuerdos y escribe un correo valido para habilitar el siguiente
+          bloque del recorrido.
         </p>
       ) : null}
 
@@ -74,17 +87,18 @@ export default function ConsentFormBlock({ ctx }: ConsentFormBlockProps) {
           className={stageStyles.buttonPrimary}
           onClick={() => {
             setTouched(true);
-            if (!flags.consentValidated) return;
+            if (!isReady) return;
             onUpdate({ autodiagnosticStarted: true });
-            window.setTimeout(() => onScrollTo("autodiagnostico"), 120);
+            window.setTimeout(() => onScrollTo("chatbot-contextual"), 120);
           }}
         >
-          Iniciar autodiagnóstico
+          Aceptar y continuar
         </button>
       </div>
 
       <p className={styles.helperText}>
-        Este paso habilita el módulo de autodiagnóstico y mantiene la experiencia confidencial.
+        Este paso habilita el siguiente tramo del flujo y conserva el caracter
+        confidencial, no punitivo y formativo de la experiencia.
       </p>
     </form>
   );

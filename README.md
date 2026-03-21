@@ -318,6 +318,20 @@ El flujo definitivo pide que el usuario primero entienda en que punto de la espi
 
 En el flujo definitivo, el usuario primero entiende su lugar en el modelo y luego comprende como la cartilla adapta el acompanamiento segun estos estados. Despues de ese contexto aparece el consentimiento, porque el embebido y el autodiagnostico deben llegar cuando ya esta claro para que sirve el recorrido y como se va a modular el apoyo.
 
+### Consentimiento
+
+- Laia contextualiza este momento antes del formulario y refuerza que el ejercicio es confidencial, no punitivo y de proposito formativo
+- el bloque pide dos acuerdos explicitos y un correo valido para compartir el resultado
+- la validacion real sigue dependiendo de `consentValidated`, calculado desde dominio y aplicacion
+- cuando el consentimiento queda valido, el CTA `Aceptar y continuar` habilita el siguiente tramo del flujo
+- ese paso activa la continuidad hacia el bloque posterior y prepara la apertura del autodiagnostico sin mezclar la logica del embebido dentro del formulario
+
+### Dependencias activadas por el consentimiento
+
+- `consentValidated` habilita el acceso al bloque siguiente dentro de la secuencia
+- el boton del consentimiento marca `autodiagnosticStarted` para dejar listo el tramo operativo posterior
+- el chatbot contextual aparece despues de este acuerdo y el embebido sigue dependiendo de `consentValidated` junto con `autodiagnosticStarted`
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
@@ -408,6 +422,7 @@ Nuevas piezas estructurales:
 - implementacion real del bloque explicativo del modelo antes del rail
 - implementacion real del rail de etapas con 6 paneles resumidos y Etapa 1 marcada como actual
 - implementacion real del bloque de estados del docente antes del consentimiento
+- refactor del bloque de consentimiento para reforzar confidencialidad, proposito formativo y gating del flujo
 
 ### Como quedo organizado
 

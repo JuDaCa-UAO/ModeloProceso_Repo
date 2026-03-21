@@ -237,6 +237,34 @@
   line-height: 1.4;
 }
 
+.consentSummary {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(7, 4, 5, 0.68);
+  padding: 14px 16px;
+  display: grid;
+  gap: 8px;
+}
+
+.consentSummaryLabel {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: rgba(80, 6, 8, 0.18);
+  color: #fe6a6f;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.consentSummaryText {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .actionRow {
   display: flex;
   gap: 10px;

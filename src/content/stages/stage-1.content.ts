@@ -349,7 +349,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                             gate: { requires: ["stage1AnimationViewed"] },
                                             dialogue: [
                                               {
-                                                text: "Este ejercicio es individual, objetivo y confidencial. No tiene efectos administrativos y solo orienta tu recorrido formativo.",
+                                                text: "Antes de seguir, quiero dejarte algo claro: este ejercicio es confidencial, no busca sancionarte y solo existe para orientar mejor tu recorrido formativo.",
                                                 imgSrc: LAIA_ASSETS.explain,
                                                 imgAlt: "Laia explica el consentimiento",
                                               },
@@ -362,7 +362,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                                 subtitle:
                                                   "Apoyo no bloqueante para consultas o acompanamiento puntual.",
                                                 surface: "plain",
-                                                gate: { requires: ["stage1AnimationViewed"] },
+                                                gate: { requires: ["consentValidated"] },
                                                 content: [
                                                   {
                                                     type: "scaffold-panel",
