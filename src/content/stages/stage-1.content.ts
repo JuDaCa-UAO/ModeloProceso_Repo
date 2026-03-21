@@ -428,16 +428,34 @@ export const STAGE1_TREE: SectionNode[] = [
                                                         },
                                                         content: [
                                                           {
-                                                            type: "scaffold-panel",
-                                                            label: "Salida",
-                                                            body:
-                                                              "Este bloque prepara el cierre narrativo y funcional de la Etapa 1 antes del video final.",
-                                                            items: [
-                                                              "La etapa queda marcada como completada.",
-                                                              "Se recupera el marco general del recorrido.",
-                                                              "La salida prepara el cambio de ambiente hacia la Etapa 2.",
+                                                            type: "paragraphs",
+                                                            paragraphs: [
+                                                              "Al terminar el autodiagnostico, el recorrido vuelve al marco principal de la cartilla para cerrar Etapa 1 como una estacion completada del modelo.",
+                                                              "Desde aqui el viewer ya puede leerse como cierre de etapa y el siguiente paso empieza a insinuarse sin romper la continuidad del recorrido.",
                                                             ],
-                                                            tone: "accent",
+                                                          },
+                                                          {
+                                                            type: "callout",
+                                                            title: "Etapa 1 queda completada",
+                                                            body:
+                                                              "Este cierre no te saca del stage ni te manda de inmediato a otra ruta. Primero recupera el marco general, confirma el avance y prepara la transicion visual a la etapa siguiente.",
+                                                          },
+                                                          {
+                                                            type: "bullets",
+                                                            title: "Lo que ocurre en esta salida",
+                                                            items: [
+                                                              "El viewer pasa a leerse como etapa completada.",
+                                                              "Etapa 2 empieza a aparecer como siguiente estacion del recorrido.",
+                                                              "El video final se vuelve obligatorio antes de habilitar la continuacion.",
+                                                            ],
+                                                          },
+                                                        ],
+                                                        actions: [
+                                                          {
+                                                            type: "scroll-to",
+                                                            label: "Ir al video final",
+                                                            targetId: "video-final",
+                                                            variant: "primary",
                                                           },
                                                         ],
                                                         children: [
@@ -456,32 +474,33 @@ export const STAGE1_TREE: SectionNode[] = [
                                                                 id: "transicion-etapa-2",
                                                                 title: "Transicion a la Etapa 2",
                                                                 subtitle:
-                                                                  "Bloque final del esqueleto, reservado para el cambio de fondo y el CTA definitivo.",
+                                                                  "La estacion cambia de ambiente y habilita la continuidad hacia la siguiente etapa.",
                                                                 surface: "plain",
                                                                 gate: {
                                                                   requires: ["transitionAnimationViewed"],
                                                                 },
                                                                 content: [
                                                                   {
-                                                                    type: "scaffold-panel",
-                                                                    label: "Transicion",
-                                                                    body:
-                                                                      "La estructura ya deja el lugar del CTA final, el cambio de ambiente y la salida hacia la Etapa 2 sin acoplar esta fase a una pagina concreta todavia.",
-                                                                    actions: [
-                                                                      {
-                                                                        label: "Cambio de fondo",
-                                                                        detail:
-                                                                          "Reservado para reflejar el paso a la siguiente etapa.",
-                                                                        state: "future",
-                                                                      },
-                                                                      {
-                                                                        label: "CTA a Etapa 2",
-                                                                        detail:
-                                                                          "Se habilitara solo despues del video final.",
-                                                                        state: "locked",
-                                                                      },
+                                                                    type: "paragraphs",
+                                                                    paragraphs: [
+                                                                      "La salida de Etapa 1 termina aqui con un cambio de ambiente que marca el paso a la siguiente estacion del modelo.",
+                                                                      "Solo despues del video final aparece la continuidad hacia Etapa 2, para que la transicion se sienta como un cambio de estado del recorrido y no como un salto brusco de pagina.",
                                                                     ],
-                                                                    tone: "accent",
+                                                                  },
+                                                                  {
+                                                                    type: "callout",
+                                                                    title: "Siguiente estacion",
+                                                                    body:
+                                                                      "Etapa 2 continua en una landing provisional mientras se implementa su flujo completo. La transicion ya queda habilitada de forma segura, sin enviar al usuario a una ruta rota.",
+                                                                  },
+                                                                ],
+                                                                actions: [
+                                                                  {
+                                                                    type: "navigate",
+                                                                    label: "Continuar a Etapa 2",
+                                                                    href: "/etapa/etapa-2",
+                                                                    variant: "primary",
+                                                                    requires: ["transitionAnimationViewed"],
                                                                   },
                                                                 ],
                                                               },

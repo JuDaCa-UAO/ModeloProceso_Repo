@@ -52,14 +52,14 @@ export default function StageClient({
   });
 
   useEffect(() => {
-    const targetSectionId = activeId || "entrada-etapa-1";
+    const targetSectionId = activeId || allIds[0] || "entrada-etapa-1";
     writeProgress({
       hasStarted: true,
       lastRoute: `/etapa/${stageId}#${targetSectionId}`,
       lastStageId: stageId,
       lastSectionId: targetSectionId,
     });
-  }, [activeId, stageId]);
+  }, [activeId, allIds, stageId]);
 
   useEffect(() => {
     if (typeof window === "undefined") return;
@@ -97,15 +97,60 @@ export default function StageClient({
   );
 
   const currentStageMeta = STAGE_META.find((item) => item.id === stageId);
+  const nextStageMeta = currentStageMeta
+    ? STAGE_META.find((item) => item.order === currentStageMeta.order + 1)
+    : undefined;
   const stageLabel = currentStageMeta
     ? `Etapa ${currentStageMeta.order}: ${currentStageMeta.name}`
     : stageName;
+  const stageCompleted = flags.autodiagnosticCompleted;
+  const transitionReady = flags.transitionAnimationViewed;
+  const viewerStageMarkers =
+    stageId === "etapa-2"
+      ? [
+          { label: "Etapa 1", tone: "done" as const },
+          { label: "Etapa 2", tone: "current" as const },
+        ]
+      : currentStageMeta
+        ? [
+            {
+              label: `Etapa ${currentStageMeta.order}`,
+              tone: (stageCompleted ? "done" : "current") as
+                | "current"
+                | "done"
+                | "next"
+                | "upcoming",
+            },
+            ...(nextStageMeta
+              ? [
+                  {
+                    label: `Etapa ${nextStageMeta.order}`,
+                    tone: (stageCompleted ? "next" : "upcoming") as
+                      | "current"
+                      | "done"
+                      | "next"
+                      | "upcoming",
+                  },
+                ]
+              : []),
+          ]
+        : [];
+  const shellTone =
+    stageId === "etapa-2" || transitionReady ? "transition" : ("default" as const);
+  const shellBackgroundImage =
+    stageId === "etapa-2" || transitionReady ? "/ui/bg-home.png" : undefined;
+  const shellBackgroundOpacity = stageId === "etapa-2" || transitionReady ? 0.68 : undefined;
 
   const viewerStatus = {
-    label: flags.transitionAnimationViewed
-      ? "Lista para siguiente etapa"
-      : "Activa",
-    tone: flags.transitionAnimationViewed ? ("done" as const) : ("active" as const),
+    label: transitionReady
+      ? "Cambio de estacion listo"
+      : stageId === "etapa-2"
+        ? "Nueva estacion activa"
+      : stageCompleted
+        ? "Etapa 1 completada"
+        : "Activa",
+    tone:
+      transitionReady || stageCompleted ? ("done" as const) : ("active" as const),
   };
 
   const visibleIndexById = useMemo(() => {
@@ -200,15 +245,28 @@ export default function StageClient({
       viewerStatusTone={viewerStatus.tone}
       viewerMeta={[
         {
-          label: "Etapa actual",
-          value: currentStageMeta
-            ? `Etapa ${currentStageMeta.order} activa`
-            : `${stageName} activa`,
+          label: "Estado",
+          value: stageId === "etapa-2"
+            ? "Etapa 2 activa"
+            : stageCompleted
+            ? `${stageName} completada`
+            : currentStageMeta
+              ? `Etapa ${currentStageMeta.order} activa`
+              : `${stageName} activa`,
         },
-        { label: "Continuidad", value: "Se conserva por seccion" },
+        {
+          label: "Siguiente",
+          value: nextStageMeta
+            ? `Etapa ${nextStageMeta.order}: ${nextStageMeta.name}`
+            : "Sin etapa siguiente publicada",
+        },
       ]}
-      viewerEnabled={flags.stage1AnimationViewed}
-      globalStageButtonVisible={flags.stage1AnimationViewed}
+      viewerStageMarkers={viewerStageMarkers}
+      viewerEnabled={stageId === "etapa-1" ? flags.stage1AnimationViewed : true}
+      shellTone={shellTone}
+      backgroundImageSrc={shellBackgroundImage}
+      backgroundImageOpacity={shellBackgroundOpacity}
+      globalStageButtonVisible={stageId === "etapa-1" ? flags.stage1AnimationViewed : true}
       globalStageItems={STAGE_META.map((item) => ({
         id: item.id,
         name: item.name,

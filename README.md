@@ -39,7 +39,7 @@ La app ofrece un recorrido stage-driven por el modelo espiral GenAI.
 | Etapa | Nombre | Estado actual |
 |---|---|---|
 | 1 | Reconocete para avanzar | Base oficial en preparacion |
-| 2 | Descubre nuevas posibilidades | Pendiente |
+| 2 | Descubre nuevas posibilidades | Landing provisional disponible |
 | 3 | Disena con proposito | Pendiente |
 | 4 | Prepara el terreno para el exito | Pendiente |
 | 5 | Hazlo realidad en el aula | Pendiente |
@@ -276,6 +276,7 @@ El CTA de entrada desplaza al usuario hacia la presentacion amplia sin romper el
 - el viewer muestra la etapa actual como activa y usa la mejor senal visual disponible sin depender del sistema de continuidad
 - se mantiene desacoplado del sistema de continuidad
 - su responsabilidad es orientar visualmente la etapa actual, no recordar la seccion exacta del recorrido
+- al cerrar Etapa 1, el viewer pasa a mostrarla como completada y resalta de forma sutil la Etapa 2 como siguiente estacion
 
 ### Diferencia entre "Ir a etapas" y "Continuar"
 
@@ -347,6 +348,18 @@ En el flujo definitivo, el usuario primero entiende su lugar en el modelo y lueg
 - durante este tramo Laia entra en silencio narrativo para que el foco quede en la interaccion individual con el modulo
 - si el embebido tarda en cargar, el stage mantiene una capa de espera integrada y, si falla, muestra un fallback sin romper la continuidad visual
 - el scroll general no se reemplaza: el autodiagnostico sigue siendo una seccion mas del recorrido y, al completarse, habilita el cierre de la etapa
+
+### Cierre de etapa
+
+- cuando el embebido se completa, el recorrido vuelve al marco principal de la cartilla antes de salir de Etapa 1
+- el viewer cambia para mostrar Etapa 1 como completada y sugerir Etapa 2 como siguiente paso
+- el cierre no dispara una ruta de inmediato: primero recupera el contexto general, luego conduce al video final obligatorio
+
+### Video final y transicion
+
+- el video final es obligatorio y bloquea el avance hasta completarse
+- al terminar, activa `transitionAnimationViewed`, habilita el boton `Continuar a Etapa 2` y dispara el cambio de ambiente del fondo
+- la transicion no se resuelve como un simple enlace: primero cambia la estacion visual del recorrido y luego conduce a una landing provisional de Etapa 2 para evitar una ruta rota
 
 ### Papel de Laia
 
@@ -441,6 +454,7 @@ Nuevas piezas estructurales:
 - refactor del bloque de consentimiento para reforzar confidencialidad, proposito formativo y gating del flujo
 - implementacion del chatbot contextual como ayuda opcional previa al embebido
 - refactor del autodiagnostico embebido para integrarlo al stage y ampliar su marco visual
+- implementacion del cierre de Etapa 1 con video obligatorio, cambio de fondo y llegada provisional a Etapa 2
 
 ### Como quedo organizado
 
@@ -474,7 +488,6 @@ El esqueleto sigue este orden logico:
 - navegacion final hacia etapas futuras cuando su contenido este publicado
 - integracion del chatbot real con backend o motor conversacional
 - cierre narrativo y visual detallado
-- CTA real de transicion a Etapa 2
 
 ## Como agregar una nueva etapa
 

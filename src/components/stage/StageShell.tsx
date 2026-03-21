@@ -18,7 +18,14 @@ type StageShellProps = {
   viewerStatusLabel: string;
   viewerStatusTone?: "active" | "done";
   viewerMeta?: Array<{ label: string; value: string }>;
+  viewerStageMarkers?: Array<{
+    label: string;
+    tone: "current" | "done" | "next" | "upcoming";
+  }>;
   viewerEnabled?: boolean;
+  shellTone?: "default" | "transition";
+  backgroundImageSrc?: string;
+  backgroundImageOpacity?: number;
   globalStageButtonVisible?: boolean;
   globalStageItems?: StageNavItem[];
   currentStageId?: string;
@@ -31,7 +38,11 @@ export default function StageShell({
   viewerStatusLabel,
   viewerStatusTone = "active",
   viewerMeta = [],
+  viewerStageMarkers = [],
   viewerEnabled = true,
+  shellTone = "default",
+  backgroundImageSrc,
+  backgroundImageOpacity,
   globalStageButtonVisible = false,
   globalStageItems = [],
   currentStageId,
@@ -45,8 +56,16 @@ export default function StageShell({
   };
 
   return (
-    <div className={styles.stageRoot}>
-      <TechTrailBackground className={styles.techBackground} />
+    <div
+      className={`${styles.stageRoot} ${
+        shellTone === "transition" ? styles.stageRootTransition : ""
+      }`.trim()}
+    >
+      <TechTrailBackground
+        className={styles.techBackground}
+        backgroundImageSrc={backgroundImageSrc}
+        backgroundImageOpacity={backgroundImageOpacity}
+      />
 
       {globalStageButtonVisible ? (
         <>
@@ -139,6 +158,27 @@ export default function StageShell({
           <div className={styles.viewerCanvasWrap}>
             <MiniSpiralViewer />
           </div>
+
+          {viewerStageMarkers.length ? (
+            <div className={styles.viewerStageMarkers}>
+              {viewerStageMarkers.map((marker) => (
+                <span
+                  key={marker.label}
+                  className={`${styles.viewerStageMarker} ${
+                    marker.tone === "done"
+                      ? styles.viewerStageMarkerDone
+                      : marker.tone === "next"
+                        ? styles.viewerStageMarkerNext
+                        : marker.tone === "current"
+                          ? styles.viewerStageMarkerCurrent
+                          : styles.viewerStageMarkerUpcoming
+                  }`}
+                >
+                  {marker.label}
+                </span>
+              ))}
+            </div>
+          ) : null}
 
           <div className={styles.viewerMeta}>
             {viewerMeta.map((row) => (

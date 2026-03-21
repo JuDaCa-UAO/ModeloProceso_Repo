@@ -22,7 +22,9 @@ export default function TransitionAnimationBlock({ ctx }: TransitionAnimationBlo
       ctx={ctx}
       videoSrc={TRANSITION_VIDEO_URL}
       flagToSet="transitionAnimationViewed"
-      blockAdvance={false}
+      blockAdvance
+      title="Cambio de estacion"
+      description="Este video de cierre completa la salida de Etapa 1 y prepara el paso visual hacia la siguiente estacion del recorrido."
     />
   );
 }

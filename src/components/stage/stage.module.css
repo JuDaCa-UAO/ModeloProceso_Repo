@@ -15,6 +15,14 @@
     radial-gradient(1000px 560px at 16% -10%, color-mix(in srgb, var(--uao-red-7) 16%, transparent), transparent 66%),
     radial-gradient(800px 520px at 92% 112%, color-mix(in srgb, var(--uao-red-3) 20%, transparent), transparent 70%),
     linear-gradient(180deg, #0a0506 0%, #050304 56%, #020102 100%);
+  transition: background 560ms ease;
+}
+
+.stageRootTransition {
+  background:
+    radial-gradient(1000px 560px at 12% -8%, rgba(254, 106, 111, 0.2), transparent 62%),
+    radial-gradient(900px 620px at 88% 110%, rgba(196, 22, 28, 0.14), transparent 66%),
+    linear-gradient(180deg, #110b12 0%, #08060d 48%, #04040a 100%);
 }
 
 .stageRoot .techBackground {
@@ -296,6 +304,49 @@
   padding: 10px 12px 12px;
   display: grid;
   gap: 5px;
+}
+
+.viewerStageMarkers {
+  position: relative;
+  z-index: 1;
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  padding: 10px 12px 0;
+}
+
+.viewerStageMarker {
+  border-radius: 999px;
+  padding: 4px 9px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  border: 1px solid transparent;
+}
+
+.viewerStageMarkerCurrent {
+  color: var(--uao-red-7);
+  border-color: rgba(248, 46, 53, 0.28);
+  background: rgba(80, 6, 8, 0.22);
+}
+
+.viewerStageMarkerDone {
+  color: #cce8d0;
+  border-color: rgba(116, 180, 129, 0.18);
+  background: rgba(58, 108, 69, 0.16);
+}
+
+.viewerStageMarkerNext {
+  color: #fff3f3;
+  border-color: rgba(254, 106, 111, 0.26);
+  background: rgba(248, 46, 53, 0.14);
+  box-shadow: 0 0 0 1px rgba(248, 46, 53, 0.06);
+}
+
+.viewerStageMarkerUpcoming {
+  color: var(--uao-grey-4);
+  border-color: rgba(255, 255, 255, 0.12);
+  background: rgba(255, 255, 255, 0.05);
 }
 
 .viewerMetaRow {
