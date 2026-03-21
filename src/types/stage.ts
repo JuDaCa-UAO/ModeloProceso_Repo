@@ -25,6 +25,7 @@ export type RailPanel = {
   lines: [string, string];
   kind?: "intro" | "stage";
   label?: string;
+  status?: "current" | "upcoming" | "completed";
 };
 
 export type StateCardItem = {

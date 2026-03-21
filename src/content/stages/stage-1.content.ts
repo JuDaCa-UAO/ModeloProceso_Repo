@@ -4,6 +4,75 @@ import { LAIA_ASSETS } from "@/content/shared/character-assets";
 export const STAGE1_ID = "etapa-1";
 export const STAGE1_NAME = "Reconocete para avanzar";
 
+const RAIL_PANELS = [
+  {
+    id: "rail-etapa-1",
+    label: "Etapa 1",
+    title: "Reconocete para avanzar",
+    lines: [
+      "Aqui comienza la espiral: primero identificas tu punto de partida.",
+      "Esta es la etapa actual y orienta el resto del recorrido.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "current" as const,
+  },
+  {
+    id: "rail-etapa-2",
+    label: "Etapa 2",
+    title: "Descubre nuevas posibilidades",
+    lines: [
+      "Exploras usos, herramientas y oportunidades de GenAI en contexto educativo.",
+      "La etapa amplia el panorama despues de reconocer tu punto de partida.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "upcoming" as const,
+  },
+  {
+    id: "rail-etapa-3",
+    label: "Etapa 3",
+    title: "Disena con proposito",
+    lines: [
+      "Transformas el descubrimiento en decisiones pedagogicas concretas.",
+      "Aqui el foco pasa del panorama general al diseno intencional.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "upcoming" as const,
+  },
+  {
+    id: "rail-etapa-4",
+    label: "Etapa 4",
+    title: "Prepara el terreno para el exito",
+    lines: [
+      "Ajustas condiciones, recursos y criterios antes de implementar.",
+      "La etapa prepara una integracion mas solida y contextualizada.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "upcoming" as const,
+  },
+  {
+    id: "rail-etapa-5",
+    label: "Etapa 5",
+    title: "Hazlo realidad en el aula",
+    lines: [
+      "Llevas la experiencia al aula con acompanamiento y observacion.",
+      "El modelo pasa de la planeacion a la practica educativa.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "upcoming" as const,
+  },
+  {
+    id: "rail-etapa-6",
+    label: "Etapa 6",
+    title: "Reflexiona, aprende y mejora",
+    lines: [
+      "Cierras el ciclo con lectura critica de resultados y ajustes.",
+      "La espiral vuelve a abrir una mejora continua para la siguiente iteracion.",
+    ] as [string, string],
+    kind: "stage" as const,
+    status: "upcoming" as const,
+  },
+];
+
 export const STAGE1_TREE: SectionNode[] = [
   {
     id: "entrada-etapa-1",
@@ -44,7 +113,7 @@ export const STAGE1_TREE: SectionNode[] = [
             content: [
               {
                 type: "stage-header",
-                title: "Etapa 1: Reconócete para avanzar",
+                title: "Etapa 1: Recon\u00F3cete para avanzar",
                 subtitle:
                   "El viewer indica la etapa actual. La continuidad conserva el punto exacto del recorrido por seccion.",
                 stageChip: "Stage activo",
@@ -125,8 +194,7 @@ export const STAGE1_TREE: SectionNode[] = [
                       {
                         id: "scroll-recorrido",
                         title: "Scroll vertical y reveal acumulativo",
-                        subtitle:
-                          "Marco estructural del desplazamiento principal del stage.",
+                        subtitle: "Marco estructural del desplazamiento principal del stage.",
                         surface: "plain",
                         gate: { requires: ["stage1AnimationViewed"] },
                         content: [
@@ -187,15 +255,24 @@ export const STAGE1_TREE: SectionNode[] = [
                                   {
                                     type: "paragraphs",
                                     paragraphs: [
-                                      "La etapa actual se presenta como una puerta de entrada al resto del modelo: reconoce el punto de partida y prepara la lectura de lo que viene despues.",
-                                      "Esta explicacion se mantiene separada del rail para evitar que el resumen de etapas aparezca antes del contexto necesario.",
+                                      "Estas iniciando en la Etapa 1 porque la espiral comienza por reconocer primero tu punto de partida antes de abrir decisiones, herramientas o retos posteriores.",
+                                      "Esta ubicacion inicial te da contexto para leer el modelo completo: primero entiendes donde estas y por que comienzas aqui; despues aparece el resumen de las seis etapas.",
                                     ],
                                   },
                                   {
-                                    type: "scaffold-panel",
-                                    label: "Modelo",
+                                    type: "callout",
+                                    title: "Por que empiezas en Etapa 1",
                                     body:
-                                      "El bloque queda listo para integrar una lectura mas rica sobre la espiral, el momento actual del docente y el papel del viewer persistente.",
+                                      "Etapa 1 no busca juzgarte ni clasificarte. Funciona como puerta de entrada al modelo y orienta el acompanamiento posterior a partir de una lectura inicial del recorrido.",
+                                  },
+                                  {
+                                    type: "bullets",
+                                    title: "Lo que este bloque deja claro",
+                                    items: [
+                                      "La espiral arranca por ubicacion, no por exigencia tecnica.",
+                                      "El viewer reducido acompana la etapa actual, pero no reemplaza la continuidad.",
+                                      "El rail aparece despues para resumir el mapa completo sin adelantarte el contexto.",
+                                    ],
                                   },
                                 ],
                                 children: [
@@ -203,17 +280,10 @@ export const STAGE1_TREE: SectionNode[] = [
                                     id: "rail-etapas",
                                     title: "Rail de etapas",
                                     subtitle:
-                                      "Queda reservado para el siguiente bloque sin implementarse todavia.",
+                                      "Resumen digerible de las seis etapas del modelo despues de entender la ubicacion actual.",
                                     surface: "plain",
                                     gate: { requires: ["stage1AnimationViewed"] },
-                                    content: [
-                                      {
-                                        type: "scaffold-panel",
-                                        label: "Pendiente",
-                                        body:
-                                          "El rail del modelo se mantiene reservado pero aun no se implementa en esta iteracion para no adelantar el siguiente bloque del flujo.",
-                                      },
-                                    ],
+                                    content: [{ type: "horizontal-rail", panels: RAIL_PANELS }],
                                     children: [
                                       {
                                         id: "estados-docente",
@@ -296,9 +366,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                                           "Retorno al marco principal de la etapa despues del embebido.",
                                                         surface: "plain",
                                                         gate: {
-                                                          requires: [
-                                                            "autodiagnosticCompleted",
-                                                          ],
+                                                          requires: ["autodiagnosticCompleted"],
                                                         },
                                                         content: [
                                                           {
@@ -322,9 +390,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                                               "Animacion obligatoria antes de habilitar la transicion a la Etapa 2.",
                                                             surface: "plain",
                                                             gate: {
-                                                              requires: [
-                                                                "autodiagnosticCompleted",
-                                                              ],
+                                                              requires: ["autodiagnosticCompleted"],
                                                             },
                                                             content: [{ type: "transition-animation" }],
                                                             children: [
@@ -335,9 +401,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                                                   "Bloque final del esqueleto, reservado para el cambio de fondo y el CTA definitivo.",
                                                                 surface: "plain",
                                                                 gate: {
-                                                                  requires: [
-                                                                    "transitionAnimationViewed",
-                                                                  ],
+                                                                  requires: ["transitionAnimationViewed"],
                                                                 },
                                                                 content: [
                                                                   {

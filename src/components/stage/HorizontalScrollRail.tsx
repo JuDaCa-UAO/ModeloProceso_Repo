@@ -29,10 +29,23 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
       if (rafId) return;
       rafId = window.requestAnimationFrame(measure);
     };
+
+    const resizeObserver =
+      typeof ResizeObserver !== "undefined" ? new ResizeObserver(schedule) : null;
+
     schedule();
     window.addEventListener("resize", schedule, { passive: true });
+
+    const viewport = viewportRef.current;
+    const track = trackRef.current;
+    if (resizeObserver && viewport && track) {
+      resizeObserver.observe(viewport);
+      resizeObserver.observe(track);
+    }
+
     return () => {
       if (rafId) window.cancelAnimationFrame(rafId);
+      resizeObserver?.disconnect();
       window.removeEventListener("resize", schedule);
     };
   }, [panels.length]);
@@ -40,7 +53,7 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
   const style = useMemo(
     () =>
       ({
-        "--rail-height-multiplier": Math.max(3.2, panels.length * 0.85),
+        "--rail-height-multiplier": Math.max(3.4, 2.5 + panels.length * 0.42),
       }) as CSSProperties,
     [panels.length]
   );
@@ -52,7 +65,8 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
           <span className={styles.railLabel}>Resumen del modelo</span>
           <h3 className={styles.railTitle}>Recorrido de las 6 etapas</h3>
           <p className={styles.railHint}>
-            El desplazamiento vertical mueve los paneles en horizontal.
+            Primero entiendes tu punto de entrada. Luego, el scroll vertical mueve este mapa
+            breve de las seis etapas.
           </p>
         </div>
 
@@ -67,12 +81,33 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                 key={panel.id}
                 className={`${styles.railPanel} ${
                   panel.kind === "intro" ? styles.railPanelIntro : ""
+                } ${panel.status === "current" ? styles.railPanelCurrent : ""} ${
+                  panel.status === "completed" ? styles.railPanelCompleted : ""
                 }`}
               >
                 <div className={styles.railPanelInner}>
-                  <span className={styles.railPanelTag}>
-                    {panel.label ?? (panel.kind === "intro" ? "Introducción" : `Etapa ${index}`)}
-                  </span>
+                  <div className={styles.railPanelHeader}>
+                    <span className={styles.railPanelTag}>
+                      {panel.label ?? (panel.kind === "intro" ? "Introduccion" : `Etapa ${index + 1}`)}
+                    </span>
+                    {panel.status ? (
+                      <span
+                        className={`${styles.railPanelStatus} ${
+                          panel.status === "current"
+                            ? styles.railPanelStatusCurrent
+                            : panel.status === "completed"
+                              ? styles.railPanelStatusCompleted
+                              : styles.railPanelStatusUpcoming
+                        }`}
+                      >
+                        {panel.status === "current"
+                          ? "Actual"
+                          : panel.status === "completed"
+                            ? "Completada"
+                            : "Siguiente"}
+                      </span>
+                    ) : null}
+                  </div>
                   <h4 className={styles.railPanelTitle}>{panel.title}</h4>
                   <p className={styles.railPanelCopy}>{panel.lines[0]}</p>
                   <p className={styles.railPanelCopy}>{panel.lines[1]}</p>
@@ -84,6 +119,17 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
 
         <div className={styles.railProgressTrack} aria-hidden="true">
           <div className={styles.railProgressFill} style={{ width: `${progress * 100}%` }} />
+        </div>
+
+        <div className={styles.railFooter}>
+          <div className={styles.railScrollCue} aria-hidden="true">
+            <span className={styles.railCueDot} />
+            <span className={styles.railCueDot} />
+            <span className={styles.railCueDot} />
+          </div>
+          <p className={styles.railFooterText}>
+            Continua bajando para seguir con la Etapa 1 y llegar despues al bloque de estados.
+          </p>
         </div>
       </div>
     </div>

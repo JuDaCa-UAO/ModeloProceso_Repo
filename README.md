@@ -288,6 +288,24 @@ Estado actual:
 - el viewer solo indica etapa activa; no guarda checkpoints ni reemplaza la continuidad
 - la navegacion final de etapas futuras sigue limitada por las etapas publicadas en `STAGE_META`
 
+### Explicacion del modelo
+
+- antes del rail aparece un bloque explicativo que ubica al usuario dentro de la espiral
+- ese bloque explica por que el recorrido empieza en Etapa 1: primero se reconoce el punto de partida y luego se abre el resto del modelo
+- la explicacion vive en `src/content/stages/stage-1.content.ts` y usa bloques stage-driven, sin meter logica de negocio en la UI
+
+### Rail de etapas
+
+- el rail aparece solo despues de explicar la ubicacion dentro del modelo
+- reutiliza `HorizontalScrollRail` para resumir las 6 etapas sin convertir el flujo en tabs ni wizard
+- Etapa 1 se marca como actual dentro del rail
+- el desplazamiento principal sigue siendo vertical: el scroll del usuario mueve el rail y despues permite continuar naturalmente con los siguientes bloques
+- el rail incluye una senal explicita para indicar que se puede seguir bajando
+
+### Por que el rail va despues
+
+El flujo definitivo pide que el usuario primero entienda en que punto de la espiral esta y por que inicia en esta etapa. Solo despues de ese contexto aparece el resumen de las seis etapas, para que el rail funcione como mapa breve y no como una lista pesada sin explicacion previa.
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
@@ -375,6 +393,8 @@ Nuevas piezas estructurales:
 - componente reusable [`src/components/stage/blocks/StageEntryBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/StageEntryBlock.tsx)
 - componente reusable [`src/components/stage/blocks/StageHeaderBlock.tsx`](/e:/ModeloProceso/ModeloProceso_Repo/src/components/stage/blocks/StageHeaderBlock.tsx)
 - reorganizacion completa de [`src/content/stages/stage-1.content.ts`](/e:/ModeloProceso/ModeloProceso_Repo/src/content/stages/stage-1.content.ts)
+- implementacion real del bloque explicativo del modelo antes del rail
+- implementacion real del rail de etapas con 6 paneles resumidos y Etapa 1 marcada como actual
 
 ### Como quedo organizado
 
@@ -409,7 +429,6 @@ El esqueleto sigue este orden logico:
 - comportamiento fino del chatbot
 - cierre narrativo y visual detallado
 - CTA real de transicion a Etapa 2
-- implementacion real del rail del modelo
 - implementacion real de los estados del docente
 
 ## Como agregar una nueva etapa
