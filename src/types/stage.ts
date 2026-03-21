@@ -29,7 +29,7 @@ export type RailPanel = {
 };
 
 export type StateCardItem = {
-  hierarchy: "Inicial" | "Intermedio" | "Avanzado";
+  contextLabel: string;
   title: string;
   description: string;
   supportHint: string;
@@ -84,7 +84,14 @@ export type SectionContentBlock =
   | { type: "callout"; title?: string; body: string }
   | { type: "bullets"; title?: string; items: string[] }
   | { type: "horizontal-rail"; panels: RailPanel[] }
-  | { type: "state-cards"; items: StateCardItem[] }
+  | {
+      type: "state-cards";
+      items: StateCardItem[];
+      title?: string;
+      intro?: string;
+      note?: string;
+      continueHint?: string;
+    }
   | { type: "stage1-animation" }
   | { type: "consent-form" }
   | { type: "autodiagnostic-module" }

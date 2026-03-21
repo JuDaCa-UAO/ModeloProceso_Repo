@@ -61,6 +61,42 @@
   line-height: 1.45;
 }
 
+.stateBlock {
+  display: grid;
+  gap: 14px;
+}
+
+.stateIntro {
+  display: grid;
+  gap: 8px;
+}
+
+.stateBlockTitle {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.2;
+}
+
+.stateBlockIntro {
+  margin: 0;
+  color: #d1d1d1;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 62ch;
+}
+
+.stateNote {
+  margin: 0;
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.14);
+  background: rgba(10, 6, 7, 0.64);
+  padding: 14px 16px;
+  color: #f4f4f4;
+  font-size: 14px;
+  line-height: 1.5;
+}
+
 .stateGrid {
   display: grid;
   grid-template-columns: repeat(3, minmax(0, 1fr));
@@ -108,6 +144,22 @@
 
 .stateHint {
   color: #d1d1d1;
+}
+
+.stateSupportLabel {
+  justify-self: start;
+  color: #fe6a6f;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.stateContinueHint {
+  margin: 0;
+  color: #d1d1d1;
+  font-size: 13px;
+  line-height: 1.45;
+  text-align: center;
 }
 
 .formCard {

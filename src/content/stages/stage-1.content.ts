@@ -73,6 +73,33 @@ const RAIL_PANELS = [
   },
 ];
 
+const STATE_CARDS = [
+  {
+    contextLabel: "Punto de entrada posible",
+    title: "Aprendiendo sin miedo",
+    description:
+      "Representa un momento de inicio o reencuentro con GenAI, donde la curiosidad necesita seguridad, ejemplos claros y espacio para probar sin presion.",
+    supportHint:
+      "La cartilla acompana con orientaciones guiadas, lenguaje simple, ayudas visibles y pasos concretos para avanzar con confianza.",
+  },
+  {
+    contextLabel: "Exploracion con intencion",
+    title: "Explorando con proposito",
+    description:
+      "Describe a quien ya experimenta con GenAI y quiere conectar mejor sus decisiones con objetivos pedagogicos, criterios eticos y sentido didactico.",
+    supportHint:
+      "La cartilla responde con preguntas de profundidad media, comparaciones utiles y apoyos para tomar decisiones con mayor criterio.",
+  },
+  {
+    contextLabel: "Integracion que inspira",
+    title: "Innovando e inspirando",
+    description:
+      "Nombra un momento de apropiacion mas madura, donde GenAI ya se integra de forma creativa, critica y transferible a distintos contextos educativos.",
+    supportHint:
+      "La cartilla acompana con retos mas abiertos, conexiones entre etapas y oportunidades para reflexionar y compartir practicas valiosas.",
+  },
+];
+
 export const STAGE1_TREE: SectionNode[] = [
   {
     id: "entrada-etapa-1",
@@ -289,15 +316,27 @@ export const STAGE1_TREE: SectionNode[] = [
                                         id: "estados-docente",
                                         title: "Estados del docente",
                                         subtitle:
-                                          "Quedan reservados para una iteracion posterior sin implementarse todavia.",
+                                          "Lectura orientadora del acompaniamiento, presentada antes del consentimiento.",
                                         surface: "plain",
                                         gate: { requires: ["stage1AnimationViewed"] },
+                                        dialogue: [
+                                          {
+                                            text: "Estos estados no te clasifican ni te juzgan. Solo nos ayudan a modular el acompanamiento para que el recorrido se sienta mas pertinente y util.",
+                                            imgSrc: LAIA_ASSETS.explain,
+                                            imgAlt: "Laia contextualiza los estados del docente",
+                                          },
+                                        ],
                                         content: [
                                           {
-                                            type: "scaffold-panel",
-                                            label: "Pendiente",
-                                            body:
-                                              "La explicacion detallada de estados se mantiene separada del viewer y de la continuidad, pero su implementacion visual queda para el siguiente bloque.",
+                                            type: "state-cards",
+                                            items: STATE_CARDS,
+                                            title: "Tres estados para orientar el recorrido",
+                                            intro:
+                                              "Los estados muestran formas posibles de relacionarte hoy con GenAI dentro de la cartilla. No son etiquetas fijas ni juicios sobre tu capacidad docente.",
+                                            note:
+                                              "Su funcion es orientar el tono del acompanamiento y la profundidad de las ayudas a lo largo del recorrido. Puedes reconocerte mas en uno, mezclar rasgos de varios o cambiar con el tiempo.",
+                                            continueHint:
+                                              "Continua bajando: despues de entender estos estados, el flujo pasa al consentimiento obligatorio antes del autodiagnostico.",
                                           },
                                         ],
                                         children: [

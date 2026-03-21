@@ -306,6 +306,18 @@ Estado actual:
 
 El flujo definitivo pide que el usuario primero entienda en que punto de la espiral esta y por que inicia en esta etapa. Solo despues de ese contexto aparece el resumen de las seis etapas, para que el rail funcione como mapa breve y no como una lista pesada sin explicacion previa.
 
+### Estados del docente
+
+- el bloque presenta tres estados posibles: `Aprendiendo sin miedo`, `Explorando con proposito` e `Innovando e inspirando`
+- los estados se muestran como orientaciones de acompanamiento y no como juicios, etiquetas ni clasificaciones fijas del docente
+- cada tarjeta explica que significa ese estado y como cambia el tono del acompanamiento dentro de la cartilla
+- Laia introduce este bloque con un dialogo breve para reforzar que el objetivo es acompanar, no evaluar
+- el bloque mantiene la logica de scroll progresivo y acumulativo, y cierra con una senal clara para seguir avanzando
+
+### Por que ocurre antes del consentimiento
+
+En el flujo definitivo, el usuario primero entiende su lugar en el modelo y luego comprende como la cartilla adapta el acompanamiento segun estos estados. Despues de ese contexto aparece el consentimiento, porque el embebido y el autodiagnostico deben llegar cuando ya esta claro para que sirve el recorrido y como se va a modular el apoyo.
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
@@ -395,6 +407,7 @@ Nuevas piezas estructurales:
 - reorganizacion completa de [`src/content/stages/stage-1.content.ts`](/e:/ModeloProceso/ModeloProceso_Repo/src/content/stages/stage-1.content.ts)
 - implementacion real del bloque explicativo del modelo antes del rail
 - implementacion real del rail de etapas con 6 paneles resumidos y Etapa 1 marcada como actual
+- implementacion real del bloque de estados del docente antes del consentimiento
 
 ### Como quedo organizado
 
@@ -429,7 +442,6 @@ El esqueleto sigue este orden logico:
 - comportamiento fino del chatbot
 - cierre narrativo y visual detallado
 - CTA real de transicion a Etapa 2
-- implementacion real de los estados del docente
 
 ## Como agregar una nueva etapa
 

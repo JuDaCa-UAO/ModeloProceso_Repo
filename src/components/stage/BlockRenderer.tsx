@@ -122,7 +122,16 @@ export default function BlockRenderer({
             return <HorizontalRailBlock key={key} panels={block.panels} />;
 
           case "state-cards":
-            return <StateCardsBlock key={key} items={block.items} />;
+            return (
+              <StateCardsBlock
+                key={key}
+                items={block.items}
+                title={block.title}
+                intro={block.intro}
+                note={block.note}
+                continueHint={block.continueHint}
+              />
+            );
 
           case "stage1-animation":
             return (
