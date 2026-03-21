@@ -10,6 +10,7 @@
 
   position: relative;
   min-height: 100dvh;
+  overflow-x: clip;
   color: #fff;
   background:
     radial-gradient(1000px 560px at 16% -10%, color-mix(in srgb, var(--uao-red-7) 16%, transparent), transparent 66%),
@@ -37,6 +38,7 @@
   position: relative;
   z-index: 1;
   width: 100%;
+  min-width: 0;
   padding: 20px clamp(12px, 2vw, 28px) 56px;
 }
 
@@ -49,6 +51,7 @@
   margin-inline: auto;
   display: grid;
   gap: 24px;
+  min-width: 0;
   padding-right: min(31vw, 380px);
 }
 
@@ -368,13 +371,16 @@
 .section {
   width: 100%;
   min-height: 52dvh;
+  min-width: 0;
   padding-block: 14px;
+  scroll-margin-top: 96px;
   display: grid;
   align-items: start;
 }
 
 .sectionInner {
   width: 100%;
+  min-width: 0;
   display: grid;
   gap: 12px;
   transform-origin: 50% 0%;
@@ -382,14 +388,14 @@
 }
 
 .sectionMuted .sectionInner {
-  opacity: 0.52;
-  filter: saturate(0.78) blur(1.5px);
-  transform: translateY(12px) scale(0.986);
+  opacity: 0.58;
+  filter: saturate(0.86) blur(0.9px);
+  transform: translateY(8px) scale(0.99);
 }
 
 .sectionRevealed:not(.sectionActive) .sectionInner {
-  opacity: 0.96;
-  transform: translateY(0) scale(0.996);
+  opacity: 0.98;
+  transform: translateY(0) scale(0.998);
 }
 
 .sectionActive .sectionInner {
@@ -512,6 +518,7 @@
 
 .surfaceCard {
   width: 100%;
+  min-width: 0;
   border-radius: 24px;
   border: 1px solid rgba(248, 46, 53, 0.22);
   background: linear-gradient(180deg, rgba(9, 6, 7, 0.84), rgba(4, 3, 4, 0.88));
@@ -523,6 +530,7 @@
 
 .surfacePlain {
   width: 100%;
+  min-width: 0;
   display: grid;
   gap: 12px;
 }
@@ -556,8 +564,69 @@
 
 .body {
   width: 100%;
+  min-width: 0;
   display: grid;
   gap: 16px;
+}
+
+.sectionFlowCue {
+  width: 100%;
+  margin-top: 4px;
+  border-radius: 14px;
+  padding: 11px 13px;
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  flex-wrap: wrap;
+  border: 1px solid rgba(255, 255, 255, 0.1);
+  background: rgba(6, 3, 4, 0.66);
+}
+
+.sectionFlowCueContinue {
+  border-color: rgba(255, 255, 255, 0.1);
+}
+
+.sectionFlowCueBlocked {
+  border-color: rgba(248, 46, 53, 0.28);
+  background:
+    radial-gradient(circle at 10% 18%, rgba(254, 106, 111, 0.12), transparent 38%),
+    rgba(12, 6, 7, 0.78);
+}
+
+.sectionFlowCueComplete {
+  border-color: rgba(248, 46, 53, 0.18);
+  background:
+    radial-gradient(circle at 10% 18%, rgba(254, 106, 111, 0.08), transparent 38%),
+    rgba(9, 5, 6, 0.72);
+}
+
+.sectionFlowCueDots {
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.sectionFlowCueDots span {
+  width: 6px;
+  height: 6px;
+  border-radius: 999px;
+  background: rgba(248, 46, 53, 0.72);
+  animation: sectionCuePulse 1.4s ease-in-out infinite;
+}
+
+.sectionFlowCueDots span:nth-child(2) {
+  animation-delay: 110ms;
+}
+
+.sectionFlowCueDots span:nth-child(3) {
+  animation-delay: 220ms;
+}
+
+.sectionFlowCueText {
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+  flex: 1 1 240px;
 }
 
 .dialogueWrap {
@@ -872,6 +941,7 @@
 }
 
 .animationViewport {
+  position: relative;
   border-radius: 14px;
   border: 1px solid rgba(248, 46, 53, 0.16);
   background: rgba(4, 2, 3, 0.78);
@@ -945,6 +1015,34 @@
   line-height: 1.45;
 }
 
+.animationViewportAction {
+  position: absolute;
+  inset: auto 16px 16px;
+  z-index: 1;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+}
+
+.animationViewportAction .buttonPrimary {
+  pointer-events: auto;
+  box-shadow: 0 14px 26px rgba(0, 0, 0, 0.28);
+}
+
+.animationGuidanceCard {
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.16);
+  background: rgba(7, 4, 5, 0.66);
+  padding: 10px 12px;
+}
+
+.animationGuidanceText {
+  margin: 0;
+  color: var(--uao-grey-4);
+  font-size: 13px;
+  line-height: 1.45;
+}
+
 .animationFooter {
   display: flex;
   justify-content: flex-end;
@@ -997,6 +1095,10 @@
 
   .viewerCanvasWrap {
     height: 150px;
+  }
+
+  .section {
+    scroll-margin-top: 220px;
   }
 
   .railTrack {
@@ -1052,6 +1154,10 @@
     grid-auto-columns: minmax(calc(100vw - 32px), 1fr);
   }
 
+  .section {
+    scroll-margin-top: 210px;
+  }
+
   .railPanel {
     min-height: 230px;
   }
@@ -1080,7 +1186,8 @@
     animation: none;
   }
 
-  .railCueDot {
+  .railCueDot,
+  .sectionFlowCueDots span {
     animation: none;
   }
 
@@ -1104,6 +1211,18 @@
   }
   50% {
     transform: translateY(3px);
+    opacity: 1;
+  }
+}
+
+@keyframes sectionCuePulse {
+  0%,
+  100% {
+    transform: translateY(0);
+    opacity: 0.35;
+  }
+  50% {
+    transform: translateY(2px);
     opacity: 1;
   }
 }

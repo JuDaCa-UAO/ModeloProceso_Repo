@@ -361,6 +361,33 @@ En el flujo definitivo, el usuario primero entiende su lugar en el modelo y lueg
 - al terminar, activa `transitionAnimationViewed`, habilita el boton `Continuar a Etapa 2` y dispara el cambio de ambiente del fondo
 - la transicion no se resuelve como un simple enlace: primero cambia la estacion visual del recorrido y luego conduce a una landing provisional de Etapa 2 para evitar una ruta rota
 
+### Pase de estabilizacion
+
+Se hizo un pase quirurgico de estabilizacion sin cambiar el flujo aprobado de Etapa 1.
+
+Que se estabilizo:
+
+- la deteccion de seccion activa ahora es mas estable para bloques altos y para el rail sticky
+- el scroll hacia secciones visibles y la restauracion por hash ya reservan espacio para el viewer fijo
+- cada seccion activa puede mostrar una retroalimentacion breve para indicar si el usuario debe seguir bajando o si el avance esta bloqueado temporalmente
+- la animacion inicial y el video final ahora muestran una guia visible adicional sobre el estado del avance
+- se suavizaron los estados visuales entre bloques para que el reveal acumulativo no se sienta abrupto
+- se reforzo la contencion horizontal del layout para reducir desbordes visuales
+
+Bugs resueltos:
+
+- se redujo el salto visual cuando `scrollIntoView` aterrizaba debajo del viewer persistente
+- el rail tiene una lectura mas estable porque la seccion activa ya no depende solo del `intersectionRatio`
+- los bloqueos temporales durante la animacion inicial y el video final ahora tienen feedback visible y persistente
+- se corrigio parte de la sensacion de que algunos bloques “se salen” de pantalla por falta de contencion horizontal
+- se corrigio el bloqueo fantasma del scroll en los videos obligatorios: ahora el lock se activa solo cuando el video entra realmente en zona de foco, muestra una accion visible dentro del viewport y se libera de inmediato al terminar la reproduccion
+
+Limitaciones que permanecen:
+
+- el chatbot sigue siendo una ayuda provisional con respuestas hardcodeadas
+- Etapa 2 sigue siendo una landing provisional, no su flujo completo
+- el embebido depende de la integracion actual con N8N y puede mostrar fallback si no carga
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual

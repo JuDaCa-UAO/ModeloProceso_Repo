@@ -13,6 +13,10 @@ type ProgressiveSectionProps = {
   registerRef: (id: string, node: HTMLElement | null) => void;
   indexLabel?: string;
   surface?: "card" | "plain";
+  flowCue?: {
+    tone: "continue" | "blocked" | "complete";
+    text: string;
+  };
 };
 
 export default function ProgressiveSection({
@@ -25,6 +29,7 @@ export default function ProgressiveSection({
   registerRef,
   indexLabel,
   surface = "plain",
+  flowCue,
 }: ProgressiveSectionProps) {
   return (
     <section
@@ -51,6 +56,26 @@ export default function ProgressiveSection({
             {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
           </header>
           <div className={styles.body}>{children}</div>
+          {flowCue ? (
+            <div
+              className={`${styles.sectionFlowCue} ${
+                flowCue.tone === "blocked"
+                  ? styles.sectionFlowCueBlocked
+                  : flowCue.tone === "complete"
+                    ? styles.sectionFlowCueComplete
+                    : styles.sectionFlowCueContinue
+              }`}
+              role="status"
+              aria-live="polite"
+            >
+              <span className={styles.sectionFlowCueDots} aria-hidden="true">
+                <span />
+                <span />
+                <span />
+              </span>
+              <span className={styles.sectionFlowCueText}>{flowCue.text}</span>
+            </div>
+          ) : null}
         </div>
       </div>
     </section>

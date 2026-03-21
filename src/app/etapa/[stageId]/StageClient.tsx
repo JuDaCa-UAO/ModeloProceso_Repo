@@ -168,6 +168,29 @@ export default function StageClient({
     return new Map(ordered.map((id, i) => [id, i + 1]));
   }, [flags, initialTree]);
 
+  const visibleNodes = useMemo(() => {
+    const ordered: Array<{ id: string; title: string }> = [];
+
+    const walk = (nodes: SectionNode[]) => {
+      for (const node of nodes) {
+        if (!hasRequiredFlags(flags, node.gate?.requires)) continue;
+        ordered.push({ id: node.id, title: node.title });
+        if (node.children?.length) walk(node.children);
+      }
+    };
+
+    walk(initialTree);
+    return ordered;
+  }, [flags, initialTree]);
+
+  const nextVisibleNodeById = useMemo(() => {
+    const pairs = new Map<string, { id: string; title: string } | undefined>();
+    for (let index = 0; index < visibleNodes.length; index += 1) {
+      pairs.set(visibleNodes[index]?.id ?? "", visibleNodes[index + 1]);
+    }
+    return pairs;
+  }, [visibleNodes]);
+
   const renderActions = (actions: SectionAction[] | undefined) => {
     if (!actions?.length) return null;
 
@@ -227,6 +250,61 @@ export default function StageClient({
           registerRef={registerSectionRef}
           indexLabel={`Seccion ${index}`}
           surface={node.surface ?? "plain"}
+          flowCue={
+            activeId === node.id
+              ? (() => {
+                  const nextNode = nextVisibleNodeById.get(node.id);
+
+                  if (
+                    node.id === "presentacion-inicial-modelo" &&
+                    !flags.stage1AnimationViewed
+                  ) {
+                    return {
+                      tone: "blocked" as const,
+                      text: "El scroll del recorrido se desbloquea cuando completes la animacion inicial.",
+                    };
+                  }
+
+                  if (node.id === "video-final" && !flags.transitionAnimationViewed) {
+                    return {
+                      tone: "blocked" as const,
+                      text: "Completa el video final para habilitar la salida a la siguiente estacion.",
+                    };
+                  }
+
+                  if (
+                    node.id === "presentacion-inicial-modelo" &&
+                    flags.stage1AnimationViewed &&
+                    nextNode
+                  ) {
+                    return {
+                      tone: "complete" as const,
+                      text: `Presentacion completada. Ya puedes seguir hacia ${nextNode.title}.`,
+                    };
+                  }
+
+                  if (
+                    node.id === "video-final" &&
+                    flags.transitionAnimationViewed &&
+                    nextNode
+                  ) {
+                    return {
+                      tone: "complete" as const,
+                      text: `Cierre completado. Ya puedes seguir hacia ${nextNode.title}.`,
+                    };
+                  }
+
+                  if (nextNode) {
+                    return {
+                      tone: "continue" as const,
+                      text: `Puedes seguir bajando hacia ${nextNode.title}.`,
+                    };
+                  }
+
+                  return undefined;
+                })()
+              : undefined
+          }
         >
           {node.dialogue?.length ? <DialogueBlock steps={node.dialogue} /> : null}
           <BlockRenderer blocks={node.content} section={node} ctx={ctx} />

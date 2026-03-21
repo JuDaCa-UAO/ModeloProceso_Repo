@@ -60,10 +60,12 @@ export default function AnimationCard({
   const touchYRef = useRef<number | null>(null);
   const feedbackTimerRef = useRef<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [lockZoneActive, setLockZoneActive] = useState(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [reducedReady, setReducedReady] = useState(false);
   const [showBlockedFeedback, setShowBlockedFeedback] = useState(false);
+  const [advanceReleased, setAdvanceReleased] = useState(completed);
   const playNotifiedRef = useRef(false);
 
   const showBlockedCard = useCallback(() => {
@@ -81,7 +83,9 @@ export default function AnimationCard({
     if (prefersReducedMotion || completed) return;
     const video = videoRef.current;
     if (!video) return;
+
     try {
+      setAdvanceReleased(false);
       video.currentTime = 0;
       await video.play();
       setStarted(true);
@@ -92,21 +96,28 @@ export default function AnimationCard({
     }
   }, [completed, prefersReducedMotion]);
 
+  const advanceUnlocked = completed || advanceReleased;
+
   useEffect(() => {
     if (!rootRef.current) return;
+
     const observer = new IntersectionObserver(
       (entries) => {
         const entry = entries[0];
         if (!entry) return;
+
         const nextVisible = entry.isIntersecting && entry.intersectionRatio > 0.45;
-      setIsVisible(nextVisible);
-      if (!nextVisible) return;
+        setIsVisible(nextVisible);
+
+        if (!nextVisible) return;
+
         if (autoplayOnVisible && !prefersReducedMotion && !completed && !started) {
           void play();
         }
       },
       { threshold: [0.2, 0.45, 0.75] }
     );
+
     observer.observe(rootRef.current);
     return () => observer.disconnect();
   }, [autoplayOnVisible, completed, play, prefersReducedMotion, started]);
@@ -118,19 +129,61 @@ export default function AnimationCard({
   }, [completed, isVisible, prefersReducedMotion, reducedMotionWaitMs]);
 
   useEffect(() => {
-    const shouldBlockAdvance = !completed && isVisible && (playing || blockAdvanceUntilComplete);
+    if (!blockAdvanceUntilComplete || typeof window === "undefined") return;
+
+    let rafId = 0;
+    const measure = () => {
+      rafId = 0;
+      const node = rootRef.current;
+      if (!node) return;
+
+      const rect = node.getBoundingClientRect();
+      const viewportHeight = window.innerHeight || 1;
+      const focusLine = viewportHeight * 0.52;
+      const nextLockZoneActive =
+        rect.top <= focusLine &&
+        rect.bottom >= focusLine &&
+        rect.height > Math.min(220, viewportHeight * 0.34);
+
+      setLockZoneActive(nextLockZoneActive);
+    };
+
+    const schedule = () => {
+      if (rafId) return;
+      rafId = window.requestAnimationFrame(measure);
+    };
+
+    schedule();
+    window.addEventListener("scroll", schedule, { passive: true });
+    window.addEventListener("resize", schedule, { passive: true });
+
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener("scroll", schedule);
+      window.removeEventListener("resize", schedule);
+    };
+  }, [blockAdvanceUntilComplete]);
+
+  useEffect(() => {
+    const shouldBlockAdvance =
+      blockAdvanceUntilComplete && !advanceUnlocked && lockZoneActive;
     if (!shouldBlockAdvance) return;
 
     const onWheel = (event: WheelEvent) => {
       if (event.deltaY <= 0) return;
       event.preventDefault();
-      if (blockAdvanceUntilComplete) showBlockedCard();
+      showBlockedCard();
     };
 
     const onKeyDown = (event: KeyboardEvent) => {
-      if (event.key === "ArrowDown" || event.key === "PageDown" || event.key === " " || event.key === "End") {
+      if (
+        event.key === "ArrowDown" ||
+        event.key === "PageDown" ||
+        event.key === " " ||
+        event.key === "End"
+      ) {
         event.preventDefault();
-        if (blockAdvanceUntilComplete) showBlockedCard();
+        showBlockedCard();
       }
     };
 
@@ -143,7 +196,7 @@ export default function AnimationCard({
       if (currentY == null || touchYRef.current == null) return;
       if (currentY < touchYRef.current) {
         event.preventDefault();
-        if (blockAdvanceUntilComplete) showBlockedCard();
+        showBlockedCard();
       }
       touchYRef.current = currentY;
     };
@@ -152,13 +205,14 @@ export default function AnimationCard({
     window.addEventListener("keydown", onKeyDown);
     window.addEventListener("touchstart", onTouchStart, { passive: false });
     window.addEventListener("touchmove", onTouchMove, { passive: false });
+
     return () => {
       window.removeEventListener("wheel", onWheel);
       window.removeEventListener("keydown", onKeyDown);
       window.removeEventListener("touchstart", onTouchStart);
       window.removeEventListener("touchmove", onTouchMove);
     };
-  }, [blockAdvanceUntilComplete, completed, isVisible, playing, showBlockedCard]);
+  }, [advanceUnlocked, blockAdvanceUntilComplete, lockZoneActive, showBlockedCard]);
 
   useEffect(
     () => () => {
@@ -175,10 +229,17 @@ export default function AnimationCard({
   }, [completed]);
 
   const statusLabel = completed ? "Vista" : playing ? "Reproduciendo" : "Pendiente";
+  const guidanceText = completed
+    ? "Video completado. Ya puedes seguir scrolleando en el recorrido."
+    : blockAdvanceUntilComplete
+      ? "El avance vertical se desbloquea cuando completes este video."
+      : "";
   const showManualPlay = useMemo(
     () => !prefersReducedMotion && !completed && (!started || !playing),
     [completed, playing, prefersReducedMotion, started]
   );
+  const showViewportPlayButton = blockAdvanceUntilComplete && showManualPlay;
+  const showFooterPlayButton = !blockAdvanceUntilComplete && showManualPlay;
 
   return (
     <div
@@ -191,9 +252,7 @@ export default function AnimationCard({
         {title || description ? (
           <div>
             {title ? <h3 className={styles.animationTitle}>{title}</h3> : null}
-            {description ? (
-              <p className={styles.animationDescription}>{description}</p>
-            ) : null}
+            {description ? <p className={styles.animationDescription}>{description}</p> : null}
           </div>
         ) : (
           <div />
@@ -212,7 +271,8 @@ export default function AnimationCard({
           <div className={styles.reducedMotionFallback}>
             <div className={styles.reducedMotionFrame} />
             <p>
-              Movimiento reducido activo. La vista se mantiene estática; la confirmación se habilita al completar el tiempo de visualización.
+              Movimiento reducido activo. La vista se mantiene estatica; la confirmacion se
+              habilita al completar el tiempo de visualizacion.
             </p>
           </div>
         ) : (
@@ -238,10 +298,19 @@ export default function AnimationCard({
             }}
             onEnded={() => {
               setPlaying(false);
+              setAdvanceReleased(true);
               onComplete();
             }}
           />
         )}
+
+        {showViewportPlayButton ? (
+          <div className={styles.animationViewportAction}>
+            <button type="button" className={styles.buttonPrimary} onClick={() => void play()}>
+              {started ? "Reproducir de nuevo" : "Reproducir video"}
+            </button>
+          </div>
+        ) : null}
       </div>
 
       {showBlockedFeedback && !completed ? (
@@ -251,8 +320,14 @@ export default function AnimationCard({
         </div>
       ) : null}
 
+      {guidanceText ? (
+        <div className={styles.animationGuidanceCard} role="status" aria-live="polite">
+          <p className={styles.animationGuidanceText}>{guidanceText}</p>
+        </div>
+      ) : null}
+
       <div className={styles.animationFooter}>
-        {showManualPlay ? (
+        {showFooterPlayButton ? (
           <button type="button" className={styles.buttonSecondary} onClick={() => void play()}>
             {started ? "Reproducir de nuevo" : "Reproducir"}
           </button>
@@ -263,9 +338,12 @@ export default function AnimationCard({
             type="button"
             className={styles.buttonSecondary}
             disabled={!reducedReady}
-            onClick={onComplete}
+            onClick={() => {
+              setAdvanceReleased(true);
+              onComplete();
+            }}
           >
-            {reducedReady ? "Confirmar visualización" : "Preparando vista..."}
+            {reducedReady ? "Confirmar visualizacion" : "Preparando vista..."}
           </button>
         ) : null}
 

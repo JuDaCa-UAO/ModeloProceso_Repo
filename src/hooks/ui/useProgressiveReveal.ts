@@ -15,7 +15,7 @@ export function useProgressiveReveal({
 }: UseProgressiveRevealOptions) {
   const refs = useRef(new Map<string, HTMLElement>());
   const observerRef = useRef<IntersectionObserver | null>(null);
-  const ratiosRef = useRef(new Map<string, number>());
+  const scoresRef = useRef(new Map<string, number>());
   const defaultId = ids[0] ?? "";
   const idsSet = useMemo(() => new Set(ids), [ids]);
   const lastActiveIdRef = useRef<string>(defaultId);
@@ -25,7 +25,7 @@ export function useProgressiveReveal({
   const [activeId, setActiveId] = useState<string>(defaultId);
 
   useEffect(() => {
-    ratiosRef.current.clear();
+    scoresRef.current.clear();
     lastActiveIdRef.current = defaultId;
   }, [defaultId]);
 
@@ -36,7 +36,25 @@ export function useProgressiveReveal({
           const node = entry.target as HTMLElement;
           const id = node.dataset.sectionId;
           if (!id) continue;
-          ratiosRef.current.set(id, entry.isIntersecting ? entry.intersectionRatio : 0);
+
+          if (!entry.isIntersecting) {
+            scoresRef.current.set(id, 0);
+            continue;
+          }
+
+          const rect = entry.boundingClientRect;
+          const viewportHeight =
+            entry.rootBounds?.height ??
+            (typeof window !== "undefined" ? window.innerHeight : rect.height || 1);
+          const viewportCenter = viewportHeight / 2;
+          const elementCenter = rect.top + rect.height / 2;
+          const distanceToCenter = Math.abs(viewportCenter - elementCenter);
+          const centerScore = Math.max(0, 1 - distanceToCenter / viewportHeight);
+          const coversCenter = rect.top <= viewportCenter && rect.bottom >= viewportCenter;
+          const score =
+            entry.intersectionRatio * 0.62 + centerScore * 0.38 + (coversCenter ? 0.14 : 0);
+
+          scoresRef.current.set(id, score);
         }
 
         setRevealedSet((current) => {
@@ -66,20 +84,21 @@ export function useProgressiveReveal({
         });
 
         let nextActiveId = "";
-        let nextActiveRatio = 0;
+        let nextActiveScore = 0;
 
         for (const id of ids) {
-          const ratio = ratiosRef.current.get(id) ?? 0;
-          if (ratio > nextActiveRatio) {
-            nextActiveRatio = ratio;
+          const score = scoresRef.current.get(id) ?? 0;
+          if (score > nextActiveScore) {
+            nextActiveScore = score;
             nextActiveId = id;
           }
         }
 
-        if (nextActiveId) {
-          lastActiveIdRef.current = nextActiveId;
-          setActiveId(nextActiveId);
-        }
+        const resolvedNextActiveId = nextActiveId || lastActiveIdRef.current || defaultId;
+        if (!resolvedNextActiveId) return;
+
+        lastActiveIdRef.current = resolvedNextActiveId;
+        setActiveId(resolvedNextActiveId);
       },
       { threshold: [0, threshold, 0.5, 1], rootMargin }
     );
