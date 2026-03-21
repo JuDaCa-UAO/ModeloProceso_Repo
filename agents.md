@@ -394,3 +394,7 @@ El trabajo está bien hecho solo si:
 - el usuario puede navegar a cualquier etapa
 - el usuario puede continuar exactamente donde iba
 - y el README explica fielmente el estado real del proyecto
+
+# 13.1 Explicación
+
+Cada cambio que realices debe ser explicado y justificado 
