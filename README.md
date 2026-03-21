@@ -38,8 +38,8 @@ La app ofrece un recorrido stage-driven por el modelo espiral GenAI.
 
 | Etapa | Nombre | Estado actual |
 |---|---|---|
-| 1 | Reconocete para avanzar | Base oficial en preparacion |
-| 2 | Descubre nuevas posibilidades | Landing provisional disponible |
+| 1 | Reconocete para avanzar | Implementacion actual consolidada |
+| 2 | Descubre nuevas posibilidades | Landing provisional de llegada |
 | 3 | Disena con proposito | Pendiente |
 | 4 | Prepara el terreno para el exito | Pendiente |
 | 5 | Hazlo realidad en el aula | Pendiente |
@@ -171,6 +171,7 @@ Los bloques actualmente soportados por `BlockRenderer` son:
 - `bullets`
 - `horizontal-rail`
 - `state-cards`
+- `contextual-chatbot`
 - `stage1-animation`
 - `consent-form`
 - `autodiagnostic-module`
@@ -212,7 +213,8 @@ Rutas principales:
 
 - `/` -> redirige a `/inicio`
 - `/inicio` -> lobby de entrada con Laia
-- `/etapa/etapa-1` -> base actual de Etapa 1
+- `/etapa/etapa-1` -> implementacion actual consolidada de Etapa 1
+- `/etapa/etapa-2` -> landing provisional de llegada desde la transicion de Etapa 1
 - `/modelo` -> redirect legacy a `/etapa/etapa-1`
 - `/opciones` -> reseteo local de progreso
 
@@ -237,7 +239,7 @@ El flujo definitivo de Etapa 1 no se define ya por el estado heredado del codigo
 
 ### Base oficial actual en codigo
 
-`src/content/stages/stage-1.content.ts` queda ahora como esqueleto estructural oficial de Etapa 1. Su secuencia actual es:
+`src/content/stages/stage-1.content.ts` es la implementacion stage-driven oficial de Etapa 1. Su secuencia actual es:
 
 1. `Entrada de Etapa 1`
 2. `Presentacion inicial del modelo`
@@ -255,6 +257,31 @@ El flujo definitivo de Etapa 1 no se define ya por el estado heredado del codigo
 14. `Cierre de la etapa`
 15. `Video final`
 16. `Transicion a la Etapa 2`
+
+### Que se implemento finalmente
+
+Etapa 1 ya no esta solo en estado de base o esqueleto. Hoy queda implementada como recorrido funcional con:
+
+- entrada con Laia, CTA principal y opcion de `Continuar donde iba`
+- animacion amplia inicial del modelo, con desbloqueo del boton global `Ir a etapas`
+- viewer 3D persistente reducido, separado del sistema de continuidad
+- encabezado funcional del stage con titulo visible `Etapa 1: Reconocete para avanzar`
+- explicacion de ubicacion dentro del modelo antes del rail
+- rail sticky con resumen digerible de las 6 etapas
+- bloque de estados del docente con apoyo contextual de Laia
+- consentimiento obligatorio previo al autodiagnostico
+- chatbot contextual opcional y no bloqueante
+- autodiagnostico embebido integrado al marco visual de la cartilla
+- cierre de etapa, video final obligatorio y transicion ambientada a Etapa 2
+
+### Contraste con el README anterior
+
+Estas afirmaciones del README viejo ya no eran correctas y se actualizan aqui:
+
+- donde decia que Etapa 1 estaba en `base oficial en preparacion`, hoy ya existe una implementacion funcional de punta a punta
+- donde decia que `src/content/stages/stage-1.content.ts` era solo un `esqueleto estructural`, hoy ya define el flujo implementado
+- donde decia que `TransitionAnimationBlock` no estaba conectado, hoy ya forma parte del cierre obligatorio de Etapa 1
+- donde la lista de bloques soportados omitia `contextual-chatbot`, hoy ya se documenta como bloque vigente del sistema
 
 ### Entrada implementada
 
@@ -393,8 +420,10 @@ Limitaciones que permanecen:
 - sigue activa como narradora y guia textual
 - los dialogos viven en `content/`
 - la logica de mood sigue preparada en dominio/aplicacion
-- ya existe una seccion estructural propia para su papel de guia, texto y futuro audio
-- durante el autodiagnostico el foco queda en el embebido; la minimizacion formal de Laia se implementara en la siguiente iteracion
+- ya existe una seccion funcional propia para su papel de guia, texto y apoyo contextual dentro de la etapa
+- contextualiza la entrada, los estados, el consentimiento y la ayuda previa al embebido
+- durante el autodiagnostico entra en silencio narrativo para no competir con la interaccion principal
+- el audio sigue siendo una decision temporal pendiente, pero la estructura ya deja ese espacio reservado
 
 ### Multimedia hardcodeado en esta fase
 
@@ -403,9 +432,53 @@ Por decision de fase, los assets siguen hardcodeados y centralizados de forma pr
 - `public/videos/intro-modelo.mp4`
 - `public/videos/TransicionE1-a-E2.mp4`
 - `public/models/espiral.glb`
+- `public/ui/bg-home.png`
 - `public/ui/*`
+- `src/content/shared/character-assets.ts`
 
 La implementacion definitiva puede seguir usando rutas hardcodeadas mientras se mantengan ordenadas y documentadas.
+
+### Componentes reutilizables para otras etapas
+
+La implementacion actual de Etapa 1 deja estas piezas listas para reutilizarse en otras etapas sin acoplarlas al contenido de esta estacion:
+
+- `StageShell`, para ambientacion, viewer persistente y boton global de etapas
+- `ProgressiveSection`, `useProgressiveReveal` y `useScrollPin`, para reveal acumulativo y scroll guiado
+- `BlockRenderer` y los bloques `stage-entry`, `stage-header`, `horizontal-rail`, `state-cards`, `consent-form`, `contextual-chatbot`, `autodiagnostic-module`, `transition-animation` y `scaffold-panel`
+- `AnimationCard` y `AnimationBlock`, para momentos multimedia con bloqueo temporal y feedback de avance
+- `lib/progress.ts`, `lib/useProgress.ts` y `StageProgressStore`, para continuidad global y progreso por etapa
+
+La justificacion de mantenerlos como reutilizables es que el flujo aprobado exige independencia entre etapas, pero no justifica duplicar sistemas de shell, reveal, continuidad, rail o embeds.
+
+### Componentes y configuraciones especificas de Etapa 1
+
+Hoy lo realmente especifico de Etapa 1 vive sobre todo en configuracion y contenido:
+
+- `src/content/stages/stage-1.content.ts`, que define el orden, copy, dialogos, estados, prompts y acciones del flujo
+- los flags `stage1AnimationViewed` y `transitionAnimationViewed` usados en esta primera estacion
+- el video `public/videos/intro-modelo.mp4` como presentacion amplia de Etapa 1
+- el video `public/videos/TransicionE1-a-E2.mp4` como cierre actual de la transicion
+- los paneles del rail, los estados del docente y los prompts del chatbot cargados desde contenido hardcodeado
+
+La justificacion es no sobre-generalizar todavia el multimedia ni el contenido narrativo mientras la referencia definitiva sigue siendo el documento de flujo de Etapa 1.
+
+### Cambios importantes respecto al proyecto anterior
+
+- se elimino la cola vieja de `resultado -> intencion -> transicion` que contradecia el flujo definitivo
+- la entrada ahora convive con dos sistemas distintos y complementarios: `Continuar` para volver al punto exacto e `Ir a etapas` para navegacion global desbloqueada
+- el viewer dejo de comportarse como pseudo-navegacion interna y quedo separado de la continuidad real
+- el rail salio del inicio heredado y paso a aparecer solo despues de explicar la ubicacion en el modelo
+- el consentimiento, el chatbot y el embebido quedaron orquestados en el orden aprobado
+- el cierre ya no es un simple cambio de ruta: vuelve al marco principal, exige video final y luego habilita la llegada a Etapa 2
+
+### Supuestos y decisiones temporales vigentes
+
+- el documento **"Flujo de diseno - Etapa 1"** sigue siendo la referencia definitiva si el codigo o el README se contradicen
+- el multimedia permanece hardcodeado y centralizado por fase
+- el chatbot sigue siendo una ayuda provisional con respuestas hardcodeadas
+- el embebido sigue dependiendo de la integracion actual con N8N y puede caer a fallback
+- la landing de Etapa 2 existe solo como llegada segura mientras su flujo completo sigue pendiente
+- el audio de Laia sigue reservado como capacidad futura, no como funcionalidad ya cerrada
 
 ## Limpieza preparatoria de Etapa 1
 
@@ -444,10 +517,11 @@ Se mantiene como base reutilizable y util:
 - `useScrollPin`
 - `DialogueBlock` y `CharacterStepDialog`
 - `HorizontalScrollRail`
+- `ContextualChatbotBlock`
 - `StateCardsBlock`
 - `ConsentFormBlock`
 - `AutodiagnosticBlock`
-- `TransitionAnimationBlock` como bloque reusable, aunque no esta conectado en la base temporal actual de Etapa 1
+- `TransitionAnimationBlock`, ya conectado al cierre obligatorio de Etapa 1
 - `StageProgressStore`
 - `lib/progress.ts` y `lib/useProgress.ts` para navegacion general
 - `ResultRule.ts` y `resultStateId` como base de una futura lectura del autodiagnostico sin volver a introducir el flujo viejo
@@ -456,15 +530,15 @@ Se mantiene como base reutilizable y util:
 
 Desde esta limpieza:
 
-- `src/content/stages/stage-1.content.ts` es la base oficial del esqueleto de Etapa 1 en codigo
+- `src/content/stages/stage-1.content.ts` es la base oficial de la implementacion actual de Etapa 1 en codigo
 - el documento **"Flujo de diseno - Etapa 1"** es la referencia definitiva del flujo
-- cualquier nueva implementacion de bloques grandes debe partir de esta base limpia, no de los pasos eliminados
+- cualquier ajuste nuevo debe partir de esta base limpia y funcional, no de los pasos eliminados del flujo anterior
 
 ## Esqueleto estructural de Etapa 1
 
 ### Que se creo
 
-Se creo un esqueleto completo de secciones para Etapa 1 sin cerrar todavia el comportamiento fino de cada bloque.
+Esta seccion se conserva por trazabilidad, pero ya no describe un esqueleto pendiente. La estructura creada ya quedo consolidada en la implementacion actual de Etapa 1.
 
 Nuevas piezas estructurales:
 
@@ -507,14 +581,14 @@ El esqueleto sigue este orden logico:
 - el scroll vertical sigue siendo el mecanismo principal
 - cada bloque tiene su propio slot en `content/`
 - `StageShell` sigue resolviendo el viewer persistente sin meter logica de flujo dentro del contenido
-- los placeholders estructurales usan `scaffold-panel` para no inventar UI final prematura
+- los `scaffold-panel` que siguen existiendo solo se usan en slots de apoyo donde todavia conviene mantener una representacion ligera
 - la etapa sigue siendo independiente de las demas aunque ya reserve el espacio de la transicion
 
 ### Que sigue pendiente
 
 - navegacion final hacia etapas futuras cuando su contenido este publicado
 - integracion del chatbot real con backend o motor conversacional
-- cierre narrativo y visual detallado
+- audio contextual de Laia y afinacion multimedia fina
 
 ## Como agregar una nueva etapa
 
@@ -599,6 +673,7 @@ Actualmente aparece como:
 
 - avatar en `/inicio`
 - dialogos por bloque en las etapas
+- chatbot contextual opcional dentro de Etapa 1, por ahora con respuestas hardcodeadas
 - contexto preparado para estados de animo segun progreso
 
 Base tecnica:
