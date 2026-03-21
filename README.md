@@ -340,6 +340,14 @@ En el flujo definitivo, el usuario primero entiende su lugar en el modelo y lueg
 - el bloque no funciona como overlay ni bloquea el flujo: incluye un CTA directo para continuar al autodiagnostico
 - el contexto visual de Laia ya usa la base de `BuildLaiaContextUseCase`, pero las respuestas del chatbot siguen siendo provisionales
 
+### Autodiagnostico embebido
+
+- se accede despues del consentimiento valido y del paso de continuidad que activa `autodiagnosticStarted`
+- el embebido permanece dentro del marco visual de la cartilla, con un contenedor propio del stage en lugar de sentirse como una pagina ajena
+- durante este tramo Laia entra en silencio narrativo para que el foco quede en la interaccion individual con el modulo
+- si el embebido tarda en cargar, el stage mantiene una capa de espera integrada y, si falla, muestra un fallback sin romper la continuidad visual
+- el scroll general no se reemplaza: el autodiagnostico sigue siendo una seccion mas del recorrido y, al completarse, habilita el cierre de la etapa
+
 ### Papel de Laia
 
 - sigue activa como narradora y guia textual
@@ -432,6 +440,7 @@ Nuevas piezas estructurales:
 - implementacion real del bloque de estados del docente antes del consentimiento
 - refactor del bloque de consentimiento para reforzar confidencialidad, proposito formativo y gating del flujo
 - implementacion del chatbot contextual como ayuda opcional previa al embebido
+- refactor del autodiagnostico embebido para integrarlo al stage y ampliar su marco visual
 
 ### Como quedo organizado
 

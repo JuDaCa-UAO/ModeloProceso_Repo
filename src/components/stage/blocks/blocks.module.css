@@ -280,6 +280,65 @@
   gap: 14px;
 }
 
+.embedStageCard {
+  border-radius: 22px;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background:
+    radial-gradient(circle at 10% 12%, rgba(254, 106, 111, 0.11), transparent 36%),
+    linear-gradient(180deg, rgba(10, 6, 7, 0.82), rgba(5, 3, 4, 0.9));
+  padding: clamp(18px, 2.2vw, 26px);
+  display: grid;
+  gap: 16px;
+}
+
+.embedStageTop {
+  display: flex;
+  justify-content: space-between;
+  gap: 16px;
+  align-items: flex-start;
+  flex-wrap: wrap;
+}
+
+.embedStageCopy {
+  display: grid;
+  gap: 8px;
+  max-width: 70ch;
+}
+
+.embedStageLabel,
+.embedStageMetaTag,
+.embedLoadingTag {
+  justify-self: start;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.22);
+  background: rgba(80, 6, 8, 0.18);
+  color: #fe6a6f;
+  padding: 4px 10px;
+  font-size: 11px;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+
+.embedStageTitle {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(22px, 2.2vw, 30px);
+  line-height: 1.15;
+}
+
+.embedStageBody {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: 15px;
+  line-height: 1.55;
+}
+
+.embedStageMeta {
+  display: grid;
+  gap: 10px;
+  justify-items: end;
+}
+
 .embedHeader {
   display: flex;
   align-items: center;
@@ -308,6 +367,19 @@
   align-items: stretch;
 }
 
+.embedViewportLarge {
+  position: relative;
+  border-radius: 18px;
+  border: 1px solid rgba(248, 46, 53, 0.18);
+  background:
+    linear-gradient(180deg, rgba(4, 2, 3, 0.9), rgba(4, 2, 3, 0.84)),
+    radial-gradient(circle at 50% 50%, rgba(248, 46, 53, 0.06), transparent 58%);
+  min-height: clamp(420px, 62dvh, 780px);
+  overflow: hidden;
+  display: grid;
+  align-items: stretch;
+}
+
 .embedIframe {
   width: 100%;
   min-height: clamp(260px, 38dvh, 430px);
@@ -315,11 +387,59 @@
   background: transparent;
 }
 
+.embedIframeLarge {
+  min-height: clamp(420px, 62dvh, 780px);
+}
+
+.embedIframeLoading {
+  opacity: 0;
+}
+
+.embedLoadingLayer {
+  position: absolute;
+  inset: 0;
+  display: grid;
+  align-content: center;
+  justify-items: center;
+  gap: 10px;
+  padding: 20px;
+  text-align: center;
+  background:
+    linear-gradient(180deg, rgba(4, 2, 3, 0.88), rgba(4, 2, 3, 0.76)),
+    radial-gradient(circle at 50% 38%, rgba(254, 106, 111, 0.12), transparent 42%);
+}
+
+.embedLoadingTitle {
+  margin: 0;
+  color: #fff;
+  font-size: clamp(18px, 1.8vw, 24px);
+  line-height: 1.3;
+}
+
+.embedLoadingCopy {
+  margin: 0;
+  color: #d1d1d1;
+  font-size: 14px;
+  line-height: 1.5;
+  max-width: 44ch;
+}
+
 .embedFallback {
   padding: 16px;
   display: grid;
   align-content: center;
   gap: 8px;
+}
+
+.embedFallbackLarge {
+  height: 100%;
+  padding: clamp(18px, 3vw, 28px);
+  display: grid;
+  align-content: center;
+  gap: 10px;
+  background:
+    radial-gradient(circle at 14% 16%, rgba(254, 106, 111, 0.1), transparent 40%),
+    rgba(7, 4, 5, 0.82);
 }
 
 .embedFallbackTitle {
@@ -843,11 +963,16 @@
 }
 
 @media (max-width: 760px) {
+  .embedStageTop,
   .chatbotFooter,
   .embedActions,
   .actionRow {
     display: grid;
     grid-template-columns: 1fr;
+  }
+
+  .embedStageMeta {
+    justify-items: start;
   }
 
   .stageHeaderMetaRow {

@@ -407,7 +407,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                                     id: "autodiagnostico-embebido",
                                                     title: "Autodiagnostico embebido",
                                                     subtitle:
-                                                      "Nucleo operativo de la Etapa 1 dentro del nuevo esqueleto.",
+                                                      "Nucleo operativo de la Etapa 1, integrado al stage y con Laia en silencio narrativo durante su uso.",
                                                     surface: "plain",
                                                     gate: {
                                                       requires: [
