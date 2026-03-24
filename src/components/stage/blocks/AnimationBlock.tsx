@@ -9,6 +9,8 @@ type AnimationBlockProps = {
   flagToSet: "stage1AnimationViewed" | "transitionAnimationViewed";
   blockAdvance?: boolean;
   onPlayStart?: () => void;
+  viewerMode?: "video" | "mini-spiral";
+  minSpiralViewMs?: number;
 };
 
 /**
@@ -24,6 +26,8 @@ export default function AnimationBlock({
   flagToSet,
   blockAdvance = false,
   onPlayStart,
+  viewerMode = "video",
+  minSpiralViewMs,
 }: AnimationBlockProps) {
   const completed = ctx.flags[flagToSet];
 
@@ -46,9 +50,13 @@ export default function AnimationBlock({
       blockAdvanceUntilComplete={blockAdvance}
       blockedAdvanceMessage={
         blockAdvance
-          ? "Para continuar con la etapa, primero debes reproducir y completar esta animación. Hasta entonces no se habilita el resto del contenido."
+          ? viewerMode === "mini-spiral"
+            ? "Para continuar con la etapa, explora el modelo 3D y completa la visualización. Hasta entonces no se habilita el resto del contenido."
+            : "Para continuar con la etapa, primero debes reproducir y completar esta animación. Hasta entonces no se habilita el resto del contenido."
           : undefined
       }
+      viewerMode={viewerMode}
+      minSpiralViewMs={minSpiralViewMs}
     />
   );
 }

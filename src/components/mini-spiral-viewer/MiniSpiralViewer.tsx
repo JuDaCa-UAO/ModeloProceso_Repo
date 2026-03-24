@@ -5,11 +5,11 @@ import { Canvas, useFrame } from "@react-three/fiber";
 import { Center, OrbitControls } from "@react-three/drei";
 import Model from "@/app/modelo/Model";
 
-function RotatingSpiralMini() {
+function RotatingSpiralMini({ enableRotation }: { enableRotation: boolean }) {
   const spinRef = useRef<{ rotation: { y: number } } | null>(null);
 
   useFrame((_, delta) => {
-    if (!spinRef.current) return;
+    if (!enableRotation || !spinRef.current) return;
     spinRef.current.rotation.y += delta * 0.5;
   });
 
@@ -22,7 +22,14 @@ function RotatingSpiralMini() {
   );
 }
 
-export default function MiniSpiralViewer() {
+type MiniSpiralViewerProps = {
+  /** Si es false, el modelo queda estático (p. ej. prefers-reduced-motion). */
+  enableRotation?: boolean;
+};
+
+export default function MiniSpiralViewer({
+  enableRotation = true,
+}: MiniSpiralViewerProps) {
   return (
     <Canvas flat camera={{ position: [0, 0, 35], fov: 42 }}>
       <ambientLight intensity={1.05} color="#ffffff" />
@@ -43,7 +50,7 @@ export default function MiniSpiralViewer() {
         maxDistance={50}
       />
 
-      <RotatingSpiralMini />
+      <RotatingSpiralMini enableRotation={enableRotation} />
     </Canvas>
   );
 }

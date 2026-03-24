@@ -8,6 +8,7 @@ import {
   useState,
   type ReactNode,
 } from "react";
+import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 import styles from "./stage.module.css";
 
 type AnimationCardProps = {
@@ -22,6 +23,10 @@ type AnimationCardProps = {
   blockAdvanceUntilComplete?: boolean;
   blockedAdvanceMessage?: string;
   onPlayStart?: () => void;
+  /** Misma espiral 3D que el visor fijo (espiral.glb), en lugar del video de intro. */
+  viewerMode?: "video" | "mini-spiral";
+  /** Tiempo mínimo de exploración antes de habilitar "Completar visualización" (modo mini-spiral). */
+  minSpiralViewMs?: number;
 };
 
 function usePrefersReducedMotion() {
@@ -51,17 +56,22 @@ export default function AnimationCard({
   blockAdvanceUntilComplete = false,
   blockedAdvanceMessage = "Debes reproducir y completar este video para continuar con la siguiente parte de la etapa.",
   onPlayStart,
+  viewerMode = "video",
+  minSpiralViewMs = 12_000,
 }: AnimationCardProps) {
   const prefersReducedMotion = usePrefersReducedMotion();
   const rootRef = useRef<HTMLDivElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const touchYRef = useRef<number | null>(null);
   const feedbackTimerRef = useRef<number | null>(null);
+  const spiralStartRef = useRef<number | null>(null);
   const [isVisible, setIsVisible] = useState(false);
   const [started, setStarted] = useState(false);
   const [playing, setPlaying] = useState(false);
   const [reducedReady, setReducedReady] = useState(false);
   const [showBlockedFeedback, setShowBlockedFeedback] = useState(false);
+  const [spiralStarted, setSpiralStarted] = useState(false);
+  const [spiralReady, setSpiralReady] = useState(false);
   const playNotifiedRef = useRef(false);
 
   const showBlockedCard = useCallback(() => {
@@ -172,10 +182,46 @@ export default function AnimationCard({
     playNotifiedRef.current = true;
   }, [completed]);
 
-  const statusLabel = completed ? "Vista" : playing ? "Reproduciendo" : "Pendiente";
+  useEffect(() => {
+    if (viewerMode !== "mini-spiral" || completed || !isVisible) return;
+    if (spiralStarted) return;
+    spiralStartRef.current = Date.now();
+    setSpiralStarted(true);
+    if (!playNotifiedRef.current) {
+      playNotifiedRef.current = true;
+      onPlayStart?.();
+    }
+  }, [completed, isVisible, onPlayStart, spiralStarted, viewerMode]);
+
+  useEffect(() => {
+    if (viewerMode !== "mini-spiral" || completed || !spiralStarted) return;
+    const tick = () => {
+      if (spiralStartRef.current === null) return;
+      setSpiralReady(Date.now() - spiralStartRef.current >= minSpiralViewMs);
+    };
+    tick();
+    const id = window.setInterval(tick, 400);
+    return () => window.clearInterval(id);
+  }, [completed, minSpiralViewMs, spiralStarted, viewerMode]);
+
+  const statusLabel =
+    completed
+      ? "Vista"
+      : viewerMode === "mini-spiral"
+        ? spiralReady
+          ? "Listo"
+          : "Explorando"
+        : playing
+          ? "Reproduciendo"
+          : "Pendiente";
+
   const showManualPlay = useMemo(
-    () => !prefersReducedMotion && !completed && (!started || !playing),
-    [completed, playing, prefersReducedMotion, started]
+    () =>
+      viewerMode === "video" &&
+      !prefersReducedMotion &&
+      !completed &&
+      (!started || !playing),
+    [completed, playing, prefersReducedMotion, started, viewerMode]
   );
 
   return (
@@ -194,7 +240,13 @@ export default function AnimationCard({
       </div>
 
       <div className={styles.animationViewport}>
-        {prefersReducedMotion ? (
+        {viewerMode === "mini-spiral" ? (
+          <div className={styles.animationViewerWrap}>
+            <MiniSpiralViewer
+              enableRotation={!prefersReducedMotion}
+            />
+          </div>
+        ) : prefersReducedMotion ? (
           <div className={styles.reducedMotionFallback}>
             <div className={styles.reducedMotionFrame} />
             <p>
@@ -236,13 +288,24 @@ export default function AnimationCard({
       ) : null}
 
       <div className={styles.animationFooter}>
+        {viewerMode === "mini-spiral" && !completed ? (
+          <button
+            type="button"
+            className={styles.buttonSecondary}
+            disabled={!spiralReady}
+            onClick={onComplete}
+          >
+            {spiralReady ? "Completar visualización" : "Explora el modelo un momento más…"}
+          </button>
+        ) : null}
+
         {showManualPlay ? (
           <button type="button" className={styles.buttonSecondary} onClick={() => void play()}>
             {started ? "Reproducir de nuevo" : "Reproducir"}
           </button>
         ) : null}
 
-        {prefersReducedMotion && !completed ? (
+        {prefersReducedMotion && !completed && viewerMode === "video" ? (
           <button
             type="button"
             className={styles.buttonSecondary}

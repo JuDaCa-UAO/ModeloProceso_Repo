@@ -81,6 +81,7 @@ export default function BlockRenderer({
                 videoSrc={MODEL_INTRO_VIDEO_URL}
                 flagToSet="stage1AnimationViewed"
                 blockAdvance
+                viewerMode="mini-spiral"
               />
             );
 

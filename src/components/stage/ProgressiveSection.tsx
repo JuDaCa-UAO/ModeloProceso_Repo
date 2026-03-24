@@ -13,6 +13,8 @@ type ProgressiveSectionProps = {
   registerRef: (id: string, node: HTMLElement | null) => void;
   indexLabel?: string;
   surface?: "card" | "plain";
+  /** Si es false, difiere el montaje del contenido (dialogo/bloques/acciones) para evitar "saltos" agresivos. */
+  renderBody?: boolean;
 };
 
 export default function ProgressiveSection({
@@ -25,6 +27,7 @@ export default function ProgressiveSection({
   registerRef,
   indexLabel,
   surface = "plain",
+  renderBody = true,
 }: ProgressiveSectionProps) {
   return (
     <section
@@ -50,7 +53,7 @@ export default function ProgressiveSection({
             </h2>
             {subtitle ? <p className={styles.subtitle}>{subtitle}</p> : null}
           </header>
-          <div className={styles.body}>{children}</div>
+          <div className={styles.body}>{renderBody ? children : null}</div>
         </div>
       </div>
     </section>
