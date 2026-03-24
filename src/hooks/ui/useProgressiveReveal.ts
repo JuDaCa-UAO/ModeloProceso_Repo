@@ -78,7 +78,15 @@ export function useProgressiveReveal({
             nextActiveId = id;
           }
         }
-        if (nextActiveId) {
+        const currentActiveId = lastActiveIdRef.current;
+        const currentRatio = ratiosRef.current.get(currentActiveId) ?? 0;
+        // Hysteresis: evita parpadeo del texto cuando dos secciones tienen ratios similares.
+        // Solo cambia si el nuevo gana claramente o la actual casi no se ve.
+        const HYSTERESIS = 0.08;
+        const shouldSwitch =
+          nextActiveId &&
+          (nextActiveRatio > currentRatio + HYSTERESIS || currentRatio < 0.06);
+        if (shouldSwitch) {
           lastActiveIdRef.current = nextActiveId;
           setActiveId(nextActiveId);
         }
