@@ -1,8 +1,40 @@
 "use client";
 
-import { useCallback, useEffect, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import styles from "./CharacterStepDialog.module.css";
+
+/** Memoizado para evitar re-render del avatar en cada tick del typewriter. */
+const CharacterAvatar = memo(function CharacterAvatar({
+  src,
+  alt,
+  characterName,
+  onError,
+}: {
+  src: string;
+  alt?: string;
+  characterName: string;
+  onError: () => void;
+}) {
+  return (
+    <div className={styles.left}>
+      <div className={styles.avatarFrame}>
+        <Image
+          src={src}
+          alt={alt || characterName}
+          fill
+          className={styles.avatarImg}
+          priority
+          unoptimized
+          onError={onError}
+        />
+        <div className={`${styles.avatarTag} ${styles.avatarTagInside}`}>
+          {characterName}
+        </div>
+      </div>
+    </div>
+  );
+});
 
 export type CharacterDialogStep = {
   text: string;
@@ -139,11 +171,11 @@ export default function CharacterStepDialog({
     return () => window.removeEventListener("keydown", onKeyDown);
   }, [completeDialog, goNext, goPrevious, isDecisionStep]);
 
-  function handleAvatarError() {
+  const handleAvatarError = useCallback(() => {
     if (step && step.imgSrc !== DEFAULT_CHARACTER_IMAGE) {
       setErroredStepKey(stepKey);
     }
-  }
+  }, [step, stepKey]);
 
   if (!step) return null;
 
@@ -155,22 +187,12 @@ export default function CharacterStepDialog({
         density === "tight" ? styles.tight : ""
       } ${className ?? ""}`.trim()}
     >
-      <div className={styles.left}>
-        <div className={styles.avatarFrame}>
-          <Image
-            src={resolvedImgSrc}
-            alt={step.imgAlt || characterName}
-            fill
-            className={styles.avatarImg}
-            priority
-            unoptimized
-            onError={handleAvatarError}
-          />
-          <div className={`${styles.avatarTag} ${styles.avatarTagInside}`}>
-            {characterName}
-          </div>
-        </div>
-      </div>
+      <CharacterAvatar
+        src={resolvedImgSrc}
+        alt={step.imgAlt}
+        characterName={characterName}
+        onError={handleAvatarError}
+      />
 
       <div className={styles.right}>
         <div className={styles.dialogBox}>
