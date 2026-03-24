@@ -2,37 +2,28 @@
  * PRESENTATION — Client Component (Stage Engine)
  *
  * StageClient: motor genérico de renderizado de etapas.
- *
- * ANTES: Etapa1Client.tsx — 562 líneas, acoplado a etapa 1, con:
- *   - 2 funciones de lógica de negocio inline
- *   - 1 URL de N8N hardcodeada
- *   - 1 switch de 10 casos embebido
- *   - Lógica de flags calculada en el componente
- *
- * AHORA: ~100 líneas, genérico por stageId, con:
- *   - Zero lógica de negocio (delegada a Application)
- *   - Zero URLs hardcodeadas (en Infrastructure)
- *   - BlockRenderer externo (un componente por bloque)
- *   - Flags calculados por EvaluateFlagsUseCase
- *
- * Depende de: useStageProgress (hook domain), StageShell, BlockRenderer,
- *             ProgressiveSection, DialogueBlock, GatingRule (dominio).
+ * Usa StageSection como componentes separados y persiste el progreso
+ * de secciones continuadas en el store.
  */
 
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo } from "react";
+import { Fragment, useCallback, useEffect, useMemo, useRef } from "react";
 import { useRouter } from "next/navigation";
 import StageShell from "@/components/stage/StageShell";
-import ProgressiveSection from "@/components/stage/ProgressiveSection";
-import DialogueBlock from "@/components/stage/DialogueBlock";
-import BlockRenderer from "@/components/stage/BlockRenderer";
-import stageStyles from "@/components/stage/stage.module.css";
+import StageSection from "@/components/stage/StageSection";
+import {
+  SectionContinueDock,
+  SectionScrollProgress,
+} from "@/components/stage/SectionScrollChrome";
+import { SectionScrollProvider } from "@/contexts/SectionScrollContext";
 import { useStageProgress } from "@/hooks/domain/useStageProgress";
 import { useProgressiveReveal } from "@/hooks/ui/useProgressiveReveal";
+import { useSectionScrollGate } from "@/hooks/ui/useSectionScrollGate";
 import { hasRequiredFlags } from "@domain/stage/rules/GatingRule";
+import { getContinueRequires, sectionNeedsContinueButton } from "@/lib/sectionScrollFlow";
 import { writeProgress } from "@/lib/progress";
-import type { SectionAction, SectionNode } from "@/types/stage";
+import type { SectionNode } from "@/types/stage";
 import type { BlockContext } from "@/components/stage/blocks/BlockContext";
 
 // ─── helpers ──────────────────────────────────────────────────────────────────
@@ -47,6 +38,18 @@ function flatIds(nodes: SectionNode[]): string[] {
   };
   walk(nodes);
   return ids;
+}
+
+function buildNodeById(nodes: SectionNode[]): Map<string, SectionNode> {
+  const m = new Map<string, SectionNode>();
+  const walk = (items: SectionNode[]) => {
+    for (const item of items) {
+      m.set(item.id, item);
+      if (item.children?.length) walk(item.children);
+    }
+  };
+  walk(nodes);
+  return m;
 }
 
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -68,13 +71,114 @@ export default function StageClient({
   const { state, flags, update } = useStageProgress(stageId);
 
   const allIds = useMemo(() => flatIds(initialTree), [initialTree]);
-  const { activeId, revealed, registerSectionRef } = useProgressiveReveal({
+  const nodeById = useMemo(() => buildNodeById(initialTree), [initialTree]);
+
+  const { orderedVisibleIds, visibleIndexById } = useMemo(() => {
+    const ordered: string[] = [];
+    const walk = (nodes: SectionNode[]) => {
+      for (const node of nodes) {
+        if (!hasRequiredFlags(flags, node.gate?.requires)) continue;
+        ordered.push(node.id);
+        if (node.children?.length) walk(node.children);
+      }
+    };
+    walk(initialTree);
+    return {
+      orderedVisibleIds: ordered,
+      visibleIndexById: new Map(ordered.map((id, i) => [id, i + 1])),
+    };
+  }, [flags, initialTree]);
+
+  /** Progreso persistido: secciones ya continuadas. */
+  const continuedSectionIds = useMemo(
+    () => new Set(state.continuedSectionIds ?? []),
+    [state.continuedSectionIds]
+  );
+
+  const sectionScrollRefs = useRef(new Map<string, HTMLElement>());
+
+  const { activeId, revealed, registerSectionRef: revealRegister } = useProgressiveReveal({
     ids: allIds,
     threshold: 0.14,
     rootMargin: "0px 0px -18% 0px",
   });
 
-  // Registra el inicio de la etapa en el progreso global de navegación
+  const registerSectionRef = useCallback(
+    (id: string, node: HTMLElement | null) => {
+      if (node) sectionScrollRefs.current.set(id, node);
+      else sectionScrollRefs.current.delete(id);
+      revealRegister(id, node);
+    },
+    [revealRegister]
+  );
+
+  const blockingSectionId = useMemo(() => {
+    for (const id of orderedVisibleIds) {
+      if (continuedSectionIds.has(id)) continue;
+      const n = nodeById.get(id);
+      if (n && sectionNeedsContinueButton(n)) return id;
+    }
+    return null;
+  }, [orderedVisibleIds, continuedSectionIds, nodeById]);
+
+  const getCanContinue = useCallback(
+    (id: string) => {
+      const n = nodeById.get(id);
+      if (!n) return false;
+      const reqs = getContinueRequires(n);
+      return reqs.length === 0 || hasRequiredFlags(flags, reqs);
+    },
+    [nodeById, flags]
+  );
+
+  const blockingNode = blockingSectionId ? nodeById.get(blockingSectionId) ?? null : null;
+  const continueDisabled =
+    blockingNode !== null &&
+    getContinueRequires(blockingNode).length > 0 &&
+    !hasRequiredFlags(flags, getContinueRequires(blockingNode));
+
+  const nextSectionId = blockingSectionId
+    ? orderedVisibleIds[orderedVisibleIds.indexOf(blockingSectionId) + 1] ?? null
+    : null;
+
+  useSectionScrollGate({
+    blockingSectionId,
+    nextSectionId,
+    sectionRefs: sectionScrollRefs,
+    shouldBlock: Boolean(blockingSectionId) && !continueDisabled,
+  });
+
+  const onContinueSection = useCallback(
+    (id?: string) => {
+      const targetId = id ?? blockingSectionId;
+      if (!targetId) return;
+      const node = nodeById.get(targetId);
+      if (node) {
+        const reqs = getContinueRequires(node);
+        if (reqs.length > 0 && !hasRequiredFlags(flags, reqs)) return;
+      }
+      const nextIds = [...(state.continuedSectionIds ?? []), targetId];
+      update({ continuedSectionIds: nextIds });
+      const idx = orderedVisibleIds.indexOf(targetId);
+      const next = orderedVisibleIds[idx + 1];
+      if (next) {
+        requestAnimationFrame(() => {
+          requestAnimationFrame(() => {
+            document.getElementById(next)?.scrollIntoView({ behavior: "smooth", block: "start" });
+          });
+        });
+      }
+    },
+    [
+      blockingSectionId,
+      nodeById,
+      flags,
+      orderedVisibleIds,
+      state.continuedSectionIds,
+      update,
+    ]
+  );
+
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
   }, [stageId]);
@@ -96,115 +200,65 @@ export default function StageClient({
     [stageId, state, flags, update, onScrollTo, onNavigate]
   );
 
-  // ── Viewer sidebar metadata ─────────────────────────────────────────────────
   const viewerStatus = flags.transitionAnimationViewed
     ? { label: "Lista para siguiente etapa", tone: "done" as const }
     : { label: `${stageName} activa`, tone: "active" as const };
 
-  const completedCount = [
-    flags.stage1AnimationViewed,
-    flags.consentValidated,
-    flags.autodiagnosticCompleted,
-    flags.intentionSaved,
-    flags.transitionAnimationViewed,
-  ].filter(Boolean).length;
-
-  const viewerMeta = [
-    { label: "Etapa", value: stageName },
-    { label: "Avance", value: `${completedCount}/5 hitos` },
-  ];
-
-  // ── Visible index map for section labels ────────────────────────────────────
-  const visibleIndexById = useMemo(() => {
-    const ordered: string[] = [];
-    const walk = (nodes: SectionNode[]) => {
-      for (const node of nodes) {
-        if (!hasRequiredFlags(flags, node.gate?.requires)) continue;
-        ordered.push(node.id);
-        if (node.children?.length) walk(node.children);
-      }
-    };
-    walk(initialTree);
-    return new Map(ordered.map((id, i) => [id, i + 1]));
-  }, [flags, initialTree]);
-
-  // ── Action renderer ─────────────────────────────────────────────────────────
-  const renderActions = (actions: SectionAction[] | undefined) => {
-    if (!actions?.length) return null;
-    return (
-      <div className={stageStyles.buttonRow}>
-        {actions.map((action) => {
-          const variant = action.variant ?? "secondary";
-          const cls =
-            variant === "primary" ? stageStyles.buttonPrimary : stageStyles.buttonSecondary;
-
-          if (action.type === "scroll-to") {
-            return (
-              <button
-                key={`scroll:${action.targetId}`}
-                type="button"
-                className={cls}
-                onClick={() => onScrollTo(action.targetId)}
-              >
-                {action.label}
-              </button>
-            );
-          }
-
-          const enabled = hasRequiredFlags(flags, action.requires);
-          return (
-            <button
-              key={`nav:${action.href}`}
-              type="button"
-              className={cls}
-              disabled={!enabled}
-              onClick={() => onNavigate(action.href)}
-            >
-              {action.label}
-            </button>
-          );
-        })}
-      </div>
-    );
-  };
-
-  // ── Node renderer ────────────────────────────────────────────────────────────
   const renderNode = (node: SectionNode): React.ReactNode => {
     if (!hasRequiredFlags(flags, node.gate?.requires)) return null;
 
     const index = visibleIndexById.get(node.id) ?? 0;
+    const activeIndex = Math.max(0, orderedVisibleIds.indexOf(activeId));
 
     return (
       <Fragment key={node.id}>
-        <ProgressiveSection
-          id={node.id}
-          title={node.title}
-          subtitle={node.subtitle}
+        <StageSection
+          node={node}
+          index={index}
           active={activeId === node.id}
           revealed={revealed.has(node.id)}
+          activeIndex={activeIndex}
           registerRef={registerSectionRef}
-          indexLabel={`Sección ${index}`}
-          surface={node.surface ?? "plain"}
-        >
-          {node.dialogue?.length ? <DialogueBlock steps={node.dialogue} /> : null}
-          <BlockRenderer blocks={node.content} section={node} ctx={ctx} />
-          {renderActions(node.actions)}
-        </ProgressiveSection>
-
+          ctx={ctx}
+          flags={flags}
+        />
         {node.children?.map((child) => renderNode(child))}
       </Fragment>
     );
   };
 
+  const scrollProgressEl =
+    orderedVisibleIds.length > 0 ? (
+      <SectionScrollProgress
+        orderedIds={orderedVisibleIds}
+        activeId={activeId}
+        continuedIds={continuedSectionIds}
+      />
+    ) : null;
+
   return (
-    <StageShell
-      viewerTitle={stageName}
-      viewerStatusLabel={viewerStatus.label}
-      viewerStatusTone={viewerStatus.tone}
-      viewerMeta={viewerMeta}
-      viewerEnabled={state.stage1AnimationStarted || flags.stage1AnimationViewed}
+    <SectionScrollProvider
+      continuedIds={continuedSectionIds}
+      onContinue={onContinueSection}
+      blockingSectionId={blockingSectionId}
+      getCanContinue={getCanContinue}
+      onScrollTo={onScrollTo}
     >
-      {initialTree.map((node) => renderNode(node))}
-    </StageShell>
+      <StageShell
+        viewerTitle={stageName}
+        viewerStatusLabel={viewerStatus.label}
+        viewerStatusTone={viewerStatus.tone}
+        scrollProgress={scrollProgressEl}
+        viewerEnabled={state.stage1AnimationStarted || flags.stage1AnimationViewed}
+      >
+        {initialTree.map((node) => renderNode(node))}
+        <SectionContinueDock
+          visible={Boolean(blockingSectionId)}
+          sectionTitle={blockingNode?.title ?? ""}
+          continueDisabled={continueDisabled}
+          onContinue={() => onContinueSection()}
+        />
+      </StageShell>
+    </SectionScrollProvider>
   );
 }
