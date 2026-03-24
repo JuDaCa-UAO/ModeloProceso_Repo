@@ -143,8 +143,8 @@ export const RAIL_PANELS: RailPanel[] = [
 export const STAGE1_TREE: SectionNode[] = [
   {
     id: "modelo-resumen",
-    title: "Resumen del modelo",
-    subtitle: "Recorrido general de las etapas antes del autodiagnóstico.",
+    title: "Inicio del recorrido",
+    subtitle: "Bienvenida y contexto antes de continuar.",
     surface: "plain",
     dialogue: [
       {
@@ -158,13 +158,14 @@ export const STAGE1_TREE: SectionNode[] = [
         imgAlt: "Laia invita a recorrer las etapas",
       },
     ],
-    content: [{ type: "horizontal-rail", panels: RAIL_PANELS }],
+    gate: { completionFlag: "stage1IntroDialogueCompleted" },
+    content: [],
     children: [
       {
         id: "animacion-estado",
         title: "Activación del estado de Etapa 1",
         subtitle:
-          "La animación debe verse completa antes de avanzar al resto de la etapa.",
+          "Explora el modelo 3D (la misma vista que el visor) y completa la visualización antes de avanzar al resto de la etapa.",
         surface: "plain",
         content: [{ type: "stage1-animation" }],
         gate: { completionFlag: "stage1AnimationViewed" },
@@ -195,9 +196,8 @@ export const STAGE1_TREE: SectionNode[] = [
             children: [
               {
                 id: "encuadre",
-                title: "Encuadre de la Etapa 1",
-                subtitle:
-                  "Por qué el recorrido inicia con autodiagnóstico y cómo se orienta la experiencia.",
+                title: "Resumen del modelo",
+                subtitle: "Recorrido de las 6 etapas y encuadre de la Etapa 1.",
                 surface: "plain",
                 dialogue: [
                   {
@@ -208,6 +208,7 @@ export const STAGE1_TREE: SectionNode[] = [
                 ],
                 gate: { requires: ["stage1AnimationViewed"] },
                 content: [
+                  { type: "horizontal-rail", panels: RAIL_PANELS },
                   {
                     type: "paragraphs",
                     paragraphs: [
@@ -261,45 +262,27 @@ export const STAGE1_TREE: SectionNode[] = [
                             content: [{ type: "result-summary" }],
                             children: [
                               {
-                                id: "intencion",
-                                title: "Intención personal",
+                                id: "transicion-etapa-2",
+                                title: "Transición a la Etapa 2",
                                 subtitle:
-                                  "Registro breve para acompañar tu recorrido.",
+                                  "Visualiza la transición completa para habilitar el avance.",
                                 surface: "plain",
                                 gate: { requires: ["autodiagnosticCompleted"] },
                                 dialogue: [
                                   {
-                                    text: "Registrar tu intención ayuda a revisar, más adelante, cómo evolucionó tu experiencia a lo largo de la espiral.",
+                                    text: "Con tu punto de partida identificado, el siguiente paso es explorar posibilidades reales de GenAI para fortalecer actividades concretas de aprendizaje.",
                                     imgSrc: LAIA_ASSETS.explain,
-                                    imgAlt: "Laia invita a registrar intención",
+                                    imgAlt: "Laia enlaza con la etapa 2",
                                   },
                                 ],
-                                content: [{ type: "intention-form" }],
-                                children: [
+                                content: [{ type: "transition-animation" }],
+                                actions: [
                                   {
-                                    id: "transicion-etapa-2",
-                                    title: "Transición a la Etapa 2",
-                                    subtitle:
-                                      "Visualiza la transición completa para habilitar el avance.",
-                                    surface: "plain",
-                                    gate: { requires: ["intentionSaved"] },
-                                    dialogue: [
-                                      {
-                                        text: "Con tu punto de partida identificado, el siguiente paso es explorar posibilidades reales de GenAI para fortalecer actividades concretas de aprendizaje.",
-                                        imgSrc: LAIA_ASSETS.explain,
-                                        imgAlt: "Laia enlaza con la etapa 2",
-                                      },
-                                    ],
-                                    content: [{ type: "transition-animation" }],
-                                    actions: [
-                                      {
-                                        type: "navigate",
-                                        label: "Continuar a Etapa 2",
-                                        href: "/etapa/etapa-2",
-                                        variant: "primary",
-                                        requires: ["transitionAnimationViewed"],
-                                      },
-                                    ],
+                                    type: "navigate",
+                                    label: "Continuar a Etapa 2",
+                                    href: "/etapa/etapa-2",
+                                    variant: "primary",
+                                    requires: ["transitionAnimationViewed"],
                                   },
                                 ],
                               },
