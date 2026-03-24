@@ -27,6 +27,7 @@ export function evaluateFlags(
   state: Stage1ProgressState
 ): Record<StageFlagKey, boolean> {
   return {
+    stage1IntroDialogueCompleted: state.stage1IntroDialogueCompleted,
     stage1AnimationViewed: state.stage1AnimationViewed,
     consentValidated: evaluateConsent(state),
     autodiagnosticStarted: state.autodiagnosticStarted,

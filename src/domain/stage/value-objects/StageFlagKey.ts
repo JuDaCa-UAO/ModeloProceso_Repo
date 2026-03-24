@@ -9,6 +9,7 @@
  */
 
 export type StageFlagKey =
+  | "stage1IntroDialogueCompleted"
   | "stage1AnimationViewed"
   | "consentValidated"
   | "autodiagnosticStarted"

@@ -7,6 +7,7 @@
  */
 
 export type StageFlagKey =
+  | "stage1IntroDialogueCompleted"
   | "stage1AnimationViewed"
   | "consentValidated"
   | "autodiagnosticStarted"
@@ -56,6 +57,14 @@ export type SectionGate = {
   completionFlag?: StageFlagKey;
 };
 
+/** Control opcional del flujo de scroll entre secciones (botón Continuar + bloqueo). */
+export type SectionScrollFlow = {
+  /** No mostrar botón ni bloquear scroll hacia la siguiente sección. */
+  skipContinue?: boolean;
+  /** Flags extra para habilitar Continuar (se unen con `gate.completionFlag` si existe). */
+  continueRequires?: StageFlagKey[];
+};
+
 export type SectionContentBlock =
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "callout"; title?: string; body: string }
@@ -78,6 +87,8 @@ export type SectionNode = {
   content: SectionContentBlock[];
   actions?: SectionAction[];
   gate?: SectionGate;
+  /** Flujo de scroll: indicador + Continuar antes de pasar a la siguiente sección. */
+  scrollFlow?: SectionScrollFlow;
   children?: SectionNode[];
   surface?: "card" | "plain";
   dialogueOptional?: boolean;

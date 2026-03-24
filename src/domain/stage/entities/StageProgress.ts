@@ -11,6 +11,10 @@
 import type { StageResultId } from "../value-objects/HierarchyLevel";
 
 export type Stage1ProgressState = {
+  /** IDs de secciones ya «continuadas» por el usuario (persistido). */
+  continuedSectionIds: string[];
+  /** Diálogo inicial de la sección 1 completado (ambos textos de Laia). */
+  stage1IntroDialogueCompleted: boolean;
   /** La animación de introducción comenzó a reproducirse. */
   stage1AnimationStarted: boolean;
   /** La animación de introducción fue vista completa (habilita el resto). */
@@ -39,6 +43,8 @@ export type Stage1ProgressState = {
 
 /** Estado inicial/default — sin efectos secundarios. */
 export const STAGE1_PROGRESS_DEFAULT: Stage1ProgressState = {
+  continuedSectionIds: [],
+  stage1IntroDialogueCompleted: false,
   stage1AnimationStarted: false,
   stage1AnimationViewed: false,
   consentAdmin: false,
@@ -61,7 +67,12 @@ export const STAGE1_PROGRESS_DEFAULT: Stage1ProgressState = {
 export function coerceStage1Progress(raw: unknown): Stage1ProgressState {
   if (!raw || typeof raw !== "object") return STAGE1_PROGRESS_DEFAULT;
   const v = raw as Partial<Stage1ProgressState>;
+  const continuedIds = v.continuedSectionIds;
   return {
+    continuedSectionIds: Array.isArray(continuedIds)
+      ? continuedIds.filter((x): x is string => typeof x === "string")
+      : [],
+    stage1IntroDialogueCompleted: Boolean(v.stage1IntroDialogueCompleted),
     stage1AnimationStarted: Boolean(v.stage1AnimationStarted),
     stage1AnimationViewed: Boolean(v.stage1AnimationViewed),
     consentAdmin: Boolean(v.consentAdmin),
