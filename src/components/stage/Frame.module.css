@@ -112,11 +112,23 @@
   padding-top: clamp(64px, 8dvh, 88px);
 }
 
+/* ─── Bottom bar slot: barra que sobresale por debajo del borde del frame ── */
+
+.bottomBarSlot {
+  position: absolute;
+  /* -30px → la barra queda parcialmente fuera del borde inferior del frame */
+  bottom: -30px;
+  left: 0;
+  right: 0;
+  z-index: 5;
+  padding: 0 clamp(12px, 2vw, 20px);
+}
+
 /* ─── Hint slot: indicador de avance anclado al fondo del frame ───────────── */
 
 .hintSlot {
   position: absolute;
-  bottom: -40px;
+  bottom: -40px; /* overridden inline cuando hintOffset prop está presente */
   left: 0;
   right: 0;
   z-index: 10;

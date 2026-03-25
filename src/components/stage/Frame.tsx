@@ -51,6 +51,17 @@ export type FrameProps = {
    * Uso: hint={<ScrollHint label="..." />}
    */
   hint?: ReactNode;
+  /**
+   * Barra inferior que sobresale por debajo del borde del frame.
+   * Usar para LaiaChatBar u otros elementos que "salen" del frame.
+   * El contenido del frame recibe padding-bottom automático para no quedar oculto.
+   */
+  bottomBar?: ReactNode;
+  /**
+   * Distancia en px que el hint slot se desplaza por debajo del borde del frame.
+   * Default: 40. Usar valores mayores (ej: 180) cuando bottomBar está presente.
+   */
+  hintOffset?: number;
   /** ID del frame para navegación con anclas. */
   id?: string;
   /** Clase CSS adicional. */
@@ -67,6 +78,8 @@ export default function Frame({
   overlay,
   align = "center",
   hint,
+  bottomBar,
+  hintOffset,
   id,
   className,
   style,
@@ -116,13 +129,26 @@ export default function Frame({
       ) : null}
 
       {/* Content */}
-      <div className={`${styles.content} ${alignClass}`}>
+      <div
+        className={`${styles.content} ${alignClass}`}
+        style={bottomBar ? { paddingBottom: "clamp(90px, 12dvh, 110px)" } : undefined}
+      >
         {children}
       </div>
 
+      {/* Bottom bar slot — sobresale por debajo del borde del frame */}
+      {bottomBar ? (
+        <div className={styles.bottomBarSlot}>
+          {bottomBar}
+        </div>
+      ) : null}
+
       {/* Hint slot — anclado al fondo del frame */}
       {hint ? (
-        <div className={styles.hintSlot}>
+        <div
+          className={styles.hintSlot}
+          style={hintOffset !== undefined ? { bottom: `-${hintOffset}px` } : undefined}
+        >
           {hint}
         </div>
       ) : null}

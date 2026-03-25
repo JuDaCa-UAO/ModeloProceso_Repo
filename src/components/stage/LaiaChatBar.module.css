@@ -1,0 +1,115 @@
+/* ─── LaiaChatBar: barra de diálogo de Laia al pie de un frame ──────────── */
+
+.bar {
+  display: flex;
+  align-items: center;
+  gap: clamp(10px, 1.5vw, 16px);
+  width: 100%;
+  padding: 14px clamp(12px, 2vw, 20px);
+  background: rgba(5, 3, 4, 0.93);
+  border: 1.5px solid rgba(248, 46, 53, 0.45);
+  border-radius: 10px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 18px rgba(248, 46, 53, 0.14),
+    0 10px 36px rgba(0, 0, 0, 0.60);
+}
+
+/* ─── Avatar ─────────────────────────────────────────────────────────────── */
+
+.avatar {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  flex-shrink: 0;
+  gap: 5px;
+}
+
+.avatarFrame {
+  position: relative;
+  width: 52px;
+  height: 52px;
+  border-radius: 999px;
+  border: 2px solid rgba(248, 46, 53, 0.60);
+  overflow: hidden;
+  background: rgba(10, 5, 8, 0.85);
+  box-shadow:
+    0 0 14px rgba(100, 160, 255, 0.30),
+    0 0 6px rgba(100, 160, 255, 0.18);
+  flex-shrink: 0;
+}
+
+.avatarImg {
+  object-fit: cover;
+}
+
+.avatarName {
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255, 255, 255, 0.65);
+}
+
+/* ─── Texto ───────────────────────────────────────────────────────────────── */
+
+.text {
+  flex: 1;
+  margin: 0;
+  font-size: clamp(12px, 1.15vw, 14px);
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.88);
+}
+
+/* ─── Controles ───────────────────────────────────────────────────────────── */
+
+.controls {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  flex-shrink: 0;
+}
+
+.iconBtn {
+  background: transparent;
+  border: none;
+  color: rgba(255, 255, 255, 0.35);
+  font-size: 15px;
+  padding: 4px;
+  cursor: default;
+  line-height: 1;
+}
+
+.navBtn {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 34px;
+  height: 34px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(248, 46, 53, 0.55);
+  background: rgba(8, 4, 5, 0.72);
+  color: rgba(254, 106, 111, 0.95);
+  font-size: 13px;
+  cursor: pointer;
+  transition: background 0.15s, transform 0.10s;
+  flex-shrink: 0;
+}
+
+.navBtn:hover:not(:disabled) {
+  background: rgba(158, 11, 15, 0.40);
+  transform: scale(1.06);
+}
+
+.navBtn:active:not(:disabled) {
+  transform: scale(0.96);
+}
+
+.navBtn:disabled {
+  opacity: 0.22;
+  cursor: default;
+}
+
+.navBtnNext {
+  background: rgba(158, 11, 15, 0.28);
+}

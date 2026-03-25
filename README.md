@@ -416,6 +416,218 @@ content: [
 
 ---
 
+## Sistema de Frames — Guía de implementación
+
+Esta sección documenta el sistema visual de secciones progresivas usado en la Etapa 1 (y base para etapas futuras). Cada "frame" es un panel glassmorphism que aparece en la página cuando el frame anterior completa su secuencia interactiva.
+
+### Archivos clave
+
+| Archivo | Responsabilidad |
+|---|---|
+| `src/components/stage/Frame.tsx` | Componente panel base — contiene la estructura visual |
+| `src/components/stage/Frame.module.css` | Estilos del panel, bordes tech, corners, hintSlot |
+| `src/app/etapa/[stageId]/StageClient.tsx` | Orquesta todos los frames, define `completedFrames` y `ScrollHint` |
+| `src/app/etapa/[stageId]/stageClient.module.css` | Estilos del contenedor `.root`, gap entre frames y estilos de `ScrollHint` |
+
+### Assets de la Etapa 1
+
+| Recurso | Ruta |
+|---|---|
+| Fondo estándar | `/ui/backgroundUAO.png` |
+| Avatar Laia (neutral) | `/ui/laia.png` |
+| Avatar Laia (explicando) | `/ui/laia_explaining.png` |
+| Modelo 3D espiral | `/models/espiral.glb` |
+| Video intro modelo | `/videos/intro-modelo.mp4` |
+
+### Estado: `completedFrames`
+
+El sistema usa un único contador de estado para controlar qué frames son visibles:
+
+```tsx
+const [completedFrames, setCompletedFrames] = useState(0);
+
+/** Marca el frame N como terminado. Seguro llamarlo más de una vez. */
+const completeFrame = useCallback((frameIndex: number) => {
+  setCompletedFrames((prev) => Math.max(prev, frameIndex));
+}, []);
+```
+
+Lógica de visibilidad:
+- `completedFrames === 0` → solo Frame 1 visible (aparece siempre)
+- `completedFrames >= 1` → Frame 2 aparece
+- `completedFrames >= 2` → Frame 3 aparece
+- El frame N llama `completeFrame(N)` cuando el usuario termina su interacción
+
+### Indicador de avance: `ScrollHint`
+
+Sub-componente definido en `StageClient.tsx` (no en un archivo separado):
+
+```tsx
+function ScrollHint({ label }: { label?: string }) {
+  return (
+    <div className={styles.scrollHint} aria-label="Desplázate hacia abajo">
+      <span className={styles.scrollArrow} aria-hidden>▼</span>
+      {label ? <span className={styles.scrollLabel}>{label}</span> : null}
+    </div>
+  );
+}
+```
+
+**Regla**: `ScrollHint` siempre se pasa al frame mediante el prop `hint`. **Nunca** se renderiza fuera del frame ni con `position: sticky` en la página.
+
+El componente `<Frame>` lo muestra en su slot `.hintSlot` (`position: absolute; bottom: -40px`), que sobresale ligeramente por debajo del borde del panel.
+
+### Props del componente `<Frame>`
+
+| Prop | Tipo | Descripción |
+|---|---|---|
+| `id` | `string` | Identificador HTML del panel |
+| `sectionTitle` | `string` | Texto en esquina superior izquierda con decoración bracket |
+| `backgroundImage` | `string` | Ruta del asset de fondo CSS (ej: `/ui/backgroundUAO.png`) |
+| `overlay` | `string` | Color CSS del overlay oscurecedor (estándar: `"rgba(4, 2, 3, 0.45)"`) |
+| `hint` | `ReactNode` | Indicador de avance — normalmente `<ScrollHint />` o `null` |
+| `align` | `string?` | Alineación del contenido (opcional) |
+| `background` | `string?` | Color de fondo sólido alternativo al `backgroundImage` |
+| `children` | `ReactNode` | Contenido del frame |
+
+### Anatomía visual
+
+```
+┌─ Frame (.frame) ───────────────────────────────── clamp(480px, 65vw, 1000px) ──┐
+│  ├─ .backgroundLayer   (posición absolute, z-index 0 — CSS background-image)   │
+│  ├─ .overlay           (posición absolute, z-index 1 — color oscurecedor)      │
+│  ├─ span.cornerTL/TR/BL/BR  (brackets decorativos, z-index 3)                  │
+│  ├─ .sectionTitle      (posición absolute top-left, z-index 3)                 │
+│  └─ .content           (posición relative, z-index 2, flex, padding-top 52px+) │
+│       └─ children                                                               │
+│                                                                                 │
+└─────────────────────────────────────────────────────────────────────────────────┘
+         └─ .hintSlot  (posición absolute, bottom: -40px — fuera del borde)
+```
+
+Especificaciones CSS relevantes (`Frame.module.css`):
+- `.frame`: `width: clamp(480px, 65vw, 1000px)`, `min-height: clamp(420px, 72dvh, 700px)`, glassmorphism (`background: rgba(6,4,5,0.82)` + `backdrop-filter: blur(16px)`), borde rojo (`border: 1.5px solid rgba(248,46,53,0.55)`), **sin `overflow: hidden`** (necesario para que `.hintSlot` sea visible)
+- `.hintSlot`: `position: absolute; bottom: -40px; width: 100%; display: flex; justify-content: center`
+- `.cornerTL/TR/BL/BR`: brackets en `#fe6a6f`, 20×20px, 3px de borde
+- Separación entre frames (`.root` en `stageClient.module.css`): `gap: clamp(5rem, 12dvh, 8rem)` — suficiente para que el hintSlot no solape el frame siguiente
+
+### Cómo añadir un frame nuevo
+
+Copiar este patrón en `StageClient.tsx` después del último frame existente:
+
+```tsx
+{/* ═══ FRAME N: Nombre descriptivo ════════════════════════════ */}
+{completedFrames >= N ? (
+  <Frame
+    id="frame-nombre"
+    sectionTitle={`Sección ${N}: Título visible`}
+    backgroundImage="/ui/backgroundUAO.png"
+    overlay="rgba(4, 2, 3, 0.45)"
+    hint={completedFrames >= N + 1 ? <ScrollHint label="Texto del indicador" /> : null}
+  >
+    {/* Contenido del frame */}
+    <button onClick={() => completeFrame(N + 1)}>Avanzar →</button>
+  </Frame>
+) : null}
+```
+
+Donde `N` es el número del frame anterior (el frame nuevo es el N+1, pero verifica la condición `>= N`).
+
+**Frame 1** es la excepción — siempre se renderiza sin condición porque es el punto de entrada.
+
+### Frame con modelo 3D (`MiniSpiralViewer`)
+
+```tsx
+<div className={styles.modelStage}>
+  <MiniSpiralViewer enableRotation />
+</div>
+```
+
+Especificaciones de `.modelStage`:
+- `height: clamp(300px, 50dvh, 480px)`
+- `background: rgba(2, 1, 2, 0.80)` (contraste oscuro para el canvas 3D)
+- `border-radius: 10px`, `overflow: hidden`
+
+### Frame con video
+
+```tsx
+<video
+  className={styles.videoPlayer}
+  src="/videos/nombre-video.mp4"
+  autoPlay
+  playsInline
+  onEnded={() => completeFrame(N)}
+/>
+```
+
+Reglas del video:
+- Sin prop `controls` (el video no puede pausarse — es narrativo)
+- `pointer-events: none` via CSS (`.videoPlayer`)
+- `onEnded` llama a `completeFrame(N)` para habilitar el siguiente frame
+- `object-fit: contain` para respetar proporciones
+
+### Frames implementados en Etapa 1
+
+| Frame | ID | Trigger de completado |
+|---|---|---|
+| Frame 1 | `frame-intro` | `CharacterStepDialog` → último paso → `completeFrame(1)` |
+| Frame 2 | `frame-modelo` | Video `intro-modelo.mp4` termina → `handleVideoEnded` → `completeFrame(2)` |
+| Frame 3 | `frame-modelo-interactivo` | `LaiaChatBar` Fase B → último paso → `completeFrame(3)`. Añade `className={styles.frameWithBar}` + `hintOffset={200}` |
+
+### Frame tipo "con barra de Laia" (usado en Frame 3)
+
+Este tipo de frame tiene una `LaiaChatBar` que sobresale por debajo del borde inferior del frame. Se configura con dos props adicionales de `<Frame>`:
+
+- `bottomBar={<LaiaChatBar ... />}` — renderiza en `.bottomBarSlot` (`position: absolute; bottom: -30px`), parcialmente fuera del borde
+- `hintOffset={200}` — empuja el ScrollHint 200px hacia abajo para dejarlo por debajo de la barra
+- `className={styles.frameWithBar}` — añade `margin-bottom` extra para que la barra no choque con el siguiente frame
+
+El frame tiene dos fases internas gestionadas con `f3Phase: 'initial' | 'laia-model' | 'laia-viewer'`:
+- **`initial`**: Modelo 3D visible + instrucciones + botón "Continuar"
+- **`laia-model`**: Modelo 3D visible + `LaiaChatBar` con `F3_LAIA_STEPS_A`
+- **`laia-viewer`**: Modelo oculto + `StageViewer` fijo top-right + `LaiaChatBar` con `F3_LAIA_STEPS_B`
+
+### StageViewer (widget fijo top-right)
+
+Componente `src/components/stage/StageViewer.tsx`. Aparece en Frame 3 fase B y permanece visible el resto del recorrido.
+
+- `position: fixed; top: 1.5rem; right: 1.5rem; z-index: 100`
+- Renderiza el modelo con rotación pasiva (sin OrbitControls)
+- Prop: `stageLabel: string` — texto mostrado bajo el canvas (ej: `"Etapa actual: Etapa 1"`)
+- **TODO pendiente**: animación de brillo/pulso intermitente en el anillo de la etapa activa. Ver comentario en `StageViewer.tsx` para instrucciones de implementación (Three.js mesh traversal + `emissiveIntensity` en `useFrame`)
+
+### LaiaChatBar
+
+Componente `src/components/stage/LaiaChatBar.tsx`. Barra de diálogo de Laia anclada al pie de un frame.
+
+- Maneja internamente el avance de pasos (estado `current`)
+- Prop `steps: LaiaChatStep[]` — array de `{ text, imgSrc? }`
+- Prop `onComplete: () => void` — llamado al avanzar más allá del último paso
+- Usa `key={f3Phase}` en StageClient para resetear el índice al cambiar de fase
+- Avatar con `next/image` (`fill` + `unoptimized`)
+- Botón de audio presente pero `disabled` (funcionalidad pendiente)
+
+### Orden narrativo de la Etapa 1
+
+El orden aprobado en `AGENTS_claude_stage1.md` que deben seguir los frames:
+
+1. ✅ Entrada guiada con Laia (Frame 1)
+2. ✅ Presentación del modelo 3D + video (Frame 2)
+3. Animación grande para ubicar al usuario en la espiral
+4. Viewer 3D que luego queda fijo arriba a la derecha
+5. Explicación del stage actual
+6. Rail de etapas
+7. Estados
+8. Consentimiento
+9. Chatbot opcional
+10. Embebido (autodiagnóstico)
+11. Cierre con video
+12. Transición a la siguiente etapa
+
+No alterar este orden sin instrucción explícita.
+
+---
+
 ## Integración con N8N
 
 El autodiagnóstico se carga como un `<iframe>` del formulario de N8N.

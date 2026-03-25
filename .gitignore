@@ -43,3 +43,5 @@ next-env.d.ts
 *.md
 
 .vscode/ 
+*.md
+AGENTS_claude_stage1.md

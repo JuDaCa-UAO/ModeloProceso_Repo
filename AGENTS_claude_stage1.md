@@ -11,7 +11,6 @@ Debes trabajar como un agente disciplinado de producción:
 - **un cambio = fácil de revertir**
 - nunca debes hacer una refactorización masiva no solicitada
 
----
 
 ## Contexto obligatorio del proyecto
 
@@ -164,7 +163,7 @@ Props del Frame:
 ### Tamaño y separación
 
 - Los frames no cubren la pantalla completa — ocupan ~65vw para que el fondo animado sea visible
-- La separación entre frames es controlada por el `gap` del contenedor `.root`: `clamp(2rem, 5dvh, 4rem)`
+- La separación entre frames es controlada por el `gap` del contenedor `.root`: `clamp(5rem, 12dvh, 8rem)` — suficiente para que el hint slot (-40px) no solape el siguiente frame
 
 ### Modelo 3D dentro de un frame
 

@@ -17,6 +17,9 @@ import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
+import LaiaChatBar from "@/components/stage/LaiaChatBar";
+import type { LaiaChatStep } from "@/components/stage/LaiaChatBar";
+import StageViewer from "@/components/stage/StageViewer";
 import { writeProgress } from "@/lib/progress";
 import styles from "./stageClient.module.css";
 
@@ -44,6 +47,24 @@ const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
   },
 ];
 
+// ─── Contenido de LaiaChatBar — Frame 3 Fase A (modelo visible) ──────────────
+
+const F3_LAIA_STEPS_A: LaiaChatStep[] = [
+  {
+    text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
+    imgSrc: "/ui/laia_explaining.png",
+  },
+];
+
+// ─── Contenido de LaiaChatBar — Frame 3 Fase B (viewer visible) ──────────────
+
+const F3_LAIA_STEPS_B: LaiaChatStep[] = [
+  {
+    text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
+    imgSrc: "/ui/laia.png",
+  },
+];
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -64,6 +85,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    */
   const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  /**
+   * f3Phase: fase interna del Frame 3.
+   *   'initial'     → model visible + botón "Continuar"
+   *   'laia-model'  → model visible + LaiaChatBar Fase A
+   *   'laia-viewer' → model oculto + StageViewer fijo + LaiaChatBar Fase B
+   */
+  const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">("initial");
 
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
@@ -153,10 +181,65 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
        *       <button onClick={() => completeFrame(N+1)}>Siguiente</button>
        *     </Frame>
        *   ) : null}
-       *   {completedFrames >= N+1 ? <ScrollHint /> : null}
        *
        * ─────────────────────────────────────────────────────────────────
        */}
+
+      {/* ═══ FRAME 3: Tu lugar en el modelo ════════════════════════════ */}
+      {completedFrames >= 2 ? (
+        <>
+          {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
+          {f3Phase === "laia-viewer" ? (
+            <StageViewer stageLabel="Etapa actual: Etapa 1" />
+          ) : null}
+
+          <Frame
+            id="frame-modelo-interactivo"
+            sectionTitle="Sección 3: Tu lugar en el modelo"
+            backgroundImage="/ui/backgroundUAO.png"
+            overlay="rgba(4, 2, 3, 0.45)"
+            className={styles.frameWithBar}
+            hintOffset={200}
+            hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
+            bottomBar={
+              f3Phase !== "initial" ? (
+                <LaiaChatBar
+                  key={f3Phase}
+                  steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
+                  onComplete={
+                    f3Phase === "laia-model"
+                      ? () => setF3Phase("laia-viewer")
+                      : () => completeFrame(3)
+                  }
+                />
+              ) : null
+            }
+          >
+            {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
+            {f3Phase !== "laia-viewer" ? (
+              <>
+                <div className={styles.modelStage}>
+                  <MiniSpiralViewer enableRotation />
+                </div>
+                <p className={styles.frameInstructions}>
+                  Puedes interactuar con el modelo usando el scroll para acercarte y
+                  arrastrando con el click presionado para girarlo.
+                </p>
+                {f3Phase === "initial" ? (
+                  <div className={styles.frameActions}>
+                    <button
+                      className={styles.btnVerAnimacion}
+                      onClick={() => setF3Phase("laia-model")}
+                    >
+                      Continuar →
+                    </button>
+                  </div>
+                ) : null}
+              </>
+            ) : null}
+          </Frame>
+        </>
+      ) : null}
     </div>
   );
 }
