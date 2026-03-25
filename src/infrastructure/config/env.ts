@@ -13,10 +13,10 @@
 
 export const ENV = {
   /** URL base de la instancia de N8N (usada en CSP y en adapters). */
-  N8N_BASE_URL: process.env.NEXT_PUBLIC_N8N_BASE_URL ?? "",
+  N8N_BASE_URL: process.env.NEXT_PUBLIC_N8N_BASE_URL ?? "https://n8n.srv1512853.hstgr.cloud",
 
   /** ID del formulario de autodiagnóstico en N8N. */
-  N8N_AUTODIAG_FORM_ID: process.env.NEXT_PUBLIC_N8N_AUTODIAG_FORM_ID ?? "",
+  N8N_AUTODIAG_FORM_ID: process.env.NEXT_PUBLIC_N8N_AUTODIAG_FORM_ID ?? "130fca67-74d5-4a0e-90a2-f2bd133bfb59",
 
   /** Nombre del entorno de despliegue. */
   APP_ENV: process.env.NEXT_PUBLIC_APP_ENV ?? "development",

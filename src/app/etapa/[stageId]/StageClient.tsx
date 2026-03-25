@@ -27,6 +27,7 @@ import { writeProgress } from "@/lib/progress";
 import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
+import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
 import styles from "./stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
 
@@ -220,7 +221,23 @@ const ESTADO_CARDS = [
     desc: "Integras GenAI de forma crítica, creativa y estratégica en distintos contextos. Recibirás retos de mayor profundidad y oportunidades para compartir aprendizajes.",
   },
 ] as const;
+// ─── Diálogo de Laia — Frame 8 ──────────────────────────────────────────────
 
+/** Antes de completar el autodiagnóstico */
+const F8_LAIA_STEPS_PRE: CharacterDialogStep[] = [
+  {
+    text: "El autodiagnóstico busca reconocer tu nivel actual de conocimiento, experiencia y disposición frente al uso de la GenAI en educación. A partir de tus respuestas, podrás ubicarte en un estado inicial del recorrido y recibir una orientación más pertinente para avanzar.",
+    imgSrc: "/ui/laia_explaining.png",
+  },
+];
+
+/** Después de completar el autodiagnóstico */
+const F8_LAIA_STEPS_POST: CharacterDialogStep[] = [
+  {
+    text: "Tu estado actual será enviado por correo al terminar.",
+    imgSrc: "/ui/laia.png",
+  },
+];
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -281,6 +298,10 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   const consentValid =
     consentAdmin && consentUsage && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(consentEmail);
 
+  // ── Frame 8: autodiagnóstico ───────────────────────────────────────────────
+  /** true cuando el usuario confirma que completó el formulario embebido */
+  const [autodiagDone, setAutodiagDone] = useState(false);
+
   // ── Hidratación desde localStorage ────────────────────────────────────────
   // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
   // componente, así que no puede haber hydration mismatch.
@@ -296,6 +317,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       setConsentAdmin(true);
       setConsentUsage(true);
     }
+    if (saved >= 8) setAutodiagDone(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -670,6 +692,79 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 }
               }}
             />
+          </div>
+        </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 8: Autodiagnóstico ═════════════════════════════════ */}
+      {completedFrames >= 7 ? (
+        <Frame
+          id="frame-autodiagnostico"
+          sectionTitle="Sección 8: Autodiagnóstico"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 8 ? <ScrollHint label="Continuar" /> : null}
+        >
+          {/* Iframe embebido con marco futurista */}
+          <div className={styles.embedShell}>
+            {/* Esquinas decorativas */}
+            <span className={styles.embedCornerTL} aria-hidden />
+            <span className={styles.embedCornerTR} aria-hidden />
+            <span className={styles.embedCornerBL} aria-hidden />
+            <span className={styles.embedCornerBR} aria-hidden />
+
+            {/* Barra de cabecera */}
+            <div className={styles.embedHeader}>
+              <span className={styles.embedHeaderDot} />
+              <span className={styles.embedHeaderDot} />
+              <span className={styles.embedHeaderDot} />
+              <span className={styles.embedHeaderLabel}>AUTODIAGNÓSTICO — ETAPA 1</span>
+            </div>
+
+            {/* El iframe */}
+            <div className={styles.embedViewport}>
+              <iframe
+                src={N8N_CONFIG.forms.autodiagnostic || undefined}
+                title="Autodiagnóstico Etapa 1"
+                className={styles.embedIframe}
+                loading="lazy"
+                sandbox="allow-forms allow-scripts allow-same-origin"
+              />
+            </div>
+
+            {/* Barra inferior con escanlines decorativos */}
+            <div className={styles.embedFooter}>
+              <span className={styles.embedFooterStatus}>
+                {autodiagDone ? "\u2713 Completado" : "Pendiente de respuesta"}
+              </span>
+            </div>
+          </div>
+
+          {/* Diálogo de Laia — cambia tras completar */}
+          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+            {!autodiagDone ? (
+              <CharacterStepDialog
+                size="compact"
+                density="tight"
+                steps={F8_LAIA_STEPS_PRE}
+                onComplete={() => setAutodiagDone(true)}
+                nextLabel="Autodiagnóstico completado"
+              />
+            ) : (
+              <CharacterStepDialog
+                key="f8-post"
+                size="compact"
+                density="tight"
+                steps={F8_LAIA_STEPS_POST}
+                onComplete={() => {
+                  completeFrame(8);
+                  if (!notifiedFrames.current.has(8)) {
+                    notifiedFrames.current.add(8);
+                    pushToast("¡Proceso guardado!");
+                  }
+                }}
+              />
+            )}
           </div>
         </Frame>
       ) : null}
