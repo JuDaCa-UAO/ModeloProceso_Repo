@@ -45,6 +45,12 @@ export type FrameProps = {
   overlay?: string;
   /** Alineación vertical del contenido. Default: "center". */
   align?: "start" | "center" | "end";
+  /**
+   * Indicador de avance anclado al fondo del frame.
+   * Siempre se renderiza dentro del frame, no en el flujo de la página.
+   * Uso: hint={<ScrollHint label="..." />}
+   */
+  hint?: ReactNode;
   /** ID del frame para navegación con anclas. */
   id?: string;
   /** Clase CSS adicional. */
@@ -60,6 +66,7 @@ export default function Frame({
   backgroundImage,
   overlay,
   align = "center",
+  hint,
   id,
   className,
   style,
@@ -112,6 +119,13 @@ export default function Frame({
       <div className={`${styles.content} ${alignClass}`}>
         {children}
       </div>
+
+      {/* Hint slot — anclado al fondo del frame */}
+      {hint ? (
+        <div className={styles.hintSlot}>
+          {hint}
+        </div>
+      ) : null}
     </section>
   );
 }

@@ -6,7 +6,7 @@
   min-height: clamp(420px, 72dvh, 700px);
   display: flex;
   flex-direction: column;
-  overflow: hidden;
+  /* overflow visible so the hint slot can extend below the frame border */
 
   /* Panel surface */
   background: rgba(6, 4, 5, 0.82);
@@ -110,6 +110,20 @@
   padding: clamp(24px, 4dvh, 48px) clamp(16px, 3vw, 48px);
   /* give extra top room for the section title */
   padding-top: clamp(64px, 8dvh, 88px);
+}
+
+/* ─── Hint slot: indicador de avance anclado al fondo del frame ───────────── */
+
+.hintSlot {
+  position: absolute;
+  bottom: -40px;
+  left: 0;
+  right: 0;
+  z-index: 10;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  pointer-events: none;
 }
 
 /* ─── Alineación vertical del contenido ──────────────────────────────────── */

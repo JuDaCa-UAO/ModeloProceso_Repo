@@ -91,6 +91,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         sectionTitle={`Sección 1: ${stageName}`}
         backgroundImage="/ui/backgroundUAO.png"
         overlay="rgba(4, 2, 3, 0.45)"
+        hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
       >
         <CharacterStepDialog
           steps={LAIA_INTRO_STEPS}
@@ -100,9 +101,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         />
       </Frame>
 
-      {/* Scroll hint tras frame 1 */}
-      {completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
-
       {/* ═══ FRAME 2: Modelo 3D interactivo ════════════════════════════ */}
       {completedFrames >= 1 ? (
         <Frame
@@ -110,6 +108,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           sectionTitle="Sección 2: Interactúa con tu entorno"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 2 ? <ScrollHint label="¡Avancemos!" /> : null}
         >
           {videoPlaying ? (
             <>
@@ -132,24 +131,17 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 Puedes interactuar con el modelo usando el scroll para acercarte y
                 arrastrando con el click presionado para girarlo.
               </p>
-              <div className={styles.frameActions}>
-                {completedFrames < 2 ? (
+              {completedFrames < 2 ? (
+                <div className={styles.frameActions}>
                   <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
                     Ver animación →
                   </button>
-                ) : (
-                  <button className={styles.btnAvancemos} disabled>
-                    ¡Avancemos!
-                  </button>
-                )}
-              </div>
+                </div>
+              ) : null}
             </>
           )}
         </Frame>
       ) : null}
-
-      {/* Scroll hint tras frame 2 */}
-      {completedFrames >= 2 ? <ScrollHint /> : null}
 
       {/*
        * ─────────────────────────────────────────────────────────────────

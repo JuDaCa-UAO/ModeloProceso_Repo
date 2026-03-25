@@ -108,7 +108,72 @@ Si modificas la estructura, el comportamiento o el propósito de una parte del s
 
 ---
 
-## Reglas funcionales obligatorias para Etapa 1
+## Reglas establecidas para el sistema de frames
+
+Estas reglas aplican a **todos los frames presentes y futuros** de la Etapa 1.
+
+### Anatomía de un frame
+
+Cada frame se construye con el componente `<Frame>` ubicado en `src/components/stage/Frame.tsx`.
+
+Props del Frame:
+- `sectionTitle` — título bracket en esquina superior izquierda
+- `backgroundImage` — imagen de fondo (`/ui/backgroundUAO.png` para todos los frames de la Etapa 1 hasta nueva instrucción)
+- `overlay` — `"rgba(4, 2, 3, 0.45)"` estándar para todos los frames de esta etapa
+- `hint` — indicador de avance (ScrollHint). **Siempre se pasa como prop, nunca fuera del frame**
+- `children` — contenido del frame
+
+### Indicador de avance (ScrollHint)
+
+- El componente `ScrollHint` se renderiza **dentro del frame** via el prop `hint`
+- Nunca debe flotar fuera del frame ni usar `position: sticky` en la página
+- Se ancla al fondo del frame usando el slot `.hintSlot` (`position: absolute; bottom: 0`)
+- Acepta un `label` opcional que aparece debajo de la flecha (ej: "Iniciar recorrido", "¡Avancemos!")
+- Solo aparece cuando el frame completó su secuencia: `hint={completedFrames >= N ? <ScrollHint label="..." /> : null}`
+
+### Sistema de frames progresivos (`completedFrames`)
+
+- Estado único: `const [completedFrames, setCompletedFrames] = useState(0)`
+- `completeFrame(N)` — función helper que llama `setCompletedFrames(prev => Math.max(prev, N))`
+- Frame N se renderiza cuando `completedFrames >= N-1`
+- Frame N completa cuando el usuario termina su interacción → llama `completeFrame(N)`
+- Patrón para agregar un frame nuevo:
+
+```tsx
+{completedFrames >= N ? (
+  <Frame
+    id="frame-XXX"
+    sectionTitle="Sección N+1: ..."
+    backgroundImage="/ui/backgroundUAO.png"
+    overlay="rgba(4, 2, 3, 0.45)"
+    hint={completedFrames >= N+1 ? <ScrollHint label="..." /> : null}
+  >
+    {/* contenido */}
+    <button onClick={() => completeFrame(N+1)}>Avanzar</button>
+  </Frame>
+) : null}
+```
+
+### Marco visual de los frames
+
+- Cada frame tiene un borde rojo tech (`border: 1.5px solid rgba(248, 46, 53, 0.55)`)
+- Cuatro corners bracket en `#fe6a6f` (clases `.cornerTL`, `.cornerTR`, `.cornerBL`, `.cornerBR`)
+- Panel glassmorphism: `background: rgba(6, 4, 5, 0.82); backdrop-filter: blur(16px)`
+- Ancho del panel: `clamp(480px, 65vw, 1000px)`
+
+### Tamaño y separación
+
+- Los frames no cubren la pantalla completa — ocupan ~65vw para que el fondo animado sea visible
+- La separación entre frames es controlada por el `gap` del contenedor `.root`: `clamp(2rem, 5dvh, 4rem)`
+
+### Modelo 3D dentro de un frame
+
+- Usar `<MiniSpiralViewer enableRotation />` para el viewer embebido
+- Envolver en `.modelStage` para contraste oscuro: `background: rgba(2, 1, 2, 0.80)`, `height: clamp(300px, 50dvh, 480px)`
+
+---
+
+
 
 ### 1. Flujo general
 La Etapa 1 debe seguir este orden:
@@ -145,7 +210,7 @@ No deben desaparecer abruptamente.
 La página debe sentirse construida poco a poco.
 
 ### 4. Indicador de avance
-Debe existir una señal clara que le indique al usuario cuándo puede seguir bajando.
+Debe existir una señal clara que le indique al usuario cuándo puede seguir bajando, por ejemplo, una flecha parpadeante hacia abajo.
 
 ### 5. Viewer 3D
 El viewer 3D:
