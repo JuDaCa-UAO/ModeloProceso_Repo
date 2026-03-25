@@ -66,6 +66,8 @@ export default function ActionButtons() {
 
       <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapa/etapa-1" />
 
+      <ButtonUI label="Etapas" variant="secondary" as="link" href="/etapas" />
+
       <ButtonUI label="Opciones" variant="danger" as="link" href="/opciones" />
     </div>
   );

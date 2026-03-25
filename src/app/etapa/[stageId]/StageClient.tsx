@@ -11,7 +11,7 @@
 
 "use client";
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
 import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
@@ -20,6 +20,8 @@ import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 import LaiaChatBar from "@/components/stage/LaiaChatBar";
 import type { LaiaChatStep } from "@/components/stage/LaiaChatBar";
 import StageViewer from "@/components/stage/StageViewer";
+import ToastStack from "@/components/stage/ToastStack";
+import type { Toast } from "@/components/stage/ToastStack";
 import { writeProgress } from "@/lib/progress";
 import styles from "./stageClient.module.css";
 
@@ -85,6 +87,19 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    */
   const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [toasts, setToasts] = useState<Toast[]>([]);
+  const toastCounter = useRef(0);
+
+  const pushToast = useCallback((text: string) => {
+    const id = ++toastCounter.current;
+    setToasts((prev) => [...prev, { id, text }]);
+    setTimeout(() => setToasts((prev) => prev.filter((t) => t.id !== id)), 3500);
+  }, []);
+
+  const dismissToast = useCallback((id: number) => {
+    setToasts((prev) => prev.filter((t) => t.id !== id));
+  }, []);
+
   /**
    * f3Phase: fase interna del Frame 3.
    *   'initial'     → model visible + botón "Continuar"
@@ -107,11 +122,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   const handleVideoEnded = useCallback(() => {
     setVideoPlaying(false);
     completeFrame(2);
-  }, [completeFrame]);
+    pushToast("\u00a1Proceso guardado!");
+  }, [completeFrame, pushToast]);
 
   return (
     <div className={styles.root}>
       <TechTrailBackground className={styles.background} />
+      <ToastStack toasts={toasts} onDismiss={dismissToast} />
 
       {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════════════ */}
       <Frame
@@ -125,7 +142,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           steps={LAIA_INTRO_STEPS}
           characterName="Laia"
           nextLabel="Siguiente"
-          onComplete={() => completeFrame(1)}
+          onComplete={() => { completeFrame(1); pushToast("\u00a1Proceso guardado!"); }}
         />
       </Frame>
 
@@ -199,7 +216,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             backgroundImage="/ui/backgroundUAO.png"
             overlay="rgba(4, 2, 3, 0.45)"
             className={styles.frameWithBar}
-            hintOffset={200}
+            hintOffset={145}
             hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
             bottomBar={
               f3Phase !== "initial" ? (
@@ -209,7 +226,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   onComplete={
                     f3Phase === "laia-model"
                       ? () => setF3Phase("laia-viewer")
-                      : () => completeFrame(3)
+                      : () => {
+                          completeFrame(3);
+                          pushToast("\u00a1Proceso guardado!");
+                          pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                        }
                   }
                 />
               ) : null

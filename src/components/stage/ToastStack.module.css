@@ -1,0 +1,70 @@
+/* ─── ToastStack: notificaciones fijas top-right, debajo del StageViewer ─── */
+
+/* El StageViewer mide aprox 170px de alto (canvas cuadrado ~140 + label ~30).
+   Las notificaciones se ubican justo debajo con un pequeño margen. */
+
+.container {
+  position: fixed;
+  top: 210px;   /* 1.5rem + ~170px StageViewer + 12px margen */
+  right: 1.5rem;
+  z-index: 200;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  width: clamp(220px, 18vw, 280px);
+  pointer-events: none;
+}
+
+.toast {
+  display: flex;
+  align-items: flex-start;
+  gap: 10px;
+  padding: 12px 14px;
+  background: rgba(10, 5, 6, 0.95);
+  border: 1.5px solid rgba(248, 46, 53, 0.55);
+  border-radius: 8px;
+  backdrop-filter: blur(14px);
+  box-shadow:
+    0 0 14px rgba(248, 46, 53, 0.18),
+    0 8px 28px rgba(0, 0, 0, 0.60);
+  pointer-events: all;
+
+  /* Aparece con un ligero slide desde la derecha */
+  animation: slideIn 0.22s ease-out;
+}
+
+@keyframes slideIn {
+  from {
+    opacity: 0;
+    transform: translateX(24px);
+  }
+  to {
+    opacity: 1;
+    transform: translateX(0);
+  }
+}
+
+.toastText {
+  flex: 1;
+  font-size: 12px;
+  line-height: 1.55;
+  font-weight: 600;
+  color: rgba(255, 255, 255, 0.92);
+  letter-spacing: 0.02em;
+}
+
+.closeBtn {
+  flex-shrink: 0;
+  background: transparent;
+  border: none;
+  color: rgba(254, 106, 111, 0.70);
+  font-size: 11px;
+  cursor: pointer;
+  padding: 0 2px;
+  line-height: 1;
+  transition: color 0.15s;
+}
+
+.closeBtn:hover {
+  color: rgba(254, 106, 111, 1);
+}
