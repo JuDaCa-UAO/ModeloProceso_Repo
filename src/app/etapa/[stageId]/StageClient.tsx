@@ -26,6 +26,27 @@ import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
 import styles from "./stageClient.module.css";
 
+// ─── Persistencia del progreso de frames en localStorage ────────────────────────────
+function frameProgressKey(stageId: string) {
+  return `ai-tech-ed-frames-${stageId}`;
+}
+function readFrameProgress(stageId: string): number {
+  if (typeof window === "undefined") return 0;
+  try {
+    const v = window.localStorage.getItem(frameProgressKey(stageId));
+    const n = parseInt(v ?? "", 10);
+    return isNaN(n) || n < 0 ? 0 : n;
+  } catch {
+    return 0;
+  }
+}
+function saveFrameProgress(stageId: string, n: number) {
+  if (typeof window === "undefined") return;
+  try {
+    window.localStorage.setItem(frameProgressKey(stageId), String(n));
+  } catch { /* quota exceeded — silently ignore */ }
+}
+
 // ─── Sub-componente: indicador de scroll entre frames ──────────────────────
 
 function ScrollHint({ label }: { label?: string }) {
@@ -91,6 +112,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastCounter = useRef(0);
+  /**
+   * notifiedFrames: frames para los que ya se enviaron las notificaciones toast.
+   * Evita que pulsar "Siguiente" varias veces al final del diálogo acumule toasts.
+   */
+  const notifiedFrames = useRef(new Set<number>());
 
   const pushToast = useCallback((text: string) => {
     const id = ++toastCounter.current;
@@ -110,21 +136,43 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    */
   const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">("initial");
 
+  // Hidrata el progreso guardado en localStorage al montar la página
+  useEffect(() => {
+    const saved = readFrameProgress(stageId);
+    if (saved > 0) {
+      setCompletedFrames(saved);
+      // Restaurar fase del viewer si el frame 3 ya estaba completado
+      if (saved >= 3) setF3Phase("laia-viewer");
+      // Marcar todos los frames guardados como ya notificados (evita re-toasting)
+      for (let i = 1; i <= saved; i++) notifiedFrames.current.add(i);
+    }
+  }, [stageId]);
+
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
   }, [stageId]);
 
-  /** Marca el frame N como terminado. Seguro llamarlo más de una vez. */
+  /**
+   * Marca el frame N como terminado y lo persiste en localStorage.
+   * Seguro llamarlo más de una vez (usa Math.max).
+   */
   const completeFrame = useCallback((frameIndex: number) => {
-    setCompletedFrames((prev) => Math.max(prev, frameIndex));
-  }, []);
+    setCompletedFrames((prev) => {
+      const next = Math.max(prev, frameIndex);
+      if (next > prev) saveFrameProgress(stageId, next);
+      return next;
+    });
+  }, [stageId]);
 
   const handleStartVideo = useCallback(() => setVideoPlaying(true), []);
 
   const handleVideoEnded = useCallback(() => {
     setVideoPlaying(false);
     completeFrame(2);
-    pushToast("\u00a1Proceso guardado!");
+    if (!notifiedFrames.current.has(2)) {
+      notifiedFrames.current.add(2);
+      pushToast("\u00a1Proceso guardado!");
+    }
   }, [completeFrame, pushToast]);
 
   return (
@@ -145,7 +193,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           steps={LAIA_INTRO_STEPS}
           characterName="Laia"
           nextLabel="Siguiente"
-          onComplete={() => { completeFrame(1); pushToast("\u00a1Proceso guardado!"); }}
+          onComplete={() => {
+            completeFrame(1);
+            if (!notifiedFrames.current.has(1)) {
+              notifiedFrames.current.add(1);
+              pushToast("\u00a1Proceso guardado!");
+            }
+          }}
         />
       </Frame>
 
@@ -219,7 +273,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             backgroundImage="/ui/backgroundUAO.png"
             overlay="rgba(4, 2, 3, 0.45)"
             className={styles.frameWithBar}
-            hintOffset={145}
+            hintOffset={90}
             hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
             bottomBar={
               f3Phase !== "initial" ? (
@@ -231,8 +285,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                       ? () => setF3Phase("laia-viewer")
                       : () => {
                           completeFrame(3);
-                          pushToast("\u00a1Proceso guardado!");
-                          pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                          if (!notifiedFrames.current.has(3)) {
+                            notifiedFrames.current.add(3);
+                            pushToast("\u00a1Proceso guardado!");
+                            pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                          }
                         }
                   }
                 />
