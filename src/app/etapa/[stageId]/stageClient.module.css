@@ -2,10 +2,12 @@
 
 .root {
   position: relative;
-  background:
-    radial-gradient(1000px 560px at 16% -10%, color-mix(in srgb, #fe6a6f 10%, transparent), transparent 66%),
-    radial-gradient(800px 520px at 92% 112%, color-mix(in srgb, #8b0304 14%, transparent), transparent 70%),
-    linear-gradient(180deg, #0a0506 0%, #050304 56%, #020102 100%);
+  min-height: 100dvh;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: clamp(2rem, 6dvh, 4rem) 1.5rem;
+  gap: clamp(2rem, 5dvh, 4rem);
   color: #fff;
 }
 

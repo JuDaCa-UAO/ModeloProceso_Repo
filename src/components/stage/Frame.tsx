@@ -95,6 +95,12 @@ export default function Frame({
         <div className={styles.overlay} style={{ background: overlay }} />
       ) : null}
 
+      {/* Corner bracket accents */}
+      <span className={`${styles.corner} ${styles.cornerTL}`} aria-hidden />
+      <span className={`${styles.corner} ${styles.cornerTR}`} aria-hidden />
+      <span className={`${styles.corner} ${styles.cornerBL}`} aria-hidden />
+      <span className={`${styles.corner} ${styles.cornerBR}`} aria-hidden />
+
       {/* Section title — top-left bracket */}
       {sectionTitle ? (
         <div className={styles.sectionTitle}>

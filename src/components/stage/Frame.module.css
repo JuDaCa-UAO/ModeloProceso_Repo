@@ -1,12 +1,23 @@
-/* ─── Frame: contenedor de pantalla completa con fondo personalizable ─────── */
+/* ─── Frame: panel de contenido (~65 vw) sobre el fondo de etapa ─────────── */
 
 .frame {
   position: relative;
-  width: 100%;
-  min-height: 100dvh;
+  width: clamp(480px, 65vw, 1000px);
+  min-height: clamp(420px, 72dvh, 700px);
   display: flex;
   flex-direction: column;
   overflow: hidden;
+
+  /* Panel surface */
+  background: rgba(6, 4, 5, 0.82);
+  backdrop-filter: blur(16px);
+  border-radius: 6px;
+
+  /* Tech border — UAO red */
+  border: 1.5px solid rgba(248, 46, 53, 0.55);
+  box-shadow:
+    0 0 18px rgba(248, 46, 53, 0.15),
+    0 12px 48px rgba(0, 0, 0, 0.55);
 }
 
 /* ─── Background layer ───────────────────────────────────────────────────── */

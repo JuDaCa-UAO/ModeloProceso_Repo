@@ -58,8 +58,8 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       <Frame
         id="frame-intro"
         sectionTitle={`Sección 1: ${stageName}`}
-        backgroundImage="/ui/frames/frame-intro.jpg"
-        overlay="rgba(4, 2, 3, 0.52)"
+        backgroundImage="/ui/backgroundUAO.png"
+        overlay="rgba(4, 2, 3, 0.45)"
       >
         <CharacterStepDialog
           steps={LAIA_INTRO_STEPS}
