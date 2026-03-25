@@ -221,18 +221,16 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   /** chatbotOpen: panel de chat visible */
   const [chatbotOpen, setChatbotOpen] = useState(false);
 
-  // ── Hidratación desde localStorage (post-mount, evita mismatch SSR) ────
-  // requestAnimationFrame evita el error React 19 "setState synchronously in effect"
+  // ── Hidratación desde localStorage ────────────────────────────────────────
+  // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
+  // componente, así que no puede haber hydration mismatch.
   useEffect(() => {
     const saved = readFrameProgress(stageId);
     if (saved <= 0) return;
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
-    const raf = requestAnimationFrame(() => {
-      setCompletedFrames(saved);
-      if (saved >= 3) setF3Phase("laia-viewer");
-      if (saved >= 5) setChatbotActivated(true);
-    });
-    return () => cancelAnimationFrame(raf);
+    setCompletedFrames(saved);
+    if (saved >= 3) setF3Phase("laia-viewer");
+    if (saved >= 5) setChatbotActivated(true);
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 

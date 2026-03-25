@@ -18,7 +18,7 @@ import { notFound } from "next/navigation";
 import { StaticStageContentRepository } from "@infra/persistence/StaticStageContentRepository";
 import { GetStageContentUseCase } from "@application/stage/usecases/GetStageContentUseCase";
 import { getStageMeta } from "@/content/stages";
-import StageClient from "./StageClient";
+import StageClient from "./StageClientLoader";
 import type { Metadata } from "next";
 
 type Props = { params: Promise<{ stageId: string }> };
