@@ -1,5 +1,45 @@
 # README — Etapa 1: Registro de cambios
 
+## Cambio 3: Diálogo de Laia + título de sección + indicador de scroll
+
+### Fecha: 2026-03-24
+
+Se actualizó `Frame` para mostrar un título de sección con estilo bracket tech en la esquina superior izquierda. Se integró `CharacterStepDialog` (Laia) con 2 pasos dentro del primer Frame. Al completarse el diálogo se activa `dialogueDone`, lo que muestra un indicador de scroll animado.
+
+**Archivos modificados:**
+
+| Archivo | Cambio |
+|---|---|
+| `src/components/stage/Frame.tsx` | Prop `sectionTitle` (reemplazó `tag`). Fondo ahora usa CSS `background-image` en el layer div (elimina el `<img>` decorativo). Default de `align` cambiado a `"center"`. |
+| `src/components/stage/Frame.module.css` | Agrega `.sectionTitle` y `.sectionTitleText` con `::before` y `::after` para esquinas bracket. Se elimina `.backgroundImage`. |
+| `src/app/etapa/[stageId]/StageClient.tsx` | `LAIA_INTRO_STEPS` (2 pasos), estado `dialogueDone`, `CharacterStepDialog` dentro del `Frame`, `.scrollHint` condicional. |
+| `src/app/etapa/[stageId]/stageClient.module.css` | Remplaza estilos de demo por `.scrollHint`, `.scrollArrow` y `@keyframes bounceDown`. |
+
+**Imágenes de fondo de frames:**
+
+Coloca las imágenes en `public/ui/frames/`. El Frame 1 de bienvenida espera:
+```
+public/ui/frames/frame-intro.jpg
+```
+Si no existe el archivo, el frame aparece sin imagen de fondo (solo el overlay oscuro).
+
+---
+
+## Cambio 2: Página vacía + primer Frame visible
+
+### Fecha: 2026-03-24
+
+Se limpió el renderizado de `StageClient` para dejar la página en blanco salvo el fondo interactivo (`TechTrailBackground`) y se montó un primer `Frame` de demostración.
+
+**Archivos modificados:**
+
+| Archivo | Cambio |
+|---|---|
+| `src/app/etapa/[stageId]/StageClient.tsx` | Reescrito: ya no importa `StageShell`, `StageSection`, `useStageProgress`, ni lógica de navegación. Solo renderiza `TechTrailBackground` fijo + un `Frame` centrado de demostración. |
+| `src/app/etapa/[stageId]/stageClient.module.css` | **Nuevo.** Estilos del contenedor raíz y del contenido de demostración del Frame. |
+
+---
+
 ## Cambio 1: Eliminación de sistemas de scroll + Creación de componente Frame
 
 ### Fecha: 2026-03-24

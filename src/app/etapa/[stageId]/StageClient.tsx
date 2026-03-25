@@ -2,122 +2,81 @@
  * PRESENTATION — Client Component (Stage Engine)
  *
  * StageClient: motor genérico de renderizado de etapas.
- * Renderiza las secciones como una página normal sin sistemas de scroll custom.
+ * Frame 1: bienvenida con diálogo de Laia.
+ * El siguiente frame se habilita al completar el diálogo.
  */
 
 "use client";
 
-import { Fragment, useCallback, useEffect, useMemo } from "react";
-import { useRouter } from "next/navigation";
-import StageShell from "@/components/stage/StageShell";
-import StageSection from "@/components/stage/StageSection";
-import { useStageProgress } from "@/hooks/domain/useStageProgress";
-import { hasRequiredFlags } from "@domain/stage/rules/GatingRule";
+import { useCallback, useEffect, useState } from "react";
+import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
+import Frame from "@/components/stage/Frame";
+import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
+import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import { writeProgress } from "@/lib/progress";
-import type { SectionNode } from "@/types/stage";
-import type { BlockContext } from "@/components/stage/blocks/BlockContext";
+import styles from "./stageClient.module.css";
 
-// ─── helpers ──────────────────────────────────────────────────────────────────
+// ─── Contenido del diálogo de Laia — Frame 1 ─────────────────────────────────
 
-function buildNodeById(nodes: SectionNode[]): Map<string, SectionNode> {
-  const m = new Map<string, SectionNode>();
-  const walk = (items: SectionNode[]) => {
-    for (const item of items) {
-      m.set(item.id, item);
-      if (item.children?.length) walk(item.children);
-    }
-  };
-  walk(nodes);
-  return m;
-}
+const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
+  {
+    text: "Bienvenido/a. Este recorrido te guiará por un modelo por etapas para integrar GenAI en experiencias de aprendizaje. Avanzaremos de forma estructurada: reconocer tu punto de partida, explorar posibilidades, diseñar con propósito, preparar el terreno, desplegar en el aula y evaluar para mejorar.",
+    imgSrc: "/ui/laia.png",
+  },
+  {
+    text: "Este modelo se recorre por etapas. Cada una cumple una función distinta dentro del proceso y te ayudará a avanzar con mayor claridad y sentido pedagógico.",
+    imgSrc: "/ui/laia_explaining.png",
+  },
+];
 
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
   stageId: string;
   stageName: string;
-  initialTree: SectionNode[];
+  initialTree: unknown[];
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
 
-export default function StageClient({
-  stageId,
-  stageName,
-  initialTree,
-}: StageClientProps) {
-  const router = useRouter();
-  const { state, flags, update } = useStageProgress(stageId);
-
-  const nodeById = useMemo(() => buildNodeById(initialTree), [initialTree]);
-
-  const { orderedVisibleIds, visibleIndexById } = useMemo(() => {
-    const ordered: string[] = [];
-    const walk = (nodes: SectionNode[]) => {
-      for (const node of nodes) {
-        if (!hasRequiredFlags(flags, node.gate?.requires)) continue;
-        ordered.push(node.id);
-        if (node.children?.length) walk(node.children);
-      }
-    };
-    walk(initialTree);
-    return {
-      orderedVisibleIds: ordered,
-      visibleIndexById: new Map(ordered.map((id, i) => [id, i + 1])),
-    };
-  }, [flags, initialTree]);
+export default function StageClient({ stageId, stageName }: StageClientProps) {
+  const [dialogueDone, setDialogueDone] = useState(false);
 
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
   }, [stageId]);
 
-  const onScrollTo = useCallback((id: string) => {
-    document.getElementById(id)?.scrollIntoView({ behavior: "smooth", block: "start" });
+  const handleDialogueComplete = useCallback(() => {
+    setDialogueDone(true);
   }, []);
 
-  const onNavigate = useCallback(
-    (href: string) => {
-      writeProgress({ lastRoute: href });
-      router.push(href);
-    },
-    [router]
-  );
-
-  const ctx: BlockContext = useMemo(
-    () => ({ stageId, state, flags, onUpdate: update, onScrollTo, onNavigate }),
-    [stageId, state, flags, update, onScrollTo, onNavigate]
-  );
-
-  const viewerStatus = flags.transitionAnimationViewed
-    ? { label: "Lista para siguiente etapa", tone: "done" as const }
-    : { label: `${stageName} activa`, tone: "active" as const };
-
-  const renderNode = (node: SectionNode): React.ReactNode => {
-    if (!hasRequiredFlags(flags, node.gate?.requires)) return null;
-
-    const index = visibleIndexById.get(node.id) ?? 0;
-
-    return (
-      <Fragment key={node.id}>
-        <StageSection
-          node={node}
-          index={index}
-          ctx={ctx}
-          flags={flags}
-        />
-        {node.children?.map((child) => renderNode(child))}
-      </Fragment>
-    );
-  };
-
   return (
-    <StageShell
-      viewerTitle={stageName}
-      viewerStatusLabel={viewerStatus.label}
-      viewerStatusTone={viewerStatus.tone}
-      viewerEnabled={state.stage1AnimationStarted || flags.stage1AnimationViewed}
-    >
-      {initialTree.map((node) => renderNode(node))}
-    </StageShell>
+    <div className={styles.root}>
+      <TechTrailBackground className={styles.background} />
+
+      {/* ── Frame 1: Bienvenida con Laia ───────────────────────────────── */}
+      <Frame
+        id="frame-intro"
+        sectionTitle={`Sección 1: ${stageName}`}
+        backgroundImage="/ui/frames/frame-intro.jpg"
+        overlay="rgba(4, 2, 3, 0.52)"
+      >
+        <CharacterStepDialog
+          steps={LAIA_INTRO_STEPS}
+          characterName="Laia"
+          nextLabel="Siguiente"
+          onComplete={handleDialogueComplete}
+        />
+      </Frame>
+
+      {/* ── Indicador de scroll — aparece cuando el diálogo termina ────── */}
+      {dialogueDone ? (
+        <div className={styles.scrollHint} aria-label="Puedes continuar hacia abajo">
+          <span className={styles.scrollArrow} aria-hidden>▼</span>
+        </div>
+      ) : null}
+
+      {/* ── Frame 2 y siguientes se agregarán aquí ─────────────────────── */}
+    </div>
   );
 }

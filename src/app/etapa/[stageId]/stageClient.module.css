@@ -1,0 +1,59 @@
+/* ─── StageClient: contenedor raíz de la etapa ───────────────────────────── */
+
+.root {
+  position: relative;
+  background:
+    radial-gradient(1000px 560px at 16% -10%, color-mix(in srgb, #fe6a6f 10%, transparent), transparent 66%),
+    radial-gradient(800px 520px at 92% 112%, color-mix(in srgb, #8b0304 14%, transparent), transparent 70%),
+    linear-gradient(180deg, #0a0506 0%, #050304 56%, #020102 100%);
+  color: #fff;
+}
+
+.background {
+  position: fixed;
+  inset: 0;
+  width: 100vw;
+  height: 100dvh;
+  z-index: 0;
+}
+
+/* ─── Indicador de scroll parpadeante ────────────────────────────────────── */
+
+.scrollHint {
+  position: sticky;
+  bottom: 28px;
+  z-index: 10;
+  display: flex;
+  justify-content: center;
+  pointer-events: none;
+  /* pull it up into the bottom of the last frame */
+  margin-top: -72px;
+  padding-bottom: 28px;
+}
+
+.scrollArrow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 48px;
+  height: 48px;
+  border-radius: 999px;
+  border: 2px solid rgba(248, 46, 53, 0.55);
+  background: rgba(8, 4, 5, 0.72);
+  color: rgba(254, 106, 111, 0.95);
+  font-size: 20px;
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  animation: bounceDown 1.4s ease-in-out infinite;
+}
+
+@keyframes bounceDown {
+  0%, 100% {
+    transform: translateY(0);
+    opacity: 0.85;
+  }
+  50% {
+    transform: translateY(8px);
+    opacity: 1;
+  }
+}

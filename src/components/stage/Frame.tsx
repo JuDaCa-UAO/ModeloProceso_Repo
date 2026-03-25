@@ -4,21 +4,23 @@
  * Contenedor de pantalla completa (100dvh) con fondo personalizable.
  * Cada "frame" del recorrido ocupa la vista completa del viewport.
  *
- * Soporta:
- * - Fondo como color/gradiente CSS (vía `background`)
- * - Fondo como imagen (vía `backgroundImage`)
- * - Overlay semi-transparente sobre el fondo
- * - Tag/etiqueta opcional arriba del contenido
- * - Alineación vertical del contenido (start, center, end)
- * - Renderizado de cualquier children
+ * El título de sección aparece arriba a la izquierda con estilo de bracket tech.
+ *
+ * Para usar una imagen de fondo, coloca el archivo en:
+ *   public/ui/frames/<nombre>.jpg   (o .png / .webp)
+ * y pásalo como:  backgroundImage="/ui/frames/mi-imagen.jpg"
  *
  * Uso:
- *   <Frame background="linear-gradient(180deg, #0a0506, #050304)">
- *     <h1>Contenido del frame</h1>
+ *   <Frame sectionTitle="Sección 1: Bienvenido/a" background="#0a0506">
+ *     <h1>Contenido</h1>
  *   </Frame>
  *
- *   <Frame backgroundImage="/videos/bg-stage1.jpg" overlay="rgba(0,0,0,0.6)">
- *     <p>Con imagen de fondo y overlay</p>
+ *   <Frame
+ *     sectionTitle="Sección 1: Bienvenido/a"
+ *     backgroundImage="/ui/frames/corredor.jpg"
+ *     overlay="rgba(0,0,0,0.52)"
+ *   >
+ *     <MiComponente />
  *   </Frame>
  */
 
@@ -29,17 +31,19 @@ import styles from "./Frame.module.css";
 
 export type FrameProps = {
   children: ReactNode;
-  /** CSS background (color, gradiente, etc.). */
+  /** Título del frame — aparece en la esquina superior izquierda con estilo bracket. */
+  sectionTitle?: string;
+  /** CSS background (color, gradiente, etc.). Se ignora si backgroundImage está presente. */
   background?: string;
-  /** URL de imagen de fondo. Se renderiza como <img> para carga lazy. */
+  /**
+   * URL de imagen de fondo.
+   * Coloca las imágenes en public/ui/frames/ y referencia como "/ui/frames/nombre.jpg".
+   */
   backgroundImage?: string;
-  /** Alt text para la imagen de fondo (accesibilidad). */
-  backgroundAlt?: string;
+
   /** Color/gradiente de overlay sobre el fondo. Ej: "rgba(0,0,0,0.5)" */
   overlay?: string;
-  /** Etiqueta opcional que aparece arriba del contenido. */
-  tag?: string;
-  /** Alineación vertical del contenido. Default: "start". */
+  /** Alineación vertical del contenido. Default: "center". */
   align?: "start" | "center" | "end";
   /** ID del frame para navegación con anclas. */
   id?: string;
@@ -51,22 +55,21 @@ export type FrameProps = {
 
 export default function Frame({
   children,
+  sectionTitle,
   background,
   backgroundImage,
-  backgroundAlt = "",
   overlay,
-  tag,
-  align = "start",
+  align = "center",
   id,
   className,
   style,
 }: FrameProps) {
   const alignClass =
-    align === "center"
-      ? styles.alignCenter
+    align === "start"
+      ? styles.alignStart
       : align === "end"
         ? styles.alignEnd
-        : styles.alignStart;
+        : styles.alignCenter;
 
   return (
     <section
@@ -78,16 +81,13 @@ export default function Frame({
       {backgroundImage ? (
         <div
           className={styles.backgroundLayer}
-          style={!overlay ? { background } : undefined}
-        >
-          <img
-            src={backgroundImage}
-            alt={backgroundAlt}
-            className={styles.backgroundImage}
-            loading="lazy"
-            draggable={false}
-          />
-        </div>
+          style={{
+            background,
+            backgroundImage: `url(${backgroundImage})`,
+            backgroundSize: "cover",
+            backgroundPosition: "center",
+          }}
+        />
       ) : null}
 
       {/* Overlay layer */}
@@ -95,9 +95,15 @@ export default function Frame({
         <div className={styles.overlay} style={{ background: overlay }} />
       ) : null}
 
+      {/* Section title — top-left bracket */}
+      {sectionTitle ? (
+        <div className={styles.sectionTitle}>
+          <span className={styles.sectionTitleText}>{sectionTitle}</span>
+        </div>
+      ) : null}
+
       {/* Content */}
       <div className={`${styles.content} ${alignClass}`}>
-        {tag ? <span className={styles.frameTag}>{tag}</span> : null}
         {children}
       </div>
     </section>
