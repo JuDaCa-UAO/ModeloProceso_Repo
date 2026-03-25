@@ -81,7 +81,7 @@ const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
 const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
-    imgSrc: "/ui/laia_explaining.png",
+    imgSrc: "/ui/Laia_explaining_holo.png",
   },
 ];
 
@@ -90,7 +90,7 @@ const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
 const F3_LAIA_STEPS_B: CharacterDialogStep[] = [
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
-    imgSrc: "/ui/laia.png",
+    imgSrc: "/ui/laia_explaining.png",
   },
 ];
 
@@ -173,14 +173,14 @@ const F4_LAIA_STEPS: CharacterDialogStep[] = [
 const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "\u201cOh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.\u201d",
-    imgSrc: "/ui/laia.png",
+    imgSrc: "/ui/Laia_explaining_holo.png",
   },
 ];
 
 const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
   {
     text: "\u00a1Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
-    imgSrc: "/ui/laia.png",
+    imgSrc: "/ui/laia_explaining.png",
   },
 ];
 
@@ -189,7 +189,7 @@ const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
 const F6_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Tus respuestas son confidenciales y se usan únicamente para orientar este recorrido. No es un examen, ni tiene efectos administrativos. Si necesitas apoyo adicional, puedes usar el chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.",
-    imgSrc: "/ui/laia_explaining.png",
+    imgSrc: "/ui/Laia_explaining_holo.png",
   },
 ];
 
@@ -198,7 +198,7 @@ const F6_LAIA_STEPS: CharacterDialogStep[] = [
 const F7_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "A lo largo de este proceso podrás reconocer en qué estado te encuentras frente al uso de la IA. Estos estados no son etiquetas ni juicios de valor: son puntos de referencia que ayudan a orientar tu recorrido. El autodiagnóstico permitirá identificar tu punto de partida dentro del modelo.",
-    imgSrc: "/ui/laia_explaining.png",
+    imgSrc: "/ui/laia.png",
   },
 ];
 
@@ -583,7 +583,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         <Frame
           id="frame-consentimiento"
           sectionTitle="Sección 6: Condiciones de confianza"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 6 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
         >
@@ -678,7 +678,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         <Frame
           id="frame-estados"
           sectionTitle="Sección 7: Estados iniciales"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 7 ? <ScrollHint label="Continuar" /> : null}
         >
@@ -716,7 +716,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         <Frame
           id="frame-autodiagnostico"
           sectionTitle="Sección 8: Autodiagnóstico"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 8 ? <ScrollHint label="Continuar" /> : null}
         >
