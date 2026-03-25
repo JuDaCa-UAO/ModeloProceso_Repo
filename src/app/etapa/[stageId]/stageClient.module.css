@@ -262,6 +262,27 @@
   }
 }
 
+/* Attract — luz muy llamativa detrás del botón hasta que el usuario lo clickee */
+/* Usa filter: drop-shadow que respeta clip-path (a diferencia de box-shadow) */
+.chatbotBtnAttract {
+  animation: chatbotAttract 1.0s ease-in-out infinite;
+}
+
+@keyframes chatbotAttract {
+  0%, 100% {
+    filter:
+      drop-shadow(0 0 6px rgba(0, 200, 255, 0.75))
+      drop-shadow(0 0 12px rgba(0, 180, 255, 0.45));
+  }
+  50% {
+    filter:
+      drop-shadow(0 0 16px rgba(0, 230, 255, 1.0))
+      drop-shadow(0 0 32px rgba(0, 200, 255, 0.90))
+      drop-shadow(0 0 60px rgba(0, 160, 255, 0.60))
+      drop-shadow(0 0 90px rgba(0, 185, 255, 0.30));
+  }
+}
+
 /* ─── Chat Panel desplegable ──────────────────────────────────────────────── */
 
 .chatPanel {

@@ -175,6 +175,13 @@ const F5_LAIA_STEPS: CharacterDialogStep[] = [
   },
 ];
 
+const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
+  {
+    text: "\u00a1Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
+    imgSrc: "/ui/laia.png",
+  },
+];
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -216,8 +223,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    */
   const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">("initial");
 
-  /** chatbotActivated: el usuario ya abrió y cerró el chatbot → Frame 5 completo */
-  const [chatbotActivated, setChatbotActivated] = useState(false);
+  /**
+   * f5Phase: fase interna del Frame 5.
+   *   'intro'       → diálogo inicial visible, botón chatbot oculto
+   *   'show-button' → diálogo completado, botón chatbot visible + pulsando
+   *   'after-chat'  → chatbot usado, diálogo muestra "Continuemos"
+   */
+  const [f5Phase, setF5Phase] = useState<"intro" | "show-button" | "after-chat">("intro");
   /** chatbotOpen: panel de chat visible */
   const [chatbotOpen, setChatbotOpen] = useState(false);
 
@@ -230,7 +242,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
     setCompletedFrames(saved);
     if (saved >= 3) setF3Phase("laia-viewer");
-    if (saved >= 5) setChatbotActivated(true);
+    if (saved >= 5) setF5Phase("after-chat");
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -448,38 +460,49 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 5 ? <ScrollHint label="Continuar" /> : null}
         >
-          {/* Diálogo de Laia */}
+          {/* Diálogo de Laia — cambia tras usar el chatbot */}
           <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
-            <CharacterStepDialog
-              size="compact"
-              density="tight"
-              steps={F5_LAIA_STEPS}
-            />
+            {f5Phase !== "after-chat" ? (
+              <CharacterStepDialog
+                size="compact"
+                density="tight"
+                steps={F5_LAIA_STEPS}
+                onComplete={() => setF5Phase("show-button")}
+              />
+            ) : (
+              <CharacterStepDialog
+                key="f5-complete"
+                size="compact"
+                density="tight"
+                steps={F5_LAIA_COMPLETE_STEPS}
+                onComplete={() => {
+                  completeFrame(5);
+                  if (!notifiedFrames.current.has(5)) {
+                    notifiedFrames.current.add(5);
+                    pushToast("\u00a1Proceso guardado!");
+                  }
+                }}
+              />
+            )}
           </div>
         </Frame>
       ) : null}
 
       {/* ═══ Floating ChatBot button — fijo abajo-izquierda ═══════════ */}
-      {completedFrames >= 4 ? (
+      {completedFrames >= 4 && f5Phase !== "intro" ? (
         <>
           <button
             type="button"
             className={[
               styles.chatbotBtn,
-              !chatbotActivated && !chatbotOpen ? styles.chatbotBtnPulse : "",
+              f5Phase === "show-button" && !chatbotOpen ? styles.chatbotBtnAttract : "",
               chatbotOpen ? styles.chatbotBtnPulseClose : "",
             ].join(" ")}
             onClick={() => {
               if (chatbotOpen) {
-                // Cerrar → completar frame
                 setChatbotOpen(false);
-                if (!chatbotActivated) {
-                  setChatbotActivated(true);
-                  completeFrame(5);
-                  if (!notifiedFrames.current.has(5)) {
-                    notifiedFrames.current.add(5);
-                    pushToast("¡Proceso guardado!");
-                  }
+                if (f5Phase === "show-button") {
+                  setF5Phase("after-chat");
                 }
               } else {
                 setChatbotOpen(true);
