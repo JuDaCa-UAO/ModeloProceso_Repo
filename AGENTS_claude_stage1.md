@@ -195,6 +195,18 @@ Props del Frame:
 - El botón aparece cuando `completedFrames >= 4` y permanece visible el resto del recorrido.
 - **Hidratación**: `chatbotActivated` se inicializa como `true` si el progreso guardado es ≥ 5.
 - CSS: `.chatbotBtn` + `.chatbotBtnPulse` (atracción) + `.chatbotBtnPulseClose` (cierre) + `.chatPanel` + `.chatPanelInner` etc. en `stageClient.module.css`.
+- **Iconos**: usa `react-icons` (paquete `react-icons/io5`): `IoChatbubbleEllipses` en el botón, `IoSend` en el send button. El avatar del chat es `<Image src="/ui/laia.png" />` con borde cyan redondeado.
+
+### Librería de iconos (`react-icons`)
+
+- **Paquete**: `react-icons` v5 — tree-shakeable, solo se incluye lo importado.
+- **Uso recomendado**: importar desde sub-módulos para minimizar bundle:
+  - `react-icons/io5` — Ionicons 5 (estilo tech/moderno, preferido para UI de la cartilla)
+  - `react-icons/hi2` — Heroicons 2 (alternativa minimalista)
+  - `react-icons/tb` — Tabler Icons (tech/outline)
+- **Patrón de import**: `import { IconName } from "react-icons/XX";`
+- **Evitar emojis** en botones y UI — preferir siempre iconos SVG de `react-icons` para aspecto tecnológico consistente.
+- **Tamaño**: pasar `size={N}` como prop (en px). Para botones: 16-18px. Para decoración: 20-24px.
 
 ### Hidratación de progreso (lazy init)
 

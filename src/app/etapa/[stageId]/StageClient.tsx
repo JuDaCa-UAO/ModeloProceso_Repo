@@ -24,6 +24,9 @@ import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
 import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
+import { IoChatbubbleEllipses } from "react-icons/io5";
+import { IoSend } from "react-icons/io5";
+import Image from "next/image";
 import styles from "./stageClient.module.css";
 
 // ─── Persistencia del progreso de frames en localStorage ────────────────────────────
@@ -476,7 +479,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               }
             }}
           >
-            💬 ChatBot con Laia
+            <IoChatbubbleEllipses size={18} /> ChatBot con Laia
           </button>
 
           {/* Panel de chat desplegable */}
@@ -500,14 +503,20 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   </p>
                 </div>
                 <div className={styles.chatInputRow}>
-                  <span className={styles.chatAvatar} aria-hidden>🤖</span>
+                  <Image
+                    src="/ui/Laia-Icon.png"
+                    alt="Laia"
+                    width={36}
+                    height={36}
+                    className={styles.chatAvatar}
+                  />
                   <input
                     className={styles.chatInput}
                     placeholder="Escribe un mensaje…"
                     disabled
                   />
                   <button className={styles.chatSendBtn} disabled aria-label="Enviar">
-                    ▶
+                    <IoSend size={16} />
                   </button>
                 </div>
               </div>
