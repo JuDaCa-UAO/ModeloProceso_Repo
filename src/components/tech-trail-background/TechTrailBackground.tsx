@@ -67,8 +67,15 @@ export default function TechTrailBackground({
     let points: TrailPoint[] = [];
     let sparks: Spark[] = [];
 
+    // Cached gradient objects — rebuilt only on resize, not every frame.
+    let cachedBaseGradient: CanvasGradient | null = null;
+    let cachedRedGlow: CanvasGradient | null = null;
+    let cachedCrimsonGlow: CanvasGradient | null = null;
+
     function resize() {
-      dpr = Math.max(1, window.devicePixelRatio || 1);
+      // Cap DPR at 1.5 — using the full device DPR (e.g. 2–3 on HiDPI) multiplies
+      // canvas memory 4–9×.  1.5 is a good quality/memory balance.
+      dpr = Math.min(1.5, Math.max(1, window.devicePixelRatio || 1));
       width = window.innerWidth;
       height = window.innerHeight;
 
@@ -77,6 +84,11 @@ export default function TechTrailBackground({
       canvas.style.width = `${width}px`;
       canvas.style.height = `${height}px`;
       context.setTransform(dpr, 0, 0, dpr, 0, 0);
+
+      // Rebuild cached gradients after resize.
+      cachedBaseGradient = null;
+      cachedRedGlow = null;
+      cachedCrimsonGlow = null;
     }
 
     function pushTrailPoint(x: number, y: number, now: number) {
@@ -134,51 +146,55 @@ export default function TechTrailBackground({
 
     function drawBase(time: number) {
       if (hasBackgroundImage) {
-        // With custom image, keep only a subtle mask so the image remains the base.
         context.clearRect(0, 0, width, height);
-        const mask = context.createLinearGradient(0, 0, 0, height);
-        mask.addColorStop(0, "rgba(2, 8, 18, 0.34)");
-        mask.addColorStop(0.52, "rgba(1, 6, 16, 0.24)");
-        mask.addColorStop(1, "rgba(1, 5, 12, 0.38)");
-        context.fillStyle = mask;
+        if (!cachedBaseGradient) {
+          const mask = context.createLinearGradient(0, 0, 0, height);
+          mask.addColorStop(0, "rgba(2, 8, 18, 0.34)");
+          mask.addColorStop(0.52, "rgba(1, 6, 16, 0.24)");
+          mask.addColorStop(1, "rgba(1, 5, 12, 0.38)");
+          cachedBaseGradient = mask;
+        }
+        context.fillStyle = cachedBaseGradient;
         context.fillRect(0, 0, width, height);
       } else {
-        const gradient = context.createLinearGradient(0, 0, 0, height);
-        gradient.addColorStop(0, "rgba(5, 11, 25, 0.99)");
-        gradient.addColorStop(0.5, "rgba(3, 8, 19, 0.985)");
-        gradient.addColorStop(1, "rgba(2, 6, 14, 0.995)");
-        context.fillStyle = gradient;
+        if (!cachedBaseGradient) {
+          const gradient = context.createLinearGradient(0, 0, 0, height);
+          gradient.addColorStop(0, "rgba(5, 11, 25, 0.99)");
+          gradient.addColorStop(0.5, "rgba(3, 8, 19, 0.985)");
+          gradient.addColorStop(1, "rgba(2, 6, 14, 0.995)");
+          cachedBaseGradient = gradient;
+        }
+        context.fillStyle = cachedBaseGradient;
         context.fillRect(0, 0, width, height);
 
-        const redGlow = context.createRadialGradient(
-          width * 0.2,
-          height * 0.16,
-          40,
-          width * 0.2,
-          height * 0.16,
-          Math.max(width, height) * 0.75
-        );
-        redGlow.addColorStop(0, "rgba(248, 46, 53, 0.14)");
-        redGlow.addColorStop(0.6, "rgba(248, 46, 53, 0.05)");
-        redGlow.addColorStop(1, "rgba(248, 46, 53, 0)");
-        context.fillStyle = redGlow;
+        if (!cachedRedGlow) {
+          const redGlow = context.createRadialGradient(
+            width * 0.2, height * 0.16, 40,
+            width * 0.2, height * 0.16, Math.max(width, height) * 0.75
+          );
+          redGlow.addColorStop(0, "rgba(248, 46, 53, 0.14)");
+          redGlow.addColorStop(0.6, "rgba(248, 46, 53, 0.05)");
+          redGlow.addColorStop(1, "rgba(248, 46, 53, 0)");
+          cachedRedGlow = redGlow;
+        }
+        context.fillStyle = cachedRedGlow;
         context.fillRect(0, 0, width, height);
 
-        const crimsonGlow = context.createRadialGradient(
-          width * 0.83,
-          height * 0.88,
-          40,
-          width * 0.83,
-          height * 0.88,
-          Math.max(width, height) * 0.65
-        );
-        crimsonGlow.addColorStop(0, "rgba(196, 22, 28, 0.18)");
-        crimsonGlow.addColorStop(0.6, "rgba(196, 22, 28, 0.06)");
-        crimsonGlow.addColorStop(1, "rgba(196, 22, 28, 0)");
-        context.fillStyle = crimsonGlow;
+        if (!cachedCrimsonGlow) {
+          const crimsonGlow = context.createRadialGradient(
+            width * 0.83, height * 0.88, 40,
+            width * 0.83, height * 0.88, Math.max(width, height) * 0.65
+          );
+          crimsonGlow.addColorStop(0, "rgba(196, 22, 28, 0.18)");
+          crimsonGlow.addColorStop(0.6, "rgba(196, 22, 28, 0.06)");
+          crimsonGlow.addColorStop(1, "rgba(196, 22, 28, 0)");
+          cachedCrimsonGlow = crimsonGlow;
+        }
+        context.fillStyle = cachedCrimsonGlow;
         context.fillRect(0, 0, width, height);
       }
 
+      // Grid — drawn every 3 frames to cut per-frame work.
       const gridSize = 52;
       const offset = (time * 0.02) % gridSize;
       context.lineWidth = 1;
@@ -218,8 +234,8 @@ export default function TechTrailBackground({
         const green = Math.round(22 + mix * 54);
         const blue = Math.round(28 + mix * 42);
         context.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${0.08 + life * 0.62})`;
-        context.shadowBlur = 6 + life * 22;
-        context.shadowColor = `rgba(248, 46, 53, ${0.18 + life * 0.5})`;
+        // No shadowBlur — it forces an off-screen compositor buffer per segment,
+        // causing runaway memory growth on long sessions.
         context.lineWidth = 1.8 + life * 2.8;
 
         context.beginPath();
@@ -228,7 +244,6 @@ export default function TechTrailBackground({
         context.stroke();
       }
 
-      context.shadowBlur = 0;
       for (let i = 0; i < points.length; i += 4) {
         const point = points[i];
         const age = Math.min(1, (now - point.time) / trailDurationMs);
@@ -278,12 +293,20 @@ export default function TechTrailBackground({
       context.stroke();
     }
 
+    // Throttled loop — renders at ~30 fps instead of 60 fps.
+    // Halves CPU work and canvas state churn with no perceivable quality loss
+    // for a trail / glow effect.
+    let lastFrameAt = 0;
+    const TARGET_INTERVAL = 1000 / 30;
+
     function drawFrame(now: number) {
+      rafId = window.requestAnimationFrame(drawFrame);
+      if (now - lastFrameAt < TARGET_INTERVAL) return;
+      lastFrameAt = now;
       drawBase(now);
       drawTrail(now);
       drawSparks(now);
       drawCursor(now);
-      rafId = window.requestAnimationFrame(drawFrame);
     }
 
     resize();
