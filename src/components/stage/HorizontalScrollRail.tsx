@@ -1,7 +1,5 @@
 "use client";
 
-import { useEffect, useMemo, useRef, useState, type CSSProperties } from "react";
-import { useScrollPin } from "@/hooks/ui/useScrollPin";
 import type { RailPanel } from "@/types/stage";
 import styles from "./stage.module.css";
 
@@ -9,59 +7,20 @@ type HorizontalScrollRailProps = {
   panels: RailPanel[];
 };
 
+/**
+ * Rail horizontal de paneles. Ahora usa overflow-x nativo en vez de scroll-pin.
+ */
 export default function HorizontalScrollRail({ panels }: HorizontalScrollRailProps) {
-  const pinAreaRef = useRef<HTMLDivElement | null>(null);
-  const viewportRef = useRef<HTMLDivElement | null>(null);
-  const trackRef = useRef<HTMLDivElement | null>(null);
-  const [maxOffset, setMaxOffset] = useState(0);
-  const { progress } = useScrollPin(pinAreaRef);
-
-  useEffect(() => {
-    let rafId = 0;
-    const measure = () => {
-      rafId = 0;
-      const viewport = viewportRef.current;
-      const track = trackRef.current;
-      if (!viewport || !track) return;
-      setMaxOffset(Math.max(0, track.scrollWidth - viewport.clientWidth));
-    };
-    const schedule = () => {
-      if (rafId) return;
-      rafId = window.requestAnimationFrame(measure);
-    };
-    schedule();
-    window.addEventListener("resize", schedule, { passive: true });
-    return () => {
-      if (rafId) window.cancelAnimationFrame(rafId);
-      window.removeEventListener("resize", schedule);
-    };
-  }, [panels.length]);
-
-  const style = useMemo(
-    () =>
-      ({
-        "--rail-height-multiplier": Math.max(3.2, panels.length * 0.85),
-      }) as CSSProperties,
-    [panels.length]
-  );
-
   return (
-    <div ref={pinAreaRef} className={styles.railPinArea} style={style}>
+    <div className={styles.railPinArea}>
       <div className={styles.railSticky}>
         <div className={styles.railHead}>
           <span className={styles.railLabel}>Resumen del modelo</span>
           <h3 className={styles.railTitle}>Recorrido de las 6 etapas</h3>
-          <p className={styles.railHint}>
-            El desplazamiento vertical mueve los paneles en horizontal.
-          </p>
         </div>
 
-        <div ref={viewportRef} className={styles.railViewport}>
-          <div
-            ref={trackRef}
-            className={styles.railTrack}
-            style={{ transform: `translate3d(${-maxOffset * progress}px,0,0)` }}
-          >
+        <div className={styles.railViewport} style={{ overflowX: "auto" }}>
+          <div className={styles.railTrack}>
             {panels.map((panel, index) => (
               <article
                 key={panel.id}
@@ -80,10 +39,6 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
               </article>
             ))}
           </div>
-        </div>
-
-        <div className={styles.railProgressTrack} aria-hidden="true">
-          <div className={styles.railProgressFill} style={{ width: `${progress * 100}%` }} />
         </div>
       </div>
     </div>

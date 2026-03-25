@@ -10,8 +10,6 @@ type StageShellProps = {
   viewerTitle: string;
   viewerStatusLabel: string;
   viewerStatusTone?: "active" | "done";
-  /** Recorrido (sección N de M): debajo del mini visor; si el panel está cerrado, se muestra arriba del contenido. */
-  scrollProgress?: ReactNode;
   viewerEnabled?: boolean;
 };
 
@@ -20,20 +18,15 @@ export default function StageShell({
   viewerTitle,
   viewerStatusLabel,
   viewerStatusTone = "active",
-  scrollProgress,
   viewerEnabled = true,
 }: StageShellProps) {
   const [dockOpen, setDockOpen] = useState(true);
   const dockVisible = viewerEnabled && dockOpen;
   const contentUsesFullWidth = !viewerEnabled || !dockOpen;
-  /** Solo sin visor global: el dock cerrado no debe usar mainNoViewer (evita saltos de padding en móvil). */
   const mainPaddingClass = !viewerEnabled ? styles.mainNoViewer : "";
   const contentColumnClass = contentUsesFullWidth
     ? styles.contentColumnNoViewer
     : "";
-
-  const showScrollProgressInMain =
-    Boolean(scrollProgress) && (!viewerEnabled || !dockVisible);
 
   return (
     <div className={styles.stageRoot}>
@@ -76,10 +69,6 @@ export default function StageShell({
           <div className={styles.viewerCanvasWrap}>
             <MiniSpiralViewer />
           </div>
-
-          {scrollProgress ? (
-            <div className={styles.viewerRecorrido}>{scrollProgress}</div>
-          ) : null}
         </aside>
       ) : null}
 
@@ -97,9 +86,6 @@ export default function StageShell({
 
       <main className={`${styles.main} ${mainPaddingClass}`.trim()}>
         <div className={`${styles.contentColumn} ${contentColumnClass}`.trim()}>
-          {showScrollProgressInMain ? (
-            <div className={styles.scrollProgressMainFallback}>{scrollProgress}</div>
-          ) : null}
           {children}
         </div>
       </main>
