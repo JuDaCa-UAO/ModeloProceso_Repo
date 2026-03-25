@@ -1,11 +1,8 @@
-/* ─── ToastStack: notificaciones fijas top-right, debajo del StageViewer ─── */
-
-/* El StageViewer mide aprox 170px de alto (canvas cuadrado ~140 + label ~30).
-   Las notificaciones se ubican justo debajo con un pequeño margen. */
+/* ─── ToastStack: notificaciones fijas en esquina inferior derecha ──────── */
 
 .container {
   position: fixed;
-  top: 210px;   /* 1.5rem + ~170px StageViewer + 12px margen */
+  bottom: 1.5rem;
   right: 1.5rem;
   z-index: 200;
   display: flex;

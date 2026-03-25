@@ -22,6 +22,7 @@ import type { LaiaChatStep } from "@/components/stage/LaiaChatBar";
 import StageViewer from "@/components/stage/StageViewer";
 import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
+import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
 import styles from "./stageClient.module.css";
 
@@ -87,6 +88,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    */
   const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
+  const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastCounter = useRef(0);
 
@@ -128,6 +130,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   return (
     <div className={styles.root}>
       <TechTrailBackground className={styles.background} />
+      <PauseMenu open={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
 
       {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════════════ */}
