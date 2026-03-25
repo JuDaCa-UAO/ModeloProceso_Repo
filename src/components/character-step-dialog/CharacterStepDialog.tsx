@@ -49,6 +49,8 @@ type CharacterStepDialogProps = {
   nextLabel?: string;
   size?: "default" | "compact";
   density?: "standard" | "tight";
+  /** Muestra el botón de reproducir audio. Default: true. Audio pendiente de implementar. */
+  showAudioButton?: boolean;
   onComplete?: (isComplete: true) => void;
 };
 
@@ -64,6 +66,7 @@ export default function CharacterStepDialog({
   nextLabel = DEFAULT_NEXT_LABEL,
   size = "default",
   density = "standard",
+  showAudioButton = true,
   onComplete,
 }: CharacterStepDialogProps) {
   const safeSteps = useMemo(
@@ -202,16 +205,30 @@ export default function CharacterStepDialog({
           </div>
 
           <div className={styles.actions}>
-            <button
-              type="button"
-              className={styles.navBtn}
-              onClick={goPrevious}
-              disabled={idx <= 0}
-              aria-label="Anterior"
-              title="Anterior (flecha izquierda)"
-            >
-              <span className={styles.arrow}>&larr;</span>
-            </button>
+            <div className={styles.leftActions}>
+              {showAudioButton ? (
+                <button
+                  type="button"
+                  className={styles.audioBtn}
+                  aria-label="Reproducir audio"
+                  disabled
+                  tabIndex={-1}
+                  title="Audio próximamente"
+                >
+                  &#128266;
+                </button>
+              ) : null}
+              <button
+                type="button"
+                className={styles.navBtn}
+                onClick={goPrevious}
+                disabled={idx <= 0}
+                aria-label="Anterior"
+                title="Anterior (flecha izquierda)"
+              >
+                <span className={styles.arrow}>&larr;</span>
+              </button>
+            </div>
 
             <div className={styles.counter}>
               {idx + 1}/{safeSteps.length}

@@ -17,8 +17,6 @@ import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
-import LaiaChatBar from "@/components/stage/LaiaChatBar";
-import type { LaiaChatStep } from "@/components/stage/LaiaChatBar";
 import StageViewer from "@/components/stage/StageViewer";
 import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
@@ -71,18 +69,18 @@ const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
   },
 ];
 
-// ─── Contenido de LaiaChatBar — Frame 3 Fase A (modelo visible) ──────────────
+// ─── Contenido de CharacterStepDialog — Frame 3 Fase A (modelo visible) ──────────────
 
-const F3_LAIA_STEPS_A: LaiaChatStep[] = [
+const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
     imgSrc: "/ui/laia_explaining.png",
   },
 ];
 
-// ─── Contenido de LaiaChatBar — Frame 3 Fase B (viewer visible) ──────────────
+// ─── Contenido de CharacterStepDialog — Frame 3 Fase B (viewer visible) ──────────────
 
-const F3_LAIA_STEPS_B: LaiaChatStep[] = [
+const F3_LAIA_STEPS_B: CharacterDialogStep[] = [
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
     imgSrc: "/ui/laia.png",
@@ -272,29 +270,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             sectionTitle="Sección 3: Tu lugar en el modelo"
             backgroundImage="/ui/backgroundUAO.png"
             overlay="rgba(4, 2, 3, 0.45)"
-            className={styles.frameWithBar}
-            hintOffset={90}
             hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
-            bottomBar={
-              f3Phase !== "initial" ? (
-                <LaiaChatBar
-                  key={f3Phase}
-                  steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
-                  onComplete={
-                    f3Phase === "laia-model"
-                      ? () => setF3Phase("laia-viewer")
-                      : () => {
-                          completeFrame(3);
-                          if (!notifiedFrames.current.has(3)) {
-                            notifiedFrames.current.add(3);
-                            pushToast("\u00a1Proceso guardado!");
-                            pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
-                          }
-                        }
-                  }
-                />
-              ) : null
-            }
           >
             {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
             {f3Phase !== "laia-viewer" ? (
@@ -317,6 +293,30 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   </div>
                 ) : null}
               </>
+            ) : null}
+
+            {/* Diálogo de Laia — misma apariencia que Frame 1, empujado al fondo */}
+            {f3Phase !== "initial" ? (
+              <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+                <CharacterStepDialog
+                  key={f3Phase}
+                  size="compact"
+                  density="tight"
+                  steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
+                  onComplete={
+                    f3Phase === "laia-model"
+                      ? () => setF3Phase("laia-viewer")
+                      : () => {
+                          completeFrame(3);
+                          if (!notifiedFrames.current.has(3)) {
+                            notifiedFrames.current.add(3);
+                            pushToast("\u00a1Proceso guardado!");
+                            pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                          }
+                        }
+                  }
+                />
+              </div>
             ) : null}
           </Frame>
         </>
