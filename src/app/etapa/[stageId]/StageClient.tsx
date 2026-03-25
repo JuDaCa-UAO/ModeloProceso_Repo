@@ -17,6 +17,8 @@ import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
+import HorizontalScrollRail from "@/components/stage/HorizontalScrollRail";
+import type { RailPanel } from "@/types/stage";
 import StageViewer from "@/components/stage/StageViewer";
 import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
@@ -83,6 +85,80 @@ const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
 const F3_LAIA_STEPS_B: CharacterDialogStep[] = [
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
+    imgSrc: "/ui/laia.png",
+  },
+];
+
+// ─── Rail de etapas — Frame 4 ──────────────────────────────────────────────
+
+const STAGE_RAIL_CARDS: RailPanel[] = [
+  {
+    id: "rail-etapa-1",
+    label: "Etapa 1",
+    title: "Recónócete para avanzar",
+    lines: [
+      "Identifica tu punto de partida con un autodiagnóstico individual y formativo.",
+      "",
+    ],
+    kind: "stage",
+  },
+  {
+    id: "rail-etapa-2",
+    label: "Etapa 2",
+    title: "Descubre nuevas posibilidades",
+    lines: [
+      "Explora opciones de GenAI para apoyar una actividad real de tu docencia con criterio pedagógico y ético.",
+      "",
+    ],
+    kind: "stage",
+  },
+  {
+    id: "rail-etapa-3",
+    label: "Etapa 3",
+    title: "Diseña con propósito",
+    lines: [
+      "Transforma lo explorado en una experiencia de aprendizaje estructurada, coherente y mediada por GenAI.",
+      "",
+    ],
+    kind: "stage",
+  },
+  {
+    id: "rail-etapa-4",
+    label: "Etapa 4",
+    title: "Prepara el terreno para el éxito",
+    lines: [
+      "Convierte el diseño en condiciones operativas, logísticas y pedagógicas para un despliegue fluido y seguro.",
+      "",
+    ],
+    kind: "stage",
+  },
+  {
+    id: "rail-etapa-5",
+    label: "Etapa 5",
+    title: "Hazlo realidad en el aula",
+    lines: [
+      "Pon en práctica lo diseñado con criterio pedagógico y atención a la experiencia real de cada estudiante.",
+      "",
+    ],
+    kind: "stage",
+  },
+  {
+    id: "rail-etapa-6",
+    label: "Etapa 6",
+    title: "Reflexiona, aprende y mejora",
+    lines: [
+      "Analiza los resultados, recoge evidencias y ajusta tu práctica para fortalecer el aprendizaje mediado por GenAI.",
+      "",
+    ],
+    kind: "stage",
+  },
+];
+
+// ─── Diálogo de Laia — Frame 4 ──────────────────────────────────────────────
+
+const F4_LAIA_STEPS: CharacterDialogStep[] = [
+  {
+    text: "Este recorrido no es lineal ni rígido. Cada etapa te ayudará a avanzar con mayor claridad, y podrás volver sobre ellas cuando lo necesites.",
     imgSrc: "/ui/laia.png",
   },
 ];
@@ -320,6 +396,35 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             ) : null}
           </Frame>
         </>
+      ) : null}
+
+      {/* ═══ FRAME 4: Familiárizándote con el modelo ══════════════════ */}
+      {completedFrames >= 3 ? (
+        <Frame
+          id="frame-rail"
+          sectionTitle="Sección 4: Familiárizándote con el modelo"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 4 ? <ScrollHint label="¡Continuemos!" /> : null}
+        >
+          <HorizontalScrollRail panels={STAGE_RAIL_CARDS} />
+
+          {/* Diálogo de Laia — empujado al fondo del frame */}
+          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+            <CharacterStepDialog
+              size="compact"
+              density="tight"
+              steps={F4_LAIA_STEPS}
+              onComplete={() => {
+                completeFrame(4);
+                if (!notifiedFrames.current.has(4)) {
+                  notifiedFrames.current.add(4);
+                  pushToast("\u00a1Proceso guardado!");
+                }
+              }}
+            />
+          </div>
+        </Frame>
       ) : null}
     </div>
   );

@@ -170,6 +170,20 @@ Props del Frame:
 - Usar `<MiniSpiralViewer enableRotation />` para el viewer embebido
 - Envolver en `.modelStage` para contraste oscuro: `background: rgba(2, 1, 2, 0.80)`, `height: clamp(300px, 50dvh, 480px)`
 
+### Rail horizontal de etapas (`HorizontalScrollRail`)
+
+- Componente: `src/components/stage/HorizontalScrollRail.tsx`
+- Props: `panels: RailPanel[]` (tipo en `src/types/stage.ts`)
+- **Scroll horizontal**: el componente intercepta la rueda del ratón sobre el viewport y la convierte en `scrollLeft`. Usa un listener nativo con `{ passive: false }` para poder llamar `preventDefault`. En los extremos (inicio o final del rail) el scroll pasa a la página normalmente.
+- **Tarjetas**: cada `RailPanel` se renderiza como una tarjeta compacta con:
+  - Badge (`panel.label`) — p.ej. "Etapa 1"
+  - Título (`panel.title`)
+  - Descripción (`panel.lines[0]`)
+  - Botones "Reproducir vídeo" (texto) + ▶ (círculo) — deshabilitados hasta que existan los `.mp4`
+- **CSS**: clases `.railViewportV2`, `.railTrackV2`, `.railCardV2` etc. en `stage.module.css`
+- **Datos**: definir el array `STAGE_RAIL_CARDS: RailPanel[]` en `StageClient.tsx` con las 6 etapas
+- **Mecanismo de avance**: según el maquetado, el scroll hint aparece después de que el docente reproduce un vídeo de alguna etapa. Mientras los vídeos no estén disponibles, el frame avanza al completar el diálogo de Laia.
+
 ---
 
 
