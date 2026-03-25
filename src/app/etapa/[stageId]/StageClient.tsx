@@ -192,6 +192,35 @@ const F6_LAIA_STEPS: CharacterDialogStep[] = [
   },
 ];
 
+// ─── Diálogo de Laia — Frame 7 ──────────────────────────────────────────────
+
+const F7_LAIA_STEPS: CharacterDialogStep[] = [
+  {
+    text: "A lo largo de este proceso podrás reconocer en qué estado te encuentras frente al uso de la IA. Estos estados no son etiquetas ni juicios de valor: son puntos de referencia que ayudan a orientar tu recorrido. El autodiagnóstico permitirá identificar tu punto de partida dentro del modelo.",
+    imgSrc: "/ui/laia_explaining.png",
+  },
+];
+
+// ─── Tarjetas de estados — Frame 7 ──────────────────────────────────────────
+
+const ESTADO_CARDS = [
+  {
+    label: "Inicial",
+    title: "Aprendiendo sin miedo",
+    desc: "Primeras aproximaciones con curiosidad y necesidad de guía clara. Recibirás apoyo más guiado, ejemplos listos para adaptar y recomendaciones paso a paso.",
+  },
+  {
+    label: "Intermedio",
+    title: "Explorando con propósito",
+    desc: "Ya experimentas con intención educativa y buscas mayor coherencia pedagógica. Recibirás recomendaciones para fortalecer decisiones didácticas, críticas y éticas.",
+  },
+  {
+    label: "Avanzado",
+    title: "Innovando e inspirando",
+    desc: "Integras GenAI de forma crítica, creativa y estratégica en distintos contextos. Recibirás retos de mayor profundidad y oportunidades para compartir aprendizajes.",
+  },
+] as const;
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -602,6 +631,44 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               density="tight"
               steps={F6_LAIA_STEPS}
               showAudioButton={false}
+            />
+          </div>
+        </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 7: Estados iniciales ═══════════════════════════════ */}
+      {completedFrames >= 6 ? (
+        <Frame
+          id="frame-estados"
+          sectionTitle="Sección 7: Estados iniciales"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 7 ? <ScrollHint label="Continuar" /> : null}
+        >
+          {/* Grid de 3 tarjetas */}
+          <div className={blockStyles.stateGrid}>
+            {ESTADO_CARDS.map((card) => (
+              <div key={card.label} className={blockStyles.stateCard}>
+                <span className={blockStyles.stateHierarchy}>{card.label}</span>
+                <p className={blockStyles.stateTitle}>{card.title}</p>
+                <p className={blockStyles.stateDesc}>{card.desc}</p>
+              </div>
+            ))}
+          </div>
+
+          {/* Diálogo de Laia al fondo */}
+          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+            <CharacterStepDialog
+              size="compact"
+              density="tight"
+              steps={F7_LAIA_STEPS}
+              onComplete={() => {
+                completeFrame(7);
+                if (!notifiedFrames.current.has(7)) {
+                  notifiedFrames.current.add(7);
+                  pushToast("¡Proceso guardado!");
+                }
+              }}
             />
           </div>
         </Frame>
