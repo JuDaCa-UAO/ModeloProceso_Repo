@@ -238,6 +238,14 @@ const F8_LAIA_STEPS_POST: CharacterDialogStep[] = [
     imgSrc: "/ui/laia.png",
   },
 ];
+
+// ─── Diálogo de Laia — Frame 9 (pos-video) ─────────────────────────────────
+const F9_LAIA_STEPS: CharacterDialogStep[] = [
+  {
+    text: "Listo. Con esta información ya tenemos un punto de partida para el recorrido. Ahora pasaremos a explorar nuevas posibilidades de uso de GenAI.",
+    imgSrc: "/ui/Laia_triumphant.png",
+  },
+];
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -302,6 +310,12 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   /** true cuando el usuario confirma que completó el formulario embebido */
   const [autodiagDone, setAutodiagDone] = useState(false);
 
+  // ── Frame 9: transición ──────────────────────────────────────────────────
+  /** true cuando el video de transición terminó de reproducirse */
+  const [f9VideoEnded, setF9VideoEnded] = useState(false);
+  /** true cuando el usuario solicitó reproducir el video de transición */
+  const [f9VideoPlaying, setF9VideoPlaying] = useState(false);
+
   // ── Hidratación desde localStorage ────────────────────────────────────────
   // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
   // componente, así que no puede haber hydration mismatch.
@@ -318,6 +332,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       setConsentUsage(true);
     }
     if (saved >= 8) setAutodiagDone(true);
+    if (saved >= 9) { setF9VideoEnded(true); setF9VideoPlaying(false); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -766,6 +781,86 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               />
             )}
           </div>
+        </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 9: Transición a Etapa 2 ══════════════════════════ */}
+      {completedFrames >= 8 ? (
+        <Frame
+          id="frame-transicion"
+          sectionTitle="Sección 9: Transición"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={null}
+        >
+          {/* ——— Reproductor de video ——— */}
+          {f9VideoPlaying && !f9VideoEnded ? (
+            <video
+              key="f9-video"
+              className={styles.f9Video}
+              src="/videos/TransicionE1-a-E2.mp4"
+              autoPlay
+              playsInline
+              onEnded={() => setF9VideoEnded(true)}
+            />
+          ) : !f9VideoEnded ? (
+            /* Pantalla inicial: modelo grande + botón ver animación */
+            <div className={styles.f9Splash}>
+              <div className={styles.f9ModelWrap}>
+                <MiniSpiralViewer enableRotation />
+              </div>
+              <button
+                className={styles.btnVerAnimacion}
+                onClick={() => setF9VideoPlaying(true)}
+              >
+                Ver animación →
+              </button>
+            </div>
+          ) : null}
+
+          {/* ——— Post-video: Laia protagonista + botón siguiente etapa ——— */}
+          {f9VideoEnded ? (
+            <>
+              {/* Botón repetir — discréto, arriba */}
+              <div className={styles.f9RepeatRow}>
+                <button
+                  className={styles.f9RepeatBtn}
+                  onClick={() => { setF9VideoEnded(false); setF9VideoPlaying(true); }}
+                >
+                  ↺ Repetir animación
+                </button>
+              </div>
+
+              {/* Diálogo de Laia a tamaño protagonista */}
+              <div className={styles.f9LaiaWrap}>
+                <CharacterStepDialog
+                  steps={F9_LAIA_STEPS}
+                  size="default"
+                  density="standard"
+                  showAudioButton
+                  onComplete={() => {
+                    completeFrame(9);
+                    if (!notifiedFrames.current.has(9)) {
+                      notifiedFrames.current.add(9);
+                    }
+                  }}
+                />
+              </div>
+
+              {/* Botón ir a Etapa 2 — solo visible tras completar el diálogo */}
+              {completedFrames >= 9 ? (
+                <div className={styles.f9NextRow}>
+                  <a
+                    href="/inicio"
+                    className={styles.f9NextBtn}
+                    aria-label="Ir a la siguiente etapa"
+                  >
+                    Ir a la siguiente etapa
+                  </a>
+                </div>
+              ) : null}
+            </>
+          ) : null}
         </Frame>
       ) : null}
 
