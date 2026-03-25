@@ -28,6 +28,7 @@ import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import styles from "./stageClient.module.css";
+import blockStyles from "@/components/stage/blocks/blocks.module.css";
 
 // ─── Persistencia del progreso de frames en localStorage ────────────────────────────
 function frameProgressKey(stageId: string) {
@@ -182,6 +183,15 @@ const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
   },
 ];
 
+// ─── Diálogo de Laia — Frame 6 ──────────────────────────────────────────────
+
+const F6_LAIA_STEPS: CharacterDialogStep[] = [
+  {
+    text: "Tus respuestas son confidenciales y se usan únicamente para orientar este recorrido. No es un examen, ni tiene efectos administrativos. Si necesitas apoyo adicional, puedes usar el chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.",
+    imgSrc: "/ui/laia_explaining.png",
+  },
+];
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -233,6 +243,15 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   /** chatbotOpen: panel de chat visible */
   const [chatbotOpen, setChatbotOpen] = useState(false);
 
+  // ── Frame 6: formulario de consentimiento ─────────────────────────────────
+  const [consentAdmin, setConsentAdmin] = useState(false);
+  const [consentUsage, setConsentUsage] = useState(false);
+  const [consentEmail, setConsentEmail] = useState("");
+  /** Muestra error de validación solo si el usuario ya intentó enviar */
+  const [consentTouched, setConsentTouched] = useState(false);
+  const consentValid =
+    consentAdmin && consentUsage && /^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(consentEmail);
+
   // ── Hidratación desde localStorage ────────────────────────────────────────
   // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
   // componente, así que no puede haber hydration mismatch.
@@ -243,6 +262,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
     setCompletedFrames(saved);
     if (saved >= 3) setF3Phase("laia-viewer");
     if (saved >= 5) setF5Phase("after-chat");
+    if (saved >= 6) {
+      // Frame 6 ya completado: marcar consentimientos como aceptados
+      setConsentAdmin(true);
+      setConsentUsage(true);
+    }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -484,6 +508,101 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 }}
               />
             )}
+          </div>
+        </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 6: Condiciones de confianza ══════════════════════ */}
+      {completedFrames >= 5 ? (
+        <Frame
+          id="frame-consentimiento"
+          sectionTitle="Sección 6: Condiciones de confianza"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 6 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
+        >
+          {/* Formulario de consentimiento */}
+          {completedFrames < 6 ? (
+            <form
+              className={blockStyles.formCard}
+              onSubmit={(e) => e.preventDefault()}
+            >
+              <div className={blockStyles.stageCopy}>
+                <p>Este ejercicio es individual, objetivo y confidencial.</p>
+                <p>No tiene efectos administrativos. Su único propósito es orientar el camino formativo.</p>
+              </div>
+
+              <label className={blockStyles.checkboxRow}>
+                <input
+                  type="checkbox"
+                  checked={consentAdmin}
+                  onChange={(e) => setConsentAdmin(e.target.checked)}
+                />
+                <span>Entiendo que no es una evaluación administrativa.</span>
+              </label>
+
+              <label className={blockStyles.checkboxRow}>
+                <input
+                  type="checkbox"
+                  checked={consentUsage}
+                  onChange={(e) => setConsentUsage(e.target.checked)}
+                />
+                <span>Acepto que mis respuestas se usen para generar mi resultado y recomendaciones.</span>
+              </label>
+
+              <label className={blockStyles.fieldLabel} htmlFor="consent-email">
+                Correo para enviarte el resultado
+              </label>
+              <input
+                id="consent-email"
+                type="email"
+                className={blockStyles.textInput}
+                placeholder="docente@uao.edu.co"
+                value={consentEmail}
+                onChange={(e) => setConsentEmail(e.target.value)}
+                autoComplete="email"
+              />
+
+              {consentTouched && !consentValid ? (
+                <p className={blockStyles.errorText}>
+                  Completa los dos consentimientos e ingresa un correo válido para continuar.
+                </p>
+              ) : null}
+
+              <div className={blockStyles.actionRow}>
+                <button
+                  type="button"
+                  className={styles.btnVerAnimacion}
+                  onClick={() => {
+                    setConsentTouched(true);
+                    if (!consentValid) return;
+                    completeFrame(6);
+                    if (!notifiedFrames.current.has(6)) {
+                      notifiedFrames.current.add(6);
+                      pushToast("\u00a1Proceso guardado!");
+                    }
+                  }}
+                >
+                  Iniciar autodiagnóstico →
+                </button>
+              </div>
+            </form>
+          ) : (
+            <div className={blockStyles.formCard}>
+              <div className={blockStyles.stageCopy}>
+                <p>Ya diste tu consentimiento. El autodiagnóstico está habilitado.</p>
+              </div>
+            </div>
+          )}
+
+          {/* Diálogo de Laia al fondo */}
+          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+            <CharacterStepDialog
+              size="compact"
+              density="tight"
+              steps={F6_LAIA_STEPS}
+              showAudioButton={false}
+            />
           </div>
         </Frame>
       ) : null}
