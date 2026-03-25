@@ -186,10 +186,8 @@ type StageClientProps = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StageClient({ stageId, stageName }: StageClientProps) {
-  // Leer progreso guardado una sola vez (lazy initializer — no dispara re-render)
-  const [initialSaved] = useState(() => readFrameProgress(stageId));
-
-  const [completedFrames, setCompletedFrames] = useState(initialSaved);
+  // ── Estado principal ──────────────────────────────────────────────────────
+  const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -198,9 +196,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    * notifiedFrames: frames para los que ya se enviaron las notificaciones toast.
    * Evita que pulsar "Siguiente" varias veces al final del diálogo acumule toasts.
    */
-  const notifiedFrames = useRef(new Set<number>(
-    Array.from({ length: initialSaved }, (_, i) => i + 1)
-  ));
+  const notifiedFrames = useRef(new Set<number>());
 
   const pushToast = useCallback((text: string) => {
     const id = ++toastCounter.current;
@@ -218,14 +214,27 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    *   'laia-model'  → model visible + LaiaChatBar Fase A
    *   'laia-viewer' → model oculto + StageViewer fijo + LaiaChatBar Fase B
    */
-  const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">(
-    initialSaved >= 3 ? "laia-viewer" : "initial"
-  );
+  const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">("initial");
 
   /** chatbotActivated: el usuario ya abrió y cerró el chatbot → Frame 5 completo */
-  const [chatbotActivated, setChatbotActivated] = useState(initialSaved >= 5);
+  const [chatbotActivated, setChatbotActivated] = useState(false);
   /** chatbotOpen: panel de chat visible */
   const [chatbotOpen, setChatbotOpen] = useState(false);
+
+  // ── Hidratación desde localStorage (post-mount, evita mismatch SSR) ────
+  // requestAnimationFrame evita el error React 19 "setState synchronously in effect"
+  useEffect(() => {
+    const saved = readFrameProgress(stageId);
+    if (saved <= 0) return;
+    notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
+    const raf = requestAnimationFrame(() => {
+      setCompletedFrames(saved);
+      if (saved >= 3) setF3Phase("laia-viewer");
+      if (saved >= 5) setChatbotActivated(true);
+    });
+    return () => cancelAnimationFrame(raf);
+    // eslint-disable-next-line react-hooks/exhaustive-deps
+  }, []);
 
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });

@@ -208,12 +208,13 @@ Props del Frame:
 - **Evitar emojis** en botones y UI — preferir siempre iconos SVG de `react-icons` para aspecto tecnológico consistente.
 - **Tamaño**: pasar `size={N}` como prop (en px). Para botones: 16-18px. Para decoración: 20-24px.
 
-### Hidratación de progreso (lazy init)
+### Hidratación de progreso (post-mount con requestAnimationFrame)
 
-- El progreso se lee de `localStorage` usando `useState(() => readFrameProgress(stageId))` (lazy initializer).
-- El valor `initialSaved` se usa para inicializar `completedFrames`, `f3Phase`, `chatbotActivated` y `notifiedFrames`.
-- `notifiedFrames` se inicializa con un `Set` pre-poblado para evitar re-toasting.
-- **No se usa `useEffect` ni `useRef.current` durante render** — esto cumple con las restricciones de React 19.
+- Todos los estados (`completedFrames`, `f3Phase`, `chatbotActivated`) se inicializan a sus valores base (`0`, `"initial"`, `false`) para que el HTML del servidor (SSG) y el primer render del cliente coincidan → **sin hydration mismatch**.
+- Después del mount, un `useEffect` con `requestAnimationFrame` lee `localStorage` y actualiza los estados.
+- `requestAnimationFrame` evita el error de React 19 *"Calling setState synchronously within an effect"* al diferir la actualización al siguiente frame del navegador.
+- `notifiedFrames.current` (ref) se actualiza de forma síncrona dentro del effect (las mutaciones de ref no son setState).
+- **Trade-off aceptado**: hay un flash de ~1 frame donde se ve el estado base antes de saltar al progreso guardado. Es el patrón estándar para estado client-only en SSG.
 
 ---
 
