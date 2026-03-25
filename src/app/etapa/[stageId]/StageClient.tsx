@@ -163,6 +163,15 @@ const F4_LAIA_STEPS: CharacterDialogStep[] = [
   },
 ];
 
+// ─── Diálogo de Laia — Frame 5 ──────────────────────────────────────────────
+
+const F5_LAIA_STEPS: CharacterDialogStep[] = [
+  {
+    text: "\u201cOh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.\u201d",
+    imgSrc: "/ui/laia.png",
+  },
+];
+
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {
@@ -174,14 +183,10 @@ type StageClientProps = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StageClient({ stageId, stageName }: StageClientProps) {
-  /**
-   * completedFrames: cuántos frames han terminado.
-   *   0 = ninguno listo  (solo frame 1 visible)
-   *   1 = frame 1 listo  (frame 2 visible)
-   *   2 = frame 2 listo  (frame 3 visible)
-   *   ...
-   */
-  const [completedFrames, setCompletedFrames] = useState(0);
+  // Leer progreso guardado una sola vez (lazy initializer — no dispara re-render)
+  const [initialSaved] = useState(() => readFrameProgress(stageId));
+
+  const [completedFrames, setCompletedFrames] = useState(initialSaved);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -190,7 +195,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    * notifiedFrames: frames para los que ya se enviaron las notificaciones toast.
    * Evita que pulsar "Siguiente" varias veces al final del diálogo acumule toasts.
    */
-  const notifiedFrames = useRef(new Set<number>());
+  const notifiedFrames = useRef(new Set<number>(
+    Array.from({ length: initialSaved }, (_, i) => i + 1)
+  ));
 
   const pushToast = useCallback((text: string) => {
     const id = ++toastCounter.current;
@@ -208,19 +215,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    *   'laia-model'  → model visible + LaiaChatBar Fase A
    *   'laia-viewer' → model oculto + StageViewer fijo + LaiaChatBar Fase B
    */
-  const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">("initial");
+  const [f3Phase, setF3Phase] = useState<"initial" | "laia-model" | "laia-viewer">(
+    initialSaved >= 3 ? "laia-viewer" : "initial"
+  );
 
-  // Hidrata el progreso guardado en localStorage al montar la página
-  useEffect(() => {
-    const saved = readFrameProgress(stageId);
-    if (saved > 0) {
-      setCompletedFrames(saved);
-      // Restaurar fase del viewer si el frame 3 ya estaba completado
-      if (saved >= 3) setF3Phase("laia-viewer");
-      // Marcar todos los frames guardados como ya notificados (evita re-toasting)
-      for (let i = 1; i <= saved; i++) notifiedFrames.current.add(i);
-    }
-  }, [stageId]);
+  /** chatbotActivated: el usuario ya abrió y cerró el chatbot → Frame 5 completo */
+  const [chatbotActivated, setChatbotActivated] = useState(initialSaved >= 5);
+  /** chatbotOpen: panel de chat visible */
+  const [chatbotOpen, setChatbotOpen] = useState(false);
 
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
@@ -425,6 +427,93 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             />
           </div>
         </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 5: Asistencia guiada ═══════════════════════════════ */}
+      {completedFrames >= 4 ? (
+        <Frame
+          id="frame-asistencia"
+          sectionTitle="Sección 5: Asistencia guiada"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 5 ? <ScrollHint label="Continuar" /> : null}
+        >
+          {/* Diálogo de Laia */}
+          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+            <CharacterStepDialog
+              size="compact"
+              density="tight"
+              steps={F5_LAIA_STEPS}
+            />
+          </div>
+        </Frame>
+      ) : null}
+
+      {/* ═══ Floating ChatBot button — fijo abajo-izquierda ═══════════ */}
+      {completedFrames >= 4 ? (
+        <>
+          <button
+            type="button"
+            className={[
+              styles.chatbotBtn,
+              !chatbotActivated && !chatbotOpen ? styles.chatbotBtnPulse : "",
+              chatbotOpen ? styles.chatbotBtnPulseClose : "",
+            ].join(" ")}
+            onClick={() => {
+              if (chatbotOpen) {
+                // Cerrar → completar frame
+                setChatbotOpen(false);
+                if (!chatbotActivated) {
+                  setChatbotActivated(true);
+                  completeFrame(5);
+                  if (!notifiedFrames.current.has(5)) {
+                    notifiedFrames.current.add(5);
+                    pushToast("¡Proceso guardado!");
+                  }
+                }
+              } else {
+                setChatbotOpen(true);
+              }
+            }}
+          >
+            💬 ChatBot con Laia
+          </button>
+
+          {/* Panel de chat desplegable */}
+          {chatbotOpen ? (
+            <div className={styles.chatPanel}>
+              <div className={styles.chatPanelInner}>
+                <div className={styles.chatBubble}>
+                  <p className={styles.chatTitle}>Hola, soy Laia.</p>
+                  <p className={styles.chatBody}>
+                    Este chatbot está aquí para acompañarte durante tu recorrido
+                    por la cartilla web. Puedes acudir a mí si necesitas aclarar
+                    algo puntual, entender mejor una parte de la página o
+                    profundizar en algún aspecto del modelo de proceso. Mi
+                    alcance se limita a esta experiencia: puedo explicarte el
+                    modelo, sus etapas, sus estados y el funcionamiento de la
+                    cartilla, pero no responder preguntas por fuera de este
+                    contexto.{" "}
+                    <strong>
+                      Siempre que lo necesites, estaré aquí para orientarte.
+                    </strong>
+                  </p>
+                </div>
+                <div className={styles.chatInputRow}>
+                  <span className={styles.chatAvatar} aria-hidden>🤖</span>
+                  <input
+                    className={styles.chatInput}
+                    placeholder="Escribe un mensaje…"
+                    disabled
+                  />
+                  <button className={styles.chatSendBtn} disabled aria-label="Enviar">
+                    ▶
+                  </button>
+                </div>
+              </div>
+            </div>
+          ) : null}
+        </>
       ) : null}
     </div>
   );

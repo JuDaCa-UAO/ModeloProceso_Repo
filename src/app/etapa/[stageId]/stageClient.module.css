@@ -158,3 +158,182 @@
 .frameWithBar {
   margin-bottom: clamp(4rem, 8dvh, 6rem);
 }
+
+/* ─── Floating ChatBot button — fijo abajo-izquierda, tonos azul neón Laia ── */
+
+.chatbotBtn {
+  position: fixed;
+  bottom: 28px;
+  left: 28px;
+  z-index: 900;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 14px 26px;
+  border: 2px solid rgba(0, 200, 255, 0.55);
+  border-radius: 18px;
+  background: linear-gradient(135deg, rgba(0, 40, 80, 0.60), rgba(0, 20, 60, 0.75));
+  color: #fff;
+  font-size: 14px;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  cursor: pointer;
+  backdrop-filter: blur(12px);
+  box-shadow:
+    0 0 14px rgba(0, 200, 255, 0.25),
+    0 4px 20px rgba(0, 0, 0, 0.35),
+    inset 0 1px 0 rgba(0, 220, 255, 0.12);
+  transition: transform 160ms ease, border-color 160ms ease, box-shadow 160ms ease;
+}
+
+.chatbotBtn:hover {
+  transform: translateY(-2px);
+  border-color: rgba(0, 220, 255, 0.80);
+  box-shadow:
+    0 0 22px rgba(0, 200, 255, 0.45),
+    0 8px 32px rgba(0, 0, 0, 0.40),
+    inset 0 1px 0 rgba(0, 220, 255, 0.16);
+}
+
+.chatbotBtn:active {
+  transform: translateY(0);
+}
+
+/* Pulse azul — atrae atención antes de abrir */
+.chatbotBtnPulse {
+  animation: chatbotGlow 1.6s ease-in-out infinite;
+}
+
+@keyframes chatbotGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0, 200, 255, 0.30),
+      0 0 24px rgba(0, 140, 255, 0.14),
+      0 4px 20px rgba(0, 0, 0, 0.35);
+    border-color: rgba(0, 200, 255, 0.55);
+  }
+  50% {
+    box-shadow:
+      0 0 24px rgba(0, 220, 255, 0.70),
+      0 0 56px rgba(0, 160, 255, 0.35),
+      0 0 80px rgba(0, 200, 255, 0.15),
+      0 4px 20px rgba(0, 0, 0, 0.35);
+    border-color: rgba(0, 230, 255, 0.95);
+  }
+}
+
+/* Pulse "ciérrame" — más rápido, cuando el chat está abierto */
+.chatbotBtnPulseClose {
+  animation: chatbotCloseGlow 0.9s ease-in-out infinite;
+}
+
+@keyframes chatbotCloseGlow {
+  0%, 100% {
+    box-shadow:
+      0 0 10px rgba(0, 200, 255, 0.30),
+      0 4px 20px rgba(0, 0, 0, 0.35);
+    border-color: rgba(0, 200, 255, 0.50);
+  }
+  50% {
+    box-shadow:
+      0 0 28px rgba(0, 220, 255, 0.80),
+      0 0 64px rgba(0, 160, 255, 0.40),
+      0 4px 20px rgba(0, 0, 0, 0.35);
+    border-color: rgba(0, 240, 255, 1);
+  }
+}
+
+/* ─── Chat Panel desplegable ──────────────────────────────────────────────── */
+
+.chatPanel {
+  position: fixed;
+  bottom: 80px;
+  left: 28px;
+  z-index: 899;
+  width: clamp(300px, 26vw, 420px);
+  max-height: clamp(360px, 55dvh, 520px);
+  display: flex;
+  flex-direction: column;
+  border-radius: 18px;
+  border: 1.5px solid rgba(0, 200, 255, 0.35);
+  background: rgba(6, 12, 22, 0.92);
+  backdrop-filter: blur(20px);
+  box-shadow:
+    0 8px 40px rgba(0, 0, 0, 0.55),
+    0 0 20px rgba(0, 180, 255, 0.10);
+  overflow: hidden;
+  animation: chatPanelIn 280ms ease-out;
+}
+
+@keyframes chatPanelIn {
+  from { opacity: 0; transform: translateY(16px) scale(0.96); }
+  to   { opacity: 1; transform: translateY(0) scale(1); }
+}
+
+.chatPanelInner {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  padding: 20px 18px 16px;
+  overflow-y: auto;
+}
+
+.chatBubble {
+  padding: 16px 18px;
+  border-radius: 14px;
+  border: 1px solid rgba(0, 200, 255, 0.18);
+  background: rgba(10, 20, 38, 0.70);
+}
+
+.chatTitle {
+  margin: 0 0 10px;
+  font-size: 15px;
+  font-weight: 700;
+  color: #fff;
+}
+
+.chatBody {
+  margin: 0;
+  font-size: 13px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.82);
+}
+
+.chatInputRow {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding-top: 4px;
+}
+
+.chatAvatar {
+  font-size: 22px;
+  flex-shrink: 0;
+}
+
+.chatInput {
+  flex: 1;
+  padding: 10px 14px;
+  border-radius: 999px;
+  border: 1.5px solid rgba(0, 200, 255, 0.30);
+  background: rgba(0, 20, 50, 0.50);
+  color: rgba(255, 255, 255, 0.5);
+  font-size: 13px;
+  outline: none;
+}
+
+.chatSendBtn {
+  width: 38px;
+  height: 38px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: none;
+  border-radius: 999px;
+  background: linear-gradient(135deg, #0088ff, #00c8ff);
+  color: #fff;
+  font-size: 14px;
+  cursor: not-allowed;
+  opacity: 0.55;
+}

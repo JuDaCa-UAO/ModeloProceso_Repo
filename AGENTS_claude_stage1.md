@@ -184,6 +184,25 @@ Props del Frame:
 - **Datos**: definir el array `STAGE_RAIL_CARDS: RailPanel[]` en `StageClient.tsx` con las 6 etapas
 - **Mecanismo de avance**: según el maquetado, el scroll hint aparece después de que el docente reproduce un vídeo de alguna etapa. Mientras los vídeos no estén disponibles, el frame avanza al completar el diálogo de Laia.
 
+### Botón de ChatBot (Frame 5: Asistencia guiada)
+
+- El Frame 5 tiene un **botón flotante "ChatBot con Laia"** fijo en la esquina **inferior-izquierda de la pantalla** (`position: fixed; bottom: 28px; left: 28px`), **fuera del frame**.
+- **Tonalidad azul neón** (Laia): bordes `rgba(0, 200, 255, ...)`, fondo degradado azul oscuro, brillo cyan.
+- El botón **brilla intermitentemente** (animación `chatbotGlow`, 1.6s) hasta que el usuario lo abra.
+- Al hacer clic se despliega un **panel de chat** (`chatPanel`) a la izquierda, con diseño visual (sin IA implementada aún): burbuja con texto de bienvenida de Laia + input deshabilitado.
+- **Mientras el chat está abierto**, el botón pulsa más rápido (`chatbotCloseGlow`, 0.9s) para indicar que debe cerrarse.
+- **El usuario debe cerrar el chat para avanzar**: al cerrar se llama `completeFrame(5)` y `chatbotActivated = true`.
+- El botón aparece cuando `completedFrames >= 4` y permanece visible el resto del recorrido.
+- **Hidratación**: `chatbotActivated` se inicializa como `true` si el progreso guardado es ≥ 5.
+- CSS: `.chatbotBtn` + `.chatbotBtnPulse` (atracción) + `.chatbotBtnPulseClose` (cierre) + `.chatPanel` + `.chatPanelInner` etc. en `stageClient.module.css`.
+
+### Hidratación de progreso (lazy init)
+
+- El progreso se lee de `localStorage` usando `useState(() => readFrameProgress(stageId))` (lazy initializer).
+- El valor `initialSaved` se usa para inicializar `completedFrames`, `f3Phase`, `chatbotActivated` y `notifiedFrames`.
+- `notifiedFrames` se inicializa con un `Set` pre-poblado para evitar re-toasting.
+- **No se usa `useEffect` ni `useRef.current` durante render** — esto cumple con las restricciones de React 19.
+
 ---
 
 
