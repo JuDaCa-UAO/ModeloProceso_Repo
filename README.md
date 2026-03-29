@@ -61,17 +61,12 @@ Reglas de negocio puras. No importa React, Next.js, localStorage ni fetch.
 
 - **Entities**: `StageProgress.ts` — modelo de datos de progreso del docente
 - **Value Objects**: `StageFlagKey.ts`, `HierarchyLevel.ts` — tipos con significado de negocio
-- **Rules**: `ConsentRule.ts`, `GatingRule.ts`, `ResultRule.ts` — funciones puras, testeables sin montar nada
 - **Repositories (interfaces)**: `IStageProgressRepository.ts`, `IStageContentRepository.ts` — contratos, no implementaciones
 
 #### 2. Application (`src/application/`)
 Casos de uso. Orquesta el dominio y llama a puertos de infraestructura.
 
-- `EvaluateFlagsUseCase.ts` — computa flags derivados desde estado raw
 - `GetStageContentUseCase.ts` — obtiene el árbol de nodos de una etapa
-- `StartStageUseCase.ts` — registra el inicio de una etapa
-- `SaveIntentionUseCase.ts` — valida y persiste la intención del docente
-- `BuildLaiaContextUseCase.ts` — construye el contexto del chatbot
 - **Ports (interfaces de salida)**: `IAutodiagnosticPort.ts`, `IProgressEventBus.ts`
 
 #### 3. Infrastructure (`src/infrastructure/`)
@@ -89,9 +84,7 @@ Todo lo que React y Next.js tocan.
 
 - **Server Components** (`app/etapa/[stageId]/page.tsx`): obtienen contenido antes del render
 - **Client Components** (`StageClient.tsx`, `BlockRenderer.tsx`, bloques): interactividad
-- **Hooks domain** (`hooks/domain/useStageProgress.ts`): adaptadores React → Application
-- **Hooks UI** (`hooks/ui/useScrollPin.ts`, `hooks/ui/useProgressiveReveal.ts`): solo visual
-- **Store** (`lib/state/StageProgressStore.ts`): `useSyncExternalStore` genérico por etapa
+- **Store** (`lib/state/StageProgressStore.ts`): `useSyncExternalStore` por etapa
 
 ---
 
@@ -112,7 +105,11 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │   ├── etapa/
 │   │   │   └── [stageId]/               # ← Ruta dinámica para TODAS las etapas
 │   │   │       ├── page.tsx             # Server Component (obtiene árbol de contenido)
-│   │   │       └── StageClient.tsx      # Client Component (motor de renderizado)
+│   │   │       ├── StageClient.tsx      # Client Component (motor de renderizado)
+│   │   │       ├── StageClientLoader.tsx # Wrapper dynamic(ssr:false) — evita hydration mismatch
+│   │   │       └── stageClient.module.css
+│   │   ├── etapas/
+│   │   │   └── page.tsx                 # Selector de todas las etapas del modelo
 │   │   ├── embebido-1/
 │   │   │   └── page.tsx                 # Redirect legacy → /etapa/etapa-1
 │   │   ├── modelo/
@@ -121,23 +118,22 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │       └── page.tsx
 │   │
 │   ├── components/
+│   │   ├── character-step-dialog/       # Diálogo paso a paso con avatar de Laia
+│   │   │   ├── CharacterStepDialog.tsx
+│   │   │   └── CharacterStepDialog.module.css
+│   │   ├── mini-spiral-viewer/          # Visor 3D del modelo espiral (canvas compacto)
+│   │   │   └── MiniSpiralViewer.tsx
+│   │   ├── tech-trail-background/       # Fondo animado con partículas tech
+│   │   │   ├── TechTrailBackground.tsx
+│   │   │   └── TechTrailBackground.module.css
 │   │   └── stage/
-│   │       ├── blocks/                  # Un componente por tipo de bloque
-│   │       │   ├── BlockContext.ts      # Tipo compartido entre bloques
-│   │       │   ├── blocks.module.css    # Estilos compartidos de bloques
-│   │       │   ├── AnimationBlock.tsx
-│   │       │   ├── AutodiagnosticBlock.tsx
-│   │       │   ├── BulletsBlock.tsx
-│   │       │   ├── ConsentFormBlock.tsx
-│   │       │   ├── HorizontalRailBlock.tsx
-│   │       │   ├── IntentionFormBlock.tsx
-│   │       │   ├── ParagraphsBlock.tsx
-│   │       │   ├── ResultSummaryBlock.tsx
-│   │       │   ├── StateCardsBlock.tsx
-│   │       │   └── TransitionAnimationBlock.tsx
-│   │       ├── BlockRenderer.tsx        # ← Único switch/dispatcher del sistema
-│   │       ├── types.ts                 # Tipos de presentación (con ReactNode)
-│   │       └── ...
+│   │       ├── blocks/
+│   │       │   └── blocks.module.css    # Estilos de bloques usados directamente en StageClient
+│   │       ├── Frame.tsx / Frame.module.css
+│   │       ├── HorizontalScrollRail.tsx
+│   │       ├── PauseMenu.tsx / PauseMenu.module.css
+│   │       ├── StageViewer.tsx / StageViewer.module.css
+│   │       └── ToastStack.tsx / ToastStack.module.css
 │   │
 │   ├── content/
 │   │   ├── stages/
@@ -146,58 +142,35 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │   └── shared/
 │   │       └── character-assets.ts      # Rutas de assets visuales de Laia
 │   │
-│   ├── hooks/
-│   │   ├── domain/
-│   │   │   └── useStageProgress.ts      # Adaptador React → Application
-│   │   └── ui/
-│   │       ├── useProgressiveReveal.ts  # Orquestación visual de secciones
-│   │       └── useScrollPin.ts          # Pin de scroll
+│   ├── hooks/                           # (actualmente vacío — lógica de estado directamente en StageClient)
 │   │
 │   ├── lib/
 │   │   ├── state/
 │   │   │   └── StageProgressStore.ts    # Progreso por etapa (useSyncExternalStore)
 │   │   ├── progress.ts                  # Estado global de navegación (hasStarted, lastRoute)
-│   │   ├── useProgress.ts               # Hook sobre progress.ts
-│   │   └── scroll/
-│   │       └── pin.ts
+│   │   └── useProgress.ts               # Hook useSyncExternalStore sobre progress.ts
 │   │
 │   ├── types/
 │   │   └── stage.ts                     # Tipos de dominio compartidos (sin React)
 │   │
 │   ├── domain/                          # Núcleo — sin dependencias externas
-│   │   ├── stage/
-│   │   │   ├── entities/
-│   │   │   │   └── StageProgress.ts     # Modelo de datos de progreso
-│   │   │   ├── value-objects/
-│   │   │   │   ├── StageFlagKey.ts      # Union type de flags de etapa
-│   │   │   │   └── HierarchyLevel.ts    # Nivel jerárquico del docente
-│   │   │   ├── rules/                   # Lógica de negocio pura (testeables)
-│   │   │   │   ├── ConsentRule.ts
-│   │   │   │   ├── GatingRule.ts
-│   │   │   │   └── ResultRule.ts
-│   │   │   └── repositories/            # Contratos (interfaces)
-│   │   │       ├── IStageProgressRepository.ts
-│   │   │       └── IStageContentRepository.ts
-│   │   ├── chatbot/
-│   │   │   ├── entities/ChatbotContext.ts
-│   │   │   └── rules/LaiaContextRule.ts
-│   │   └── shared/
-│   │       └── validation/
-│   │           ├── EmailValidator.ts
-│   │           └── RequiredValidator.ts
+│   │   └── stage/
+│   │       ├── entities/
+│   │       │   └── StageProgress.ts     # Modelo de datos de progreso
+│   │       ├── value-objects/
+│   │       │   ├── StageFlagKey.ts      # Union type de flags de etapa
+│   │       │   └── HierarchyLevel.ts    # Nivel jerárquico del docente
+│   │       └── repositories/            # Contratos (interfaces)
+│   │           ├── IStageProgressRepository.ts
+│   │           └── IStageContentRepository.ts
 │   │
 │   ├── application/                     # Casos de uso — orquesta dominio
-│   │   ├── stage/
-│   │   │   ├── usecases/
-│   │   │   │   ├── EvaluateFlagsUseCase.ts
-│   │   │   │   ├── GetStageContentUseCase.ts
-│   │   │   │   ├── StartStageUseCase.ts
-│   │   │   │   └── SaveIntentionUseCase.ts
-│   │   │   └── ports/
-│   │   │       ├── IAutodiagnosticPort.ts
-│   │   │       └── IProgressEventBus.ts
-│   │   └── chatbot/
-│   │       └── usecases/BuildLaiaContextUseCase.ts
+│   │   └── stage/
+│   │       ├── usecases/
+│   │       │   └── GetStageContentUseCase.ts
+│   │       └── ports/
+│   │           ├── IAutodiagnosticPort.ts
+│   │           └── IProgressEventBus.ts
 │   │
 │   └── infrastructure/                  # Implementaciones concretas
 │       ├── config/
@@ -221,43 +194,31 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 
 ## Flujo de comunicación entre capas
 
-### Ejemplo: docente completa el consentimiento
+### Ejemplo: docente guarda progreso de frames
 
 ```
-[ConsentFormBlock]               Presentation
-  onChange → ctx.onUpdate({ consentAdmin: true })
+[StageClient]                    Presentation
+  writeProgress({ hasStarted: true })
        ↓
-[useStageProgress hook]          Presentation/Adaptor
-  patchStore(stageId, patch)
-       ↓
-[StageProgressStore]             Presentation/State
-  progressRepository.write()
-  eventBus.emit(stageId)
-       ↓
-[LocalStorageProgressRepository] Infrastructure
+[lib/progress.ts]                Presentation/State
   localStorage.setItem(...)
        ↓
 [useSyncExternalStore]           React reconciliation
-  getSnapshot() → evaluateFlags(newState)   ← EvaluateFlagsUseCase (Application)
-       ↓
-[ConsentRule.evaluate()]         Domain (función pura)
-  returns { consentValidated: true }
+  getSnapshot() → estado actualizado
        ↓
 [StageClient re-render]          Presentation
-  sección "autodiagnóstico" ahora visible
+  ActionButtons muestra "Continuar"
 ```
 
 ### Regla de importación
 
 ```
 ✅ Permitido:
-  Presentation → Application → Domain
-  Infrastructure → Application → Domain
-  Presentation → Infrastructure (solo a través del store/hooks)
+  Presentation → Infrastructure (store/progress/n8n.config)
+  Server Components → Application → Domain
 
 ❌ Prohibido:
   Domain → cualquier otra capa
-  Application → Presentation / Infrastructure (solo a través de interfaces/ports)
   Presentation → Domain directamente (excepto tipos)
 ```
 
@@ -282,8 +243,10 @@ La app estará disponible en [http://localhost:3000](http://localhost:3000).
 Rutas principales:
 - `/` → redirige a `/inicio`
 - `/inicio` → página de bienvenida con Laia
+- `/etapas` → selector de todas las etapas del modelo
 - `/etapa/etapa-1` → Etapa 1 (activa)
 - `/modelo` → redirect legacy a `/etapa/etapa-1`
+- `/embebido-1` → redirect legacy a `/etapa/etapa-1`
 
 ---
 
@@ -427,6 +390,7 @@ Esta sección documenta el sistema visual de secciones progresivas usado en la E
 | `src/components/stage/Frame.tsx` | Componente panel base — contiene la estructura visual |
 | `src/components/stage/Frame.module.css` | Estilos del panel, bordes tech, corners, hintSlot |
 | `src/app/etapa/[stageId]/StageClient.tsx` | Orquesta todos los frames, define `completedFrames` y `ScrollHint` |
+| `src/app/etapa/[stageId]/StageClientLoader.tsx` | Wrapper `dynamic(ssr:false)` que evita hydration mismatch por persist de frames en localStorage |
 | `src/app/etapa/[stageId]/stageClient.module.css` | Estilos del contenedor `.root`, gap entre frames y estilos de `ScrollHint` |
 
 ### Assets de la Etapa 1
@@ -434,10 +398,17 @@ Esta sección documenta el sistema visual de secciones progresivas usado en la E
 | Recurso | Ruta |
 |---|---|
 | Fondo estándar | `/ui/backgroundUAO.png` |
+| Fondo biblioteca | `/ui/fondo_biblioteca.png` |
+| Fondo home | `/ui/bg-home.png` |
 | Avatar Laia (neutral) | `/ui/laia.png` |
 | Avatar Laia (explicando) | `/ui/laia_explaining.png` |
+| Avatar Laia (explicando holo) | `/ui/Laia_explaining_holo.png` |
+| Avatar Laia (confundida) | `/ui/laia_confused.png` |
+| Avatar Laia (triunfante) | `/ui/Laia_triumphant.png` |
+| Ícono Laia | `/ui/Laia-Icon.png` |
 | Modelo 3D espiral | `/models/espiral.glb` |
 | Video intro modelo | `/videos/intro-modelo.mp4` |
+| Video transición E1 → E2 | `/videos/TransicionE1-a-E2.mp4` |
 
 ### Estado: `completedFrames`
 
@@ -635,49 +606,37 @@ El autodiagnóstico se carga como un `<iframe>` del formulario de N8N.
 | Archivo | Responsabilidad |
 |---|---|
 | `src/infrastructure/n8n/n8n.config.ts` | URLs de N8N — único lugar, lee de `process.env` |
-| `src/infrastructure/n8n/N8NAutodiagnosticAdapter.ts` | Comunicación con webhooks de N8N |
+| `src/infrastructure/n8n/N8NAutodiagnosticAdapter.ts` | Implementación de `IAutodiagnosticPort` para webhooks de N8N |
 | `src/application/stage/ports/IAutodiagnosticPort.ts` | Contrato — no menciona N8N |
-| `components/stage/blocks/AutodiagnosticBlock.tsx` | UI del iframe — no conoce N8N |
 
-**Flujo de URL:**
+**Flujo de URL del iframe (actual):**
 ```
 NEXT_PUBLIC_N8N_BASE_URL (.env.local)
   → env.ts (ENV.N8N_BASE_URL)
   → n8n.config.ts (N8N_CONFIG.forms.autodiagnostic)
-  → N8NAutodiagnosticAdapter.getFormUrl()
-  → AutodiagnosticBlock (src del iframe)
+  → StageClient (src del iframe embebido)
 ```
 
-Para recibir el **resultado del diagnóstico** vía webhook:
+Para implementar la **recepción del resultado** vía webhook (pendiente):
 1. Implementar `N8NAutodiagnosticAdapter.notifyCompletion()` con el webhook real de N8N
-2. El adapter retornará `{ resultId: "avanzado" | "intermedio" | "inicial" }`
-3. El `stateId` se persiste automáticamente en el store
-4. `ResultSummaryBlock` llamará `deriveResultRecommendations(resultId)` del dominio
+2. Crear `CompleteAutodiagnosticUseCase` que llame el adapter y persista `resultStateId` en el store
 
 ---
 
 ## Chatbot Laia
 
 Laia es la asistente pedagógica. Actualmente aparece como:
-- Avatar estático en `/inicio`
-- Diálogos paso a paso en secciones del modelo (`DialogueBlock`)
-- Cambio de "mood" visual según el progreso del docente
+- Diálogos paso a paso vía `CharacterStepDialog` (entrada de Etapa 1)
+- Chat inline en Frame 3 (chat panel con avatar + input)
+- Widget fijo `StageViewer` en esquina superior derecha desde Frame 3
 
-### Arquitectura preparada para Laia conversacional
+### Para activar Laia conversacional (pendiente)
 
-```
-src/domain/chatbot/entities/ChatbotContext.ts    ← Estado: mood, nivel, etapa actual
-src/domain/chatbot/rules/LaiaContextRule.ts      ← Regla: elige mood según flags
-src/application/chatbot/usecases/               ← Construye contexto completo
-  BuildLaiaContextUseCase.ts
-```
-
-Para activar el chat conversacional:
-1. Crear `src/infrastructure/chatbot/LaiaServiceAdapter.ts`
-2. Crear `app/api/laia/route.ts` como BFF para el LLM
-3. Crear `components/chatbot/LaiaChatPanel.tsx` usando `BuildLaiaContextUseCase`
-
-El contexto de Laia se adapta automáticamente al progreso vía `LaiaContextRule` — ya está implementado en el dominio.
+1. Crear `src/domain/chatbot/entities/ChatbotContext.ts` — estado: mood, nivel, etapa
+2. Crear `src/domain/chatbot/rules/LaiaContextRule.ts` — elige mood según progreso
+3. Crear `src/application/chatbot/usecases/BuildLaiaContextUseCase.ts`
+4. Crear `src/infrastructure/chatbot/LaiaServiceAdapter.ts`
+5. Crear `app/api/laia/route.ts` como BFF para el LLM
 
 ---
 
@@ -685,52 +644,15 @@ El contexto de Laia se adapta automáticamente al progreso vía `LaiaContextRule
 
 La arquitectura permite testar cada capa de forma aislada.
 
-### Dominio — sin mocks, sin framework UI
-
-```typescript
-// __tests__/domain/ConsentRule.test.ts
-import { evaluateConsent } from "@domain/stage/rules/ConsentRule";
-
-it("rechaza si email inválido", () => {
-  expect(evaluateConsent({
-    stage1AnimationViewed: true,
-    consentAdmin: true,
-    consentUsage: true,
-    email: "no-es-email",
-  })).toBe(false);
-});
-
-it("aprueba con todos los campos válidos", () => {
-  expect(evaluateConsent({
-    stage1AnimationViewed: true,
-    consentAdmin: true,
-    consentUsage: true,
-    email: "docente@universidad.edu",
-  })).toBe(true);
-});
-```
-
-### Aplicación — funciones puras
-
-```typescript
-// EvaluateFlagsUseCase es una función pura — no necesita mocks
-import { evaluateFlags } from "@application/stage/usecases/EvaluateFlagsUseCase";
-
-it("consentValidated requiere animación y email", () => {
-  const flags = evaluateFlags({ ...defaultState, email: "test@test.com", consentAdmin: true, consentUsage: true, stage1AnimationViewed: true });
-  expect(flags.consentValidated).toBe(true);
-});
-```
-
 ### Componentes — con props mockeadas
 
 ```typescript
 import { render, screen } from "@testing-library/react";
-import { ConsentFormBlock } from "@/components/stage/blocks/ConsentFormBlock";
+import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 
-const mockCtx = { stageId: "etapa-1", state: defaultState, flags: defaultFlags, onUpdate: vi.fn(), ... };
-render(<ConsentFormBlock ctx={mockCtx} />);
-expect(screen.getByRole("checkbox", { name: /administración/ })).toBeInTheDocument();
+const mockSteps = [{ imgSrc: "/ui/laia.png", lines: ["Hola"] }];
+render(<CharacterStepDialog steps={mockSteps} onComplete={vi.fn()} />);
+expect(screen.getByRole("button")).toBeInTheDocument();
 ```
 
 Para configurar Vitest:
@@ -768,30 +690,16 @@ El estado del docente es local y debe sobrevivir recargas de página. `useSyncEx
 
 Para que agregar una nueva etapa sea solo crear un archivo de contenido. `StageClient.tsx` es el mismo componente para todas las etapas — recibe el árbol de nodos diferente según `stageId`.
 
-### Archivos heritage (mantenidos intencionalmente)
+### Archivos de navegación global (mantenidos intencionalmente)
 
-Dos archivos anteriores se conservan porque sirven un propósito distinto al del store de etapas:
+Dos archivos de `lib/` almacenan estado de navegación global separado del progreso de etapas:
 
 | Archivo | Por qué se conserva |
 |---|---|
-| `lib/progress.ts` | Estado global de navegación: `hasStarted` y `lastRoute` para el botón "Continuar" |
-| `lib/useProgress.ts` | Hook `useSyncExternalStore` sobre `lib/progress.ts` — usado por `ActionButtons` y `opciones` |
+| `lib/progress.ts` | Estado global: `hasStarted` y `lastRoute` para el botón "Continuar" en `/inicio` |
+| `lib/useProgress.ts` | Hook `useSyncExternalStore` sobre `lib/progress.ts` — usado por `ActionButtons` y `/opciones` |
 
-Estos archivos almacenan datos diferentes a `Stage1ProgressState` (progreso de etapa) y no deben mezclarse con el store de etapas.
-
-### Archivos eliminados en la migración
-
-Los siguientes archivos fueron eliminados al completar la migración a la nueva arquitectura:
-
-| Archivo eliminado | Reemplazado por |
-|---|---|
-| `app/etapa-1/` | `app/etapa/[stageId]/` |
-| `app/etapa2/` | `app/etapa/[stageId]/` |
-| `hooks/useStageProgress.ts` | `hooks/domain/useStageProgress.ts` |
-| `hooks/useScrollPin.ts` | `hooks/ui/useScrollPin.ts` |
-| `hooks/useProgressiveReveal.ts` | `hooks/ui/useProgressiveReveal.ts` |
-| `content/stage1.ts` | `content/stages/stage-1.content.ts` |
-| `lib/validation/index.ts` | `src/domain/shared/validation/` |
+Almacenan datos distintos a `Stage1ProgressState` y no deben mezclarse con `StageProgressStore`.
 
 ## Deploy on Vercel
 
