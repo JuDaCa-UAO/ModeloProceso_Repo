@@ -24,7 +24,6 @@ import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
 import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
-import { IoChatbubbleEllipses } from "react-icons/io5";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
@@ -864,7 +863,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ Floating ChatBot button — fijo abajo-izquierda ═══════════ */}
+      {/* ═══ Floating ChatBot button — fijo abajo-derecha ═══════════ */}
       {completedFrames >= 4 && f5Phase !== "intro" ? (
         <>
           <button
@@ -885,7 +884,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               }
             }}
           >
-            <IoChatbubbleEllipses size={18} /> ChatBot con Laia
+            <Image
+              src="/ui/Laia-Icon.png"
+              alt="Chat con Laia"
+              width={44}
+              height={44}
+              unoptimized
+              className={styles.chatbotBtnIcon}
+            />
           </button>
 
           {/* Panel de chat desplegable */}

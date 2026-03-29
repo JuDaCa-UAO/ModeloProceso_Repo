@@ -258,59 +258,54 @@
   margin-bottom: clamp(4rem, 8dvh, 6rem);
 }
 
-/* ─── Floating ChatBot button — fijo abajo-izquierda, tonos azul neón Laia ── */
+/* ─── Floating ChatBot button — fijo abajo-derecha, circular con avatar Laia ── */
 
 .chatbotBtn {
   position: fixed;
   bottom: 28px;
-  left: 28px;
+  right: 28px;
   z-index: 900;
-  display: inline-flex;
+  display: flex;
   align-items: center;
-  gap: 10px;
-  padding: 12px 24px 12px 18px;
-  /* Tron-style: cortes angulares con clip-path */
-  clip-path: polygon(
-    12px 0%, 100% 0%,
-    100% calc(100% - 10px), calc(100% - 10px) 100%,
-    0% 100%, 0% 10px
-  );
-  border: none;
-  background: linear-gradient(135deg, rgba(0, 30, 70, 0.72), rgba(0, 14, 48, 0.85));
-  color: #fff;
-  font-size: 14px;
-  font-weight: 600;
-  letter-spacing: 0.08em;
-  text-transform: uppercase;
+  justify-content: center;
+  width: 60px;
+  height: 60px;
+  padding: 0;
+  border: 2px solid rgba(0, 210, 255, 0.55);
+  border-radius: 50%;
+  background: linear-gradient(135deg, rgba(0, 30, 70, 0.80), rgba(0, 14, 48, 0.92));
   cursor: pointer;
   backdrop-filter: blur(14px);
   box-shadow:
     0 0 16px rgba(0, 200, 255, 0.30),
-    0 4px 22px rgba(0, 0, 0, 0.40),
-    inset 0 0 0 1.5px rgba(0, 200, 255, 0.50);
+    0 4px 22px rgba(0, 0, 0, 0.40);
   transition: transform 160ms ease, box-shadow 200ms ease;
+  overflow: hidden;
 }
 
-/* Borde neón simulado con outline para respetar clip-path */
+.chatbotBtnIcon {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  object-fit: cover;
+  pointer-events: none;
+}
+
+/* Borde neón hover */
 .chatbotBtn::before {
   content: "";
   position: absolute;
   inset: 0;
-  clip-path: polygon(
-    12px 0%, 100% 0%,
-    100% calc(100% - 10px), calc(100% - 10px) 100%,
-    0% 100%, 0% 10px
-  );
-  border: 1.5px solid rgba(0, 210, 255, 0.60);
+  border-radius: 50%;
+  border: 1.5px solid rgba(0, 210, 255, 0.40);
   pointer-events: none;
 }
 
 .chatbotBtn:hover {
-  transform: translateY(-2px);
+  transform: translateY(-2px) scale(1.06);
   box-shadow:
     0 0 28px rgba(0, 210, 255, 0.55),
-    0 8px 36px rgba(0, 0, 0, 0.45),
-    inset 0 0 0 1.5px rgba(0, 220, 255, 0.70);
+    0 8px 36px rgba(0, 0, 0, 0.45);
 }
 
 .chatbotBtn:active {
@@ -386,8 +381,8 @@
 
 .chatPanel {
   position: fixed;
-  bottom: 80px;
-  left: 28px;
+  bottom: 100px;
+  right: 28px;
   z-index: 899;
   width: clamp(300px, 26vw, 420px);
   max-height: clamp(360px, 55dvh, 520px);
