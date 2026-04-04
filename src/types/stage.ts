@@ -94,9 +94,4 @@ export type SectionNode = {
   dialogueOptional?: boolean;
 };
 
-/**
- * RenderContext has been moved to components/stage/types.ts
- * because it depends on ReactNode (a presentation concern).
- * @deprecated Import from @/components/stage/types instead.
- */
-export type RenderContext = Record<string, never>;
+

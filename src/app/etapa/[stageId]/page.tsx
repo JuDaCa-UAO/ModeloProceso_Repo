@@ -41,11 +41,10 @@ export default async function StagePage({ params }: Props) {
 
   if (!meta) notFound();
 
-  let tree;
   try {
     const repo = new StaticStageContentRepository();
     const useCase = new GetStageContentUseCase(repo);
-    tree = useCase.execute(stageId);
+    useCase.execute(stageId);
   } catch {
     notFound();
   }
@@ -54,7 +53,6 @@ export default async function StagePage({ params }: Props) {
     <StageClient
       stageId={stageId}
       stageName={meta.name}
-      initialTree={tree}
     />
   );
 }

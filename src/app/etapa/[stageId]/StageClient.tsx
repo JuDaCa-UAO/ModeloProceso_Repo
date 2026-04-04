@@ -1,4 +1,4 @@
-/**
+﻿/**
  * PRESENTATION — Client Component (Stage Engine)
  *
  * Sistema de frames progresivos:
@@ -99,7 +99,7 @@ const STAGE_RAIL_CARDS: RailPanel[] = [
   {
     id: "rail-etapa-1",
     label: "Etapa 1",
-    title: "Recónócete para avanzar",
+    title: "Reconócete para avanzar",
     lines: [
       "Identifica tu punto de partida con un autodiagnóstico individual y formativo.",
       "",
@@ -250,7 +250,6 @@ const F9_LAIA_STEPS: CharacterDialogStep[] = [
 type StageClientProps = {
   stageId: string;
   stageName: string;
-  initialTree: unknown[];
 };
 
 // ─── Component ────────────────────────────────────────────────────────────────
@@ -486,7 +485,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
             {/* Diálogo de Laia — misma apariencia que Frame 1, empujado al fondo */}
             {f3Phase !== "initial" ? (
-              <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+              <div className={styles.laiaSlot}>
                 <CharacterStepDialog
                   key={f3Phase}
                   size="compact"
@@ -523,7 +522,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           <HorizontalScrollRail panels={STAGE_RAIL_CARDS} />
 
           {/* Diálogo de Laia — empujado al fondo del frame */}
-          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+          <div className={styles.laiaSlot}>
             <CharacterStepDialog
               size="compact"
               density="tight"
@@ -550,7 +549,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           hint={completedFrames >= 5 ? <ScrollHint label="Continuar" /> : null}
         >
           {/* Diálogo de Laia — cambia tras usar el chatbot */}
-          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+          <div className={styles.laiaSlot}>
             {f5Phase !== "after-chat" ? (
               <CharacterStepDialog
                 size="compact"
@@ -661,7 +660,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           )}
 
           {/* Diálogo de Laia al fondo */}
-          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+          <div className={styles.laiaSlot}>
             <CharacterStepDialog
               size="compact"
               density="tight"
@@ -693,7 +692,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           </div>
 
           {/* Diálogo de Laia al fondo */}
-          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+          <div className={styles.laiaSlot}>
             <CharacterStepDialog
               size="compact"
               density="tight"
@@ -755,7 +754,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           </div>
 
           {/* Diálogo de Laia — cambia tras completar */}
-          <div style={{ marginTop: "auto", width: "100%", paddingTop: "16px" }}>
+          <div className={styles.laiaSlot}>
             {!autodiagDone ? (
               <CharacterStepDialog
                 size="compact"
