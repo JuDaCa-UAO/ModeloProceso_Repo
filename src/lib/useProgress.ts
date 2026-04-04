@@ -51,7 +51,6 @@ export function useProgress() {
     readProgressSnapshot,
     () => SERVER_SNAPSHOT
   );
-  const ready = true;
 
   const set = useCallback((patch: Partial<ProgressState>) => {
     if (typeof window === "undefined") return;
@@ -67,5 +66,5 @@ export function useProgress() {
     window.dispatchEvent(new Event(PROGRESS_EVENT));
   }, []);
 
-  return { progress, set, reset, ready };
+  return { progress, set, reset };
 }

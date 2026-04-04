@@ -50,8 +50,8 @@ function ButtonUI({
 }
 
 export default function ActionButtons() {
-  const { progress, ready } = useProgress();
-  const showContinue = ready && progress.hasStarted;
+  const { progress } = useProgress();
+  const showContinue = progress.hasStarted;
 
   return (
     <div className={styles.buttonsCol}>
