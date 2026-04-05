@@ -23,7 +23,7 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Center } from "@react-three/drei";
-import Model from "@/app/modelo/Model";
+import Model from "@/components/stage/Model";
 import styles from "./StageViewer.module.css";
 
 function RotatingSpiral() {

@@ -24,34 +24,14 @@ import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
 import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
+import { useStageProgress } from "@/lib/useStageProgress";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
 import styles from "./stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
 
-// ─── Persistencia del progreso de frames en localStorage ────────────────────────────
-function frameProgressKey(stageId: string) {
-  return `ai-tech-ed-frames-${stageId}`;
-}
-function readFrameProgress(stageId: string): number {
-  if (typeof window === "undefined") return 0;
-  try {
-    const v = window.localStorage.getItem(frameProgressKey(stageId));
-    const n = parseInt(v ?? "", 10);
-    return isNaN(n) || n < 0 ? 0 : n;
-  } catch {
-    return 0;
-  }
-}
-function saveFrameProgress(stageId: string, n: number) {
-  if (typeof window === "undefined") return;
-  try {
-    window.localStorage.setItem(frameProgressKey(stageId), String(n));
-  } catch { /* quota exceeded — silently ignore */ }
-}
-
-// ─── Sub-componente: indicador de scroll entre frames ──────────────────────
+// ─── Sub-componente: indicador de scroll entre frames ──────────────────────────
 
 function ScrollHint({ label }: { label?: string }) {
   return (
@@ -255,8 +235,11 @@ type StageClientProps = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StageClient({ stageId, stageName }: StageClientProps) {
+  // ── Progreso persistido (store) ───────────────────────────────────────────
+  const { state, patch } = useStageProgress(stageId);
+  const completedFrames = state.completedFrames;
+
   // ── Estado principal ──────────────────────────────────────────────────────
-  const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
   const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
@@ -314,22 +297,21 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   /** true cuando el usuario solicitó reproducir el video de transición */
   const [f9VideoPlaying, setF9VideoPlaying] = useState(false);
 
-  // ── Hidratación desde localStorage ────────────────────────────────────────
-  // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
-  // componente, así que no puede haber hydration mismatch.
+  // ── Inicialización de estado secundario desde el progreso guardado ─────────────────────
+  // completedFrames ya viene del store (sin useState extra ni localStorage manual).
+  // Solo restauramos fases internas que no se persisten en el store.
   useEffect(() => {
-    const saved = readFrameProgress(stageId);
+    const saved = state.completedFrames;
     if (saved <= 0) return;
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
-    setCompletedFrames(saved);
     if (saved >= 3) setF3Phase("laia-viewer");
     if (saved >= 5) setF5Phase("after-chat");
     if (saved >= 6) {
-      // Frame 6 ya completado: marcar consentimientos como aceptados
-      setConsentAdmin(true);
-      setConsentUsage(true);
+      setConsentAdmin(state.consentAdmin);
+      setConsentUsage(state.consentUsage);
+      if (state.email) setConsentEmail(state.email);
     }
-    if (saved >= 8) setAutodiagDone(true);
+    if (saved >= 8) setAutodiagDone(state.autodiagnosticCompleted);
     if (saved >= 9) { setF9VideoEnded(true); setF9VideoPlaying(false); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -343,12 +325,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
    * Seguro llamarlo más de una vez (usa Math.max).
    */
   const completeFrame = useCallback((frameIndex: number) => {
-    setCompletedFrames((prev) => {
-      const next = Math.max(prev, frameIndex);
-      if (next > prev) saveFrameProgress(stageId, next);
-      return next;
-    });
-  }, [stageId]);
+    const next = Math.max(completedFrames, frameIndex);
+    if (next > completedFrames) patch({ completedFrames: next });
+  }, [completedFrames, patch]);
 
   const handleStartVideo = useCallback(() => setVideoPlaying(true), []);
 
@@ -639,8 +618,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   className={styles.btnVerAnimacion}
                   onClick={() => {
                     setConsentTouched(true);
-                    if (!consentValid) return;
-                    completeFrame(6);
+                    if (!consentValid) return;                    patch({ consentAdmin, consentUsage, email: consentEmail });                    completeFrame(6);
                     if (!notifiedFrames.current.has(6)) {
                       notifiedFrames.current.add(6);
                       pushToast("\u00a1Proceso guardado!");
@@ -760,7 +738,10 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 size="compact"
                 density="tight"
                 steps={F8_LAIA_STEPS_PRE}
-                onComplete={() => setAutodiagDone(true)}
+                onComplete={() => {
+                  setAutodiagDone(true);
+                  patch({ autodiagnosticCompleted: true });
+                }}
                 nextLabel="Autodiagnóstico completado"
               />
             ) : (

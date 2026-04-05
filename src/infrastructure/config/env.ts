@@ -17,12 +17,4 @@ export const ENV = {
 
   /** ID del formulario de autodiagnóstico en N8N. */
   N8N_AUTODIAG_FORM_ID: process.env.NEXT_PUBLIC_N8N_AUTODIAG_FORM_ID ?? "130fca67-74d5-4a0e-90a2-f2bd133bfb59",
-
-  /** Nombre del entorno de despliegue. */
-  APP_ENV: process.env.NEXT_PUBLIC_APP_ENV ?? "development",
-
-  /** Habilita logging verbose en la consola. */
-  VERBOSE_LOGGING:
-    process.env.NEXT_PUBLIC_VERBOSE_LOGGING === "true" ||
-    process.env.NEXT_PUBLIC_APP_ENV === "development",
 } as const;

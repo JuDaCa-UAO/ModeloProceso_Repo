@@ -3,7 +3,7 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Center, OrbitControls } from "@react-three/drei";
-import Model from "@/app/modelo/Model";
+import Model from "@/components/stage/Model";
 
 function RotatingSpiralMini({ enableRotation }: { enableRotation: boolean }) {
   const spinRef = useRef<{ rotation: { y: number } } | null>(null);

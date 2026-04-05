@@ -21,9 +21,4 @@ export const N8N_CONFIG = {
     /** URL completa del formulario de autodiagnóstico de Etapa 1. */
     autodiagnostic: `${ENV.N8N_BASE_URL}/form/${ENV.N8N_AUTODIAG_FORM_ID}`,
   },
-
-  webhooks: {
-    /** Endpoint de N8N para notificación de completion del diagnóstico. */
-    completionNotification: `${ENV.N8N_BASE_URL}/webhook/stage-completed`,
-  },
 } as const;

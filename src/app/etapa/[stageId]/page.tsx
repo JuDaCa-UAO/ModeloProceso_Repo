@@ -16,7 +16,6 @@
 
 import { notFound } from "next/navigation";
 import { StaticStageContentRepository } from "@infra/persistence/StaticStageContentRepository";
-import { GetStageContentUseCase } from "@application/stage/usecases/GetStageContentUseCase";
 import { getStageMeta } from "@/content/stages";
 import StageClient from "./StageClientLoader";
 import type { Metadata } from "next";
@@ -40,14 +39,6 @@ export default async function StagePage({ params }: Props) {
   const meta = getStageMeta(stageId);
 
   if (!meta) notFound();
-
-  try {
-    const repo = new StaticStageContentRepository();
-    const useCase = new GetStageContentUseCase(repo);
-    useCase.execute(stageId);
-  } catch {
-    notFound();
-  }
 
   return (
     <StageClient

@@ -11,15 +11,3 @@
 export type HierarchyLevel = "Inicial" | "Intermedio" | "Avanzado";
 
 export type StageResultId = "inicial" | "intermedio" | "avanzado";
-
-/** Mapping canónico de resultado de diagnóstico → nivel jerárquico. */
-export const RESULT_TO_HIERARCHY: Record<StageResultId, HierarchyLevel> = {
-  inicial: "Inicial",
-  intermedio: "Intermedio",
-  avanzado: "Avanzado",
-};
-
-/** Type-guard para validar que un string arbitrario es un StageResultId válido. */
-export function isValidResultId(value: string): value is StageResultId {
-  return value === "inicial" || value === "intermedio" || value === "avanzado";
-}

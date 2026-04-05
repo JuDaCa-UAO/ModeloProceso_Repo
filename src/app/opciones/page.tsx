@@ -18,16 +18,6 @@ export default function OpcionesPage() {
 
     resetProgress();
     resetStore("etapa-1");
-
-    // Borra las claves de progreso de frames (ai-tech-ed-frames-*)
-    // que maneja StageClient directamente en localStorage.
-    const keysToRemove: string[] = [];
-    for (let i = 0; i < window.localStorage.length; i++) {
-      const key = window.localStorage.key(i);
-      if (key?.startsWith("ai-tech-ed-frames-")) keysToRemove.push(key);
-    }
-    keysToRemove.forEach((k) => window.localStorage.removeItem(k));
-
     setFeedback("done");
   };
 
