@@ -52,7 +52,7 @@ export default function StageViewer({ stageLabel }: StageViewerProps) {
   return (
     <div className={styles.widget} aria-label={stageLabel}>
       <div className={styles.canvas}>
-        <Canvas flat camera={{ position: [0, 0, 35], fov: 42 }}>
+        <Canvas flat camera={{ position: [0, 0, 60], fov: 42 }}>
           <ambientLight intensity={1.05} color="#ffffff" />
           <directionalLight position={[4, 5, 3]} intensity={0.55} color="#ffffff" />
           <directionalLight position={[-3, -2, -4]} intensity={0.22} color="#ffffff" />
