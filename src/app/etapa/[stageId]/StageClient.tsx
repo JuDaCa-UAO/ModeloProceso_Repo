@@ -592,9 +592,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
           {/* Botón CTA — visible al completar frame 5 */}
           {completedFrames >= 5 ? (
-            <div className={styles.frameActions}>
-              <a href="/etapa/etapa-1" className={styles.btnVerAnimacion}>
-                Comenzar Etapa 1 →
+            <div className={styles.f9NextRow}>
+              <a
+                href="/etapa/etapa-1"
+                className={styles.f9NextBtn}
+                aria-label="Ir a la siguiente etapa"
+              >
+                Ir a la siguiente etapa
               </a>
             </div>
           ) : null}
