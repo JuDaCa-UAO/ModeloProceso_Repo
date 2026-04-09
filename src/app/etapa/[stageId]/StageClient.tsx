@@ -413,7 +413,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           ) : (
             <>
               <div className={styles.modelStage}>
-                <MiniSpiralViewer enableRotation />
+                <StageViewer enableRotation />
               </div>
               <p className={styles.frameInstructions}>
                 Puedes interactuar con el modelo usando el scroll para acercarte y
@@ -450,7 +450,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         <>
           {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
           {f3Phase === "laia-viewer" ? (
-            <StageViewer stageLabel="Etapa actual: Etapa 1" />
+            <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" />
           ) : null}
 
           <Frame
@@ -464,7 +464,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             {f3Phase !== "laia-viewer" ? (
               <>
                 <div className={styles.modelStage}>
-                  <MiniSpiralViewer enableRotation />
+                  <StageViewer enableRotation />
                 </div>
                 <p className={styles.frameInstructions}>
                   Puedes interactuar con el modelo usando el scroll para acercarte y
@@ -805,7 +805,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             /* Pantalla inicial: modelo grande + botón ver animación */
             <div className={styles.f9Splash}>
               <div className={styles.f9ModelWrap}>
-                <MiniSpiralViewer enableRotation />
+                <StageViewer enableRotation />
               </div>
               <button
                 className={styles.btnVerAnimacion}
