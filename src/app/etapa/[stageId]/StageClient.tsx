@@ -255,6 +255,8 @@ type StageClientProps = {
 // ─── Component ────────────────────────────────────────────────────────────────
 
 export default function StageClient({ stageId, stageName }: StageClientProps) {
+  const isEtapa0 = stageId === "etapa-0";
+
   // ── Estado principal ──────────────────────────────────────────────────────
   const [completedFrames, setCompletedFrames] = useState(0);
   const [videoPlaying, setVideoPlaying] = useState(false);
@@ -322,15 +324,19 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
     if (saved <= 0) return;
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
     setCompletedFrames(saved);
-    if (saved >= 3) setF3Phase("laia-viewer");
-    if (saved >= 5) setF5Phase("after-chat");
-    if (saved >= 6) {
-      // Frame 6 ya completado: marcar consentimientos como aceptados
-      setConsentAdmin(true);
-      setConsentUsage(true);
+    if (stageId === "etapa-0") {
+      // Restauración para etapa-0 (frames 1-5)
+      if (saved >= 3) setF3Phase("laia-viewer");
+      if (saved >= 5) setF5Phase("after-chat");
+    } else {
+      // Restauración para etapa-1 (frames renumerados 1-4)
+      if (saved >= 1) {
+        setConsentAdmin(true);
+        setConsentUsage(true);
+      }
+      if (saved >= 3) setAutodiagDone(true);
+      if (saved >= 4) { setF9VideoEnded(true); setF9VideoPlaying(false); }
     }
-    if (saved >= 8) setAutodiagDone(true);
-    if (saved >= 9) { setF9VideoEnded(true); setF9VideoPlaying(false); }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
@@ -367,10 +373,20 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       <PauseMenu open={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
 
-      {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════════════ */}
+      {/* Título de etapa — visible encima del primer frame */}
+      <div className={styles.stageHeader}>
+        <h1 className={styles.stageTitle}>
+          {isEtapa0 ? "Etapa 0: Introducción" : "Etapa 1: Recónocete para avanzar"}
+        </h1>
+      </div>
+
+      {/* ═══ FRAMES 1-5: Solo en etapa-0 ══════════════════════ */}
+      {isEtapa0 ? (
+        <>
+      {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════ */}
       <Frame
         id="frame-intro"
-        sectionTitle={`Sección 1: ${stageName}`}
+        sectionTitle="Sección 1: Bienvenido a esta iteración"
         backgroundImage="/ui/backgroundUAO.png"
         overlay="rgba(4, 2, 3, 0.45)"
         hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
@@ -449,8 +465,8 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       {completedFrames >= 2 ? (
         <>
           {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
-          {f3Phase === "laia-viewer" ? (
-            <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" />
+          {(isEtapa0 ? f3Phase === "laia-viewer" : true) ? (
+            <MiniSpiralViewer stageLabel={isEtapa0 ? "Etapa actual: Etapa 0" : "Etapa actual: Etapa 1"} />
           ) : null}
 
           <Frame
@@ -546,7 +562,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           sectionTitle="Sección 5: Asistencia guiada"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 5 ? <ScrollHint label="Continuar" /> : null}
+          hint={null}
         >
           {/* Diálogo de Laia — cambia tras usar el chatbot */}
           <div className={styles.laiaSlot}>
@@ -573,20 +589,35 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               />
             )}
           </div>
+
+          {/* Botón CTA — visible al completar frame 5 */}
+          {completedFrames >= 5 ? (
+            <div className={styles.frameActions}>
+              <a href="/etapa/etapa-1" className={styles.btnVerAnimacion}>
+                Comenzar Etapa 1 →
+              </a>
+            </div>
+          ) : null}
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 6: Condiciones de confianza ══════════════════════ */}
-      {completedFrames >= 5 ? (
+        </>
+      ) : null}
+
+      {/* ═══ FRAMES 1-4: Solo en etapa-1 (antes frames 6-9) ══════ */}
+      {!isEtapa0 ? (
+        <>
+      {/* ═══ FRAME 1 (etapa-1): Condiciones de confianza ═══════─ */}
+      {completedFrames >= 0 ? (
         <Frame
           id="frame-consentimiento"
-          sectionTitle="Sección 6: Condiciones de confianza"
+          sectionTitle="Sección 1: Condiciones de confianza"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 6 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
+          hint={completedFrames >= 1 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
         >
           {/* Formulario de consentimiento */}
-          {completedFrames < 6 ? (
+          {completedFrames < 1 ? (
             <form
               className={blockStyles.formCard}
               onSubmit={(e) => e.preventDefault()}
@@ -640,9 +671,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   onClick={() => {
                     setConsentTouched(true);
                     if (!consentValid) return;
-                    completeFrame(6);
-                    if (!notifiedFrames.current.has(6)) {
-                      notifiedFrames.current.add(6);
+                    completeFrame(1);
+                    if (!notifiedFrames.current.has(1)) {
+                      notifiedFrames.current.add(1);
                       pushToast("\u00a1Proceso guardado!");
                     }
                   }}
@@ -671,14 +702,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 7: Estados iniciales ═══════════════════════════════ */}
-      {completedFrames >= 6 ? (
+      {/* ═══ FRAME 2 (etapa-1): Estados iniciales ════════─────── */}
+      {completedFrames >= 1 ? (
         <Frame
           id="frame-estados"
-          sectionTitle="Sección 7: Estados iniciales"
+          sectionTitle="Sección 2: Estados iniciales"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 7 ? <ScrollHint label="Continuar" /> : null}
+          hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
         >
           {/* Grid de 3 tarjetas */}
           <div className={blockStyles.stateGrid}>
@@ -698,9 +729,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               density="tight"
               steps={F7_LAIA_STEPS}
               onComplete={() => {
-                completeFrame(7);
-                if (!notifiedFrames.current.has(7)) {
-                  notifiedFrames.current.add(7);
+                completeFrame(2);
+                if (!notifiedFrames.current.has(2)) {
+                  notifiedFrames.current.add(2);
                   pushToast("¡Proceso guardado!");
                 }
               }}
@@ -709,14 +740,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 8: Autodiagnóstico ═════════════════════════════════ */}
-      {completedFrames >= 7 ? (
+      {/* ═══ FRAME 3 (etapa-1): Autodiagnóstico ═════════════─── */}
+      {completedFrames >= 2 ? (
         <Frame
           id="frame-autodiagnostico"
-          sectionTitle="Sección 8: Autodiagnóstico"
+          sectionTitle="Sección 3: Autodiagnóstico"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 8 ? <ScrollHint label="Continuar" /> : null}
+          hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
         >
           {/* Iframe embebido con marco futurista */}
           <div className={styles.embedShell}>
@@ -770,9 +801,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 density="tight"
                 steps={F8_LAIA_STEPS_POST}
                 onComplete={() => {
-                  completeFrame(8);
-                  if (!notifiedFrames.current.has(8)) {
-                    notifiedFrames.current.add(8);
+                  completeFrame(3);
+                  if (!notifiedFrames.current.has(3)) {
+                    notifiedFrames.current.add(3);
                     pushToast("¡Proceso guardado!");
                   }
                 }}
@@ -782,11 +813,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 9: Transición a Etapa 2 ══════════════════════════ */}
-      {completedFrames >= 8 ? (
+      {/* ═══ FRAME 4 (etapa-1): Transición ══════════════───── */}
+      {completedFrames >= 3 ? (
         <Frame
           id="frame-transicion"
-          sectionTitle="Sección 9: Transición"
+          sectionTitle="Sección 4: Transición"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={null}
@@ -837,16 +868,16 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   density="standard"
                   showAudioButton
                   onComplete={() => {
-                    completeFrame(9);
-                    if (!notifiedFrames.current.has(9)) {
-                      notifiedFrames.current.add(9);
+                    completeFrame(4);
+                    if (!notifiedFrames.current.has(4)) {
+                      notifiedFrames.current.add(4);
                     }
                   }}
                 />
               </div>
 
               {/* Botón ir a Etapa 2 — solo visible tras completar el diálogo */}
-              {completedFrames >= 9 ? (
+              {completedFrames >= 4 ? (
                 <div className={styles.f9NextRow}>
                   <a
                     href="/inicio"
@@ -862,8 +893,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ Floating ChatBot button — fijo abajo-derecha ═══════════ */}
-      {completedFrames >= 4 && f5Phase !== "intro" ? (
+        </>
+      ) : null}
+
+      {/* ═══ Floating ChatBot button — fijo abajo-derecha ════─── */}
+      {isEtapa0 && completedFrames >= 4 && f5Phase !== "intro" ? (
         <>
           <button
             type="button"

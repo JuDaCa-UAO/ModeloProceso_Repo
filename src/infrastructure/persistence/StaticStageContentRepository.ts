@@ -15,10 +15,12 @@
 
 import type { IStageContentRepository } from "@domain/stage/repositories/IStageContentRepository";
 import type { SectionNode } from "@/types/stage";
+import { STAGE0_TREE } from "@/content/stages/stage-0.content";
 import { STAGE1_TREE } from "@/content/stages/stage-1.content";
 
 /** Registro canónico de stageId → árbol de contenido. */
 const STAGE_REGISTRY: Record<string, SectionNode[]> = {
+  "etapa-0": STAGE0_TREE,
   "etapa-1": STAGE1_TREE,
   // "etapa-2": STAGE2_TREE,  ← agregar aquí al crear contenido de Etapa 2
   // "etapa-3": STAGE3_TREE,

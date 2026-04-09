@@ -18,7 +18,28 @@
   height: 100dvh;
   z-index: 0;
 }
+/* ─── Título de etapa — visible encima del primer frame ───────────────── */
 
+.stageHeader {
+  width: 100%;
+  max-width: 820px;
+  padding: clamp(0.5rem, 1.5dvh, 1.2rem) 0 0;
+  text-align: center;
+  z-index: 1;
+}
+
+.stageTitle {
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-size: clamp(1.1rem, 2.4vw, 1.9rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(254, 106, 111, 0.95);
+  text-shadow:
+    0 0 18px rgba(248, 46, 53, 0.5),
+    0 0 40px rgba(248, 46, 53, 0.2);
+  margin: 0;
+}
 /* ─── Frame 8: marco futurista del embebido ─────────────────────────────── */
 
 .embedShell {

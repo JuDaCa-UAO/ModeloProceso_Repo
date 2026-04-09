@@ -23,8 +23,13 @@ export type StageMeta = {
 };
 
 export const STAGE_META: StageMeta[] = [
-  {
-    id: "etapa-1",
+  {    id: "etapa-0",
+    name: "Introducción",
+    order: 0,
+    href: "/etapa/etapa-0",
+    available: true,
+  },
+  {    id: "etapa-1",
     name: "Reconócete para avanzar",
     order: 1,
     href: "/etapa/etapa-1",
