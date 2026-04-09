@@ -611,6 +611,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       {/* ═══ FRAMES 1-4: Solo en etapa-1 (antes frames 6-9) ══════ */}
       {!isEtapa0 ? (
         <>
+          {/* Viewer fijo top-right — visible en toda la etapa-1 */}
+          <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" />
+
       {/* ═══ FRAME 1 (etapa-1): Condiciones de confianza ═══════─ */}
       {completedFrames >= 0 ? (
         <Frame
