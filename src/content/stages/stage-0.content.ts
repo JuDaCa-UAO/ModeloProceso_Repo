@@ -15,12 +15,8 @@ export const STAGE0_NAME = "Introducción";
 export const STAGE0_TREE: SectionNode[] = [
   {
     id: "etapa-0-intro",
-    kind: "section",
-    label: "Introducción",
     title: "Bienvenido a esta iteración",
-    lines: [
-      "Este recorrido introductorio te prepara para comenzar el modelo de proceso GenAI.",
-    ],
+    content: [],
     children: [],
   },
 ];
