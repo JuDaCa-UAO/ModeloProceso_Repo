@@ -609,3 +609,15 @@
   width: 100%;
   padding-top: 16px;
 }
+
+/* ─── YouTubeNarrativePlayer: alturas mínimas por contexto de uso ────────── */
+
+/* Frame 1 de etapa-1: video de introducción del modelo */
+.ytIntro {
+  min-height: clamp(220px, 40dvh, 360px);
+}
+
+/* Frame 5 de etapa-1: video de transición E1 → E2 */
+.ytTransicion {
+  min-height: clamp(260px, 44dvh, 440px);
+}

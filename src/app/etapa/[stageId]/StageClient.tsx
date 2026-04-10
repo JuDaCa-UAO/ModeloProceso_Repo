@@ -27,6 +27,8 @@ import { writeProgress } from "@/lib/progress";
 import { IoSend } from "react-icons/io5";
 import Image from "next/image";
 import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
+import YouTubeNarrativePlayer from "@/components/youtube-narrative-player/YouTubeNarrativePlayer";
+import { VIDEO_REGISTRY } from "@/content/shared/video-registry";
 import styles from "./stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
 
@@ -582,17 +584,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
         >
           {videoPlaying ? (
-            <>
-              {/* Video sin controles — no se puede pausar */}
-              <video
-                className={styles.videoPlayer}
-                src="/videos/intro-modelo.mp4"
-                autoPlay
-                playsInline
-                onEnded={handleVideoEnded}
-              />
-              <p className={styles.videoStatus}>Animación en reproducción</p>
-            </>
+            <YouTubeNarrativePlayer
+              videoId={VIDEO_REGISTRY.introModelo.videoId}
+              startSeconds={VIDEO_REGISTRY.introModelo.startSeconds}
+              autoplay
+              onEnded={handleVideoEnded}
+              className={styles.ytIntro}
+            />
           ) : (
             <>
               <div className={styles.modelStage}>
@@ -831,13 +829,12 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         >
           {/* ——— Reproductor de video ——— */}
           {f9VideoPlaying && !f9VideoEnded ? (
-            <video
-              key="f9-video"
-              className={styles.f9Video}
-              src="/videos/TransicionE1-a-E2.mp4"
-              autoPlay
-              playsInline
+            <YouTubeNarrativePlayer
+              videoId={VIDEO_REGISTRY.transicionE1aE2.videoId}
+              startSeconds={VIDEO_REGISTRY.transicionE1aE2.startSeconds}
+              autoplay
               onEnded={() => setF9VideoEnded(true)}
+              className={styles.ytTransicion}
             />
           ) : !f9VideoEnded ? (
             /* Pantalla inicial: modelo grande + botón ver animación */
