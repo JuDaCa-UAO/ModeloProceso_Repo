@@ -325,17 +325,17 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
     setCompletedFrames(saved);
     if (stageId === "etapa-0") {
-      // Restauración para etapa-0 (frames 1-5)
-      if (saved >= 3) setF3Phase("laia-viewer");
-      if (saved >= 5) setF5Phase("after-chat");
+      // Restauración para etapa-0 (frames 1-4)
+      if (saved >= 2) setF3Phase("laia-viewer");
+      if (saved >= 4) setF5Phase("after-chat");
     } else {
-      // Restauración para etapa-1 (frames renumerados 1-4)
-      if (saved >= 1) {
+      // Restauración para etapa-1 (frames renumerados 1-5)
+      if (saved >= 2) {
         setConsentAdmin(true);
         setConsentUsage(true);
       }
-      if (saved >= 3) setAutodiagDone(true);
-      if (saved >= 4) { setF9VideoEnded(true); setF9VideoPlaying(false); }
+      if (saved >= 4) setAutodiagDone(true);
+      if (saved >= 5) { setF9VideoEnded(true); setF9VideoPlaying(false); }
     }
     // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
@@ -360,9 +360,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
   const handleVideoEnded = useCallback(() => {
     setVideoPlaying(false);
-    completeFrame(2);
-    if (!notifiedFrames.current.has(2)) {
-      notifiedFrames.current.add(2);
+    completeFrame(1);
+    if (!notifiedFrames.current.has(1)) {
+      notifiedFrames.current.add(1);
       pushToast("\u00a1Proceso guardado!");
     }
   }, [completeFrame, pushToast]);
@@ -380,7 +380,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </h1>
       </div>
 
-      {/* ═══ FRAMES 1-5: Solo en etapa-0 ══════════════════════ */}
+      {/* ═══ FRAMES 1-4: Solo en etapa-0 ══════════════════════ */}
       {isEtapa0 ? (
         <>
       {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════ */}
@@ -405,48 +405,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         />
       </Frame>
 
-      {/* ═══ FRAME 2: Modelo 3D interactivo ════════════════════════════ */}
-      {completedFrames >= 1 ? (
-        <Frame
-          id="frame-modelo"
-          sectionTitle="Sección 2: Interactúa con tu entorno"
-          backgroundImage="/ui/backgroundUAO.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 2 ? <ScrollHint label="¡Avancemos!" /> : null}
-        >
-          {videoPlaying ? (
-            <>
-              {/* Video sin controles — no se puede pausar */}
-              <video
-                className={styles.videoPlayer}
-                src="/videos/intro-modelo.mp4"
-                autoPlay
-                playsInline
-                onEnded={handleVideoEnded}
-              />
-              <p className={styles.videoStatus}>Animación en reproducción</p>
-            </>
-          ) : (
-            <>
-              <div className={styles.modelStage}>
-                <StageViewer enableRotation />
-              </div>
-              <p className={styles.frameInstructions}>
-                Puedes interactuar con el modelo usando el scroll para acercarte y
-                arrastrando con el click presionado para girarlo.
-              </p>
-              {completedFrames < 2 ? (
-                <div className={styles.frameActions}>
-                  <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
-                    Ver animación →
-                  </button>
-                </div>
-              ) : null}
-            </>
-          )}
-        </Frame>
-      ) : null}
-
       {/*
        * ─────────────────────────────────────────────────────────────────
        * PARA AÑADIR UN FRAME NUEVO:
@@ -461,8 +419,8 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
        * ─────────────────────────────────────────────────────────────────
        */}
 
-      {/* ═══ FRAME 3: Tu lugar en el modelo ════════════════════════════ */}
-      {completedFrames >= 2 ? (
+      {/* ═══ FRAME 2: Tu lugar en el modelo ════════════════════════════ */}
+      {completedFrames >= 1 ? (
         <>
           {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
           {(isEtapa0 ? f3Phase === "laia-viewer" : true) ? (
@@ -471,10 +429,10 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
           <Frame
             id="frame-modelo-interactivo"
-            sectionTitle="Sección 3: Tu lugar en el modelo"
+            sectionTitle="Sección 2: Tu lugar en el modelo"
             backgroundImage="/ui/backgroundUAO.png"
             overlay="rgba(4, 2, 3, 0.45)"
-            hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
+            hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
           >
             {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
             {f3Phase !== "laia-viewer" ? (
@@ -511,9 +469,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                     f3Phase === "laia-model"
                       ? () => setF3Phase("laia-viewer")
                       : () => {
-                          completeFrame(3);
-                          if (!notifiedFrames.current.has(3)) {
-                            notifiedFrames.current.add(3);
+                          completeFrame(2);
+                          if (!notifiedFrames.current.has(2)) {
+                            notifiedFrames.current.add(2);
                             pushToast("\u00a1Proceso guardado!");
                             pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
                           }
@@ -526,14 +484,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </>
       ) : null}
 
-      {/* ═══ FRAME 4: Familiárizándote con el modelo ══════════════════ */}
-      {completedFrames >= 3 ? (
+      {/* ═══ FRAME 3: Familiárizándote con el modelo ══════════════════ */}
+      {completedFrames >= 2 ? (
         <Frame
           id="frame-rail"
-          sectionTitle="Sección 4: Familiárizándote con el modelo"
+          sectionTitle="Sección 3: Familiárizándote con el modelo"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 4 ? <ScrollHint label="¡Continuemos!" /> : null}
+          hint={completedFrames >= 3 ? <ScrollHint label="¡Continuemos!" /> : null}
         >
           <HorizontalScrollRail panels={STAGE_RAIL_CARDS} />
 
@@ -544,9 +502,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               density="tight"
               steps={F4_LAIA_STEPS}
               onComplete={() => {
-                completeFrame(4);
-                if (!notifiedFrames.current.has(4)) {
-                  notifiedFrames.current.add(4);
+                completeFrame(3);
+                if (!notifiedFrames.current.has(3)) {
+                  notifiedFrames.current.add(3);
                   pushToast("\u00a1Proceso guardado!");
                 }
               }}
@@ -555,11 +513,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 5: Asistencia guiada ═══════════════════════════════ */}
-      {completedFrames >= 4 ? (
+      {/* ═══ FRAME 4: Asistencia guiada ═══════════════════════════════ */}
+      {completedFrames >= 3 ? (
         <Frame
           id="frame-asistencia"
-          sectionTitle="Sección 5: Asistencia guiada"
+          sectionTitle="Sección 4: Asistencia guiada"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={null}
@@ -580,9 +538,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 density="tight"
                 steps={F5_LAIA_COMPLETE_STEPS}
                 onComplete={() => {
-                  completeFrame(5);
-                  if (!notifiedFrames.current.has(5)) {
-                    notifiedFrames.current.add(5);
+                  completeFrame(4);
+                  if (!notifiedFrames.current.has(4)) {
+                    notifiedFrames.current.add(4);
                     pushToast("\u00a1Proceso guardado!");
                   }
                 }}
@@ -591,7 +549,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           </div>
 
           {/* Botón CTA — visible al completar frame 5 */}
-          {completedFrames >= 5 ? (
+          {completedFrames >= 4 ? (
             <div className={styles.f9NextRow}>
               <a
                 href="/etapa/etapa-1"
@@ -608,23 +566,65 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </>
       ) : null}
 
-      {/* ═══ FRAMES 1-4: Solo en etapa-1 (antes frames 6-9) ══════ */}
+      {/* ═══ FRAMES 1-5: Solo en etapa-1 ══════════════════════ */}
       {!isEtapa0 ? (
         <>
           {/* Viewer fijo top-right — visible en toda la etapa-1 */}
           <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" />
 
-      {/* ═══ FRAME 1 (etapa-1): Condiciones de confianza ═══════─ */}
+      {/* ═══ FRAME 1 (etapa-1): Interactúa con tu entorno ══════ */}
       {completedFrames >= 0 ? (
         <Frame
+          id="frame-modelo"
+          sectionTitle="Sección 1: Interactúa con tu entorno"
+          backgroundImage="/ui/backgroundUAO.png"
+          overlay="rgba(4, 2, 3, 0.45)"
+          hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
+        >
+          {videoPlaying ? (
+            <>
+              {/* Video sin controles — no se puede pausar */}
+              <video
+                className={styles.videoPlayer}
+                src="/videos/intro-modelo.mp4"
+                autoPlay
+                playsInline
+                onEnded={handleVideoEnded}
+              />
+              <p className={styles.videoStatus}>Animación en reproducción</p>
+            </>
+          ) : (
+            <>
+              <div className={styles.modelStage}>
+                <StageViewer enableRotation />
+              </div>
+              <p className={styles.frameInstructions}>
+                Puedes interactuar con el modelo usando el scroll para acercarte y
+                arrastrando con el click presionado para girarlo.
+              </p>
+              {completedFrames < 1 ? (
+                <div className={styles.frameActions}>
+                  <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
+                    Ver animación →
+                  </button>
+                </div>
+              ) : null}
+            </>
+          )}
+        </Frame>
+      ) : null}
+
+      {/* ═══ FRAME 2 (etapa-1): Condiciones de confianza ════════ */}
+      {completedFrames >= 1 ? (
+        <Frame
           id="frame-consentimiento"
-          sectionTitle="Sección 1: Condiciones de confianza"
+          sectionTitle="Sección 2: Condiciones de confianza"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 1 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
+          hint={completedFrames >= 2 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
         >
           {/* Formulario de consentimiento */}
-          {completedFrames < 1 ? (
+          {completedFrames < 2 ? (
             <form
               className={blockStyles.formCard}
               onSubmit={(e) => e.preventDefault()}
@@ -678,9 +678,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   onClick={() => {
                     setConsentTouched(true);
                     if (!consentValid) return;
-                    completeFrame(1);
-                    if (!notifiedFrames.current.has(1)) {
-                      notifiedFrames.current.add(1);
+                    completeFrame(2);
+                    if (!notifiedFrames.current.has(2)) {
+                      notifiedFrames.current.add(2);
                       pushToast("\u00a1Proceso guardado!");
                     }
                   }}
@@ -709,14 +709,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 2 (etapa-1): Estados iniciales ════════─────── */}
-      {completedFrames >= 1 ? (
+      {/* ═══ FRAME 3 (etapa-1): Estados iniciales ═══════════════ */}
+      {completedFrames >= 2 ? (
         <Frame
           id="frame-estados"
-          sectionTitle="Sección 2: Estados iniciales"
+          sectionTitle="Sección 3: Estados iniciales"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
+          hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
         >
           {/* Grid de 3 tarjetas */}
           <div className={blockStyles.stateGrid}>
@@ -736,9 +736,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               density="tight"
               steps={F7_LAIA_STEPS}
               onComplete={() => {
-                completeFrame(2);
-                if (!notifiedFrames.current.has(2)) {
-                  notifiedFrames.current.add(2);
+                completeFrame(3);
+                if (!notifiedFrames.current.has(3)) {
+                  notifiedFrames.current.add(3);
                   pushToast("¡Proceso guardado!");
                 }
               }}
@@ -747,14 +747,14 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 3 (etapa-1): Autodiagnóstico ═════════════─── */}
-      {completedFrames >= 2 ? (
+      {/* ═══ FRAME 4 (etapa-1): Autodiagnóstico ═════════════─── */}
+      {completedFrames >= 3 ? (
         <Frame
           id="frame-autodiagnostico"
-          sectionTitle="Sección 3: Autodiagnóstico"
+          sectionTitle="Sección 4: Autodiagnóstico"
           backgroundImage="/ui/fondo_biblioteca.png"
           overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
+          hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
         >
           {/* Iframe embebido con marco futurista */}
           <div className={styles.embedShell}>
@@ -808,9 +808,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 density="tight"
                 steps={F8_LAIA_STEPS_POST}
                 onComplete={() => {
-                  completeFrame(3);
-                  if (!notifiedFrames.current.has(3)) {
-                    notifiedFrames.current.add(3);
+                  completeFrame(4);
+                  if (!notifiedFrames.current.has(4)) {
+                    notifiedFrames.current.add(4);
                     pushToast("¡Proceso guardado!");
                   }
                 }}
@@ -820,11 +820,11 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         </Frame>
       ) : null}
 
-      {/* ═══ FRAME 4 (etapa-1): Transición ══════════════───── */}
-      {completedFrames >= 3 ? (
+      {/* ═══ FRAME 5 (etapa-1): Transición ══════════════───── */}
+      {completedFrames >= 4 ? (
         <Frame
           id="frame-transicion"
-          sectionTitle="Sección 4: Transición"
+          sectionTitle="Sección 5: Transición"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={null}
@@ -875,16 +875,16 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   density="standard"
                   showAudioButton
                   onComplete={() => {
-                    completeFrame(4);
-                    if (!notifiedFrames.current.has(4)) {
-                      notifiedFrames.current.add(4);
+                    completeFrame(5);
+                    if (!notifiedFrames.current.has(5)) {
+                      notifiedFrames.current.add(5);
                     }
                   }}
                 />
               </div>
 
               {/* Botón ir a Etapa 2 — solo visible tras completar el diálogo */}
-              {completedFrames >= 4 ? (
+              {completedFrames >= 5 ? (
                 <div className={styles.f9NextRow}>
                   <a
                     href="/inicio"
@@ -904,7 +904,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       ) : null}
 
       {/* ═══ Floating ChatBot button — fijo abajo-derecha ════─── */}
-      {isEtapa0 && completedFrames >= 4 && f5Phase !== "intro" ? (
+      {isEtapa0 && completedFrames >= 3 && f5Phase !== "intro" ? (
         <>
           <button
             type="button"
