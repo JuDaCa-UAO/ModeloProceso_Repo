@@ -576,7 +576,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       {completedFrames >= 0 ? (
         <Frame
           id="frame-modelo"
-          sectionTitle="Sección 1: Interactúa con tu entorno"
+          sectionTitle="Sección 1: Reconociendo nuestros pasos"
           backgroundImage="/ui/backgroundUAO.png"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
