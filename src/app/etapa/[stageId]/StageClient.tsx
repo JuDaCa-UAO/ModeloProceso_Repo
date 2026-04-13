@@ -450,7 +450,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
             {f3Phase !== "laia-viewer" ? (
               <>
-                <div className={styles.modelStage}>
+                <div className={styles.modelStageCompact}>
                   <StageViewer enableRotation />
                 </div>
                 <p className={styles.frameInstructions}>
