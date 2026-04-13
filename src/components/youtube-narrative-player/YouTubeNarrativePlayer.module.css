@@ -28,45 +28,4 @@
   height: 100%;
   border: none;
   display: block;
-  /* Sin pointer-events en el iframe mismo — el overlay los captura todos */
-  pointer-events: none;
-}
-
-/*
- * Overlay transparente — se sitúa encima del iframe (z-index: 1) e
- * intercepta todos los clics/toques del usuario antes de que lleguen
- * al reproductor. Garantiza que pause, skip y controles de YT estén
- * completamente bloqueados aunque controls=0 no fuera suficiente.
- */
-.overlay {
-  position: absolute;
-  inset: 0;
-  z-index: 1;
-  background: transparent;
-  cursor: default;
-  /* pointer-events: auto es el valor por defecto — lo declaramos explícitamente */
-  pointer-events: auto;
-}
-
-/* Botón de replay interno — visible en la esquina inferior derecha */
-.replayBtn {
-  position: absolute;
-  bottom: 12px;
-  right: 14px;
-  z-index: 2;
-  padding: 7px 16px;
-  background: transparent;
-  color: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 999px;
-  font-size: 12px;
-  font-weight: 500;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: color 0.2s, border-color 0.2s;
-}
-
-.replayBtn:hover {
-  color: rgba(254, 106, 111, 0.90);
-  border-color: rgba(254, 106, 111, 0.40);
 }
