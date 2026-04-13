@@ -105,6 +105,7 @@ export default function YouTubeNarrativePlayer({
         host: "https://www.youtube-nocookie.com",
         playerVars: {
           autoplay: autoplay ? 1 : 0,
+          controls: 0,     // oculta la barra de controles nativa de YouTube
           playsinline: 1,  // evita que iOS abra fullscreen automáticamente
           enablejsapi: 1,  // necesario para recibir eventos (onEnded)
           start: startSeconds,
@@ -132,6 +133,8 @@ export default function YouTubeNarrativePlayer({
   return (
     <div className={[styles.wrapper, className].filter(Boolean).join(" ")}>
       <div ref={containerRef} className={styles.player} />
+      {/* Overlay transparente — bloquea clic-para-pausar sin ocultar el video */}
+      <div className={styles.overlay} aria-hidden="true" />
     </div>
   );
 }

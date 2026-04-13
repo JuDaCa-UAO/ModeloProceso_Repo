@@ -28,4 +28,15 @@
   height: 100%;
   border: none;
   display: block;
+  pointer-events: none;
+}
+
+/* Overlay transparente — se sitúa encima del iframe e intercepta
+   todos los clics antes de que lleguen al reproductor, impidiendo
+   que el usuario pause o reanude el video. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
 }
