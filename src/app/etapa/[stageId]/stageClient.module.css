@@ -116,7 +116,7 @@
 /* Viewport del iframe */
 .embedViewport {
   width: 100%;
-  height: clamp(380px, 52dvh, 560px);
+  height: clamp(200px, 32dvh, 340px);
   overflow: hidden;
   /* Fondo blanco para que el form de n8n no muestre transparencia */
   background: #fff;
