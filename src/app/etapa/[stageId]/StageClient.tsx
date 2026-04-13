@@ -56,11 +56,22 @@ function saveFrameProgress(stageId: string, n: number) {
 // ─── Sub-componente: indicador de scroll entre frames ──────────────────────
 
 function ScrollHint({ label }: { label?: string }) {
+  function handleClick(e: React.MouseEvent<HTMLButtonElement>) {
+    const frame = (e.currentTarget as HTMLElement).closest('section');
+    const next = frame?.nextElementSibling as HTMLElement | null;
+    next?.scrollIntoView({ behavior: 'smooth', block: 'center' });
+  }
+
   return (
-    <div className={styles.scrollHint} aria-label="Desplázate hacia abajo">
+    <button
+      type="button"
+      className={styles.scrollHint}
+      onClick={handleClick}
+      aria-label="Ir al siguiente paso"
+    >
       <span className={styles.scrollArrow} aria-hidden>▼</span>
       {label ? <span className={styles.scrollLabel}>{label}</span> : null}
-    </div>
+    </button>
   );
 }
 
