@@ -202,3 +202,12 @@ export default function YouTubeNarrativePlayer({
     </div>
   );
 }
+
+// ─── Eager init ───────────────────────────────────────────────────────────────
+// Inicia la descarga de la IFrame API en cuanto este módulo se importa,
+// sin esperar a que ningún componente monte. En la práctica esto ocurre
+// cuando Next.js carga el bundle de la ruta, ganando los segundos de latencia
+// que antes se perdían hasta el primer render del player.
+if (typeof window !== "undefined") {
+  loadYouTubeApi();
+}

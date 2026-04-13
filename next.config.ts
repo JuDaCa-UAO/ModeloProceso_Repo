@@ -22,6 +22,17 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
   { key: "Content-Security-Policy", value: ContentSecurityPolicy.replace(/\n/g, "") },
+  // Instruye al browser para abrir conexiones con YouTube antes de parsear el HTML.
+  // Llega antes que cualquier <link> del <head>, reduciendo la latencia del primer frame.
+  {
+    key: "Link",
+    value: [
+      "<https://www.youtube-nocookie.com>; rel=preconnect",
+      "<https://www.youtube.com>; rel=preconnect; crossorigin",
+      "<https://i.ytimg.com>; rel=dns-prefetch",
+      "<https://www.youtube.com/iframe_api>; rel=preload; as=script",
+    ].join(", "),
+  },
 ];
 
 const nextConfig: NextConfig = {
