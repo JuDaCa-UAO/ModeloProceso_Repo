@@ -53,21 +53,6 @@ function saveFrameProgress(stageId: string, n: number) {
   } catch { /* quota exceeded — silently ignore */ }
 }
 
-// ─── Persistencia del desbloqueo del chatbot ─────────────────────────────────
-const CHATBOT_UNLOCKED_KEY = "ai-tech-ed-chatbot-unlocked";
-
-function readChatbotUnlocked(): boolean {
-  if (typeof window === "undefined") return false;
-  try { return window.localStorage.getItem(CHATBOT_UNLOCKED_KEY) === "1"; }
-  catch { return false; }
-}
-
-function writeChatbotUnlocked() {
-  if (typeof window === "undefined") return;
-  try { window.localStorage.setItem(CHATBOT_UNLOCKED_KEY, "1"); }
-  catch { /* quota exceeded */ }
-}
-
 // ─── Sub-componente: indicador de scroll entre frames ──────────────────────
 
 function ScrollHint({ label }: { label?: string }) {
@@ -324,8 +309,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   const [f5Phase, setF5Phase] = useState<"intro" | "show-button" | "after-chat">("intro");
   /** chatbotOpen: panel de chat visible */
   const [chatbotOpen, setChatbotOpen] = useState(false);
-  /** chatbotUnlocked: el botón de chatbot es visible en todas las etapas una vez desbloqueado */
-  const [chatbotUnlocked, setChatbotUnlocked] = useState(false);
 
   // ── Frame 6: formulario de consentimiento ─────────────────────────────────
   const [consentAdmin, setConsentAdmin] = useState(false);
@@ -350,9 +333,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   // Seguro porque page.tsx usa dynamic({ ssr: false }) — no hay SSR de este
   // componente, así que no puede haber hydration mismatch.
   useEffect(() => {
-    // La lectura del chatbot debe ocurrir siempre, sin importar el progreso guardado
-    if (readChatbotUnlocked()) setChatbotUnlocked(true);
-
     const saved = readFrameProgress(stageId);
     if (saved <= 0) return;
     notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
@@ -562,11 +542,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 size="compact"
                 density="tight"
                 steps={F5_LAIA_STEPS}
-                onComplete={() => {
-                  setF5Phase("show-button");
-                  writeChatbotUnlocked();
-                  setChatbotUnlocked(true);
-                }}
+                onComplete={() => setF5Phase("show-button")}
               />
             ) : (
               <CharacterStepDialog
@@ -937,7 +913,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       ) : null}
 
       {/* ═══ Floating ChatBot button — fijo abajo-derecha ════─── */}
-      {chatbotUnlocked ? (
+      {(isEtapa0 ? f5Phase !== "intro" : true) ? (
         <>
           <button
             type="button"
