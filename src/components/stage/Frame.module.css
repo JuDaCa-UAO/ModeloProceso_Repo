@@ -8,6 +8,9 @@
   flex-direction: column;
   /* overflow visible so the hint slot can extend below the frame border */
 
+  /* Empuja el siguiente frame fuera del viewport hasta que el usuario scrollee */
+  margin-bottom: clamp(40dvh, 55dvh, 65dvh);
+
   /* Panel surface */
   background: rgba(6, 4, 5, 0.82);
   backdrop-filter: blur(16px);
