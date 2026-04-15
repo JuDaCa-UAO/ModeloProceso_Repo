@@ -1,4 +1,4 @@
-﻿/**
+/**
  * PRESENTATION — Client Component (Stage Engine)
  *
  * Sistema de frames progresivos:
@@ -437,7 +437,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
         <>
           {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
           {(isEtapa0 ? f3Phase === "laia-viewer" : true) ? (
-            <MiniSpiralViewer stageLabel={isEtapa0 ? "Etapa actual: Etapa 0" : "Etapa actual: Etapa 1"} />
+            <MiniSpiralViewer stageLabel={isEtapa0 ? "Etapa actual: Etapa 0" : "Etapa actual: Etapa 1"} stageKey={isEtapa0 ? "etapa-0" : "etapa-1"} />
           ) : null}
 
           <Frame
@@ -583,7 +583,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       {!isEtapa0 ? (
         <>
           {/* Viewer fijo top-right — visible en toda la etapa-1 */}
-          <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" />
+          <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" stageKey="etapa-1" />
 
       {/* ═══ FRAME 1 (etapa-1): Interactúa con tu entorno ══════ */}
       {completedFrames >= 0 ? (
