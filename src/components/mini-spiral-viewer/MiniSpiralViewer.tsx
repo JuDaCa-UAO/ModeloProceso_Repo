@@ -15,7 +15,8 @@ function drawFrame(ctx: CanvasRenderingContext2D, canvas: HTMLCanvasElement, img
   const { width, height } = canvas;
   ctx.clearRect(0, 0, width, height);
 
-  const scale = Math.min(width / img.width, height / img.height);
+  // Hacemos que cubra ("cover") para eliminar barras negras asimetricas
+  const scale = Math.max(width / img.width, height / img.height);
   const drawWidth = img.width * scale;
   const drawHeight = img.height * scale;
   
@@ -127,7 +128,7 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
   return (
     <div className={styles.widget} aria-label={stageLabel}>
       <div className={styles.canvas}>
-        <canvas ref={canvasRef} style={{ display: "block", aspectRatio: "1/1" }} />
+        <canvas ref={canvasRef} style={{ display: "block", aspectRatio: "16/9" }} />
       </div>
       <p className={styles.label}>{stageLabel}</p>
     </div>
