@@ -35,7 +35,7 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
   const { framesRef, posterLoaded, readyToAnimate } = useImageSequence(config);
 
   const frameIndexRef = useRef(0);
-  const animationRef = useRef<number>();
+  const animationRef = useRef<number>(0);
   const lastTimeRef = useRef<number>(0);
 
   useEffect(() => {
