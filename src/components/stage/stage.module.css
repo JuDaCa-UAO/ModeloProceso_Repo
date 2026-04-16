@@ -792,28 +792,27 @@
 
 .railCardFooter {
   display: flex;
-  align-items: center;
-  gap: 8px;
+  align-items: stretch;
   padding: 10px 14px 14px;
   border-top: 1px solid rgba(248, 46, 53, 0.12);
 }
 
 .railCardBtnText {
-  flex: 1;
-  min-width: 0;
+  width: 100%;
   border: 1px solid rgba(248, 46, 53, 0.28);
   background: rgba(12, 5, 6, 0.72);
   color: rgba(255, 220, 221, 0.90);
   border-radius: 10px;
-  padding: 7px 8px;
+  padding: 7px 8px 7px 12px;
   font-size: 11px;
   letter-spacing: 0.04em;
   cursor: pointer;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
-  transition: border-color 140ms ease, background 140ms ease;
+  display: inline-flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  transition: border-color 140ms ease, background 140ms ease, color 140ms ease;
 }
 
 .railCardBtnText:disabled {
@@ -824,6 +823,27 @@
 .railCardBtnText:not(:disabled):hover {
   border-color: rgba(254, 106, 111, 0.50);
   background: rgba(100, 10, 12, 0.40);
+}
+
+.railCardBtnText:focus-visible {
+  outline: 2px solid rgba(254, 106, 111, 0.55);
+  outline-offset: 2px;
+}
+
+.railCardBtnIcon {
+  flex-shrink: 0;
+  width: 28px;
+  height: 28px;
+  border-radius: 999px;
+  border: 1px solid rgba(248, 46, 53, 0.32);
+  background: rgba(139, 3, 4, 0.56);
+  color: rgba(255, 239, 240, 0.96);
+  font-size: 11px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding-left: 2px;
+  box-shadow: inset 0 0 0 1px rgba(248, 46, 53, 0.08);
 }
 
 .railCardBtnPlay {

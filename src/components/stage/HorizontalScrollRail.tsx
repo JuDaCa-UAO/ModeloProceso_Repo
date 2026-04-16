@@ -117,19 +117,13 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                     className={styles.railCardBtnText}
                     disabled={!hasVideo}
                     title={title}
-                    onClick={() => openVideo(panel)}
-                  >
-                    Reproducir video
-                  </button>
-                  <button
-                    type="button"
-                    className={styles.railCardBtnPlay}
-                    disabled={!hasVideo}
                     aria-label={`Reproducir video de ${panel.label ?? panel.title}`}
-                    title={title}
                     onClick={() => openVideo(panel)}
                   >
-                    &#9654;
+                    <span>Reproducir</span>
+                    <span className={styles.railCardBtnIcon} aria-hidden="true">
+                      &#9654;
+                    </span>
                   </button>
                 </div>
               </article>
@@ -192,15 +186,15 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                 </div>
 
                 <div className={styles.railVideoFooter}>
-                  {videoEnded ? (
-                    <div className={styles.railVideoActions}>
-                      <button
-                        type="button"
-                        className={styles.buttonSecondary}
-                        onClick={closeOverlay}
-                      >
-                        Cerrar
-                      </button>
+                  <div className={styles.railVideoActions}>
+                    <button
+                      type="button"
+                      className={styles.buttonSecondary}
+                      onClick={closeOverlay}
+                    >
+                      Cerrar
+                    </button>
+                    {videoEnded ? (
                       <button
                         type="button"
                         className={styles.buttonPrimary}
@@ -208,8 +202,8 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                       >
                         Reproducir de nuevo
                       </button>
-                    </div>
-                  ) : null}
+                    ) : null}
+                  </div>
                 </div>
               </section>
             </div>,
