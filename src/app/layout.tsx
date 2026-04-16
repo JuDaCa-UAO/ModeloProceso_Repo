@@ -21,6 +21,8 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             cualquier componente solicite el iframe_api o el embed. */}
         <link rel="preconnect" href="https://www.youtube-nocookie.com" />
         <link rel="preconnect" href="https://www.youtube.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://s.ytimg.com" crossOrigin="anonymous" />
+        <link rel="preconnect" href="https://i.ytimg.com" crossOrigin="anonymous" />
         {/* Resuelve DNS para miniaturas sin abrir conexión completa */}
         <link rel="dns-prefetch" href="https://i.ytimg.com" />
         {/* Descarga el script de la IFrame API en paralelo con el HTML */}

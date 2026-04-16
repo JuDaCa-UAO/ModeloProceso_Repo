@@ -22,11 +22,13 @@ type HorizontalScrollRailProps = {
  */
 export default function HorizontalScrollRail({ panels }: HorizontalScrollRailProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
-  const closeButtonRef = useRef<HTMLButtonElement>(null);
+  const modalRef = useRef<HTMLElement>(null);
   const [activePanel, setActivePanel] = useState<RailPanel | null>(null);
   const [videoEnded, setVideoEnded] = useState(false);
   const [playerInstanceKey, setPlayerInstanceKey] = useState(0);
 
+  const preloadedVideoKey = panels.find((panel) => panel.videoKey)?.videoKey;
+  const preloadedVideo = preloadedVideoKey ? VIDEO_REGISTRY[preloadedVideoKey] : null;
   const activeVideo = activePanel?.videoKey ? VIDEO_REGISTRY[activePanel.videoKey] : null;
 
   useEffect(() => {
@@ -59,7 +61,7 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
     };
 
     const focusTimer = window.setTimeout(() => {
-      closeButtonRef.current?.focus();
+      modalRef.current?.focus();
     }, 0);
 
     window.addEventListener("keydown", onKeyDown);
@@ -136,6 +138,17 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
         </div>
       </div>
 
+      {preloadedVideo ? (
+        <div className={styles.railVideoPreload} aria-hidden="true">
+          <YouTubeNarrativePlayer
+            videoId={preloadedVideo.videoId}
+            startSeconds={preloadedVideo.startSeconds}
+            autoplay={false}
+            className={styles.railVideoPreloadPlayer}
+          />
+        </div>
+      ) : null}
+
       {activePanel && activeVideo && typeof document !== "undefined"
         ? createPortal(
             <div
@@ -149,10 +162,12 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
             >
               <div className={styles.railVideoBackdrop} aria-hidden="true" />
               <section
+                ref={modalRef}
                 className={styles.railVideoModal}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="rail-video-title"
+                tabIndex={-1}
               >
                 <div className={styles.railVideoHeader}>
                   <div className={styles.railVideoHeaderCopy}>
@@ -163,15 +178,6 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                       {activePanel.title}
                     </h3>
                   </div>
-                  <button
-                    ref={closeButtonRef}
-                    type="button"
-                    className={styles.railVideoClose}
-                    onClick={closeOverlay}
-                    aria-label="Cerrar video y volver al rail"
-                  >
-                    Cerrar
-                  </button>
                 </div>
 
                 <div className={styles.railVideoPlayerShell}>
@@ -193,7 +199,7 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
                         className={styles.buttonSecondary}
                         onClick={closeOverlay}
                       >
-                        Volver al rail
+                        Cerrar
                       </button>
                       <button
                         type="button"
