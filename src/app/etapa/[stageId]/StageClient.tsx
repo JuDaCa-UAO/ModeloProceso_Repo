@@ -118,6 +118,7 @@ const STAGE_RAIL_CARDS: RailPanel[] = [
       "",
     ],
     kind: "stage",
+    videoKey: "railEtapasIntro",
   },
   {
     id: "rail-etapa-2",
@@ -128,6 +129,7 @@ const STAGE_RAIL_CARDS: RailPanel[] = [
       "",
     ],
     kind: "stage",
+    videoKey: "railEtapasIntro",
   },
   {
     id: "rail-etapa-3",

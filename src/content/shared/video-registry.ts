@@ -17,6 +17,10 @@ export interface VideoEntry {
 }
 
 export const VIDEO_REGISTRY = {
+  railEtapasIntro: {
+    videoId: "7sT6Gh9aDVc",
+    startSeconds: 0,
+  },
   /**
    * Animación introductoria del modelo de proceso.
    * Reemplaza el archivo local /videos/intro-modelo.mp4
@@ -35,3 +39,5 @@ export const VIDEO_REGISTRY = {
     startSeconds: 1,
   },
 } as const satisfies Record<string, VideoEntry>;
+/*  */
+export type VideoRegistryKey = keyof typeof VIDEO_REGISTRY;

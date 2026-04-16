@@ -1,4 +1,5 @@
 import type { StageFlagKey } from "@domain/stage/value-objects/StageFlagKey";
+import type { VideoRegistryKey } from "@/content/shared/video-registry";
 export type { StageFlagKey };
 
 export type DialogueStepConfig = {
@@ -13,6 +14,7 @@ export type RailPanel = {
   lines: [string, string];
   kind?: "intro" | "stage";
   label?: string;
+  videoKey?: VideoRegistryKey;
 };
 
 export type StateCardItem = {
