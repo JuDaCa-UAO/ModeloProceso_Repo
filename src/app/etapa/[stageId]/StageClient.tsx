@@ -211,8 +211,9 @@ const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
 
 const F6_LAIA_STEPS: CharacterDialogStep[] = [
   {
-    text: "Tus respuestas son confidenciales y se usan únicamente para orientar este recorrido. No es un examen, ni tiene efectos administrativos. Si necesitas apoyo adicional, puedes usar el chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.",
+    text: "Tus respuestas son confidenciales y se usan únicamente para orientar este recorrido. No es un examen, ni tiene efectos administrativos.",
     imgSrc: "/ui/Laia_explaining_holo.png",
+    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion2.ogg",
   },
 ];
 
@@ -222,6 +223,7 @@ const F7_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "A lo largo de este proceso podrás reconocer en qué estado te encuentras frente al uso de la IA. Estos estados no son etiquetas ni juicios de valor: son puntos de referencia que ayudan a orientar tu recorrido. El autodiagnóstico permitirá identificar tu punto de partida dentro del modelo.",
     imgSrc: "/ui/laia.png",
+    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion3.ogg",
   },
 ];
 
@@ -251,6 +253,7 @@ const F8_LAIA_STEPS_PRE: CharacterDialogStep[] = [
   {
     text: "El autodiagnóstico busca reconocer tu nivel actual de conocimiento, experiencia y disposición frente al uso de la GenAI en educación. A partir de tus respuestas, podrás ubicarte en un estado inicial del recorrido y recibir una orientación más pertinente para avanzar.",
     imgSrc: "/ui/laia_explaining.png",
+    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion4-1.ogg",
   },
 ];
 
@@ -259,6 +262,7 @@ const F8_LAIA_STEPS_POST: CharacterDialogStep[] = [
   {
     text: "Tu estado actual será enviado por correo al terminar.",
     imgSrc: "/ui/laia.png",
+    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion4-2.ogg",
   },
 ];
 
@@ -267,6 +271,7 @@ const F9_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Listo. Con esta información ya tenemos un punto de partida para el recorrido. Ahora pasaremos a explorar nuevas posibilidades de uso de GenAI.",
     imgSrc: "/ui/Laia_triumphant.png",
+    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion5.ogg",
   },
 ];
 // ─── Props ────────────────────────────────────────────────────────────────────
@@ -726,7 +731,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   size="compact"
                   density="tight"
                   steps={F6_LAIA_STEPS}
-                  showAudioButton={false}
                 />
               </div>
             </Frame>
