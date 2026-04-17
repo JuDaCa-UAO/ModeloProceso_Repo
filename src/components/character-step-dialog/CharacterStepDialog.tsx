@@ -2,7 +2,7 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath } from "react-icons/hi2";
+import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath, HiOutlinePause } from "react-icons/hi2";
 import { useVolume } from "@/context/VolumeContext";
 import styles from "./CharacterStepDialog.module.css";
 
@@ -42,6 +42,7 @@ export type CharacterDialogStep = {
   text: string;
   imgSrc: string;
   imgAlt?: string;
+  audioSrc?: string;
 };
 
 type CharacterStepDialogProps = {
@@ -83,6 +84,8 @@ export default function CharacterStepDialog({
   const shellRef = useRef<HTMLDivElement | null>(null);
   const completionSent = useRef(false);
   const typingAudioRef = useRef<HTMLAudioElement | null>(null);
+  const voiceAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [isVoicePlaying, setIsVoicePlaying] = useState(false);
   const fadeOutIntervalRef = useRef<number | null>(null);
 
   useEffect(() => {
@@ -105,8 +108,11 @@ export default function CharacterStepDialog({
   useEffect(() => {
     typingAudioRef.current = new Audio("/audio/tecleo.ogg");
     typingAudioRef.current.loop = true;
+    voiceAudioRef.current = new Audio();
+    
     return () => {
       typingAudioRef.current?.pause();
+      voiceAudioRef.current?.pause();
       if (fadeOutIntervalRef.current) {
         window.clearInterval(fadeOutIntervalRef.current);
       }
@@ -130,6 +136,10 @@ export default function CharacterStepDialog({
   useEffect(() => {
     if (!step || !step.text.length || !isTyping || !isVisible) return;
 
+    // Si el usuario presionó reproducir voz, cancelamos el sonido de tecleo.
+    // El texto se seguirá generando en silencio.
+    if (isVoicePlaying) return;
+
     const timerId = window.setInterval(() => {
       setTypedChars((current) => {
         const next = current + 1;
@@ -138,13 +148,13 @@ export default function CharacterStepDialog({
     }, TYPEWRITER_MS);
 
     return () => window.clearInterval(timerId);
-  }, [isTyping, step, step?.text, isVisible]);
+  }, [isTyping, step, step?.text, isVisible, isVoicePlaying]);
 
   useEffect(() => {
     const audio = typingAudioRef.current;
     if (!audio) return;
 
-    if (isTyping && isVisible) {
+    if (isTyping && isVisible && !isVoicePlaying) {
       // Cancelar fade-out si estaba en progreso
       if (fadeOutIntervalRef.current) {
         window.clearInterval(fadeOutIntervalRef.current);
@@ -173,7 +183,7 @@ export default function CharacterStepDialog({
         }
       }, FADE_INTERVAL);
     }
-  }, [isTyping, volume, isVisible]);
+  }, [isTyping, volume, isVisible, isVoicePlaying]);
 
   const playClickSound = useCallback(() => {
     try {
@@ -188,6 +198,37 @@ export default function CharacterStepDialog({
     }
   }, [volume]);
 
+  // Detiene el audio de voz de forma segura
+  const stopVoiceAudio = useCallback(() => {
+    if (voiceAudioRef.current) {
+      voiceAudioRef.current.pause();
+      voiceAudioRef.current.currentTime = 0;
+    }
+    setIsVoicePlaying(false);
+  }, []);
+
+  const toggleVoiceAudio = useCallback(() => {
+    if (!step?.audioSrc || !voiceAudioRef.current) return;
+
+    if (isVoicePlaying) {
+      stopVoiceAudio();
+    } else {
+      // Cargar y reproducir el nuevo audio
+      voiceAudioRef.current.src = step.audioSrc;
+      voiceAudioRef.current.volume = volume;
+      voiceAudioRef.current.play().then(() => {
+        setIsVoicePlaying(true);
+      }).catch((e) => {
+        console.debug("Voice audio prevented:", e);
+        setIsVoicePlaying(false);
+      });
+      
+      voiceAudioRef.current.onended = () => {
+        setIsVoicePlaying(false);
+      };
+    }
+  }, [step?.audioSrc, isVoicePlaying, volume, stopVoiceAudio]);
+
   const goNext = useCallback(() => {
     if (!step) return;
 
@@ -196,6 +237,7 @@ export default function CharacterStepDialog({
       return;
     }
 
+    stopVoiceAudio();
     playClickSound();
 
     if (!isLast) {
@@ -209,27 +251,30 @@ export default function CharacterStepDialog({
   const goPrevious = useCallback(() => {
     if (!step) return;
     if (idx <= 0) return;
+    stopVoiceAudio();
     playClickSound();
     setIdx((current) => Math.max(current - 1, 0));
     setTypedChars(0);
     setErroredStepKey(null);
-  }, [idx, step, playClickSound]);
+  }, [idx, step, playClickSound, stopVoiceAudio]);
 
   const completeDialog = useCallback(() => {
     if (!completionSent.current) {
+      stopVoiceAudio();
       playClickSound();
       completionSent.current = true;
       onComplete?.(true);
     }
-  }, [onComplete, playClickSound]);
+  }, [onComplete, playClickSound, stopVoiceAudio]);
 
   const restartDialog = useCallback(() => {
+    stopVoiceAudio();
     playClickSound();
     setIdx(0);
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
-  }, [playClickSound]);
+  }, [playClickSound, stopVoiceAudio]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -297,12 +342,12 @@ export default function CharacterStepDialog({
                 <button
                   type="button"
                   className={styles.audioBtn}
-                  aria-label="Reproducir audio"
-                  disabled
-                  tabIndex={-1}
-                  title="Audio próximamente"
+                  aria-label={isVoicePlaying ? "Pausar audio" : "Reproducir audio"}
+                  onClick={toggleVoiceAudio}
+                  disabled={!step.audioSrc}
+                  title={step.audioSrc ? (isVoicePlaying ? "Pausar narración" : "Escuchar narración") : "Audio próximamente"}
                 >
-                  <HiOutlineSpeakerWave />
+                  {isVoicePlaying ? <HiOutlinePause /> : <HiOutlineSpeakerWave />}
                 </button>
               ) : null}
               <button

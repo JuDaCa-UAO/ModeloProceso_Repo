@@ -82,10 +82,12 @@ const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
   {
     text: "Bienvenido/a. Este recorrido te guiará por un modelo por etapas para integrar GenAI en experiencias de aprendizaje. Avanzaremos de forma estructurada: reconocer tu punto de partida, explorar posibilidades, diseñar con propósito, preparar el terreno, desplegar en el aula y evaluar para mejorar.",
     imgSrc: "/ui/laia.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-1.ogg",
   },
   {
     text: "Este modelo se recorre por etapas. Cada una cumple una función distinta dentro del proceso y te ayudará a avanzar con mayor claridad y sentido pedagógico.",
     imgSrc: "/ui/laia_explaining.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-2.ogg",
   },
 ];
 
@@ -95,6 +97,7 @@ const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
     imgSrc: "/ui/Laia_explaining_holo.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-1.ogg",
   },
 ];
 
@@ -104,6 +107,7 @@ const F3_LAIA_STEPS_B: CharacterDialogStep[] = [
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
     imgSrc: "/ui/laia_explaining.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-2.ogg",
   },
 ];
 
@@ -180,6 +184,7 @@ const F4_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Este recorrido no es lineal ni rígido. Cada etapa te ayudará a avanzar con mayor claridad, y podrás volver sobre ellas cuando lo necesites.",
     imgSrc: "/ui/laia.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion3.ogg",
   },
 ];
 
@@ -189,6 +194,7 @@ const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "\u201cOh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.\u201d",
     imgSrc: "/ui/Laia_explaining_holo.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4.ogg",
   },
 ];
 
