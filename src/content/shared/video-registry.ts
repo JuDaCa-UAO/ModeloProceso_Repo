@@ -25,6 +25,10 @@ export const VIDEO_REGISTRY = {
     videoId: "ACco5jCODbw",
     startSeconds: 0,
   },
+  railEtapa3Intro: {
+    videoId: "ewiNn8LXzfY",
+    startSeconds: 0,
+  },
   /**
    * Animación introductoria del modelo de proceso.
    * Reemplaza el archivo local /videos/intro-modelo.mp4

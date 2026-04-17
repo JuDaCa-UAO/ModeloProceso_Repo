@@ -145,6 +145,7 @@ const STAGE_RAIL_CARDS: RailPanel[] = [
       "",
     ],
     kind: "stage",
+    videoKey: "railEtapa3Intro",
   },
   {
     id: "rail-etapa-4",
