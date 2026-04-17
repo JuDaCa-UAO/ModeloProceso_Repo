@@ -41,11 +41,10 @@ export default async function StagePage({ params }: Props) {
 
   if (!meta) notFound();
 
-  let tree;
   try {
     const repo = new StaticStageContentRepository();
     const useCase = new GetStageContentUseCase(repo);
-    tree = useCase.execute(stageId);
+    useCase.execute(stageId);
   } catch {
     notFound();
   }
@@ -54,15 +53,14 @@ export default async function StagePage({ params }: Props) {
     <StageClient
       stageId={stageId}
       stageName={meta.name}
-      initialTree={tree}
     />
   );
 }
 
 // ─── Pre-renderizado estático de etapas disponibles ──────────────────────────────
+// Derivado del registro canónico: al agregar una etapa en StaticStageContentRepository
+// y en STAGE_META, automáticamente se incluye en el build estático sin tocar este archivo.
 export function generateStaticParams() {
-  return [
-    { stageId: "etapa-1" },
-    // Agregar más a medida que se implemente el contenido
-  ];
+  const repo = new StaticStageContentRepository();
+  return repo.listStageIds().map((stageId) => ({ stageId }));
 }

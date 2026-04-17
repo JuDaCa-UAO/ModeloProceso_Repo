@@ -1,19 +1,6 @@
-/**
- * Domain + shared types for the Stage system.
- *
- * RULE: This file must NOT import React or any framework.
- * It describes the data shapes used across all layers.
- * React-specific types (ReactNode, etc.) belong in components/stage/types.ts.
- */
-
-export type StageFlagKey =
-  | "stage1IntroDialogueCompleted"
-  | "stage1AnimationViewed"
-  | "consentValidated"
-  | "autodiagnosticStarted"
-  | "autodiagnosticCompleted"
-  | "intentionSaved"
-  | "transitionAnimationViewed";
+import type { StageFlagKey } from "@domain/stage/value-objects/StageFlagKey";
+import type { VideoRegistryKey } from "@/content/shared/video-registry";
+export type { StageFlagKey };
 
 export type DialogueStepConfig = {
   text: string;
@@ -27,6 +14,7 @@ export type RailPanel = {
   lines: [string, string];
   kind?: "intro" | "stage";
   label?: string;
+  videoKey?: VideoRegistryKey;
 };
 
 export type StateCardItem = {
@@ -94,9 +82,4 @@ export type SectionNode = {
   dialogueOptional?: boolean;
 };
 
-/**
- * RenderContext has been moved to components/stage/types.ts
- * because it depends on ReactNode (a presentation concern).
- * @deprecated Import from @/components/stage/types instead.
- */
-export type RenderContext = Record<string, never>;
+

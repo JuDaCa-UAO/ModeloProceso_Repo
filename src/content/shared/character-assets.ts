@@ -12,8 +12,8 @@
 export const LAIA_ASSETS = {
   neutral: "/ui/laia.png",
   explain: "/ui/laia_explaining.png",
-  holo: "/ui/laia_explaining_holo.png",
-  triumphant: "/ui/laia_triumphant.png",
+  holo: "/ui/Laia_explaining_holo.png",
+  triumphant: "/ui/Laia_triumphant.png",
   confused: "/ui/laia_confused.png",
 } as const;
 

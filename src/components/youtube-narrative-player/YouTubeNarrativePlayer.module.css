@@ -1,0 +1,42 @@
+/* ─── YouTubeNarrativePlayer — wrapper y controles ──────────────────────── */
+
+/**
+ * El wrapper ocupa todo el ancho disponible con proporción 16:9.
+ * El componente padre puede pasar `className` con `min-height` adicional
+ * para garantizar altura mínima en viewports pequeños.
+ */
+.wrapper {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: #000;
+  border-radius: 4px;
+  overflow: hidden;
+}
+
+/* Div destino de la IFrame API — ocupa todo el wrapper */
+.player {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+}
+
+/* El iframe inyectado por la API */
+.player iframe {
+  width: 100%;
+  height: 100%;
+  border: none;
+  display: block;
+  pointer-events: none;
+}
+
+/* Overlay transparente — se sitúa encima del iframe e intercepta
+   todos los clics antes de que lleguen al reproductor, impidiendo
+   que el usuario pause o reanude el video. */
+.overlay {
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background: transparent;
+}

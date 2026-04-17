@@ -50,8 +50,8 @@ function ButtonUI({
 }
 
 export default function ActionButtons() {
-  const { progress, ready } = useProgress();
-  const showContinue = ready && progress.hasStarted;
+  const { progress } = useProgress();
+  const showContinue = progress.hasStarted;
 
   return (
     <div className={styles.buttonsCol}>
@@ -60,11 +60,11 @@ export default function ActionButtons() {
           label="Continuar"
           variant="secondary"
           as="link"
-          href={progress.lastRoute || "/etapa/etapa-1"}
+          href={progress.lastRoute || "/etapa/etapa-0"}
         />
       )}
 
-      <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapa/etapa-1" />
+      <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapa/etapa-0" />
 
       <ButtonUI label="Etapas" variant="secondary" as="link" href="/etapas" />
 

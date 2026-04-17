@@ -14,6 +14,8 @@
 "use client";
 
 import Link from "next/link";
+import { useVolume } from "@/context/VolumeContext";
+import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
 import styles from "./PauseMenu.module.css";
 
 interface PauseMenuProps {
@@ -22,6 +24,8 @@ interface PauseMenuProps {
 }
 
 export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
+  const { volume, setVolume } = useVolume();
+
   return (
     <>
       {/* Botón hamburguesa — siempre visible arriba izquierda */}
@@ -48,9 +52,30 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
           >
             <p className={styles.panelTitle}>Menú</p>
 
+            <div className={styles.volumeControl}>
+              <div className={styles.volumeHeader}>
+                <span className={styles.volumeLabel}>Volumen</span>
+                <span className={styles.volumeLabel}>{Math.round(volume * 100)}%</span>
+              </div>
+              <div className={styles.volumeRow}>
+                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} />
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={volume}
+                  onChange={(e) => setVolume(parseFloat(e.target.value))}
+                  className={styles.volumeSlider}
+                  aria-label="Control de volumen"
+                />
+                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} />
+              </div>
+            </div>
+
             <nav className={styles.menuList}>
               <Link href="/inicio" className={styles.menuItem}>
-                Salir
+                Volver al menú principal
               </Link>
             </nav>
           </div>

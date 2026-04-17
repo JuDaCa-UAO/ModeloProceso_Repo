@@ -2,7 +2,7 @@
 
 .container {
   position: fixed;
-  bottom: 1.5rem;
+  bottom: 6.5rem; /* encima del botón Laia: button(60px) + offset(28px) + gap(16px) ≈ 104px */
   right: 1.5rem;
   z-index: 200;
   display: flex;

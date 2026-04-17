@@ -21,10 +21,10 @@ import { LAIA_ASSETS } from "@/content/shared/character-assets";
 
 // ─── Constantes exportadas para uso en StageShell y StageClient ───────────────
 
-export const STAGE1_ID = "etapa-1";
-export const STAGE1_NAME = "Reconócete para avanzar";
+const STAGE1_ID = "etapa-1";
+const STAGE1_NAME = "Reconócete para avanzar";
 
-export const ALL_STAGE_NAMES = [
+const ALL_STAGE_NAMES = [
   "Reconócete para avanzar",
   "Descubre nuevas posibilidades",
   "Diseña con propósito",

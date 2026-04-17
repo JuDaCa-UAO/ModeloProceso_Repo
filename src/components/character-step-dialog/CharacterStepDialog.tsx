@@ -2,6 +2,8 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath, HiOutlinePause } from "react-icons/hi2";
+import { useVolume } from "@/context/VolumeContext";
 import styles from "./CharacterStepDialog.module.css";
 
 /** Memoizado para evitar re-render del avatar en cada tick del typewriter. */
@@ -40,6 +42,7 @@ export type CharacterDialogStep = {
   text: string;
   imgSrc: string;
   imgAlt?: string;
+  audioSrc?: string;
 };
 
 type CharacterStepDialogProps = {
@@ -52,6 +55,7 @@ type CharacterStepDialogProps = {
   /** Muestra el botón de reproducir audio. Default: true. Audio pendiente de implementar. */
   showAudioButton?: boolean;
   onComplete?: (isComplete: true) => void;
+  onStepChange?: (index: number) => void;
 };
 
 const DEFAULT_CHARACTER_NAME = "Laia";
@@ -68,7 +72,9 @@ export default function CharacterStepDialog({
   density = "standard",
   showAudioButton = true,
   onComplete,
+  onStepChange,
 }: CharacterStepDialogProps) {
+  const { volume } = useVolume();
   const safeSteps = useMemo(
     () => steps.filter((step) => step.text.trim() && step.imgSrc.trim()),
     [steps]
@@ -76,7 +82,44 @@ export default function CharacterStepDialog({
   const [idx, setIdx] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
   const [erroredStepKey, setErroredStepKey] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const shellRef = useRef<HTMLDivElement | null>(null);
   const completionSent = useRef(false);
+  const typingAudioRef = useRef<HTMLAudioElement | null>(null);
+  const voiceAudioRef = useRef<HTMLAudioElement | null>(null);
+  const [isVoicePlaying, setIsVoicePlaying] = useState(false);
+  const fadeOutIntervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (shellRef.current) {
+      observer.observe(shellRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
+
+  useEffect(() => {
+    typingAudioRef.current = new Audio("/audio/tecleo.ogg");
+    typingAudioRef.current.loop = true;
+    voiceAudioRef.current = new Audio();
+    
+    return () => {
+      typingAudioRef.current?.pause();
+      voiceAudioRef.current?.pause();
+      if (fadeOutIntervalRef.current) {
+        window.clearInterval(fadeOutIntervalRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     completionSent.current = false;
@@ -93,7 +136,7 @@ export default function CharacterStepDialog({
     step && erroredStepKey === stepKey ? DEFAULT_CHARACTER_IMAGE : step?.imgSrc ?? DEFAULT_CHARACTER_IMAGE;
 
   useEffect(() => {
-    if (!step || !step.text.length || !isTyping) return;
+    if (!step || !step.text.length || !isTyping || !isVisible) return;
 
     const timerId = window.setInterval(() => {
       setTypedChars((current) => {
@@ -103,7 +146,86 @@ export default function CharacterStepDialog({
     }, TYPEWRITER_MS);
 
     return () => window.clearInterval(timerId);
-  }, [isTyping, step, step?.text]);
+  }, [isTyping, step, step?.text, isVisible, isVoicePlaying]);
+
+  useEffect(() => {
+    const audio = typingAudioRef.current;
+    if (!audio) return;
+
+    if (isTyping && isVisible && !isVoicePlaying) {
+      // Cancelar fade-out si estaba en progreso
+      if (fadeOutIntervalRef.current) {
+        window.clearInterval(fadeOutIntervalRef.current);
+        fadeOutIntervalRef.current = null;
+      }
+      audio.volume = volume;
+      audio.play().catch((e) => console.debug("Typing audio prevented:", e));
+    } else {
+      // Iniciar fade out si está reproduciendo
+      if (audio.paused || fadeOutIntervalRef.current) return;
+
+      const FADE_STEP = 0.05;
+      const FADE_INTERVAL = 30;
+
+      fadeOutIntervalRef.current = window.setInterval(() => {
+        if (audio.volume > FADE_STEP) {
+          audio.volume = Math.max(0, audio.volume - FADE_STEP);
+        } else {
+          audio.volume = 0;
+          audio.pause();
+          audio.currentTime = 0;
+          if (fadeOutIntervalRef.current) {
+            window.clearInterval(fadeOutIntervalRef.current);
+            fadeOutIntervalRef.current = null;
+          }
+        }
+      }, FADE_INTERVAL);
+    }
+  }, [isTyping, volume, isVisible, isVoicePlaying]);
+
+  const playClickSound = useCallback(() => {
+    try {
+      const audio = new Audio("/audio/button.ogg");
+      audio.volume = volume;
+      audio.play().catch((e) => {
+        // Ignorar el error si el navegador bloquea la reproducción automática
+        console.debug("Audio play prevented:", e);
+      });
+    } catch (e) {
+      // Ignorar si Audio no está disponible
+    }
+  }, [volume]);
+
+  // Detiene el audio de voz de forma segura
+  const stopVoiceAudio = useCallback(() => {
+    if (voiceAudioRef.current) {
+      voiceAudioRef.current.pause();
+      voiceAudioRef.current.currentTime = 0;
+    }
+    setIsVoicePlaying(false);
+  }, []);
+
+  const toggleVoiceAudio = useCallback(() => {
+    if (!step?.audioSrc || !voiceAudioRef.current) return;
+
+    if (isVoicePlaying) {
+      stopVoiceAudio();
+    } else {
+      // Cargar y reproducir el nuevo audio
+      voiceAudioRef.current.src = step.audioSrc;
+      voiceAudioRef.current.volume = volume;
+      voiceAudioRef.current.play().then(() => {
+        setIsVoicePlaying(true);
+      }).catch((e) => {
+        console.debug("Voice audio prevented:", e);
+        setIsVoicePlaying(false);
+      });
+      
+      voiceAudioRef.current.onended = () => {
+        setIsVoicePlaying(false);
+      };
+    }
+  }, [step?.audioSrc, isVoicePlaying, volume, stopVoiceAudio]);
 
   const goNext = useCallback(() => {
     if (!step) return;
@@ -112,6 +234,9 @@ export default function CharacterStepDialog({
       setTypedChars(step.text.length);
       return;
     }
+
+    stopVoiceAudio();
+    playClickSound();
 
     if (!isLast) {
       setIdx((current) => Math.min(current + 1, safeSteps.length - 1));
@@ -124,24 +249,33 @@ export default function CharacterStepDialog({
   const goPrevious = useCallback(() => {
     if (!step) return;
     if (idx <= 0) return;
-    setIdx((current) => Math.max(current - 1, 0));
+    stopVoiceAudio();
+    playClickSound();
+    const prevIdx = idx - 1;
+    setIdx(prevIdx);
     setTypedChars(0);
     setErroredStepKey(null);
-  }, [idx, step]);
+    onStepChange?.(prevIdx);
+  }, [idx, step, playClickSound, stopVoiceAudio, onStepChange]);
 
   const completeDialog = useCallback(() => {
     if (!completionSent.current) {
+      stopVoiceAudio();
+      playClickSound();
       completionSent.current = true;
       onComplete?.(true);
     }
-  }, [onComplete]);
+  }, [onComplete, playClickSound, stopVoiceAudio]);
 
   const restartDialog = useCallback(() => {
+    stopVoiceAudio();
+    playClickSound();
     setIdx(0);
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
-  }, []);
+    onStepChange?.(0);
+  }, [playClickSound, stopVoiceAudio, onStepChange]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -184,11 +318,10 @@ export default function CharacterStepDialog({
 
   return (
     <div
-      className={`${styles.shell} ${
-        size === "compact" ? styles.compact : ""
-      } ${styles.modelCenter} ${
-        density === "tight" ? styles.tight : ""
-      } ${className ?? ""}`.trim()}
+      ref={shellRef}
+      className={`${styles.shell} ${size === "compact" ? styles.compact : ""
+        } ${styles.modelCenter} ${density === "tight" ? styles.tight : ""
+        } ${className ?? ""}`.trim()}
     >
       <CharacterAvatar
         src={resolvedImgSrc}
@@ -210,12 +343,12 @@ export default function CharacterStepDialog({
                 <button
                   type="button"
                   className={styles.audioBtn}
-                  aria-label="Reproducir audio"
-                  disabled
-                  tabIndex={-1}
-                  title="Audio próximamente"
+                  aria-label={isVoicePlaying ? "Pausar audio" : "Reproducir audio"}
+                  onClick={toggleVoiceAudio}
+                  disabled={!step.audioSrc}
+                  title={step.audioSrc ? (isVoicePlaying ? "Pausar narración" : "Escuchar narración") : "Audio próximamente"}
                 >
-                  &#128266;
+                  {isVoicePlaying ? <HiOutlinePause /> : <HiOutlineSpeakerWave />}
                 </button>
               ) : null}
               <button
@@ -226,7 +359,7 @@ export default function CharacterStepDialog({
                 aria-label="Anterior"
                 title="Anterior (flecha izquierda)"
               >
-                <span className={styles.arrow}>&larr;</span>
+                <span className={styles.arrow}><HiChevronLeft size={20} /></span>
               </button>
             </div>
 
@@ -241,14 +374,14 @@ export default function CharacterStepDialog({
                   className={styles.secondaryBtn}
                   onClick={restartDialog}
                 >
-                  Repetir
+                  <HiOutlineArrowPath size={16} /> Repetir
                 </button>
                 <button
                   type="button"
                   className={styles.nextBtn}
                   onClick={completeDialog}
                 >
-                  Continuar <span className={styles.arrow}>&rarr;</span>
+                  Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
                 </button>
               </div>
             ) : (
@@ -258,7 +391,7 @@ export default function CharacterStepDialog({
                 onClick={goNext}
                 title="Siguiente (flecha derecha)"
               >
-                {nextLabel} <span className={styles.arrow}>&rarr;</span>
+                {nextLabel} <span className={styles.arrow}><HiChevronRight size={18} /></span>
               </button>
             )}
           </div>

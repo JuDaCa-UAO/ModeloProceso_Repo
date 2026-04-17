@@ -125,3 +125,76 @@
 .menuItem:active {
   transform: translateY(0);
 }
+
+/* ─── Controles de Audio ─────────────────────────────────────────────────── */
+
+.volumeControl {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  margin-bottom: 8px;
+}
+
+.volumeHeader {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.volumeLabel {
+  font-size: 12px;
+  font-weight: 600;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: rgba(255, 230, 231, 0.7);
+}
+
+.volumeRow {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.volumeIcon {
+  color: rgba(254, 106, 111, 0.8);
+}
+
+.volumeSlider {
+  -webkit-appearance: none;
+  flex: 1;
+  height: 6px;
+  background: rgba(80, 6, 8, 0.5);
+  border-radius: 4px;
+  outline: none;
+  border: 1px solid rgba(248, 46, 53, 0.3);
+}
+
+.volumeSlider::-webkit-slider-thumb {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 230, 231, 0.95);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(248, 46, 53, 0.6);
+  transition: transform 0.1s;
+}
+
+.volumeSlider::-moz-range-thumb {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  background: rgba(255, 230, 231, 0.95);
+  cursor: pointer;
+  box-shadow: 0 0 10px rgba(248, 46, 53, 0.6);
+  border: none;
+}
+
+.volumeSlider::-webkit-slider-thumb:hover {
+  transform: scale(1.2);
+}
+
+.volumeSlider::-moz-range-thumb:hover {
+  transform: scale(1.2);
+}
