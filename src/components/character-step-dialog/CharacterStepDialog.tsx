@@ -2,6 +2,7 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
+import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath } from "react-icons/hi2";
 import styles from "./CharacterStepDialog.module.css";
 
 /** Memoizado para evitar re-render del avatar en cada tick del typewriter. */
@@ -105,6 +106,19 @@ export default function CharacterStepDialog({
     return () => window.clearInterval(timerId);
   }, [isTyping, step, step?.text]);
 
+  const playClickSound = useCallback(() => {
+    try {
+      const audio = new Audio("/audio/button.ogg");
+      audio.volume = 0.5;
+      audio.play().catch((e) => {
+        // Ignorar el error si el navegador bloquea la reproducción automática
+        console.debug("Audio play prevented:", e);
+      });
+    } catch (e) {
+      // Ignorar si Audio no está disponible
+    }
+  }, []);
+
   const goNext = useCallback(() => {
     if (!step) return;
 
@@ -112,6 +126,8 @@ export default function CharacterStepDialog({
       setTypedChars(step.text.length);
       return;
     }
+
+    playClickSound();
 
     if (!isLast) {
       setIdx((current) => Math.min(current + 1, safeSteps.length - 1));
@@ -124,24 +140,27 @@ export default function CharacterStepDialog({
   const goPrevious = useCallback(() => {
     if (!step) return;
     if (idx <= 0) return;
+    playClickSound();
     setIdx((current) => Math.max(current - 1, 0));
     setTypedChars(0);
     setErroredStepKey(null);
-  }, [idx, step]);
+  }, [idx, step, playClickSound]);
 
   const completeDialog = useCallback(() => {
     if (!completionSent.current) {
+      playClickSound();
       completionSent.current = true;
       onComplete?.(true);
     }
-  }, [onComplete]);
+  }, [onComplete, playClickSound]);
 
   const restartDialog = useCallback(() => {
+    playClickSound();
     setIdx(0);
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
-  }, []);
+  }, [playClickSound]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {
@@ -184,11 +203,9 @@ export default function CharacterStepDialog({
 
   return (
     <div
-      className={`${styles.shell} ${
-        size === "compact" ? styles.compact : ""
-      } ${styles.modelCenter} ${
-        density === "tight" ? styles.tight : ""
-      } ${className ?? ""}`.trim()}
+      className={`${styles.shell} ${size === "compact" ? styles.compact : ""
+        } ${styles.modelCenter} ${density === "tight" ? styles.tight : ""
+        } ${className ?? ""}`.trim()}
     >
       <CharacterAvatar
         src={resolvedImgSrc}
@@ -215,7 +232,7 @@ export default function CharacterStepDialog({
                   tabIndex={-1}
                   title="Audio próximamente"
                 >
-                  &#128266;
+                  <HiOutlineSpeakerWave />
                 </button>
               ) : null}
               <button
@@ -226,7 +243,7 @@ export default function CharacterStepDialog({
                 aria-label="Anterior"
                 title="Anterior (flecha izquierda)"
               >
-                <span className={styles.arrow}>&larr;</span>
+                <span className={styles.arrow}><HiChevronLeft size={20} /></span>
               </button>
             </div>
 
@@ -241,14 +258,14 @@ export default function CharacterStepDialog({
                   className={styles.secondaryBtn}
                   onClick={restartDialog}
                 >
-                  Repetir
+                  <HiOutlineArrowPath size={16} /> Repetir
                 </button>
                 <button
                   type="button"
                   className={styles.nextBtn}
                   onClick={completeDialog}
                 >
-                  Continuar <span className={styles.arrow}>&rarr;</span>
+                  Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
                 </button>
               </div>
             ) : (
@@ -258,7 +275,7 @@ export default function CharacterStepDialog({
                 onClick={goNext}
                 title="Siguiente (flecha derecha)"
               >
-                {nextLabel} <span className={styles.arrow}>&rarr;</span>
+                {nextLabel} <span className={styles.arrow}><HiChevronRight size={18} /></span>
               </button>
             )}
           </div>
