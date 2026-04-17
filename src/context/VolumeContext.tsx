@@ -5,6 +5,8 @@ import React, { createContext, useContext, useState, useEffect } from "react";
 interface VolumeContextType {
   volume: number;
   setVolume: (volume: number) => void;
+  isVideoPlaying: boolean;
+  setIsVideoPlaying: (playing: boolean) => void;
 }
 
 const VolumeContext = createContext<VolumeContextType | undefined>(undefined);
@@ -12,6 +14,7 @@ const VolumeContext = createContext<VolumeContextType | undefined>(undefined);
 export function VolumeProvider({ children }: { children: React.ReactNode }) {
   // Inicializamos el volumen global, puede ser 0.5 por defecto
   const [volume, setVolumeState] = useState(0.5);
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   useEffect(() => {
     // Al cargar el cliente, recuperar de localStorage si existe
@@ -31,7 +34,7 @@ export function VolumeProvider({ children }: { children: React.ReactNode }) {
   };
 
   return (
-    <VolumeContext.Provider value={{ volume, setVolume }}>
+    <VolumeContext.Provider value={{ volume, setVolume, isVideoPlaying, setIsVideoPlaying }}>
       {children}
     </VolumeContext.Provider>
   );

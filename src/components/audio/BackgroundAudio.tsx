@@ -8,7 +8,7 @@ interface BackgroundAudioProps {
 }
 
 export default function BackgroundAudio({ src }: BackgroundAudioProps) {
-  const { volume } = useVolume();
+  const { volume, isVideoPlaying } = useVolume();
   const audioRef = useRef<HTMLAudioElement | null>(null);
 
   useEffect(() => {
@@ -21,6 +21,16 @@ export default function BackgroundAudio({ src }: BackgroundAudioProps) {
       audioRef.current.volume = volume * BACKGROUND_MULTIPLIER;
     }
   }, [volume]);
+
+  useEffect(() => {
+    if (audioRef.current) {
+      if (isVideoPlaying) {
+        audioRef.current.pause();
+      } else {
+        audioRef.current.play().catch(e => console.debug("Background audio prevented:", e));
+      }
+    }
+  }, [isVideoPlaying]);
 
   return (
     <audio

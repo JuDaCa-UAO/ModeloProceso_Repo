@@ -1,6 +1,7 @@
 "use client";
 
 import { useEffect, useRef } from "react";
+import { useVolume } from "@/context/VolumeContext";
 import styles from "./YouTubeNarrativePlayer.module.css";
 
 // ─── Minimal YouTube IFrame API type declarations ─────────────────────────────
@@ -85,6 +86,7 @@ export default function YouTubeNarrativePlayer({
   onEnded,
   className,
 }: YouTubeNarrativePlayerProps) {
+  const { setIsVideoPlaying } = useVolume();
   const containerRef = useRef<HTMLDivElement>(null);
   const playerRef = useRef<YTPlayer | null>(null);
 
@@ -112,6 +114,12 @@ export default function YouTubeNarrativePlayer({
         },
         events: {
           onStateChange: (event) => {
+            if (event.data === 1) { // PLAYING
+              setIsVideoPlaying(true);
+            } else if (event.data === 0 || event.data === 2) { // ENDED or PAUSED
+              setIsVideoPlaying(false);
+            }
+            
             if (event.data === 0) {
               onEndedRef.current?.();
             }
@@ -124,6 +132,7 @@ export default function YouTubeNarrativePlayer({
 
     return () => {
       destroyed = true;
+      setIsVideoPlaying(false);
       playerRef.current?.destroy();
       playerRef.current = null;
     };
