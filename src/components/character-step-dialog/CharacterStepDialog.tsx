@@ -79,9 +79,28 @@ export default function CharacterStepDialog({
   const [idx, setIdx] = useState(0);
   const [typedChars, setTypedChars] = useState(0);
   const [erroredStepKey, setErroredStepKey] = useState<string | null>(null);
+  const [isVisible, setIsVisible] = useState(false);
+  const shellRef = useRef<HTMLDivElement | null>(null);
   const completionSent = useRef(false);
   const typingAudioRef = useRef<HTMLAudioElement | null>(null);
   const fadeOutIntervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          setIsVisible(true);
+        }
+      },
+      { threshold: 0.3 }
+    );
+
+    if (shellRef.current) {
+      observer.observe(shellRef.current);
+    }
+
+    return () => observer.disconnect();
+  }, []);
 
   useEffect(() => {
     typingAudioRef.current = new Audio("/audio/tecleo.ogg");
@@ -109,7 +128,7 @@ export default function CharacterStepDialog({
     step && erroredStepKey === stepKey ? DEFAULT_CHARACTER_IMAGE : step?.imgSrc ?? DEFAULT_CHARACTER_IMAGE;
 
   useEffect(() => {
-    if (!step || !step.text.length || !isTyping) return;
+    if (!step || !step.text.length || !isTyping || !isVisible) return;
 
     const timerId = window.setInterval(() => {
       setTypedChars((current) => {
@@ -119,13 +138,13 @@ export default function CharacterStepDialog({
     }, TYPEWRITER_MS);
 
     return () => window.clearInterval(timerId);
-  }, [isTyping, step, step?.text]);
+  }, [isTyping, step, step?.text, isVisible]);
 
   useEffect(() => {
     const audio = typingAudioRef.current;
     if (!audio) return;
 
-    if (isTyping) {
+    if (isTyping && isVisible) {
       // Cancelar fade-out si estaba en progreso
       if (fadeOutIntervalRef.current) {
         window.clearInterval(fadeOutIntervalRef.current);
@@ -154,7 +173,7 @@ export default function CharacterStepDialog({
         }
       }, FADE_INTERVAL);
     }
-  }, [isTyping, volume]);
+  }, [isTyping, volume, isVisible]);
 
   const playClickSound = useCallback(() => {
     try {
@@ -253,6 +272,7 @@ export default function CharacterStepDialog({
 
   return (
     <div
+      ref={shellRef}
       className={`${styles.shell} ${size === "compact" ? styles.compact : ""
         } ${styles.modelCenter} ${density === "tight" ? styles.tight : ""
         } ${className ?? ""}`.trim()}
