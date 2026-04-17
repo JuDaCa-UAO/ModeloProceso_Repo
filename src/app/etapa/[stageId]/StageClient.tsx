@@ -385,7 +385,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
   return (
     <div className={styles.root}>
-      {(stageId === "etapa-1" || stageId === "etapa-2") && (
+      {(stageId === "etapa-0" || stageId === "etapa-1") && (
         <BackgroundAudio src="/audio/fondo.ogg" />
       )}
       <TechTrailBackground className={styles.background} />
