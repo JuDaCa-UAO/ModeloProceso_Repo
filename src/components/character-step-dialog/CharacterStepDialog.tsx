@@ -136,10 +136,6 @@ export default function CharacterStepDialog({
   useEffect(() => {
     if (!step || !step.text.length || !isTyping || !isVisible) return;
 
-    // Si el usuario presionó reproducir voz, cancelamos el sonido de tecleo.
-    // El texto se seguirá generando en silencio.
-    if (isVoicePlaying) return;
-
     const timerId = window.setInterval(() => {
       setTypedChars((current) => {
         const next = current + 1;

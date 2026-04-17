@@ -303,7 +303,7 @@
   min-width: 44px;
   font-size: 18px;
   line-height: 1;
-  cursor: not-allowed;
+  cursor: pointer;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
   display: inline-flex;
   align-items: center;
@@ -320,6 +320,7 @@
 
 .audioBtn:disabled {
   opacity: 0.5;
+  cursor: not-allowed;
 }
 
 .arrow {

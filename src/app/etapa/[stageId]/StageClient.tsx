@@ -192,9 +192,9 @@ const F4_LAIA_STEPS: CharacterDialogStep[] = [
 
 const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
-    text: "\u201cOh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.\u201d",
+    text: "Oh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.",
     imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4.ogg",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-1.ogg",
   },
 ];
 
@@ -202,6 +202,7 @@ const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
   {
     text: "\u00a1Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
     imgSrc: "/ui/laia_explaining.png",
+    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-2.ogg",
   },
 ];
 
@@ -408,29 +409,29 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       {/* ═══ FRAMES 1-4: Solo en etapa-0 ══════════════════════ */}
       {isEtapa0 ? (
         <>
-      {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════ */}
-      <Frame
-        id="frame-intro"
-        sectionTitle="Sección 1: Bienvenido a esta iteración"
-        backgroundImage="/ui/backgroundUAO.png"
-        overlay="rgba(4, 2, 3, 0.45)"
-        hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
-      >
-        <CharacterStepDialog
-          steps={LAIA_INTRO_STEPS}
-          characterName="Laia"
-          nextLabel="Siguiente"
-          onComplete={() => {
-            completeFrame(1);
-            if (!notifiedFrames.current.has(1)) {
-              notifiedFrames.current.add(1);
-              pushToast("\u00a1Proceso guardado!");
-            }
-          }}
-        />
-      </Frame>
+          {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════ */}
+          <Frame
+            id="frame-intro"
+            sectionTitle="Sección 1: Bienvenido a esta iteración"
+            backgroundImage="/ui/backgroundUAO.png"
+            overlay="rgba(4, 2, 3, 0.45)"
+            hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
+          >
+            <CharacterStepDialog
+              steps={LAIA_INTRO_STEPS}
+              characterName="Laia"
+              nextLabel="Siguiente"
+              onComplete={() => {
+                completeFrame(1);
+                if (!notifiedFrames.current.has(1)) {
+                  notifiedFrames.current.add(1);
+                  pushToast("\u00a1Proceso guardado!");
+                }
+              }}
+            />
+          </Frame>
 
-      {/*
+          {/*
        * ─────────────────────────────────────────────────────────────────
        * PARA AÑADIR UN FRAME NUEVO:
        *
@@ -444,149 +445,149 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
        * ─────────────────────────────────────────────────────────────────
        */}
 
-      {/* ═══ FRAME 2: Tu lugar en el modelo ════════════════════════════ */}
-      {completedFrames >= 1 ? (
-        <>
-          {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
-          {(isEtapa0 ? f3Phase === "laia-viewer" : true) ? (
-            <MiniSpiralViewer stageLabel={isEtapa0 ? "Etapa actual: Etapa 0" : "Etapa actual: Etapa 1"} stageKey={isEtapa0 ? "etapa-0" : "etapa-1"} />
-          ) : null}
+          {/* ═══ FRAME 2: Tu lugar en el modelo ════════════════════════════ */}
+          {completedFrames >= 1 ? (
+            <>
+              {/* Viewer fijo top-right — aparece en fase B y se mantiene permanente */}
+              {(isEtapa0 ? f3Phase === "laia-viewer" : true) ? (
+                <MiniSpiralViewer stageLabel={isEtapa0 ? "Etapa actual: Etapa 0" : "Etapa actual: Etapa 1"} stageKey={isEtapa0 ? "etapa-0" : "etapa-1"} />
+              ) : null}
 
-          <Frame
-            id="frame-modelo-interactivo"
-            sectionTitle="Sección 2: Tu lugar en el modelo"
-            backgroundImage="/ui/backgroundUAO.png"
-            overlay="rgba(4, 2, 3, 0.45)"
-            hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
-          >
-            {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
-            {f3Phase !== "laia-viewer" ? (
-              <>
-                <div className={styles.modelStageCompact}>
-                  <StageViewer enableRotation />
-                </div>
-                <p className={styles.frameInstructions}>
-                  Puedes interactuar con el modelo usando el scroll para acercarte y
-                  arrastrando con el click presionado para girarlo.
-                </p>
-                {f3Phase === "initial" ? (
-                  <div className={styles.frameActions}>
-                    <button
-                      className={styles.btnVerAnimacion}
-                      onClick={() => setF3Phase("laia-model")}
-                    >
-                      Continuar →
-                    </button>
+              <Frame
+                id="frame-modelo-interactivo"
+                sectionTitle="Sección 2: Tu lugar en el modelo"
+                backgroundImage="/ui/backgroundUAO.png"
+                overlay="rgba(4, 2, 3, 0.45)"
+                hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
+              >
+                {/* Fase A y B: modelo visible solo mientras no estamos en viewer */}
+                {f3Phase !== "laia-viewer" ? (
+                  <>
+                    <div className={styles.modelStageCompact}>
+                      <StageViewer enableRotation />
+                    </div>
+                    <p className={styles.frameInstructions}>
+                      Puedes interactuar con el modelo usando el scroll para acercarte y
+                      arrastrando con el click presionado para girarlo.
+                    </p>
+                    {f3Phase === "initial" ? (
+                      <div className={styles.frameActions}>
+                        <button
+                          className={styles.btnVerAnimacion}
+                          onClick={() => setF3Phase("laia-model")}
+                        >
+                          Continuar →
+                        </button>
+                      </div>
+                    ) : null}
+                  </>
+                ) : null}
+
+                {/* Diálogo de Laia — misma apariencia que Frame 1, empujado al fondo */}
+                {f3Phase !== "initial" ? (
+                  <div className={styles.laiaSlot}>
+                    <CharacterStepDialog
+                      key={f3Phase}
+                      size="compact"
+                      density="tight"
+                      steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
+                      onComplete={
+                        f3Phase === "laia-model"
+                          ? () => setF3Phase("laia-viewer")
+                          : () => {
+                            completeFrame(2);
+                            if (!notifiedFrames.current.has(2)) {
+                              notifiedFrames.current.add(2);
+                              pushToast("\u00a1Proceso guardado!");
+                              pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                            }
+                          }
+                      }
+                    />
                   </div>
                 ) : null}
-              </>
-            ) : null}
+              </Frame>
+            </>
+          ) : null}
 
-            {/* Diálogo de Laia — misma apariencia que Frame 1, empujado al fondo */}
-            {f3Phase !== "initial" ? (
+          {/* ═══ FRAME 3: Familiárizándote con el modelo ══════════════════ */}
+          {completedFrames >= 2 ? (
+            <Frame
+              id="frame-rail"
+              sectionTitle="Sección 3: Familiárizándote con el modelo"
+              backgroundImage="/ui/backgroundUAO.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={completedFrames >= 3 ? <ScrollHint label="¡Continuemos!" /> : null}
+            >
+              <HorizontalScrollRail panels={STAGE_RAIL_CARDS} />
+
+              {/* Diálogo de Laia — empujado al fondo del frame */}
               <div className={styles.laiaSlot}>
                 <CharacterStepDialog
-                  key={f3Phase}
                   size="compact"
                   density="tight"
-                  steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
-                  onComplete={
-                    f3Phase === "laia-model"
-                      ? () => setF3Phase("laia-viewer")
-                      : () => {
-                          completeFrame(2);
-                          if (!notifiedFrames.current.has(2)) {
-                            notifiedFrames.current.add(2);
-                            pushToast("\u00a1Proceso guardado!");
-                            pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
-                          }
-                        }
-                  }
+                  steps={F4_LAIA_STEPS}
+                  onComplete={() => {
+                    completeFrame(3);
+                    if (!notifiedFrames.current.has(3)) {
+                      notifiedFrames.current.add(3);
+                      pushToast("\u00a1Proceso guardado!");
+                    }
+                  }}
                 />
               </div>
-            ) : null}
-          </Frame>
-        </>
-      ) : null}
-
-      {/* ═══ FRAME 3: Familiárizándote con el modelo ══════════════════ */}
-      {completedFrames >= 2 ? (
-        <Frame
-          id="frame-rail"
-          sectionTitle="Sección 3: Familiárizándote con el modelo"
-          backgroundImage="/ui/backgroundUAO.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 3 ? <ScrollHint label="¡Continuemos!" /> : null}
-        >
-          <HorizontalScrollRail panels={STAGE_RAIL_CARDS} />
-
-          {/* Diálogo de Laia — empujado al fondo del frame */}
-          <div className={styles.laiaSlot}>
-            <CharacterStepDialog
-              size="compact"
-              density="tight"
-              steps={F4_LAIA_STEPS}
-              onComplete={() => {
-                completeFrame(3);
-                if (!notifiedFrames.current.has(3)) {
-                  notifiedFrames.current.add(3);
-                  pushToast("\u00a1Proceso guardado!");
-                }
-              }}
-            />
-          </div>
-        </Frame>
-      ) : null}
-
-      {/* ═══ FRAME 4: Asistencia guiada ═══════════════════════════════ */}
-      {completedFrames >= 3 ? (
-        <Frame
-          id="frame-asistencia"
-          sectionTitle="Sección 4: Asistencia guiada"
-          backgroundImage="/ui/backgroundUAO.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={null}
-        >
-          {/* Diálogo de Laia — cambia tras usar el chatbot */}
-          <div className={styles.laiaSlot}>
-            {f5Phase !== "after-chat" ? (
-              <CharacterStepDialog
-                size="compact"
-                density="tight"
-                steps={F5_LAIA_STEPS}
-                onComplete={() => setF5Phase("show-button")}
-              />
-            ) : (
-              <CharacterStepDialog
-                key="f5-complete"
-                size="compact"
-                density="tight"
-                steps={F5_LAIA_COMPLETE_STEPS}
-                onComplete={() => {
-                  completeFrame(4);
-                  if (!notifiedFrames.current.has(4)) {
-                    notifiedFrames.current.add(4);
-                    pushToast("\u00a1Proceso guardado!");
-                  }
-                }}
-              />
-            )}
-          </div>
-
-          {/* Botón CTA — visible al completar frame 5 */}
-          {completedFrames >= 4 ? (
-            <div className={styles.f9NextRow}>
-              <a
-                href="/etapa/etapa-1"
-                className={styles.f9NextBtn}
-                aria-label="Ir a la siguiente etapa"
-              >
-                Ir a la siguiente etapa
-              </a>
-            </div>
+            </Frame>
           ) : null}
-        </Frame>
-      ) : null}
+
+          {/* ═══ FRAME 4: Asistencia guiada ═══════════════════════════════ */}
+          {completedFrames >= 3 ? (
+            <Frame
+              id="frame-asistencia"
+              sectionTitle="Sección 4: Asistencia guiada"
+              backgroundImage="/ui/backgroundUAO.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={null}
+            >
+              {/* Diálogo de Laia — cambia tras usar el chatbot */}
+              <div className={styles.laiaSlot}>
+                {f5Phase !== "after-chat" ? (
+                  <CharacterStepDialog
+                    size="compact"
+                    density="tight"
+                    steps={F5_LAIA_STEPS}
+                    onComplete={() => setF5Phase("show-button")}
+                  />
+                ) : (
+                  <CharacterStepDialog
+                    key="f5-complete"
+                    size="compact"
+                    density="tight"
+                    steps={F5_LAIA_COMPLETE_STEPS}
+                    onComplete={() => {
+                      completeFrame(4);
+                      if (!notifiedFrames.current.has(4)) {
+                        notifiedFrames.current.add(4);
+                        pushToast("\u00a1Proceso guardado!");
+                      }
+                    }}
+                  />
+                )}
+              </div>
+
+              {/* Botón CTA — visible al completar frame 5 */}
+              {completedFrames >= 4 ? (
+                <div className={styles.f9NextRow}>
+                  <a
+                    href="/etapa/etapa-1"
+                    className={styles.f9NextBtn}
+                    aria-label="Ir a la siguiente etapa"
+                  >
+                    Ir a la siguiente etapa
+                  </a>
+                </div>
+              ) : null}
+            </Frame>
+          ) : null}
 
         </>
       ) : null}
@@ -597,329 +598,329 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           {/* Viewer fijo top-right — visible en toda la etapa-1 */}
           <MiniSpiralViewer stageLabel="Etapa actual: Etapa 1" stageKey="etapa-1" />
 
-      {/* ═══ FRAME 1 (etapa-1): Interactúa con tu entorno ══════ */}
-      {completedFrames >= 0 ? (
-        <Frame
-          id="frame-modelo"
-          sectionTitle="Sección 1: Reconociendo nuestros pasos"
-          backgroundImage="/ui/backgroundUAO.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
-        >
-          {videoPlaying ? (
-            <YouTubeNarrativePlayer
-              videoId={VIDEO_REGISTRY.introModelo.videoId}
-              startSeconds={VIDEO_REGISTRY.introModelo.startSeconds}
-              autoplay
-              onEnded={handleVideoEnded}
-              className={styles.ytIntro}
-            />
-          ) : (
-            <>
-              <div className={styles.modelStage}>
-                <StageViewer enableRotation />
+          {/* ═══ FRAME 1 (etapa-1): Interactúa con tu entorno ══════ */}
+          {completedFrames >= 0 ? (
+            <Frame
+              id="frame-modelo"
+              sectionTitle="Sección 1: Reconociendo nuestros pasos"
+              backgroundImage="/ui/backgroundUAO.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
+            >
+              {videoPlaying ? (
+                <YouTubeNarrativePlayer
+                  videoId={VIDEO_REGISTRY.introModelo.videoId}
+                  startSeconds={VIDEO_REGISTRY.introModelo.startSeconds}
+                  autoplay
+                  onEnded={handleVideoEnded}
+                  className={styles.ytIntro}
+                />
+              ) : (
+                <>
+                  <div className={styles.modelStage}>
+                    <StageViewer enableRotation />
+                  </div>
+                  <p className={styles.frameInstructions}>
+                    Puedes interactuar con el modelo usando el scroll para acercarte y
+                    arrastrando con el click presionado para girarlo.
+                  </p>
+                  {completedFrames < 1 ? (
+                    <div className={styles.frameActions}>
+                      <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
+                        Ver animación →
+                      </button>
+                    </div>
+                  ) : null}
+                </>
+              )}
+            </Frame>
+          ) : null}
+
+          {/* ═══ FRAME 2 (etapa-1): Condiciones de confianza ════════ */}
+          {completedFrames >= 1 ? (
+            <Frame
+              id="frame-consentimiento"
+              sectionTitle="Sección 2: Condiciones de confianza"
+              backgroundImage="/ui/fondo_biblioteca.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={completedFrames >= 2 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
+            >
+              {/* Formulario de consentimiento */}
+              {completedFrames < 2 ? (
+                <form
+                  className={blockStyles.formCard}
+                  onSubmit={(e) => e.preventDefault()}
+                >
+                  <div className={blockStyles.stageCopy}>
+                    <p>Este ejercicio es individual, objetivo y confidencial.</p>
+                    <p>No tiene efectos administrativos. Su único propósito es orientar el camino formativo.</p>
+                  </div>
+
+                  <label className={blockStyles.checkboxRow}>
+                    <input
+                      type="checkbox"
+                      checked={consentAdmin}
+                      onChange={(e) => setConsentAdmin(e.target.checked)}
+                    />
+                    <span>Entiendo que no es una evaluación administrativa.</span>
+                  </label>
+
+                  <label className={blockStyles.checkboxRow}>
+                    <input
+                      type="checkbox"
+                      checked={consentUsage}
+                      onChange={(e) => setConsentUsage(e.target.checked)}
+                    />
+                    <span>Acepto que mis respuestas se usen para generar mi resultado y recomendaciones.</span>
+                  </label>
+
+                  <label className={blockStyles.fieldLabel} htmlFor="consent-email">
+                    Correo para enviarte el resultado
+                  </label>
+                  <input
+                    id="consent-email"
+                    type="email"
+                    className={blockStyles.textInput}
+                    placeholder="docente@uao.edu.co"
+                    value={consentEmail}
+                    onChange={(e) => setConsentEmail(e.target.value)}
+                    autoComplete="email"
+                  />
+
+                  {consentTouched && !consentValid ? (
+                    <p className={blockStyles.errorText}>
+                      Completa los dos consentimientos e ingresa un correo válido para continuar.
+                    </p>
+                  ) : null}
+
+                  <div className={blockStyles.actionRow}>
+                    <button
+                      type="button"
+                      className={styles.btnVerAnimacion}
+                      onClick={() => {
+                        setConsentTouched(true);
+                        if (!consentValid) return;
+                        completeFrame(2);
+                        if (!notifiedFrames.current.has(2)) {
+                          notifiedFrames.current.add(2);
+                          pushToast("\u00a1Proceso guardado!");
+                        }
+                      }}
+                    >
+                      Iniciar autodiagnóstico →
+                    </button>
+                  </div>
+                </form>
+              ) : (
+                <div className={blockStyles.formCard}>
+                  <div className={blockStyles.stageCopy}>
+                    <p>Ya diste tu consentimiento. El autodiagnóstico está habilitado.</p>
+                  </div>
+                </div>
+              )}
+
+              {/* Diálogo de Laia al fondo */}
+              <div className={styles.laiaSlot}>
+                <CharacterStepDialog
+                  size="compact"
+                  density="tight"
+                  steps={F6_LAIA_STEPS}
+                  showAudioButton={false}
+                />
               </div>
-              <p className={styles.frameInstructions}>
-                Puedes interactuar con el modelo usando el scroll para acercarte y
-                arrastrando con el click presionado para girarlo.
-              </p>
-              {completedFrames < 1 ? (
-                <div className={styles.frameActions}>
-                  <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
+            </Frame>
+          ) : null}
+
+          {/* ═══ FRAME 3 (etapa-1): Estados iniciales ═══════════════ */}
+          {completedFrames >= 2 ? (
+            <Frame
+              id="frame-estados"
+              sectionTitle="Sección 3: Estados iniciales"
+              backgroundImage="/ui/fondo_biblioteca.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
+            >
+              {/* Grid de 3 tarjetas */}
+              <div className={blockStyles.stateGrid}>
+                {ESTADO_CARDS.map((card) => (
+                  <div key={card.label} className={blockStyles.stateCard}>
+                    <span className={blockStyles.stateHierarchy}>{card.label}</span>
+                    <p className={blockStyles.stateTitle}>{card.title}</p>
+                    <p className={blockStyles.stateDesc}>{card.desc}</p>
+                  </div>
+                ))}
+              </div>
+
+              {/* Diálogo de Laia al fondo */}
+              <div className={styles.laiaSlot}>
+                <CharacterStepDialog
+                  size="compact"
+                  density="tight"
+                  steps={F7_LAIA_STEPS}
+                  onComplete={() => {
+                    completeFrame(3);
+                    if (!notifiedFrames.current.has(3)) {
+                      notifiedFrames.current.add(3);
+                      pushToast("¡Proceso guardado!");
+                    }
+                  }}
+                />
+              </div>
+            </Frame>
+          ) : null}
+
+          {/* ═══ FRAME 4 (etapa-1): Autodiagnóstico ═════════════─── */}
+          {completedFrames >= 3 ? (
+            <Frame
+              id="frame-autodiagnostico"
+              sectionTitle="Sección 4: Autodiagnóstico"
+              backgroundImage="/ui/fondo_biblioteca.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
+              style={{ minHeight: 'clamp(460px, 80dvh, 800px)' }}
+            >
+              {/* Iframe embebido con marco futurista */}
+              <div className={styles.embedShell}>
+                {/* Esquinas decorativas */}
+                <span className={styles.embedCornerTL} aria-hidden />
+                <span className={styles.embedCornerTR} aria-hidden />
+                <span className={styles.embedCornerBL} aria-hidden />
+                <span className={styles.embedCornerBR} aria-hidden />
+
+                {/* Barra de cabecera */}
+                <div className={styles.embedHeader}>
+                  <span className={styles.embedHeaderDot} />
+                  <span className={styles.embedHeaderDot} />
+                  <span className={styles.embedHeaderDot} />
+                  <span className={styles.embedHeaderLabel}>AUTODIAGNÓSTICO — ETAPA 1</span>
+                </div>
+
+                {/* El iframe */}
+                <div className={styles.embedViewport}>
+                  <iframe
+                    src={N8N_CONFIG.forms.autodiagnostic || undefined}
+                    title="Autodiagnóstico Etapa 1"
+                    className={styles.embedIframe}
+                    loading="lazy"
+                    sandbox="allow-forms allow-scripts allow-same-origin"
+                  />
+                </div>
+
+                {/* Barra inferior con escanlines decorativos */}
+                <div className={styles.embedFooter}>
+                  <span className={styles.embedFooterStatus}>
+                    {autodiagDone ? "\u2713 Completado" : "Pendiente de respuesta"}
+                  </span>
+                </div>
+              </div>
+
+              {/* Diálogo de Laia — cambia tras completar */}
+              <div className={styles.laiaSlot}>
+                {!autodiagDone ? (
+                  <CharacterStepDialog
+                    size="compact"
+                    density="tight"
+                    steps={F8_LAIA_STEPS_PRE}
+                    onComplete={() => setAutodiagDone(true)}
+                    nextLabel="Autodiagnóstico completado"
+                  />
+                ) : (
+                  <CharacterStepDialog
+                    key="f8-post"
+                    size="compact"
+                    density="tight"
+                    steps={F8_LAIA_STEPS_POST}
+                    onComplete={() => {
+                      completeFrame(4);
+                      if (!notifiedFrames.current.has(4)) {
+                        notifiedFrames.current.add(4);
+                        pushToast("¡Proceso guardado!");
+                      }
+                    }}
+                  />
+                )}
+              </div>
+            </Frame>
+          ) : null}
+
+          {/* ═══ FRAME 5 (etapa-1): Transición ══════════════───── */}
+          {completedFrames >= 4 ? (
+            <Frame
+              id="frame-transicion"
+              sectionTitle="Sección 5: Transición"
+              backgroundImage="/ui/backgroundUAO.png"
+              overlay="rgba(4, 2, 3, 0.45)"
+              hint={null}
+            >
+              {/* ——— Reproductor de video ——— */}
+              {f9VideoPlaying && !f9VideoEnded ? (
+                <YouTubeNarrativePlayer
+                  videoId={VIDEO_REGISTRY.transicionE1aE2.videoId}
+                  startSeconds={VIDEO_REGISTRY.transicionE1aE2.startSeconds}
+                  autoplay
+                  onEnded={() => setF9VideoEnded(true)}
+                  className={styles.ytTransicion}
+                />
+              ) : !f9VideoEnded ? (
+                /* Pantalla inicial: modelo grande + botón ver animación */
+                <div className={styles.f9Splash}>
+                  <div className={styles.f9ModelWrap}>
+                    <StageViewer enableRotation />
+                  </div>
+                  <button
+                    className={styles.btnVerAnimacion}
+                    onClick={() => setF9VideoPlaying(true)}
+                  >
                     Ver animación →
                   </button>
                 </div>
               ) : null}
-            </>
-          )}
-        </Frame>
-      ) : null}
 
-      {/* ═══ FRAME 2 (etapa-1): Condiciones de confianza ════════ */}
-      {completedFrames >= 1 ? (
-        <Frame
-          id="frame-consentimiento"
-          sectionTitle="Sección 2: Condiciones de confianza"
-          backgroundImage="/ui/fondo_biblioteca.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 2 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
-        >
-          {/* Formulario de consentimiento */}
-          {completedFrames < 2 ? (
-            <form
-              className={blockStyles.formCard}
-              onSubmit={(e) => e.preventDefault()}
-            >
-              <div className={blockStyles.stageCopy}>
-                <p>Este ejercicio es individual, objetivo y confidencial.</p>
-                <p>No tiene efectos administrativos. Su único propósito es orientar el camino formativo.</p>
-              </div>
+              {/* ——— Post-video: Laia protagonista + botón siguiente etapa ——— */}
+              {f9VideoEnded ? (
+                <>
+                  {/* Botón repetir — discréto, arriba */}
+                  <div className={styles.f9RepeatRow}>
+                    <button
+                      className={styles.f9RepeatBtn}
+                      onClick={() => { setF9VideoEnded(false); setF9VideoPlaying(true); }}
+                    >
+                      ↺ Repetir animación
+                    </button>
+                  </div>
 
-              <label className={blockStyles.checkboxRow}>
-                <input
-                  type="checkbox"
-                  checked={consentAdmin}
-                  onChange={(e) => setConsentAdmin(e.target.checked)}
-                />
-                <span>Entiendo que no es una evaluación administrativa.</span>
-              </label>
+                  {/* Diálogo de Laia a tamaño protagonista */}
+                  <div className={styles.f9LaiaWrap}>
+                    <CharacterStepDialog
+                      steps={F9_LAIA_STEPS}
+                      size="default"
+                      density="standard"
+                      showAudioButton
+                      onComplete={() => {
+                        completeFrame(5);
+                        if (!notifiedFrames.current.has(5)) {
+                          notifiedFrames.current.add(5);
+                        }
+                      }}
+                    />
+                  </div>
 
-              <label className={blockStyles.checkboxRow}>
-                <input
-                  type="checkbox"
-                  checked={consentUsage}
-                  onChange={(e) => setConsentUsage(e.target.checked)}
-                />
-                <span>Acepto que mis respuestas se usen para generar mi resultado y recomendaciones.</span>
-              </label>
-
-              <label className={blockStyles.fieldLabel} htmlFor="consent-email">
-                Correo para enviarte el resultado
-              </label>
-              <input
-                id="consent-email"
-                type="email"
-                className={blockStyles.textInput}
-                placeholder="docente@uao.edu.co"
-                value={consentEmail}
-                onChange={(e) => setConsentEmail(e.target.value)}
-                autoComplete="email"
-              />
-
-              {consentTouched && !consentValid ? (
-                <p className={blockStyles.errorText}>
-                  Completa los dos consentimientos e ingresa un correo válido para continuar.
-                </p>
+                  {/* Botón ir a Etapa 2 — solo visible tras completar el diálogo */}
+                  {completedFrames >= 5 ? (
+                    <div className={styles.f9NextRow}>
+                      <a
+                        href="/inicio"
+                        className={styles.f9NextBtn}
+                        aria-label="Ir a la siguiente etapa"
+                      >
+                        Ir a la siguiente etapa
+                      </a>
+                    </div>
+                  ) : null}
+                </>
               ) : null}
-
-              <div className={blockStyles.actionRow}>
-                <button
-                  type="button"
-                  className={styles.btnVerAnimacion}
-                  onClick={() => {
-                    setConsentTouched(true);
-                    if (!consentValid) return;
-                    completeFrame(2);
-                    if (!notifiedFrames.current.has(2)) {
-                      notifiedFrames.current.add(2);
-                      pushToast("\u00a1Proceso guardado!");
-                    }
-                  }}
-                >
-                  Iniciar autodiagnóstico →
-                </button>
-              </div>
-            </form>
-          ) : (
-            <div className={blockStyles.formCard}>
-              <div className={blockStyles.stageCopy}>
-                <p>Ya diste tu consentimiento. El autodiagnóstico está habilitado.</p>
-              </div>
-            </div>
-          )}
-
-          {/* Diálogo de Laia al fondo */}
-          <div className={styles.laiaSlot}>
-            <CharacterStepDialog
-              size="compact"
-              density="tight"
-              steps={F6_LAIA_STEPS}
-              showAudioButton={false}
-            />
-          </div>
-        </Frame>
-      ) : null}
-
-      {/* ═══ FRAME 3 (etapa-1): Estados iniciales ═══════════════ */}
-      {completedFrames >= 2 ? (
-        <Frame
-          id="frame-estados"
-          sectionTitle="Sección 3: Estados iniciales"
-          backgroundImage="/ui/fondo_biblioteca.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
-        >
-          {/* Grid de 3 tarjetas */}
-          <div className={blockStyles.stateGrid}>
-            {ESTADO_CARDS.map((card) => (
-              <div key={card.label} className={blockStyles.stateCard}>
-                <span className={blockStyles.stateHierarchy}>{card.label}</span>
-                <p className={blockStyles.stateTitle}>{card.title}</p>
-                <p className={blockStyles.stateDesc}>{card.desc}</p>
-              </div>
-            ))}
-          </div>
-
-          {/* Diálogo de Laia al fondo */}
-          <div className={styles.laiaSlot}>
-            <CharacterStepDialog
-              size="compact"
-              density="tight"
-              steps={F7_LAIA_STEPS}
-              onComplete={() => {
-                completeFrame(3);
-                if (!notifiedFrames.current.has(3)) {
-                  notifiedFrames.current.add(3);
-                  pushToast("¡Proceso guardado!");
-                }
-              }}
-            />
-          </div>
-        </Frame>
-      ) : null}
-
-      {/* ═══ FRAME 4 (etapa-1): Autodiagnóstico ═════════════─── */}
-      {completedFrames >= 3 ? (
-        <Frame
-          id="frame-autodiagnostico"
-          sectionTitle="Sección 4: Autodiagnóstico"
-          backgroundImage="/ui/fondo_biblioteca.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
-          style={{ minHeight: 'clamp(460px, 80dvh, 800px)' }}
-        >
-          {/* Iframe embebido con marco futurista */}
-          <div className={styles.embedShell}>
-            {/* Esquinas decorativas */}
-            <span className={styles.embedCornerTL} aria-hidden />
-            <span className={styles.embedCornerTR} aria-hidden />
-            <span className={styles.embedCornerBL} aria-hidden />
-            <span className={styles.embedCornerBR} aria-hidden />
-
-            {/* Barra de cabecera */}
-            <div className={styles.embedHeader}>
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderLabel}>AUTODIAGNÓSTICO — ETAPA 1</span>
-            </div>
-
-            {/* El iframe */}
-            <div className={styles.embedViewport}>
-              <iframe
-                src={N8N_CONFIG.forms.autodiagnostic || undefined}
-                title="Autodiagnóstico Etapa 1"
-                className={styles.embedIframe}
-                loading="lazy"
-                sandbox="allow-forms allow-scripts allow-same-origin"
-              />
-            </div>
-
-            {/* Barra inferior con escanlines decorativos */}
-            <div className={styles.embedFooter}>
-              <span className={styles.embedFooterStatus}>
-                {autodiagDone ? "\u2713 Completado" : "Pendiente de respuesta"}
-              </span>
-            </div>
-          </div>
-
-          {/* Diálogo de Laia — cambia tras completar */}
-          <div className={styles.laiaSlot}>
-            {!autodiagDone ? (
-              <CharacterStepDialog
-                size="compact"
-                density="tight"
-                steps={F8_LAIA_STEPS_PRE}
-                onComplete={() => setAutodiagDone(true)}
-                nextLabel="Autodiagnóstico completado"
-              />
-            ) : (
-              <CharacterStepDialog
-                key="f8-post"
-                size="compact"
-                density="tight"
-                steps={F8_LAIA_STEPS_POST}
-                onComplete={() => {
-                  completeFrame(4);
-                  if (!notifiedFrames.current.has(4)) {
-                    notifiedFrames.current.add(4);
-                    pushToast("¡Proceso guardado!");
-                  }
-                }}
-              />
-            )}
-          </div>
-        </Frame>
-      ) : null}
-
-      {/* ═══ FRAME 5 (etapa-1): Transición ══════════════───── */}
-      {completedFrames >= 4 ? (
-        <Frame
-          id="frame-transicion"
-          sectionTitle="Sección 5: Transición"
-          backgroundImage="/ui/backgroundUAO.png"
-          overlay="rgba(4, 2, 3, 0.45)"
-          hint={null}
-        >
-          {/* ——— Reproductor de video ——— */}
-          {f9VideoPlaying && !f9VideoEnded ? (
-            <YouTubeNarrativePlayer
-              videoId={VIDEO_REGISTRY.transicionE1aE2.videoId}
-              startSeconds={VIDEO_REGISTRY.transicionE1aE2.startSeconds}
-              autoplay
-              onEnded={() => setF9VideoEnded(true)}
-              className={styles.ytTransicion}
-            />
-          ) : !f9VideoEnded ? (
-            /* Pantalla inicial: modelo grande + botón ver animación */
-            <div className={styles.f9Splash}>
-              <div className={styles.f9ModelWrap}>
-                <StageViewer enableRotation />
-              </div>
-              <button
-                className={styles.btnVerAnimacion}
-                onClick={() => setF9VideoPlaying(true)}
-              >
-                Ver animación →
-              </button>
-            </div>
+            </Frame>
           ) : null}
-
-          {/* ——— Post-video: Laia protagonista + botón siguiente etapa ——— */}
-          {f9VideoEnded ? (
-            <>
-              {/* Botón repetir — discréto, arriba */}
-              <div className={styles.f9RepeatRow}>
-                <button
-                  className={styles.f9RepeatBtn}
-                  onClick={() => { setF9VideoEnded(false); setF9VideoPlaying(true); }}
-                >
-                  ↺ Repetir animación
-                </button>
-              </div>
-
-              {/* Diálogo de Laia a tamaño protagonista */}
-              <div className={styles.f9LaiaWrap}>
-                <CharacterStepDialog
-                  steps={F9_LAIA_STEPS}
-                  size="default"
-                  density="standard"
-                  showAudioButton
-                  onComplete={() => {
-                    completeFrame(5);
-                    if (!notifiedFrames.current.has(5)) {
-                      notifiedFrames.current.add(5);
-                    }
-                  }}
-                />
-              </div>
-
-              {/* Botón ir a Etapa 2 — solo visible tras completar el diálogo */}
-              {completedFrames >= 5 ? (
-                <div className={styles.f9NextRow}>
-                  <a
-                    href="/inicio"
-                    className={styles.f9NextBtn}
-                    aria-label="Ir a la siguiente etapa"
-                  >
-                    Ir a la siguiente etapa
-                  </a>
-                </div>
-              ) : null}
-            </>
-          ) : null}
-        </Frame>
-      ) : null}
 
         </>
       ) : null}
