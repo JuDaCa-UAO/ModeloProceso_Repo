@@ -3,6 +3,7 @@
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
 import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath } from "react-icons/hi2";
+import { useVolume } from "@/context/VolumeContext";
 import styles from "./CharacterStepDialog.module.css";
 
 /** Memoizado para evitar re-render del avatar en cada tick del typewriter. */
@@ -70,6 +71,7 @@ export default function CharacterStepDialog({
   showAudioButton = true,
   onComplete,
 }: CharacterStepDialogProps) {
+  const { volume } = useVolume();
   const safeSteps = useMemo(
     () => steps.filter((step) => step.text.trim() && step.imgSrc.trim()),
     [steps]
@@ -109,7 +111,7 @@ export default function CharacterStepDialog({
   const playClickSound = useCallback(() => {
     try {
       const audio = new Audio("/audio/button.ogg");
-      audio.volume = 0.5;
+      audio.volume = volume;
       audio.play().catch((e) => {
         // Ignorar el error si el navegador bloquea la reproducción automática
         console.debug("Audio play prevented:", e);
@@ -117,7 +119,7 @@ export default function CharacterStepDialog({
     } catch (e) {
       // Ignorar si Audio no está disponible
     }
-  }, []);
+  }, [volume]);
 
   const goNext = useCallback(() => {
     if (!step) return;

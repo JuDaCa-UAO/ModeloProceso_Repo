@@ -1,6 +1,7 @@
 import "./globals.css";
 import type { Metadata } from "next";
 import { Chakra_Petch } from "next/font/google";
+import { VolumeProvider } from "@/context/VolumeContext";
 
 const techFont = Chakra_Petch({
   subsets: ["latin"],
@@ -28,7 +29,9 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Descarga el script de la IFrame API en paralelo con el HTML */}
         <link rel="preload" as="script" href="https://www.youtube.com/iframe_api" />
       </head>
-      <body className={techFont.variable}>{children}</body>
+      <body className={techFont.variable}>
+        <VolumeProvider>{children}</VolumeProvider>
+      </body>
     </html>
   );
 }

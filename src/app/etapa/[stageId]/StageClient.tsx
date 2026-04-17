@@ -29,6 +29,7 @@ import Image from "next/image";
 import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
 import YouTubeNarrativePlayer from "@/components/youtube-narrative-player/YouTubeNarrativePlayer";
 import { VIDEO_REGISTRY } from "@/content/shared/video-registry";
+import BackgroundAudio from "@/components/audio/BackgroundAudio";
 import styles from "./stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
 
@@ -384,6 +385,9 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
   return (
     <div className={styles.root}>
+      {(stageId === "etapa-1" || stageId === "etapa-2") && (
+        <BackgroundAudio src="/audio/fondo.ogg" />
+      )}
       <TechTrailBackground className={styles.background} />
       <PauseMenu open={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
