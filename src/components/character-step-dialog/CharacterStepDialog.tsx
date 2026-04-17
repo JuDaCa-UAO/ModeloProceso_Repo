@@ -80,6 +80,19 @@ export default function CharacterStepDialog({
   const [typedChars, setTypedChars] = useState(0);
   const [erroredStepKey, setErroredStepKey] = useState<string | null>(null);
   const completionSent = useRef(false);
+  const typingAudioRef = useRef<HTMLAudioElement | null>(null);
+  const fadeOutIntervalRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    typingAudioRef.current = new Audio("/audio/tecleo.ogg");
+    typingAudioRef.current.loop = true;
+    return () => {
+      typingAudioRef.current?.pause();
+      if (fadeOutIntervalRef.current) {
+        window.clearInterval(fadeOutIntervalRef.current);
+      }
+    };
+  }, []);
 
   useEffect(() => {
     completionSent.current = false;
@@ -107,6 +120,41 @@ export default function CharacterStepDialog({
 
     return () => window.clearInterval(timerId);
   }, [isTyping, step, step?.text]);
+
+  useEffect(() => {
+    const audio = typingAudioRef.current;
+    if (!audio) return;
+
+    if (isTyping) {
+      // Cancelar fade-out si estaba en progreso
+      if (fadeOutIntervalRef.current) {
+        window.clearInterval(fadeOutIntervalRef.current);
+        fadeOutIntervalRef.current = null;
+      }
+      audio.volume = volume;
+      audio.play().catch((e) => console.debug("Typing audio prevented:", e));
+    } else {
+      // Iniciar fade out si está reproduciendo
+      if (audio.paused || fadeOutIntervalRef.current) return;
+
+      const FADE_STEP = 0.05;
+      const FADE_INTERVAL = 30;
+
+      fadeOutIntervalRef.current = window.setInterval(() => {
+        if (audio.volume > FADE_STEP) {
+          audio.volume = Math.max(0, audio.volume - FADE_STEP);
+        } else {
+          audio.volume = 0;
+          audio.pause();
+          audio.currentTime = 0;
+          if (fadeOutIntervalRef.current) {
+            window.clearInterval(fadeOutIntervalRef.current);
+            fadeOutIntervalRef.current = null;
+          }
+        }
+      }, FADE_INTERVAL);
+    }
+  }, [isTyping, volume]);
 
   const playClickSound = useCallback(() => {
     try {
