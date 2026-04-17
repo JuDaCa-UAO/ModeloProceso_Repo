@@ -56,6 +56,8 @@ type CharacterStepDialogProps = {
   showAudioButton?: boolean;
   onComplete?: (isComplete: true) => void;
   onStepChange?: (index: number) => void;
+  onBeforeNext?: (currentIndex: number) => boolean;
+  disableNext?: boolean;
 };
 
 const DEFAULT_CHARACTER_NAME = "Laia";
@@ -73,6 +75,8 @@ export default function CharacterStepDialog({
   showAudioButton = true,
   onComplete,
   onStepChange,
+  onBeforeNext,
+  disableNext = false,
 }: CharacterStepDialogProps) {
   const { volume } = useVolume();
   const safeSteps = useMemo(
@@ -235,16 +239,22 @@ export default function CharacterStepDialog({
       return;
     }
 
+    if (onBeforeNext && onBeforeNext(idx) === false) {
+      return;
+    }
+
     stopVoiceAudio();
     playClickSound();
 
     if (!isLast) {
-      setIdx((current) => Math.min(current + 1, safeSteps.length - 1));
+      const nextIdx = Math.min(idx + 1, safeSteps.length - 1);
+      setIdx(nextIdx);
       setTypedChars(0);
       setErroredStepKey(null);
+      onStepChange?.(nextIdx);
       return;
     }
-  }, [isLast, isTyping, safeSteps.length, step]);
+  }, [idx, isLast, isTyping, safeSteps.length, step, onStepChange, onBeforeNext, stopVoiceAudio, playClickSound]);
 
   const goPrevious = useCallback(() => {
     if (!step) return;
@@ -380,6 +390,7 @@ export default function CharacterStepDialog({
                   type="button"
                   className={styles.nextBtn}
                   onClick={completeDialog}
+                  disabled={disableNext}
                 >
                   Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
                 </button>
@@ -389,6 +400,7 @@ export default function CharacterStepDialog({
                 type="button"
                 className={styles.nextBtn}
                 onClick={goNext}
+                disabled={disableNext}
                 title="Siguiente (flecha derecha)"
               >
                 {nextLabel} <span className={styles.arrow}><HiChevronRight size={18} /></span>

@@ -546,9 +546,13 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                   size="compact"
                   density="tight"
                   steps={F5_LAIA_STEPS}
-                  onStepChange={(idx) => {
-                    if (idx === 1) setF5Phase("show-button");
-                    else setF5Phase("intro");
+                  disableNext={f5Phase === "show-button"}
+                  onBeforeNext={(idx) => {
+                    if (idx === 0 && f5Phase === "intro") {
+                      setF5Phase("show-button");
+                      return false;
+                    }
+                    return true;
                   }}
                   onComplete={() => {
                     completeFrame(4);
