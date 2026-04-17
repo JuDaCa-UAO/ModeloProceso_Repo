@@ -192,7 +192,7 @@ const F4_LAIA_STEPS: CharacterDialogStep[] = [
 
 const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
-    text: "Oh, \u00a1es verdad! Podr\u00e9 asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicar\u00e9 qu\u00e9 puede hacer, qu\u00e9 no puede hacer y cu\u00e1ndo te puede ayudar.",
+    text: "“Oh, ¡es verdad! Podré asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.”",
     imgSrc: "/ui/Laia_explaining_holo.png",
     audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-1.ogg",
   },
