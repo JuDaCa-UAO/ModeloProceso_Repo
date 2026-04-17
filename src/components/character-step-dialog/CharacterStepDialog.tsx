@@ -55,6 +55,7 @@ type CharacterStepDialogProps = {
   /** Muestra el botón de reproducir audio. Default: true. Audio pendiente de implementar. */
   showAudioButton?: boolean;
   onComplete?: (isComplete: true) => void;
+  onStepChange?: (index: number) => void;
 };
 
 const DEFAULT_CHARACTER_NAME = "Laia";
@@ -71,6 +72,7 @@ export default function CharacterStepDialog({
   density = "standard",
   showAudioButton = true,
   onComplete,
+  onStepChange,
 }: CharacterStepDialogProps) {
   const { volume } = useVolume();
   const safeSteps = useMemo(
@@ -249,10 +251,12 @@ export default function CharacterStepDialog({
     if (idx <= 0) return;
     stopVoiceAudio();
     playClickSound();
-    setIdx((current) => Math.max(current - 1, 0));
+    const prevIdx = idx - 1;
+    setIdx(prevIdx);
     setTypedChars(0);
     setErroredStepKey(null);
-  }, [idx, step, playClickSound, stopVoiceAudio]);
+    onStepChange?.(prevIdx);
+  }, [idx, step, playClickSound, stopVoiceAudio, onStepChange]);
 
   const completeDialog = useCallback(() => {
     if (!completionSent.current) {
@@ -270,7 +274,8 @@ export default function CharacterStepDialog({
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
-  }, [playClickSound, stopVoiceAudio]);
+    onStepChange?.(0);
+  }, [playClickSound, stopVoiceAudio, onStepChange]);
 
   useEffect(() => {
     function onKeyDown(event: KeyboardEvent) {

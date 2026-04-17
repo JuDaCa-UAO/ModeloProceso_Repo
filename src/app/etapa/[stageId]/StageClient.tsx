@@ -93,17 +93,12 @@ const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
 
 // ─── Contenido de CharacterStepDialog — Frame 3 Fase A (modelo visible) ──────────────
 
-const F3_LAIA_STEPS_A: CharacterDialogStep[] = [
+const F3_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
     imgSrc: "/ui/Laia_explaining_holo.png",
     audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-1.ogg",
   },
-];
-
-// ─── Contenido de CharacterStepDialog — Frame 3 Fase B (viewer visible) ──────────────
-
-const F3_LAIA_STEPS_B: CharacterDialogStep[] = [
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
     imgSrc: "/ui/laia_explaining.png",
@@ -197,9 +192,6 @@ const F5_LAIA_STEPS: CharacterDialogStep[] = [
     imgSrc: "/ui/Laia_explaining_holo.png",
     audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-1.ogg",
   },
-];
-
-const F5_LAIA_COMPLETE_STEPS: CharacterDialogStep[] = [
   {
     text: "\u00a1Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
     imgSrc: "/ui/laia_explaining.png",
@@ -248,17 +240,12 @@ const ESTADO_CARDS = [
 ] as const;
 // ─── Diálogo de Laia — Frame 8 ──────────────────────────────────────────────
 
-/** Antes de completar el autodiagnóstico */
-const F8_LAIA_STEPS_PRE: CharacterDialogStep[] = [
+const F8_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "El autodiagnóstico busca reconocer tu nivel actual de conocimiento, experiencia y disposición frente al uso de la GenAI en educación. A partir de tus respuestas, podrás ubicarte en un estado inicial del recorrido y recibir una orientación más pertinente para avanzar.",
     imgSrc: "/ui/laia_explaining.png",
     audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion4-1.ogg",
   },
-];
-
-/** Después de completar el autodiagnóstico */
-const F8_LAIA_STEPS_POST: CharacterDialogStep[] = [
   {
     text: "Tu estado actual será enviado por correo al terminar.",
     imgSrc: "/ui/laia.png",
@@ -493,22 +480,21 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
                 {f3Phase !== "initial" ? (
                   <div className={styles.laiaSlot}>
                     <CharacterStepDialog
-                      key={f3Phase}
                       size="compact"
                       density="tight"
-                      steps={f3Phase === "laia-model" ? F3_LAIA_STEPS_A : F3_LAIA_STEPS_B}
-                      onComplete={
-                        f3Phase === "laia-model"
-                          ? () => setF3Phase("laia-viewer")
-                          : () => {
-                            completeFrame(2);
-                            if (!notifiedFrames.current.has(2)) {
-                              notifiedFrames.current.add(2);
-                              pushToast("\u00a1Proceso guardado!");
-                              pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
-                            }
-                          }
-                      }
+                      steps={F3_LAIA_STEPS}
+                      onStepChange={(idx) => {
+                        if (idx === 1) setF3Phase("laia-viewer");
+                        else setF3Phase("laia-model");
+                      }}
+                      onComplete={() => {
+                        completeFrame(2);
+                        if (!notifiedFrames.current.has(2)) {
+                          notifiedFrames.current.add(2);
+                          pushToast("\u00a1Proceso guardado!");
+                          pushToast("Ahora puedes acceder a cualquier etapa desde el men\u00fa principal");
+                        }
+                      }}
                     />
                   </div>
                 ) : null}
@@ -556,28 +542,22 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             >
               {/* Diálogo de Laia — cambia tras usar el chatbot */}
               <div className={styles.laiaSlot}>
-                {f5Phase !== "after-chat" ? (
-                  <CharacterStepDialog
-                    size="compact"
-                    density="tight"
-                    steps={F5_LAIA_STEPS}
-                    onComplete={() => setF5Phase("show-button")}
-                  />
-                ) : (
-                  <CharacterStepDialog
-                    key="f5-complete"
-                    size="compact"
-                    density="tight"
-                    steps={F5_LAIA_COMPLETE_STEPS}
-                    onComplete={() => {
-                      completeFrame(4);
-                      if (!notifiedFrames.current.has(4)) {
-                        notifiedFrames.current.add(4);
-                        pushToast("\u00a1Proceso guardado!");
-                      }
-                    }}
-                  />
-                )}
+                <CharacterStepDialog
+                  size="compact"
+                  density="tight"
+                  steps={F5_LAIA_STEPS}
+                  onStepChange={(idx) => {
+                    if (idx === 1) setF5Phase("show-button");
+                    else setF5Phase("intro");
+                  }}
+                  onComplete={() => {
+                    completeFrame(4);
+                    if (!notifiedFrames.current.has(4)) {
+                      notifiedFrames.current.add(4);
+                      pushToast("\u00a1Proceso guardado!");
+                    }
+                  }}
+                />
               </div>
 
               {/* Botón CTA — visible al completar frame 5 */}
@@ -821,29 +801,23 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
 
               {/* Diálogo de Laia — cambia tras completar */}
               <div className={styles.laiaSlot}>
-                {!autodiagDone ? (
-                  <CharacterStepDialog
-                    size="compact"
-                    density="tight"
-                    steps={F8_LAIA_STEPS_PRE}
-                    onComplete={() => setAutodiagDone(true)}
-                    nextLabel="Autodiagnóstico completado"
-                  />
-                ) : (
-                  <CharacterStepDialog
-                    key="f8-post"
-                    size="compact"
-                    density="tight"
-                    steps={F8_LAIA_STEPS_POST}
-                    onComplete={() => {
-                      completeFrame(4);
-                      if (!notifiedFrames.current.has(4)) {
-                        notifiedFrames.current.add(4);
-                        pushToast("¡Proceso guardado!");
-                      }
-                    }}
-                  />
-                )}
+                <CharacterStepDialog
+                  size="compact"
+                  density="tight"
+                  steps={F8_LAIA_STEPS}
+                  onStepChange={(idx) => {
+                    if (idx === 1) setAutodiagDone(true);
+                    else setAutodiagDone(false);
+                  }}
+                  onComplete={() => {
+                    completeFrame(4);
+                    if (!notifiedFrames.current.has(4)) {
+                      notifiedFrames.current.add(4);
+                      pushToast("¡Proceso guardado!");
+                    }
+                  }}
+                  nextLabel={!autodiagDone ? "Autodiagnóstico completado" : "Siguiente"}
+                />
               </div>
             </Frame>
           ) : null}
