@@ -71,7 +71,6 @@ function ScrollHint({ label }: { label?: string }) {
       aria-label="Ir al siguiente paso"
     >
       <span className={styles.scrollArrow} aria-hidden>▼</span>
-      {label ? <span className={styles.scrollLabel}>{label}</span> : null}
     </button>
   );
 }
