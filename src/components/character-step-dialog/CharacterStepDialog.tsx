@@ -78,7 +78,7 @@ export default function CharacterStepDialog({
   onBeforeNext,
   disableNext = false,
 }: CharacterStepDialogProps) {
-  const { volume } = useVolume();
+  const { sfxVolume, voiceVolume } = useVolume();
   const safeSteps = useMemo(
     () => steps.filter((step) => step.text.trim() && step.imgSrc.trim()),
     [steps]
@@ -162,7 +162,7 @@ export default function CharacterStepDialog({
         window.clearInterval(fadeOutIntervalRef.current);
         fadeOutIntervalRef.current = null;
       }
-      audio.volume = volume;
+      audio.volume = sfxVolume;
       audio.play().catch((e) => console.debug("Typing audio prevented:", e));
     } else {
       // Iniciar fade out si está reproduciendo
@@ -185,12 +185,12 @@ export default function CharacterStepDialog({
         }
       }, FADE_INTERVAL);
     }
-  }, [isTyping, volume, isVisible, isVoicePlaying]);
+  }, [isTyping, sfxVolume, isVisible, isVoicePlaying]);
 
   const playClickSound = useCallback(() => {
     try {
       const audio = new Audio("/audio/button.ogg");
-      audio.volume = volume;
+      audio.volume = sfxVolume;
       audio.play().catch((e) => {
         // Ignorar el error si el navegador bloquea la reproducción automática
         console.debug("Audio play prevented:", e);
@@ -198,7 +198,7 @@ export default function CharacterStepDialog({
     } catch (e) {
       // Ignorar si Audio no está disponible
     }
-  }, [volume]);
+  }, [sfxVolume]);
 
   // Detiene el audio de voz de forma segura
   const stopVoiceAudio = useCallback(() => {
@@ -217,7 +217,7 @@ export default function CharacterStepDialog({
     } else {
       // Cargar y reproducir el nuevo audio
       voiceAudioRef.current.src = step.audioSrc;
-      voiceAudioRef.current.volume = volume;
+      voiceAudioRef.current.volume = voiceVolume;
       voiceAudioRef.current.play().then(() => {
         setIsVoicePlaying(true);
       }).catch((e) => {
@@ -229,7 +229,7 @@ export default function CharacterStepDialog({
         setIsVoicePlaying(false);
       };
     }
-  }, [step?.audioSrc, isVoicePlaying, volume, stopVoiceAudio]);
+  }, [step?.audioSrc, isVoicePlaying, voiceVolume, stopVoiceAudio]);
 
   const goNext = useCallback(() => {
     if (!step) return;
