@@ -20,6 +20,7 @@ export type StageMeta = {
   href: string;
   /** Indica si el contenido está implementado y publicado */
   available: boolean;
+  shortDescription?: string;
 };
 
 export const STAGE_META: StageMeta[] = [
@@ -28,12 +29,14 @@ export const STAGE_META: StageMeta[] = [
     order: 0,
     href: "/etapa/etapa-0",
     available: true,
+    shortDescription: "Conoce el modelo y a Laia, tu asistente.",
   },
   {    id: "etapa-1",
     name: "Reconócete para avanzar",
     order: 1,
     href: "/etapa/etapa-1",
     available: true,
+    shortDescription: "Identifica tu punto de partida con un autodiagnóstico.",
   },
   {
     id: "etapa-2",
@@ -41,6 +44,7 @@ export const STAGE_META: StageMeta[] = [
     order: 2,
     href: "/etapa/etapa-2",
     available: false,
+    shortDescription: "Explora opciones de GenAI para apoyar tu docencia.",
   },
   {
     id: "etapa-3",
@@ -48,6 +52,7 @@ export const STAGE_META: StageMeta[] = [
     order: 3,
     href: "/etapa/etapa-3",
     available: false,
+    shortDescription: "Transforma lo explorado en una experiencia estructurada.",
   },
   {
     id: "etapa-4",
@@ -55,6 +60,7 @@ export const STAGE_META: StageMeta[] = [
     order: 4,
     href: "/etapa/etapa-4",
     available: false,
+    shortDescription: "Convierte el diseño en condiciones operativas y logísticas.",
   },
   {
     id: "etapa-5",
@@ -62,6 +68,7 @@ export const STAGE_META: StageMeta[] = [
     order: 5,
     href: "/etapa/etapa-5",
     available: false,
+    shortDescription: "Pon en práctica lo diseñado con atención a cada estudiante.",
   },
   {
     id: "etapa-6",
@@ -69,6 +76,7 @@ export const STAGE_META: StageMeta[] = [
     order: 6,
     href: "/etapa/etapa-6",
     available: false,
+    shortDescription: "Analiza resultados, recoge evidencias y ajusta tu práctica.",
   },
 ];
 
