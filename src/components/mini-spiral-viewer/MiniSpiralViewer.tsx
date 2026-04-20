@@ -3,9 +3,10 @@
 import { useEffect, useRef, useState } from "react";
 import { createPortal } from "react-dom";
 import styles from "../stage/StageViewer.module.css";
+import blockStyles from "../stage/blocks/blocks.module.css";
 import { sequenceRegistry, StageKey } from "./sequenceRegistry";
 import { useImageSequence } from "./useImageSequence";
-import { STAGE_META } from "@/content/stages/index";
+import { STAGE_META, STAGE_INFO } from "@/content/stages/index";
 
 type MiniSpiralViewerProps = {
   /** Etiqueta que se muestra debajo del canvas. Ej: "Etapa actual: Etapa 1" */
@@ -163,33 +164,50 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
 
       {panelOpen && typeof document !== "undefined" && createPortal(
         <div className={styles.modalBackdrop} onClick={() => setPanelOpen(false)}>
-          <div className={styles.modalContent} onClick={(e) => e.stopPropagation()}>
+          <div 
+            className={blockStyles.formCard} 
+            style={{ width: '90%', maxWidth: '560px', position: 'relative', cursor: 'default' }}
+            onClick={(e) => e.stopPropagation()}
+          >
             <button className={styles.closeBtn} onClick={() => setPanelOpen(false)} aria-label="Cerrar">✕</button>
-            <h2 className={styles.modalHeader}>Información del recorrido</h2>
-            {STAGE_META.map((stage, i) => {
-              let stateClass = styles.pending;
-              if (i < currentIdx) stateClass = styles.completed;
-              else if (i === currentIdx) stateClass = styles.current;
-              else if (i === currentIdx + 1) stateClass = styles.next;
+            
+            {/* Bloque Principal: Etapa Actual */}
+            <div className={blockStyles.stageCopy} style={{ marginTop: '8px' }}>
+              <span className={blockStyles.stateHierarchy}>Etapa actual</span>
+              <h2 style={{ margin: 0, color: '#fff', fontSize: '24px', letterSpacing: '0.02em' }}>
+                {STAGE_INFO[stageKey]?.title || "Etapa Actual"}
+              </h2>
+              <p style={{ color: '#d1d1d1', fontSize: '15px', lineHeight: '1.5' }}>
+                {STAGE_INFO[stageKey]?.extendedDescription}
+              </p>
+            </div>
 
-              // Mostrar descripciones en modal para current y next, o para todas según preferencia.
-              // Para dar "más información", mostraremos la descripción de la actual y la siguiente.
-              const isImportant = i === currentIdx || i === currentIdx + 1;
+            <div className={blockStyles.bulletBlock} style={{ background: 'rgba(80, 6, 8, 0.15)', padding: '16px', borderRadius: '12px', border: '1px solid rgba(248, 46, 53, 0.15)' }}>
+              <ul className={blockStyles.bulletList}>
+                <li><strong>Propósito:</strong> {STAGE_INFO[stageKey]?.stagePurpose}</li>
+                <li><strong>Foco actual:</strong> {STAGE_INFO[stageKey]?.currentFocus}</li>
+                <li><strong>Meta:</strong> {STAGE_INFO[stageKey]?.completionGoal}</li>
+              </ul>
+            </div>
 
-              return (
-                <div key={stage.id} className={`${styles.panelItem} ${stateClass}`}>
-                  <span className={styles.panelTitle}>
-                    {i < currentIdx && "✓ "} 
-                    {stage.name}
-                    {i === currentIdx && " (Actual)"}
-                    {i === currentIdx + 1 && " (Siguiente)"}
-                  </span>
-                  {isImportant && stage.shortDescription && (
-                    <span className={styles.panelDesc}>{stage.shortDescription}</span>
-                  )}
-                </div>
-              );
-            })}
+            {/* Bloque Secundario: Siguiente Etapa */}
+            {STAGE_INFO[stageKey]?.nextStagePreview ? (
+              <div className={blockStyles.callout} style={{ marginTop: '12px' }}>
+                <span className={blockStyles.stateHierarchy} style={{ background: 'transparent', border: '1px solid rgba(255,255,255,0.2)', color: '#d1d1d1', marginBottom: '8px' }}>
+                  Siguiente etapa
+                </span>
+                <h3 className={blockStyles.calloutTitle}>{STAGE_INFO[stageKey].nextStagePreview!.title}</h3>
+                <p className={blockStyles.calloutBody}>
+                  {STAGE_INFO[stageKey].nextStagePreview!.context} <br/>
+                  <strong>Acción:</strong> {STAGE_INFO[stageKey].nextStagePreview!.userAction}
+                </p>
+              </div>
+            ) : (
+              <div className={blockStyles.callout} style={{ marginTop: '12px', borderColor: 'rgba(255, 255, 255, 0.1)' }}>
+                <h3 className={blockStyles.calloutTitle}>Recorrido completado</h3>
+                <p className={blockStyles.calloutBody}>Has llegado al final del proceso iterativo. Puedes volver a revisar cualquier etapa anterior.</p>
+              </div>
+            )}
           </div>
         </div>,
         document.body
