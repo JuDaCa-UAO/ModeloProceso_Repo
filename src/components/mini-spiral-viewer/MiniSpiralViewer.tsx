@@ -117,7 +117,7 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
         const nextFrameImg = framesRef.current[frameIndexRef.current];
         if (nextFrameImg) {
           drawFrame(ctx, canvas, nextFrameImg);
-          frameIndexRef.current = (frameIndexRef.current + 1) % config.totalFrames;
+          frameIndexRef.current = (frameIndexRef.current - 1 + config.totalFrames) % config.totalFrames;
         }
       }
     };
