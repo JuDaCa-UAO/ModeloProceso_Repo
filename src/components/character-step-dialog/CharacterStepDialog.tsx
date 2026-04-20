@@ -87,6 +87,7 @@ export default function CharacterStepDialog({
   const [typedChars, setTypedChars] = useState(0);
   const [erroredStepKey, setErroredStepKey] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const shellRef = useRef<HTMLDivElement | null>(null);
   const completionSent = useRef(false);
   const typingAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -127,6 +128,7 @@ export default function CharacterStepDialog({
 
   useEffect(() => {
     completionSent.current = false;
+    setIsCompleted(false);
   }, [safeSteps]);
 
   const step = safeSteps[idx] ?? safeSteps[0];
@@ -265,6 +267,7 @@ export default function CharacterStepDialog({
     setIdx(prevIdx);
     setTypedChars(0);
     setErroredStepKey(null);
+    setIsCompleted(false);
     onStepChange?.(prevIdx);
   }, [idx, step, playClickSound, stopVoiceAudio, onStepChange]);
 
@@ -273,6 +276,7 @@ export default function CharacterStepDialog({
       stopVoiceAudio();
       playClickSound();
       completionSent.current = true;
+      setIsCompleted(true);
       onComplete?.(true);
     }
   }, [onComplete, playClickSound, stopVoiceAudio]);
@@ -284,6 +288,7 @@ export default function CharacterStepDialog({
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
+    setIsCompleted(false);
     onStepChange?.(0);
   }, [playClickSound, stopVoiceAudio, onStepChange]);
 
@@ -390,7 +395,7 @@ export default function CharacterStepDialog({
                   type="button"
                   className={styles.nextBtn}
                   onClick={completeDialog}
-                  disabled={disableNext}
+                  disabled={disableNext || isCompleted}
                 >
                   Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
                 </button>
