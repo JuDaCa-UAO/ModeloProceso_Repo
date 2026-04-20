@@ -28,7 +28,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
 
   return (
     <>
-      {/* Botón hamburguesa — siempre visible arriba izquierda */}
+      {/* Botón hamburguesa — siempre visible arriba derecha */}
       <button
         className={styles.triggerBtn}
         onClick={onToggle}

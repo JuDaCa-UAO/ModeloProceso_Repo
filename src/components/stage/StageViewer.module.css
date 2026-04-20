@@ -1,9 +1,9 @@
-/* ─── StageViewer: widget fijo top-right del modelo espiral ─────────────── */
+/* ─── StageViewer: widget fijo top-left del modelo espiral ─────────────── */
 
 .widget {
   position: fixed;
   top: 1.5rem;
-  right: 1.5rem;
+  left: 1.5rem;
   z-index: 100;
   width: clamp(160px, 14vw, 230px);
   display: flex;

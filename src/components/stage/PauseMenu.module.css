@@ -1,11 +1,11 @@
 /* ─── PauseMenu: botón y panel de pausa para las etapas ─────────────────── */
 
-/* ─── Botón trigger — arriba izquierda ──────────────────────────────────── */
+/* ─── Botón trigger — arriba derecha ──────────────────────────────────── */
 
 .triggerBtn {
   position: fixed;
   top: 1.5rem;
-  left: 1.5rem;
+  right: 1.5rem;
   z-index: 300;
   display: flex;
   align-items: center;
