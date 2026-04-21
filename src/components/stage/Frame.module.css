@@ -135,7 +135,7 @@
 
 .hintSlot {
   position: absolute;
-  bottom: -40px; /* overridden inline cuando hintOffset prop está presente */
+  bottom: -24px; /* overridden inline cuando hintOffset prop está presente */
   left: 0;
   right: 0;
   z-index: 10;

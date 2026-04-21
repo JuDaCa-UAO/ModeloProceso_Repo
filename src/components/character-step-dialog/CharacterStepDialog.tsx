@@ -78,7 +78,7 @@ export default function CharacterStepDialog({
   onBeforeNext,
   disableNext = false,
 }: CharacterStepDialogProps) {
-  const { volume } = useVolume();
+  const { sfxVolume, voiceVolume } = useVolume();
   const safeSteps = useMemo(
     () => steps.filter((step) => step.text.trim() && step.imgSrc.trim()),
     [steps]
@@ -87,6 +87,7 @@ export default function CharacterStepDialog({
   const [typedChars, setTypedChars] = useState(0);
   const [erroredStepKey, setErroredStepKey] = useState<string | null>(null);
   const [isVisible, setIsVisible] = useState(false);
+  const [isCompleted, setIsCompleted] = useState(false);
   const shellRef = useRef<HTMLDivElement | null>(null);
   const completionSent = useRef(false);
   const typingAudioRef = useRef<HTMLAudioElement | null>(null);
@@ -127,6 +128,7 @@ export default function CharacterStepDialog({
 
   useEffect(() => {
     completionSent.current = false;
+    setIsCompleted(false);
   }, [safeSteps]);
 
   const step = safeSteps[idx] ?? safeSteps[0];
@@ -162,7 +164,7 @@ export default function CharacterStepDialog({
         window.clearInterval(fadeOutIntervalRef.current);
         fadeOutIntervalRef.current = null;
       }
-      audio.volume = volume;
+      audio.volume = sfxVolume;
       audio.play().catch((e) => console.debug("Typing audio prevented:", e));
     } else {
       // Iniciar fade out si está reproduciendo
@@ -185,12 +187,12 @@ export default function CharacterStepDialog({
         }
       }, FADE_INTERVAL);
     }
-  }, [isTyping, volume, isVisible, isVoicePlaying]);
+  }, [isTyping, sfxVolume, isVisible, isVoicePlaying]);
 
   const playClickSound = useCallback(() => {
     try {
       const audio = new Audio("/audio/button.ogg");
-      audio.volume = volume;
+      audio.volume = sfxVolume;
       audio.play().catch((e) => {
         // Ignorar el error si el navegador bloquea la reproducción automática
         console.debug("Audio play prevented:", e);
@@ -198,7 +200,7 @@ export default function CharacterStepDialog({
     } catch (e) {
       // Ignorar si Audio no está disponible
     }
-  }, [volume]);
+  }, [sfxVolume]);
 
   // Detiene el audio de voz de forma segura
   const stopVoiceAudio = useCallback(() => {
@@ -217,7 +219,7 @@ export default function CharacterStepDialog({
     } else {
       // Cargar y reproducir el nuevo audio
       voiceAudioRef.current.src = step.audioSrc;
-      voiceAudioRef.current.volume = volume;
+      voiceAudioRef.current.volume = voiceVolume;
       voiceAudioRef.current.play().then(() => {
         setIsVoicePlaying(true);
       }).catch((e) => {
@@ -229,7 +231,7 @@ export default function CharacterStepDialog({
         setIsVoicePlaying(false);
       };
     }
-  }, [step?.audioSrc, isVoicePlaying, volume, stopVoiceAudio]);
+  }, [step?.audioSrc, isVoicePlaying, voiceVolume, stopVoiceAudio]);
 
   const goNext = useCallback(() => {
     if (!step) return;
@@ -265,6 +267,7 @@ export default function CharacterStepDialog({
     setIdx(prevIdx);
     setTypedChars(0);
     setErroredStepKey(null);
+    setIsCompleted(false);
     onStepChange?.(prevIdx);
   }, [idx, step, playClickSound, stopVoiceAudio, onStepChange]);
 
@@ -273,6 +276,7 @@ export default function CharacterStepDialog({
       stopVoiceAudio();
       playClickSound();
       completionSent.current = true;
+      setIsCompleted(true);
       onComplete?.(true);
     }
   }, [onComplete, playClickSound, stopVoiceAudio]);
@@ -284,6 +288,7 @@ export default function CharacterStepDialog({
     setTypedChars(0);
     setErroredStepKey(null);
     completionSent.current = false;
+    setIsCompleted(false);
     onStepChange?.(0);
   }, [playClickSound, stopVoiceAudio, onStepChange]);
 
@@ -390,7 +395,7 @@ export default function CharacterStepDialog({
                   type="button"
                   className={styles.nextBtn}
                   onClick={completeDialog}
-                  disabled={disableNext}
+                  disabled={disableNext || isCompleted}
                 >
                   Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
                 </button>

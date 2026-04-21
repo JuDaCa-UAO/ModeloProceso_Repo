@@ -24,11 +24,11 @@ interface PauseMenuProps {
 }
 
 export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
-  const { volume, setVolume } = useVolume();
+  const { musicVolume, setMusicVolume, sfxVolume, setSfxVolume, voiceVolume, setVoiceVolume } = useVolume();
 
   return (
     <>
-      {/* Botón hamburguesa — siempre visible arriba izquierda */}
+      {/* Botón hamburguesa — siempre visible arriba derecha */}
       <button
         className={styles.triggerBtn}
         onClick={onToggle}
@@ -54,8 +54,8 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
 
             <div className={styles.volumeControl}>
               <div className={styles.volumeHeader}>
-                <span className={styles.volumeLabel}>Volumen</span>
-                <span className={styles.volumeLabel}>{Math.round(volume * 100)}%</span>
+                <span className={styles.volumeLabel}>Música</span>
+                <span className={styles.volumeLabel}>{Math.round(musicVolume * 100)}%</span>
               </div>
               <div className={styles.volumeRow}>
                 <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} />
@@ -64,10 +64,48 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   min="0"
                   max="1"
                   step="0.05"
-                  value={volume}
-                  onChange={(e) => setVolume(parseFloat(e.target.value))}
+                  value={musicVolume}
+                  onChange={(e) => setMusicVolume(parseFloat(e.target.value))}
                   className={styles.volumeSlider}
-                  aria-label="Control de volumen"
+                  aria-label="Volumen de música"
+                />
+                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} />
+              </div>
+
+              <div className={styles.volumeHeader} style={{ marginTop: '12px' }}>
+                <span className={styles.volumeLabel}>Efectos</span>
+                <span className={styles.volumeLabel}>{Math.round(sfxVolume * 100)}%</span>
+              </div>
+              <div className={styles.volumeRow}>
+                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} />
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={sfxVolume}
+                  onChange={(e) => setSfxVolume(parseFloat(e.target.value))}
+                  className={styles.volumeSlider}
+                  aria-label="Volumen de efectos"
+                />
+                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} />
+              </div>
+
+              <div className={styles.volumeHeader} style={{ marginTop: '12px' }}>
+                <span className={styles.volumeLabel}>Voz de Laia</span>
+                <span className={styles.volumeLabel}>{Math.round(voiceVolume * 100)}%</span>
+              </div>
+              <div className={styles.volumeRow}>
+                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} />
+                <input
+                  type="range"
+                  min="0"
+                  max="1"
+                  step="0.05"
+                  value={voiceVolume}
+                  onChange={(e) => setVoiceVolume(parseFloat(e.target.value))}
+                  className={styles.volumeSlider}
+                  aria-label="Volumen de voz"
                 />
                 <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} />
               </div>

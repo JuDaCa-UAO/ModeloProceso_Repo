@@ -178,12 +178,17 @@
 }
 
 .scrollLabel {
-  font-size: 11px;
+  font-size: 13px;
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(254, 106, 111, 0.85);
-  text-shadow: 0 1px 6px rgba(0, 0, 0, 0.6);
+  color: #ffffff;
+  background: rgba(8, 4, 5, 0.85);
+  border: 1px solid rgba(248, 46, 53, 0.4);
+  padding: 8px 16px;
+  border-radius: 6px;
+  backdrop-filter: blur(4px);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
 }
 
 @keyframes bounceDown {
