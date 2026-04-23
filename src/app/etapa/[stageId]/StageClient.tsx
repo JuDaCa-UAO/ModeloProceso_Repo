@@ -391,12 +391,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
       <PauseMenu open={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />
       <ToastStack toasts={toasts} onDismiss={dismissToast} />
 
-      {/* Título de etapa — visible encima del primer frame */}
-      <div className={styles.stageHeader}>
-        <h1 className={styles.stageTitle}>
-          {isEtapa0 ? "Etapa 0: Introducción" : "Etapa 1: Recónocete para avanzar"}
-        </h1>
-      </div>
+
 
       {/* ═══ FRAMES 1-4: Solo en etapa-0 ══════════════════════ */}
       {isEtapa0 ? (
@@ -405,6 +400,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
           <Frame
             id="frame-intro"
             sectionTitle="Sección 1: Bienvenido a esta iteración"
+            stageTitle="Introducción: Bienvenido a esta iteración"
             backgroundImage="/ui/backgroundUAO.png"
             overlay="rgba(4, 2, 3, 0.45)"
             hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
@@ -592,6 +588,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
             <Frame
               id="frame-modelo"
               sectionTitle="Sección 1: Reconociendo nuestros pasos"
+              stageTitle="Etapa 1: Reconócete para avanzar"
               backgroundImage="/ui/backgroundUAO.png"
               overlay="rgba(4, 2, 3, 0.45)"
               hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}

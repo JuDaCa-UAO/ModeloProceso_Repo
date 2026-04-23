@@ -61,7 +61,9 @@
 /* ─── Panel ──────────────────────────────────────────────────────────────── */
 
 .panel {
-  width: clamp(240px, 30vw, 360px);
+  width: clamp(260px, 32vw, 400px);
+  max-height: clamp(400px, 80dvh, 700px);
+  overflow-y: auto;
   border-radius: 14px;
   border: 1.5px solid rgba(248, 46, 53, 0.55);
   background: rgba(6, 4, 5, 0.96);
@@ -74,6 +76,8 @@
   display: flex;
   flex-direction: column;
   gap: 24px;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(248, 46, 53, 0.35) transparent;
 }
 
 @keyframes slideUp {
@@ -197,4 +201,106 @@
 
 .volumeSlider::-moz-range-thumb:hover {
   transform: scale(1.2);
+}
+
+/* ─── Sección de Accesibilidad ───────────────────────────────────────────── */
+
+.accessibilitySection {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  padding-top: 8px;
+  border-top: 1px solid rgba(248, 46, 53, 0.25);
+}
+
+.sectionLabel {
+  margin: 0;
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.16em;
+  text-transform: uppercase;
+  color: rgba(255, 230, 231, 0.55);
+  text-align: center;
+}
+
+.scaleControl {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+
+.scaleLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.10em;
+  text-transform: uppercase;
+  color: rgba(255, 230, 231, 0.65);
+}
+
+.scaleRow {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 14px;
+}
+
+.scaleBtn {
+  width: 40px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 8px;
+  border: 1.5px solid rgba(248, 46, 53, 0.45);
+  background: rgba(80, 6, 8, 0.28);
+  color: rgba(255, 230, 231, 0.92);
+  font-size: 14px;
+  font-weight: 700;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s, transform 0.10s, opacity 0.15s;
+}
+
+.scaleBtn:hover:not(:disabled) {
+  background: rgba(158, 11, 15, 0.42);
+  border-color: rgba(254, 106, 111, 0.75);
+  transform: scale(1.08);
+}
+
+.scaleBtn:active:not(:disabled) {
+  transform: scale(0.95);
+}
+
+.scaleBtn:disabled {
+  opacity: 0.30;
+  cursor: not-allowed;
+}
+
+.scaleValue {
+  min-width: 48px;
+  text-align: center;
+  font-size: 15px;
+  font-weight: 700;
+  letter-spacing: 0.05em;
+  color: rgba(254, 106, 111, 0.95);
+  font-variant-numeric: tabular-nums;
+}
+
+.resetBtn {
+  align-self: center;
+  padding: 8px 20px;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 255, 255, 0.20);
+  background: transparent;
+  color: rgba(255, 255, 255, 0.55);
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  cursor: pointer;
+  transition: color 0.15s, border-color 0.15s;
+}
+
+.resetBtn:hover {
+  color: rgba(254, 106, 111, 0.90);
+  border-color: rgba(254, 106, 111, 0.50);
 }

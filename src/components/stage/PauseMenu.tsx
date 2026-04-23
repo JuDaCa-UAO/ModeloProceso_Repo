@@ -5,6 +5,8 @@
  * en la esquina superior izquierda de las etapas.
  *
  * Funcionalidades actuales:
+ *   - Controles de volumen (música, efectos, voz)
+ *   - Controles de accesibilidad (tamaño de texto, escala de interfaz)
  *   - Salir → redirige a /inicio
  *
  * El botón de apertura se renderiza siempre (outside del overlay).
@@ -15,6 +17,7 @@
 
 import Link from "next/link";
 import { useVolume } from "@/context/VolumeContext";
+import { useAccessibility, SCALE_MIN, SCALE_MAX, SCALE_STEP } from "@/context/AccessibilityContext";
 import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
 import styles from "./PauseMenu.module.css";
 
@@ -25,6 +28,7 @@ interface PauseMenuProps {
 
 export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
   const { musicVolume, setMusicVolume, sfxVolume, setSfxVolume, voiceVolume, setVoiceVolume } = useVolume();
+  const { textScale, setTextScale, uiScale, setUiScale, resetAccessibility } = useAccessibility();
 
   return (
     <>
@@ -52,6 +56,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
           >
             <p className={styles.panelTitle}>Menú</p>
 
+            {/* ── Audio controls ─────────────────────────── */}
             <div className={styles.volumeControl}>
               <div className={styles.volumeHeader}>
                 <span className={styles.volumeLabel}>Música</span>
@@ -109,6 +114,70 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                 />
                 <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} />
               </div>
+            </div>
+
+            {/* ── Accessibility controls ─────────────────── */}
+            <div className={styles.accessibilitySection}>
+              <p className={styles.sectionLabel}>Accesibilidad</p>
+
+              {/* Text scale */}
+              <div className={styles.scaleControl}>
+                <span className={styles.scaleLabel}>Tamaño de texto</span>
+                <div className={styles.scaleRow}>
+                  <button
+                    className={styles.scaleBtn}
+                    onClick={() => setTextScale(textScale - SCALE_STEP)}
+                    disabled={textScale <= SCALE_MIN}
+                    aria-label="Reducir tamaño de texto"
+                  >
+                    A−
+                  </button>
+                  <span className={styles.scaleValue}>{Math.round(textScale * 100)}%</span>
+                  <button
+                    className={styles.scaleBtn}
+                    onClick={() => setTextScale(textScale + SCALE_STEP)}
+                    disabled={textScale >= SCALE_MAX}
+                    aria-label="Aumentar tamaño de texto"
+                  >
+                    A+
+                  </button>
+                </div>
+              </div>
+
+              {/* UI scale */}
+              <div className={styles.scaleControl}>
+                <span className={styles.scaleLabel}>Escala de interfaz</span>
+                <div className={styles.scaleRow}>
+                  <button
+                    className={styles.scaleBtn}
+                    onClick={() => setUiScale(uiScale - SCALE_STEP)}
+                    disabled={uiScale <= SCALE_MIN}
+                    aria-label="Reducir escala de interfaz"
+                  >
+                    −
+                  </button>
+                  <span className={styles.scaleValue}>{Math.round(uiScale * 100)}%</span>
+                  <button
+                    className={styles.scaleBtn}
+                    onClick={() => setUiScale(uiScale + SCALE_STEP)}
+                    disabled={uiScale >= SCALE_MAX}
+                    aria-label="Aumentar escala de interfaz"
+                  >
+                    +
+                  </button>
+                </div>
+              </div>
+
+              {/* Reset button */}
+              {(textScale !== 1.0 || uiScale !== 1.0) ? (
+                <button
+                  className={styles.resetBtn}
+                  onClick={resetAccessibility}
+                  aria-label="Restablecer configuración de accesibilidad"
+                >
+                  Restablecer
+                </button>
+              ) : null}
             </div>
 
             <nav className={styles.menuList}>
