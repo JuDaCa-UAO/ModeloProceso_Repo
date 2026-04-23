@@ -17,7 +17,7 @@
 
 import Link from "next/link";
 import { useVolume } from "@/context/VolumeContext";
-import { useAccessibility, SCALE_MIN, SCALE_MAX, SCALE_STEP } from "@/context/AccessibilityContext";
+import { useAccessibility, SCALE_MIN, TEXT_SCALE_MAX, UI_SCALE_MAX, SCALE_STEP } from "@/context/AccessibilityContext";
 import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
 import styles from "./PauseMenu.module.css";
 
@@ -136,7 +136,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   <button
                     className={styles.scaleBtn}
                     onClick={() => setTextScale(textScale + SCALE_STEP)}
-                    disabled={textScale >= SCALE_MAX}
+                    disabled={textScale >= TEXT_SCALE_MAX}
                     aria-label="Aumentar tamaño de texto"
                   >
                     A+
@@ -160,7 +160,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   <button
                     className={styles.scaleBtn}
                     onClick={() => setUiScale(uiScale + SCALE_STEP)}
-                    disabled={uiScale >= SCALE_MAX}
+                    disabled={uiScale >= UI_SCALE_MAX}
                     aria-label="Aumentar escala de interfaz"
                   >
                     +

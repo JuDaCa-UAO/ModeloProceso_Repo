@@ -23,6 +23,5 @@ body {
 body {
   margin: 0;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
-  font-size: calc(1rem * var(--text-scale));
   background-color: #050304;
 }

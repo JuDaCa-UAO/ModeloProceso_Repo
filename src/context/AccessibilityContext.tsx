@@ -13,13 +13,18 @@ interface AccessibilityContextType {
 const AccessibilityContext = createContext<AccessibilityContextType | undefined>(undefined);
 
 const SCALE_MIN = 0.8;
-const SCALE_MAX = 1.5;
+const TEXT_SCALE_MAX = 1.1;
+const UI_SCALE_MAX = 1.1;
 const SCALE_STEP = 0.1;
 const DEFAULT_TEXT_SCALE = 1.0;
 const DEFAULT_UI_SCALE = 1.0;
 
-function clampScale(value: number): number {
-  return Math.round(Math.max(SCALE_MIN, Math.min(SCALE_MAX, value)) * 10) / 10;
+function clampTextScale(value: number): number {
+  return Math.round(Math.max(SCALE_MIN, Math.min(TEXT_SCALE_MAX, value)) * 10) / 10;
+}
+
+function clampUiScale(value: number): number {
+  return Math.round(Math.max(SCALE_MIN, Math.min(UI_SCALE_MAX, value)) * 10) / 10;
 }
 
 /**
@@ -42,8 +47,8 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
       const savedText = localStorage.getItem("app-text-scale");
       const savedUi = localStorage.getItem("app-ui-scale");
 
-      const tScale = savedText !== null ? clampScale(parseFloat(savedText)) : DEFAULT_TEXT_SCALE;
-      const uScale = savedUi !== null ? clampScale(parseFloat(savedUi)) : DEFAULT_UI_SCALE;
+      const tScale = savedText !== null ? clampTextScale(parseFloat(savedText)) : DEFAULT_TEXT_SCALE;
+      const uScale = savedUi !== null ? clampUiScale(parseFloat(savedUi)) : DEFAULT_UI_SCALE;
 
       setTextScaleState(tScale);
       setUiScaleState(uScale);
@@ -54,14 +59,14 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   }, []);
 
   const setTextScale = useCallback((newScale: number) => {
-    const clamped = clampScale(newScale);
+    const clamped = clampTextScale(newScale);
     setTextScaleState(clamped);
     localStorage.setItem("app-text-scale", clamped.toString());
     applyCSSVars(clamped, uiScale);
   }, [uiScale]);
 
   const setUiScale = useCallback((newScale: number) => {
-    const clamped = clampScale(newScale);
+    const clamped = clampUiScale(newScale);
     setUiScaleState(clamped);
     localStorage.setItem("app-ui-scale", clamped.toString());
     applyCSSVars(textScale, clamped);
@@ -92,4 +97,4 @@ export function useAccessibility() {
   return context;
 }
 
-export { SCALE_MIN, SCALE_MAX, SCALE_STEP };
+export { SCALE_MIN, TEXT_SCALE_MAX, UI_SCALE_MAX, SCALE_STEP };

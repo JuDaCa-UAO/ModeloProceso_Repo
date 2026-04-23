@@ -1,9 +1,12 @@
-/* ─── Frame: panel de contenido (~65 vw) sobre el fondo de etapa ─────────── */
+/* ─── Frame: panel de contenido sobre el fondo de etapa ──────────────────── */
 
 .frame {
   position: relative;
-  width: clamp(480px, 88vw, 1400px);
-  min-height: clamp(420px, 82dvh, 860px);
+  /* Base dimensions — scalable via --ui-scale from AccessibilityContext */
+  --frame-base-w: clamp(480px, 80vw, 1300px);
+  --frame-base-h: clamp(420px, 78dvh, 800px);
+  width: calc(var(--frame-base-w) * var(--ui-scale, 1));
+  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1));
   display: flex;
   flex-direction: column;
   /* overflow visible so the hint slot can extend below the frame border */
@@ -114,10 +117,13 @@
   width: 100%;
   max-width: 1360px;
   margin-inline: auto;
-  padding: calc(clamp(24px, 4dvh, 48px) * var(--ui-scale, 1)) calc(clamp(16px, 3vw, 48px) * var(--ui-scale, 1));
+  padding: clamp(24px, 4dvh, 48px) clamp(16px, 3vw, 48px);
   /* give extra top room for the section title */
-  padding-top: calc(clamp(64px, 8dvh, 88px) * var(--ui-scale, 1));
-  gap: calc(12px * var(--ui-scale, 1));
+  padding-top: clamp(64px, 8dvh, 88px);
+  gap: 12px;
+  /* Text accessibility — zoom scales all px-based content proportionally
+     without breaking layout. The frame expands via min-height to accommodate. */
+  zoom: var(--text-scale, 1);
 }
 
 /* ─── Bottom bar slot: barra que sobresale por debajo del borde del frame ── */
