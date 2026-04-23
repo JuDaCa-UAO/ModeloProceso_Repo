@@ -1,9 +1,13 @@
-/* ─── Frame: panel de contenido (~65 vw) sobre el fondo de etapa ─────────── */
+/* ─── Frame: panel de contenido sobre el fondo de etapa ──────────────────── */
 
 .frame {
   position: relative;
-  width: clamp(480px, 65vw, 1000px);
-  min-height: clamp(420px, 72dvh, 700px);
+  /* Base dimensions — scalable via --ui-scale and --text-scale from AccessibilityContext */
+  --frame-base-w: clamp(480px, 80vw, 1300px);
+  --frame-base-h: clamp(420px, 78dvh, 800px);
+  width: calc(var(--frame-base-w) * var(--ui-scale, 1));
+  /* Both scales affect height so the frame always contains its zoomed content */
+  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1) * var(--text-scale, 1));
   display: flex;
   flex-direction: column;
   /* overflow visible so the hint slot can extend below the frame border */
@@ -112,11 +116,15 @@
   display: flex;
   flex-direction: column;
   width: 100%;
-  max-width: 1280px;
+  max-width: 1360px;
   margin-inline: auto;
   padding: clamp(24px, 4dvh, 48px) clamp(16px, 3vw, 48px);
   /* give extra top room for the section title */
   padding-top: clamp(64px, 8dvh, 88px);
+  gap: 12px;
+  /* Text accessibility — zoom scales all px-based content proportionally
+     without breaking layout. The frame expands via min-height to accommodate. */
+  zoom: var(--text-scale, 1);
 }
 
 /* ─── Bottom bar slot: barra que sobresale por debajo del borde del frame ── */
@@ -159,3 +167,36 @@
   justify-content: flex-end;
 }
 
+/* ─── Stage title bar: pegado encima del borde superior del frame ─────────── */
+
+.stageTitleBar {
+  position: absolute;
+  /* Sube el título por encima del borde del frame */
+  top: -2.8rem;
+  left: 0;
+  right: 0;
+  z-index: 4;
+  display: flex;
+  justify-content: center;
+  align-items: flex-end;
+  pointer-events: none;
+}
+
+.stageTitleText {
+  margin: 0;
+  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-size: clamp(0.85rem, 1.8vw, 1.55rem);
+  font-weight: 700;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: rgba(254, 106, 111, 0.95);
+  text-shadow:
+    0 0 18px rgba(248, 46, 53, 0.5),
+    0 0 40px rgba(248, 46, 53, 0.2);
+  text-align: center;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  max-width: 100%;
+  padding: 0 1rem;
+}

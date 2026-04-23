@@ -33,6 +33,11 @@ export type FrameProps = {
   children: ReactNode;
   /** Título del frame — aparece en la esquina superior izquierda con estilo bracket. */
   sectionTitle?: string;
+  /**
+   * Título de etapa — se renderiza pegado encima del borde superior del frame.
+   * Ideal para el título principal de la etapa, siempre visible al centrar el frame.
+   */
+  stageTitle?: string;
   /** CSS background (color, gradiente, etc.). Se ignora si backgroundImage está presente. */
   background?: string;
   /**
@@ -73,6 +78,7 @@ export type FrameProps = {
 export default function Frame({
   children,
   sectionTitle,
+  stageTitle,
   background,
   backgroundImage,
   overlay,
@@ -97,6 +103,12 @@ export default function Frame({
       className={`${styles.frame} ${className ?? ""}`.trim()}
       style={{ ...style, background: backgroundImage ? undefined : background }}
     >
+      {/* Stage title — pegado encima del borde superior del frame */}
+      {stageTitle ? (
+        <div className={styles.stageTitleBar} aria-label={stageTitle}>
+          <h1 className={styles.stageTitleText}>{stageTitle}</h1>
+        </div>
+      ) : null}
       {/* Background image layer */}
       {backgroundImage ? (
         <div
