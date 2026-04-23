@@ -14,7 +14,7 @@ const AccessibilityContext = createContext<AccessibilityContextType | undefined>
 
 const SCALE_MIN = 0.8;
 const TEXT_SCALE_MAX = 1.1;
-const UI_SCALE_MAX = 1.1;
+const UI_SCALE_MAX = 1.0;
 const SCALE_STEP = 0.1;
 const DEFAULT_TEXT_SCALE = 1.0;
 const DEFAULT_UI_SCALE = 1.0;

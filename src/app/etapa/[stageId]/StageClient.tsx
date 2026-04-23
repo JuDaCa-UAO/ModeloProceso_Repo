@@ -762,7 +762,6 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               backgroundImage="/ui/fondo_biblioteca.png"
               overlay="rgba(4, 2, 3, 0.45)"
               hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
-              style={{ minHeight: 'clamp(460px, 80dvh, 800px)' }}
             >
               {/* Iframe embebido con marco futurista */}
               <div className={styles.embedShell}>

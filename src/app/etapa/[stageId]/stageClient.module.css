@@ -93,10 +93,10 @@
   text-transform: uppercase;
 }
 
-/* Viewport del iframe */
+/* Viewport del iframe — reducida para que siempre haya espacio para Laia */
 .embedViewport {
   width: 100%;
-  height: clamp(220px, 42dvh, 480px);
+  height: clamp(200px, 36dvh, 400px);
   overflow: hidden;
   /* Fondo blanco para que el form de n8n no muestre transparencia */
   background: #fff;
@@ -199,7 +199,7 @@
 /* Versión compacta para frames donde el modelo convive con el diálogo de Laia */
 .modelStageCompact {
   width: 100%;
-  height: clamp(180px, 32dvh, 300px);
+  height: clamp(160px, 28dvh, 260px);
   border-radius: 10px;
   background: rgba(2, 1, 2, 0.80);
   border: 1px solid rgba(254, 106, 111, 0.14);

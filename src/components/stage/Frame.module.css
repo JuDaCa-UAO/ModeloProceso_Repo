@@ -2,11 +2,12 @@
 
 .frame {
   position: relative;
-  /* Base dimensions — scalable via --ui-scale from AccessibilityContext */
+  /* Base dimensions — scalable via --ui-scale and --text-scale from AccessibilityContext */
   --frame-base-w: clamp(480px, 80vw, 1300px);
   --frame-base-h: clamp(420px, 78dvh, 800px);
   width: calc(var(--frame-base-w) * var(--ui-scale, 1));
-  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1));
+  /* Both scales affect height so the frame always contains its zoomed content */
+  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1) * var(--text-scale, 1));
   display: flex;
   flex-direction: column;
   /* overflow visible so the hint slot can extend below the frame border */
