@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment } from "@react-three/drei";
+import { OrbitControls, Environment, Lightformer } from "@react-three/drei";
 import SpiralModel from "./SpiralModel";
 import styles from "./InteractiveSpiral.module.css";
 
@@ -25,8 +25,14 @@ export default function InteractiveSpiral() {
           autoRotateSpeed={0.5}
         />
         
-        {/* Entorno HDRI para que los materiales metálicos se vean bien */}
-        <Environment preset="city" />
+        {/* Entorno HDRI sintético para que los materiales metálicos se vean bien sin hacer descargas externas */}
+        <Environment resolution={256}>
+          <group rotation={[Math.PI / 2, 0, 0]}>
+            <Lightformer form="ring" intensity={1} color="white" position={[0, 0, -10]} scale={[20, 20, 1]} />
+          </group>
+          <Lightformer form="rect" intensity={0.5} color="white" position={[-10, 0, 10]} scale={[20, 20, 1]} />
+          <Lightformer form="rect" intensity={0.5} color="white" position={[10, 0, 10]} scale={[20, 20, 1]} />
+        </Environment>
 
         <Suspense fallback={null}>
           <SpiralModel />
