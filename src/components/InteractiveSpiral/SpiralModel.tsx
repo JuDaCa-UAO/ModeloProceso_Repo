@@ -1,7 +1,7 @@
 "use client";
 
 import React, { useState, useRef } from "react";
-import { useGLTF, Html } from "@react-three/drei";
+import { useGLTF, Html, Center } from "@react-three/drei";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
 import { STAGE_META, StageMeta } from "@/content/stages";
@@ -110,58 +110,60 @@ export default function SpiralModel(props: any) {
   const inactivaMaterial = materials.Etapa_Inactiva;
 
   return (
-    <group {...props} dispose={null}>
-      {/* Estructura central de la espiral */}
-      <mesh 
-        geometry={nodes.Spiral002.geometry} 
-        material={spiralMaterial} 
-        position={[-0.437, 0.827, 44.286]} 
-      />
-      
-      {/* Orbes mapeados a las etapas de la 1 a la 6 */}
-      <Orb
-        geometry={nodes.Cube_E1001.geometry}
-        position={[8.455, 0.89, 43.561]}
-        scale={1.3}
-        stageIndex={1}
-        defaultMaterial={inactivaMaterial}
-      />
-      <Orb
-        geometry={nodes.Cube_E1002.geometry}
-        position={[-10.93, 4.349, 43.561]}
-        scale={1.3}
-        stageIndex={2}
-        defaultMaterial={inactivaMaterial}
-      />
-      <Orb
-        geometry={nodes.Cube_E3001.geometry}
-        position={[-0.503, 6.408, 55.74]}
-        scale={1.3}
-        stageIndex={3}
-        defaultMaterial={inactivaMaterial}
-      />
-      <Orb
-        geometry={nodes.Cube_E4001.geometry}
-        position={[3.275, 9.688, 31.997]}
-        scale={1.3}
-        stageIndex={4}
-        defaultMaterial={inactivaMaterial}
-      />
-      <Orb
-        geometry={nodes.Cube_E5001.geometry}
-        position={[-12.233, 12.511, 52.109]}
-        scale={1.3}
-        stageIndex={5}
-        defaultMaterial={inactivaMaterial}
-      />
-      <Orb
-        geometry={nodes.Cube_E6001.geometry}
-        position={[14.599, 15.712, 40.562]}
-        scale={1.3}
-        stageIndex={6}
-        defaultMaterial={inactivaMaterial}
-      />
-    </group>
+    <Center>
+      <group {...props} dispose={null}>
+        {/* Estructura central de la espiral */}
+        <mesh 
+          geometry={nodes.Spiral002.geometry} 
+          material={spiralMaterial} 
+          position={[-0.437, 0.827, 44.286]} 
+        />
+        
+        {/* Orbes mapeados a las etapas de la 1 a la 6 */}
+        <Orb
+          geometry={nodes.Cube_E1001.geometry}
+          position={[8.455, 0.89, 43.561]}
+          scale={1.3}
+          stageIndex={1}
+          defaultMaterial={inactivaMaterial}
+        />
+        <Orb
+          geometry={nodes.Cube_E1002.geometry}
+          position={[-10.93, 4.349, 43.561]}
+          scale={1.3}
+          stageIndex={2}
+          defaultMaterial={inactivaMaterial}
+        />
+        <Orb
+          geometry={nodes.Cube_E3001.geometry}
+          position={[-0.503, 6.408, 55.74]}
+          scale={1.3}
+          stageIndex={3}
+          defaultMaterial={inactivaMaterial}
+        />
+        <Orb
+          geometry={nodes.Cube_E4001.geometry}
+          position={[3.275, 9.688, 31.997]}
+          scale={1.3}
+          stageIndex={4}
+          defaultMaterial={inactivaMaterial}
+        />
+        <Orb
+          geometry={nodes.Cube_E5001.geometry}
+          position={[-12.233, 12.511, 52.109]}
+          scale={1.3}
+          stageIndex={5}
+          defaultMaterial={inactivaMaterial}
+        />
+        <Orb
+          geometry={nodes.Cube_E6001.geometry}
+          position={[14.599, 15.712, 40.562]}
+          scale={1.3}
+          stageIndex={6}
+          defaultMaterial={inactivaMaterial}
+        />
+      </group>
+    </Center>
   );
 }
 

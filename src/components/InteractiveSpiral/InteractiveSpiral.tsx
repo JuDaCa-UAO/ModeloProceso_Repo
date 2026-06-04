@@ -9,7 +9,7 @@ import styles from "./InteractiveSpiral.module.css";
 export default function InteractiveSpiral() {
   return (
     <div className={styles.canvasContainer}>
-      <Canvas camera={{ position: [0, 5, 60], fov: 45 }}>
+      <Canvas camera={{ position: [0, 5, 40], fov: 45 }}>
         {/* Luces base */}
         <ambientLight intensity={0.5} />
         <directionalLight position={[10, 10, 10]} intensity={1} castShadow />
