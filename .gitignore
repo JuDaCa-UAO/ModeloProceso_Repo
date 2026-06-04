@@ -46,3 +46,5 @@ next-env.d.ts
 *.md
 AGENTS_claude_stage1.md
 .env.local
+.agents
+skills-lock.json
