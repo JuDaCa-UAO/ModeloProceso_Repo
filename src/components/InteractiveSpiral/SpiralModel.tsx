@@ -48,7 +48,7 @@ function Orb({
   const materialRef = useRef<THREE.MeshStandardMaterial>(null);
   
   // Obtenemos la etapa correspondiente (el index de stage-1 a stage-6 es de 1 a 6)
-  // STAGE_META tiene index 0 = etapa 0, index 1 = etapa 1, etc.
+  // STAGE_META tiene index 0 = introducción, index 1 = etapa 1, etc.
   const stageData = STAGE_META[stageIndex];
   
   // Si no hay datos, no renderizamos el orbe

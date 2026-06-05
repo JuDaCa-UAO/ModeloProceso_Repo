@@ -1,4 +1,4 @@
-export type StageKey = "etapa-0" | "etapa-1";
+export type StageKey = "introduccion" | "etapa-1";
 
 export interface SequenceConfig {
   basePath: string;
@@ -8,8 +8,8 @@ export interface SequenceConfig {
 }
 
 export const sequenceRegistry: Record<StageKey, SequenceConfig> = {
-  "etapa-0": {
-    basePath: "/spiral-seq/etapa-0",
+  "introduccion": {
+    basePath: "/spiral-seq/introduccion",
     totalFrames: 120,
     fps: 30,
     posterFrame: 1,

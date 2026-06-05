@@ -1,5 +1,5 @@
 /**
- * CONTENT — Etapa 0
+ * CONTENT — Introducción
  *
  * Metadatos y árbol de contenido mínimo para la etapa de introducción.
  * El contenido real de esta etapa está hardcodeado en StageClient
@@ -9,12 +9,12 @@
 
 import type { SectionNode } from "@/types/stage";
 
-export const STAGE0_ID = "etapa-0";
-export const STAGE0_NAME = "Introducción";
+export const INTRODUCCION_ID = "introduccion";
+export const INTRODUCCION_NAME = "Introducción";
 
-export const STAGE0_TREE: SectionNode[] = [
+export const INTRODUCCION_TREE: SectionNode[] = [
   {
-    id: "etapa-0-intro",
+    id: "introduccion-intro",
     title: "Bienvenido a esta iteración",
     content: [],
     children: [],

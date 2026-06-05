@@ -1,5 +1,5 @@
 /**
- * CONTENT — Diálogos y copy de la Etapa 0 (Introducción)
+ * CONTENT — Diálogos y copy de la Introducción
  *
  * Textos de Laia y datos de secciones extraídos de StageClient (frames 1-4).
  * Son DATOS PUROS: el texto, los assets y los audios son idénticos a los que
@@ -21,12 +21,12 @@ export const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
   {
     text: "Bienvenido/a. Este recorrido te guiará por un modelo por etapas para integrar GenAI en experiencias de aprendizaje. Avanzaremos de forma estructurada: reconocer tu punto de partida, explorar posibilidades, diseñar con propósito, preparar el terreno, desplegar en el aula y evaluar para mejorar.",
     imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-1.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion1-1.ogg",
   },
   {
     text: "Este modelo se recorre por etapas. Cada una cumple una función distinta dentro del proceso y te ayudará a avanzar con mayor claridad y sentido pedagógico.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion1-2.ogg",
   },
 ];
 
@@ -36,12 +36,12 @@ export const F3_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
     imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-1.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion2-1.ogg",
   },
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion2-2.ogg",
   },
 ];
 
@@ -119,7 +119,7 @@ export const F4_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Este recorrido no es lineal ni rígido. Cada etapa te ayudará a avanzar con mayor claridad, y podrás volver sobre ellas cuando lo necesites.",
     imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion3.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion3.ogg",
   },
 ];
 
@@ -129,11 +129,11 @@ export const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "“Oh, ¡es verdad! Podré asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.”",
     imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-1.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-1.ogg",
   },
   {
     text: "¡Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-2.ogg",
   },
 ];

@@ -4,7 +4,7 @@
  * /etapas/[stageId]/page.tsx
  *
  * Ruta dinámica que maneja TODAS las etapas del modelo.
- * Todas siguen el mismo patrón: /etapas/etapa-0, /etapas/etapa-1, etc.
+ * Todas siguen el mismo patrón: /etapas/introduccion, /etapas/etapa-1, etc.
  *
  * La ruta antigua /etapa/[stageId] redirige aquí por compatibilidad con
  * progreso guardado en localStorage (ver src/app/etapa/[stageId]/page.tsx).

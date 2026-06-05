@@ -60,11 +60,11 @@ export default function ActionButtons() {
           label="Continuar"
           variant="secondary"
           as="link"
-          href={progress.lastRoute || "/etapas/etapa-0"}
+          href={progress.lastRoute || "/etapas/introduccion"}
         />
       )}
 
-      <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapas/etapa-0" />
+      <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapas/introduccion" />
 
       <ButtonUI label="Etapas" variant="secondary" as="link" href="/etapas" />
 

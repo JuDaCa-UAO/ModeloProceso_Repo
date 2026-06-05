@@ -8,7 +8,7 @@
  *   - Despacho: renderiza el componente de frames correspondiente a cada etapa
  *
  * La lógica de frames de cada etapa vive en su propio componente:
- *   etapa-0 → stage-0-intro/Stage0Frames.tsx
+ *   introduccion → introduccion/IntroduccionFrames.tsx
  *   etapa-1 → stage-1-diagnostico/Stage1Frames.tsx
  *   etapa-2 → stage-2-discover/Stage2Frames.tsx  (placeholder)
  *   ...
@@ -29,7 +29,7 @@ import { writeProgress } from "@/lib/progress";
 import BackgroundAudio from "@/components/audio/BackgroundAudio";
 import styles from "./stageClient.module.css";
 import { readFrameProgress, saveFrameProgress } from "./shared/frameProgress";
-import Stage0Frames from "./stage-0-intro/Stage0Frames";
+import IntroduccionFrames from "./introduccion/IntroduccionFrames";
 import Stage1Frames from "./stage-1-diagnostico/Stage1Frames";
 import Stage2Frames from "./stage-2-discover/Stage2Frames";
 import Stage3Frames from "./stage-3-design/Stage3Frames";
@@ -89,7 +89,7 @@ export default function StageClient({ stageId }: StageClientProps) {
 
   function renderStage() {
     switch (stageId) {
-      case "etapa-0": return <Stage0Frames {...sharedProps} />;
+      case "introduccion": return <IntroduccionFrames {...sharedProps} />;
       case "etapa-1": return <Stage1Frames {...sharedProps} />;
       case "etapa-2": return <Stage2Frames {...sharedProps} />;
       case "etapa-3": return <Stage3Frames {...sharedProps} />;
@@ -102,7 +102,7 @@ export default function StageClient({ stageId }: StageClientProps) {
 
   return (
     <div className={styles.root}>
-      {(stageId === "etapa-0" || stageId === "etapa-1") && (
+      {(stageId === "introduccion" || stageId === "etapa-1") && (
         <BackgroundAudio src="/audio/fondo.ogg" />
       )}
       <PauseMenu open={menuOpen} onToggle={() => setMenuOpen((v) => !v)} />

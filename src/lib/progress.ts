@@ -8,7 +8,7 @@ const STORAGE_KEY = "ai-tech-ed-progress";
 
 const DEFAULT_STATE: ProgressState = {
   hasStarted: false,
-  lastRoute: "/etapas/etapa-0",
+  lastRoute: "/etapas/introduccion",
   updatedAt: 0,
 };
 

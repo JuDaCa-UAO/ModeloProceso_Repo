@@ -17,7 +17,7 @@ export default function OpcionesPage() {
     if (!confirmed) return;
 
     resetProgress();
-    resetStore("etapa-0");
+    resetStore("introduccion");
     resetStore("etapa-1");
 
     // Borra las claves de progreso de frames (ai-tech-ed-frames-*)
@@ -75,8 +75,8 @@ export default function OpcionesPage() {
           <Link href="/inicio" className={styles.linkBtn}>
             Volver al inicio
           </Link>
-          <Link href="/etapas/etapa-0" className={styles.linkBtnSecondary}>
-            Ir a Etapa 0
+          <Link href="/etapas/introduccion" className={styles.linkBtnSecondary}>
+            Ir a Introducción
           </Link>
         </div>
       </section>

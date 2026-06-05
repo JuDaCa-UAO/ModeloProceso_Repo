@@ -15,6 +15,7 @@
 
 "use client";
 
+import { useState } from "react";
 import Link from "next/link";
 import { useVolume } from "@/context/VolumeContext";
 import { useAccessibility, SCALE_MIN, TEXT_SCALE_MAX, UI_SCALE_MAX, SCALE_STEP } from "@/context/AccessibilityContext";
@@ -29,13 +30,19 @@ interface PauseMenuProps {
 export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
   const { musicVolume, setMusicVolume, sfxVolume, setSfxVolume, voiceVolume, setVoiceVolume } = useVolume();
   const { textScale, setTextScale, uiScale, setUiScale, resetAccessibility } = useAccessibility();
+  const [confirmExit, setConfirmExit] = useState(false);
+
+  const handleToggle = () => {
+    if (open) setConfirmExit(false);
+    onToggle();
+  };
 
   return (
     <>
       {/* Botón hamburguesa — siempre visible arriba derecha */}
       <button
         className={styles.triggerBtn}
-        onClick={onToggle}
+        onClick={handleToggle}
         aria-label={open ? "Cerrar menú" : "Abrir menú"}
         aria-expanded={open}
       >
@@ -46,7 +53,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
 
       {/* Overlay + panel del menú */}
       {open ? (
-        <div className={styles.overlay} onClick={onToggle} aria-hidden>
+        <div className={styles.overlay} onClick={handleToggle} aria-hidden>
           <div
             className={styles.panel}
             onClick={(e) => e.stopPropagation()}
@@ -181,9 +188,23 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
             </div>
 
             <nav className={styles.menuList}>
-              <Link href="/inicio" className={styles.menuItem}>
-                Volver al menú principal
-              </Link>
+              {confirmExit ? (
+                <div className={styles.confirmBox}>
+                  <p className={styles.confirmText}>¿Seguro que deseas salir al menú principal?</p>
+                  <div className={styles.confirmActions}>
+                    <button className={styles.menuItem} onClick={() => setConfirmExit(false)}>
+                      Cancelar
+                    </button>
+                    <Link href="/inicio" className={styles.menuItemPrimary}>
+                      Sí, Salir
+                    </Link>
+                  </div>
+                </div>
+              ) : (
+                <button className={styles.menuItem} onClick={() => setConfirmExit(true)}>
+                  Volver al menú principal
+                </button>
+              )}
             </nav>
           </div>
         </div>

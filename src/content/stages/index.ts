@@ -24,10 +24,10 @@ export type StageMeta = {
 };
 
 export const STAGE_META: StageMeta[] = [
-  {    id: "etapa-0",
+  {    id: "introduccion",
     name: "Introducción",
     order: 0,
-    href: "/etapas/etapa-0",
+    href: "/etapas/introduccion",
     available: true,
     shortDescription: "Conoce el modelo y a Laia, tu asistente.",
   },
@@ -96,10 +96,10 @@ export type StageInfo = {
 };
 
 export const STAGE_INFO: Record<string, StageInfo> = {
-  "etapa-0": {
-    id: "etapa-0",
+  "introduccion": {
+    id: "introduccion",
     title: "Introducción",
-    shortTitle: "Etapa 0",
+    shortTitle: "Introducción",
     extendedDescription: "Este es tu punto de partida. Aquí conocerás a Laia, tu asistente virtual, y entenderás cómo navegar por el modelo de proceso estructurado para integrar GenAI en tus experiencias de aprendizaje.",
     stagePurpose: "Familiarizarte con el entorno y la metodología del modelo.",
     currentFocus: "Estás explorando la interfaz y aprendiendo la lógica de progreso.",

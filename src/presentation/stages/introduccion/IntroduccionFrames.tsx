@@ -14,13 +14,13 @@ import {
   STAGE_RAIL_CARDS,
   F4_LAIA_STEPS,
   F5_LAIA_STEPS,
-} from "@/content/dialogs/stage-0.dialogs";
+} from "@/content/dialogs/introduccion.dialogs";
 import styles from "../stageClient.module.css";
 import ScrollHint from "../shared/ScrollHint";
 import { readFrameProgress } from "../shared/frameProgress";
 import type { StageFramesProps } from "../shared/StageFramesProps";
 
-export default function Stage0Frames({
+export default function IntroduccionFrames({
   stageId,
   completedFrames,
   completeFrame,
@@ -84,7 +84,7 @@ export default function Stage0Frames({
       {completedFrames >= 1 ? (
         <>
           {f3Phase === "laia-viewer" ? (
-            <MiniSpiralViewer stageLabel="Etapa actual: Etapa 0" stageKey="etapa-0" />
+            <MiniSpiralViewer stageLabel="Introducción" stageKey="introduccion" />
           ) : null}
 
           <Frame
