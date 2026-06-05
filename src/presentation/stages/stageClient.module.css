@@ -15,6 +15,14 @@
   color: #fff;
 }
 
+@media (min-width: 1024px) {
+  .root {
+    /* Safe zones for MiniSpiralViewer (left) and PauseMenu (right) so the centered Frame never overlaps them */
+    padding-left: clamp(184px, calc(14vw + 2rem), 262px);
+    padding-right: clamp(184px, calc(14vw + 2rem), 262px);
+  }
+}
+
 .root::-webkit-scrollbar {
   display: none; /* Chrome / Safari / Edge */
 }
@@ -96,7 +104,7 @@
 /* Viewport del iframe — reducida para que siempre haya espacio para Laia */
 .embedViewport {
   width: 100%;
-  height: clamp(200px, 36dvh, 400px);
+  height: clamp(140px, 26dvh, 300px);
   overflow: hidden;
   /* Fondo blanco para que el form de n8n no muestre transparencia */
   background: #fff;

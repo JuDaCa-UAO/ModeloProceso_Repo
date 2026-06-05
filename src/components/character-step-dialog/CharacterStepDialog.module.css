@@ -48,7 +48,7 @@
 }
 
 .compact .avatarFrame {
-  max-width: 210px;
+  max-width: 185px;
   border-radius: 18px;
 }
 
@@ -118,7 +118,7 @@
 }
 
 .compact .dialogBox {
-  min-height: clamp(160px, 24dvh, 190px);
+  min-height: clamp(130px, 19dvh, 172px);
   border-radius: 18px;
   padding: 14px 14px 12px;
 }
@@ -428,13 +428,27 @@
   }
 }
 
+@media (max-height: 800px) {
+  .compact .avatarFrame {
+    max-width: 165px;
+  }
+
+  .compact .dialogBox {
+    min-height: clamp(110px, 16dvh, 140px);
+  }
+}
+
 @media (max-height: 740px) {
   .avatarFrame {
     max-width: 240px;
   }
 
   .compact .avatarFrame {
-    max-width: 160px;
+    max-width: 150px;
+  }
+
+  .compact .dialogBox {
+    min-height: clamp(100px, 14dvh, 125px);
   }
 
   .modelCenter.compact .avatarFrame {
