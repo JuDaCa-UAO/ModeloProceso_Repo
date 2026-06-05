@@ -15,10 +15,8 @@ import { useCallback, useEffect, useRef, useState } from "react";
 import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
 import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
-import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 import HorizontalScrollRail from "@/components/stage/HorizontalScrollRail";
-import type { RailPanel } from "@/types/stage";
 import StageViewer from "@/components/stage/StageViewer";
 import ToastStack from "@/components/stage/ToastStack";
 import type { Toast } from "@/components/stage/ToastStack";
@@ -32,6 +30,20 @@ import { VIDEO_REGISTRY } from "@/content/shared/video-registry";
 import BackgroundAudio from "@/components/audio/BackgroundAudio";
 import styles from "./stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
+import {
+  LAIA_INTRO_STEPS,
+  F3_LAIA_STEPS,
+  STAGE_RAIL_CARDS,
+  F4_LAIA_STEPS,
+  F5_LAIA_STEPS,
+} from "@/content/dialogs/stage-0.dialogs";
+import {
+  F6_LAIA_STEPS,
+  F7_LAIA_STEPS,
+  ESTADO_CARDS,
+  F8_LAIA_STEPS,
+  F9_LAIA_STEPS,
+} from "@/content/dialogs/stage-1.dialogs";
 
 // ─── Persistencia del progreso de frames en localStorage ────────────────────────────
 function frameProgressKey(stageId: string) {
@@ -75,191 +87,10 @@ function ScrollHint({ label }: { label?: string }) {
   );
 }
 
-// ─── Contenido del diálogo de Laia — Frame 1 ─────────────────────────────────
+// Contenido (textos de Laia, rail y tarjetas) movido a archivos por etapa:
+//   etapa-0 -> @/content/dialogs/stage-0.dialogs
+//   etapa-1 -> @/content/dialogs/stage-1.dialogs
 
-const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
-  {
-    text: "Bienvenido/a. Este recorrido te guiará por un modelo por etapas para integrar GenAI en experiencias de aprendizaje. Avanzaremos de forma estructurada: reconocer tu punto de partida, explorar posibilidades, diseñar con propósito, preparar el terreno, desplegar en el aula y evaluar para mejorar.",
-    imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-1.ogg",
-  },
-  {
-    text: "Este modelo se recorre por etapas. Cada una cumple una función distinta dentro del proceso y te ayudará a avanzar con mayor claridad y sentido pedagógico.",
-    imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion1-2.ogg",
-  },
-];
-
-// ─── Contenido de CharacterStepDialog — Frame 3 Fase A (modelo visible) ──────────────
-
-const F3_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
-    imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-1.ogg",
-  },
-  {
-    text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
-    imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion2-2.ogg",
-  },
-];
-
-// ─── Rail de etapas — Frame 4 ──────────────────────────────────────────────
-
-const STAGE_RAIL_CARDS: RailPanel[] = [
-  {
-    id: "rail-etapa-1",
-    label: "Etapa 1",
-    title: "Reconócete para avanzar",
-    lines: [
-      "Identifica tu punto de partida con un autodiagnóstico individual y formativo.",
-      "",
-    ],
-    kind: "stage",
-    videoKey: "railEtapasIntro",
-  },
-  {
-    id: "rail-etapa-2",
-    label: "Etapa 2",
-    title: "Descubre nuevas posibilidades",
-    lines: [
-      "Explora opciones de GenAI para apoyar una actividad real de tu docencia con criterio pedagógico y ético.",
-      "",
-    ],
-    kind: "stage",
-    videoKey: "railEtapa2Intro",
-  },
-  {
-    id: "rail-etapa-3",
-    label: "Etapa 3",
-    title: "Diseña con propósito",
-    lines: [
-      "Transforma lo explorado en una experiencia de aprendizaje estructurada, coherente y mediada por GenAI.",
-      "",
-    ],
-    kind: "stage",
-    videoKey: "railEtapa3Intro",
-  },
-  {
-    id: "rail-etapa-4",
-    label: "Etapa 4",
-    title: "Prepara el terreno para el éxito",
-    lines: [
-      "Convierte el diseño en condiciones operativas, logísticas y pedagógicas para un despliegue fluido y seguro.",
-      "",
-    ],
-    kind: "stage",
-  },
-  {
-    id: "rail-etapa-5",
-    label: "Etapa 5",
-    title: "Hazlo realidad en el aula",
-    lines: [
-      "Pon en práctica lo diseñado con criterio pedagógico y atención a la experiencia real de cada estudiante.",
-      "",
-    ],
-    kind: "stage",
-  },
-  {
-    id: "rail-etapa-6",
-    label: "Etapa 6",
-    title: "Reflexiona, aprende y mejora",
-    lines: [
-      "Analiza los resultados, recoge evidencias y ajusta tu práctica para fortalecer el aprendizaje mediado por GenAI.",
-      "",
-    ],
-    kind: "stage",
-  },
-];
-
-// ─── Diálogo de Laia — Frame 4 ──────────────────────────────────────────────
-
-const F4_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "Este recorrido no es lineal ni rígido. Cada etapa te ayudará a avanzar con mayor claridad, y podrás volver sobre ellas cuando lo necesites.",
-    imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion3.ogg",
-  },
-];
-
-// ─── Diálogo de Laia — Frame 5 ──────────────────────────────────────────────
-
-const F5_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "“Oh, ¡es verdad! Podré asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.”",
-    imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-1.ogg",
-  },
-  {
-    text: "\u00a1Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
-    imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-0/LaiaAudio-seccion4-2.ogg",
-  },
-];
-
-// ─── Diálogo de Laia — Frame 6 ──────────────────────────────────────────────
-
-const F6_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "Tus respuestas son confidenciales y se usan únicamente para orientar este recorrido. No es un examen, ni tiene efectos administrativos.",
-    imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion2.ogg",
-  },
-];
-
-// ─── Diálogo de Laia — Frame 7 ──────────────────────────────────────────────
-
-const F7_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "A lo largo de este proceso podrás reconocer en qué estado te encuentras frente al uso de la IA. Estos estados no son etiquetas ni juicios de valor: son puntos de referencia que ayudan a orientar tu recorrido. El autodiagnóstico permitirá identificar tu punto de partida dentro del modelo.",
-    imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion3.ogg",
-  },
-];
-
-// ─── Tarjetas de estados — Frame 7 ──────────────────────────────────────────
-
-const ESTADO_CARDS = [
-  {
-    label: "Inicial",
-    title: "Aprendiendo sin miedo",
-    desc: "Primeras aproximaciones con curiosidad y necesidad de guía clara. Recibirás apoyo más guiado, ejemplos listos para adaptar y recomendaciones paso a paso.",
-  },
-  {
-    label: "Intermedio",
-    title: "Explorando con propósito",
-    desc: "Ya experimentas con intención educativa y buscas mayor coherencia pedagógica. Recibirás recomendaciones para fortalecer decisiones didácticas, críticas y éticas.",
-  },
-  {
-    label: "Avanzado",
-    title: "Innovando e inspirando",
-    desc: "Integras GenAI de forma crítica, creativa y estratégica en distintos contextos. Recibirás retos de mayor profundidad y oportunidades para compartir aprendizajes.",
-  },
-] as const;
-// ─── Diálogo de Laia — Frame 8 ──────────────────────────────────────────────
-
-const F8_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "El autodiagnóstico busca reconocer tu nivel actual de conocimiento, experiencia y disposición frente al uso de la GenAI en educación. A partir de tus respuestas, podrás ubicarte en un estado inicial del recorrido y recibir una orientación más pertinente para avanzar.",
-    imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion4-1.ogg",
-  },
-  {
-    text: "Tu estado actual será enviado por correo al terminar.",
-    imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion4-2.ogg",
-  },
-];
-
-// ─── Diálogo de Laia — Frame 9 (pos-video) ─────────────────────────────────
-const F9_LAIA_STEPS: CharacterDialogStep[] = [
-  {
-    text: "Listo. Con esta información ya tenemos un punto de partida para el recorrido. Ahora pasaremos a explorar nuevas posibilidades de uso de GenAI.",
-    imgSrc: "/ui/Laia_triumphant.png",
-    audioSrc: "/audio/Audios_laia/Etapa-1/LaiaAudio-seccion5.ogg",
-  },
-];
 // ─── Props ────────────────────────────────────────────────────────────────────
 
 type StageClientProps = {

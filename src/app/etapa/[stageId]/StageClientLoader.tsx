@@ -10,7 +10,7 @@
  */
 import dynamic from "next/dynamic";
 
-const StageClient = dynamic(() => import("./StageClient"), {
+const StageClient = dynamic(() => import("@/presentation/stages/StageClient"), {
   ssr: false,
   loading: () => null,
 });
