@@ -70,18 +70,21 @@ function Orb({
 
   const handlePointerOver = (e: any) => {
     e.stopPropagation();
+    if (hideLabels) return;
     setHovered(true);
     document.body.style.cursor = "pointer";
   };
 
   const handlePointerOut = (e: any) => {
     e.stopPropagation();
+    if (hideLabels) return;
     setHovered(false);
     document.body.style.cursor = "default";
   };
 
   const handleClick = (e: any) => {
     e.stopPropagation();
+    if (hideLabels) return;
     // Si available es true, navegamos a la ruta
     if (stageData.available) {
       document.body.style.cursor = "default";
@@ -101,8 +104,8 @@ function Orb({
     >
       <meshStandardMaterial
         ref={materialRef}
-        color={hovered && !isActive ? "#ffcc00" : "#666666"}
-        emissive={isActive || hovered ? "#ffcc00" : "#000000"}
+        color={hovered && !isActive ? "#FFD86A" : "#666666"}
+        emissive={isActive || hovered ? "#FFD86A" : "#000000"}
         emissiveIntensity={hovered && !isActive ? 0.8 : 0}
         roughness={0.4}
         metalness={0.8}

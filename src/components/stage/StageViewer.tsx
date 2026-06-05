@@ -15,7 +15,7 @@ function RotatingSpiral({ enableRotation, activeStageIndex }: { enableRotation: 
 
   return (
     <group ref={spinRef}>
-      <SpiralModel activeStageIndex={activeStageIndex} hideLabels={true} />
+      <SpiralModel activeStageIndex={activeStageIndex} hideLabels={true} position={[-2, 1.5, 0]} />
     </group>
   );
 }
