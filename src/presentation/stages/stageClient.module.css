@@ -34,14 +34,24 @@
   height: 100dvh;
   z-index: 0;
 }
+/* ─── Frame 4: autodiagnostico layout ─────────────────────────────────────── */
+
+.autodiagLayout {
+  display: grid;
+  grid-template-rows: minmax(0, 1fr) auto;
+  width: 100%;
+  flex: 1;
+  gap: clamp(10px, 2vh, 16px);
+}
+
 /* ─── Frame 8: marco futurista del embebido ─────────────────────────────── */
 
 
 .embedShell {
   position: relative;
-  width: min(82vw, 820px);
-  height: min(68vh, 620px);
-  min-height: 520px;
+  width: min(68vw, 780px);
+  height: 100%;
+  max-height: 470px;
   margin: 0 auto;
   display: flex;
   flex-direction: column;

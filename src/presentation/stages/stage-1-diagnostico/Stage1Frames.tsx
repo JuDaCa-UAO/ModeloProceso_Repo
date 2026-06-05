@@ -242,54 +242,56 @@ export default function Stage1Frames({
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
         >
-          <div className={styles.embedShell}>
-            <span className={styles.embedCornerTL} aria-hidden />
-            <span className={styles.embedCornerTR} aria-hidden />
-            <span className={styles.embedCornerBL} aria-hidden />
-            <span className={styles.embedCornerBR} aria-hidden />
+          <div className={styles.autodiagLayout}>
+            <div className={styles.embedShell}>
+              <span className={styles.embedCornerTL} aria-hidden />
+              <span className={styles.embedCornerTR} aria-hidden />
+              <span className={styles.embedCornerBL} aria-hidden />
+              <span className={styles.embedCornerBR} aria-hidden />
 
-            <div className={styles.embedHeader}>
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderDot} />
-              <span className={styles.embedHeaderLabel}>AUTODIAGNÓSTICO — ETAPA 1</span>
+              <div className={styles.embedHeader}>
+                <span className={styles.embedHeaderDot} />
+                <span className={styles.embedHeaderDot} />
+                <span className={styles.embedHeaderDot} />
+                <span className={styles.embedHeaderLabel}>AUTODIAGNÓSTICO — ETAPA 1</span>
+              </div>
+
+              <div className={styles.embedViewport}>
+                <iframe
+                  src={N8N_CONFIG.forms.autodiagnostic || undefined}
+                  title="Autodiagnóstico Etapa 1"
+                  className={styles.embedIframe}
+                  loading="lazy"
+                  sandbox="allow-forms allow-scripts allow-same-origin"
+                />
+              </div>
+
+              <div className={styles.embedFooter}>
+                <span className={styles.embedFooterStatus}>
+                  {autodiagDone ? "✓ Completado" : "Pendiente de respuesta"}
+                </span>
+              </div>
             </div>
 
-            <div className={styles.embedViewport}>
-              <iframe
-                src={N8N_CONFIG.forms.autodiagnostic || undefined}
-                title="Autodiagnóstico Etapa 1"
-                className={styles.embedIframe}
-                loading="lazy"
-                sandbox="allow-forms allow-scripts allow-same-origin"
+            <div className={styles.laiaSlot}>
+              <CharacterStepDialog
+                size="compact"
+                density="tight"
+                steps={F8_LAIA_STEPS}
+                onStepChange={(idx) => {
+                  if (idx === 1) setAutodiagDone(true);
+                  else setAutodiagDone(false);
+                }}
+                onComplete={() => {
+                  completeFrame(4);
+                  if (!notifiedFrames.current.has(4)) {
+                    notifiedFrames.current.add(4);
+                    pushToast("¡Proceso guardado!");
+                  }
+                }}
+                nextLabel={!autodiagDone ? "Autodiagnóstico completado" : "Siguiente"}
               />
             </div>
-
-            <div className={styles.embedFooter}>
-              <span className={styles.embedFooterStatus}>
-                {autodiagDone ? "✓ Completado" : "Pendiente de respuesta"}
-              </span>
-            </div>
-          </div>
-
-          <div className={styles.laiaSlot}>
-            <CharacterStepDialog
-              size="compact"
-              density="tight"
-              steps={F8_LAIA_STEPS}
-              onStepChange={(idx) => {
-                if (idx === 1) setAutodiagDone(true);
-                else setAutodiagDone(false);
-              }}
-              onComplete={() => {
-                completeFrame(4);
-                if (!notifiedFrames.current.has(4)) {
-                  notifiedFrames.current.add(4);
-                  pushToast("¡Proceso guardado!");
-                }
-              }}
-              nextLabel={!autodiagDone ? "Autodiagnóstico completado" : "Siguiente"}
-            />
           </div>
         </Frame>
       ) : null}
