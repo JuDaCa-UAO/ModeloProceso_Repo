@@ -43,7 +43,7 @@ export const STAGE_META: StageMeta[] = [
     name: "Descubre nuevas posibilidades",
     order: 2,
     href: "/etapas/etapa-2",
-    available: false,
+    available: true,
     shortDescription: "Explora opciones de GenAI para apoyar tu docencia.",
   },
   {
@@ -51,7 +51,7 @@ export const STAGE_META: StageMeta[] = [
     name: "Diseña con propósito",
     order: 3,
     href: "/etapas/etapa-3",
-    available: false,
+    available: true,
     shortDescription: "Transforma lo explorado en una experiencia estructurada.",
   },
   {
@@ -59,7 +59,7 @@ export const STAGE_META: StageMeta[] = [
     name: "Prepara el terreno para el éxito",
     order: 4,
     href: "/etapas/etapa-4",
-    available: false,
+    available: true,
     shortDescription: "Convierte el diseño en condiciones operativas y logísticas.",
   },
   {
@@ -67,7 +67,7 @@ export const STAGE_META: StageMeta[] = [
     name: "Hazlo realidad en el aula",
     order: 5,
     href: "/etapas/etapa-5",
-    available: false,
+    available: true,
     shortDescription: "Pon en práctica lo diseñado con atención a cada estudiante.",
   },
   {
@@ -75,7 +75,7 @@ export const STAGE_META: StageMeta[] = [
     name: "Reflexiona, aprende y mejora",
     order: 6,
     href: "/etapas/etapa-6",
-    available: false,
+    available: true,
     shortDescription: "Analiza resultados, recoge evidencias y ajusta tu práctica.",
   },
 ];

@@ -1,5 +1,4 @@
 import Link from "next/link";
-import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
 import InteractiveSpiral from "@/components/InteractiveSpiral/InteractiveSpiral";
 import { STAGE_META } from "@/content/stages/index";
 import styles from "./etapas.module.css";
@@ -7,8 +6,6 @@ import styles from "./etapas.module.css";
 export default function EtapasPage() {
   return (
     <div className={styles.stage}>
-      <TechTrailBackground className={styles.background} />
-
       <main className={styles.main}>
         <section className={styles.card}>
           <header className={styles.header}>

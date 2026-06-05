@@ -17,13 +17,21 @@ import type { IStageContentRepository } from "@domain/stage/repositories/IStageC
 import type { SectionNode } from "@/types/stage";
 import { STAGE0_TREE } from "@/content/stages/stage-0.content";
 import { STAGE1_TREE } from "@/content/stages/stage-1.content";
+import { STAGE2_TREE } from "@/content/stages/stage-2.content";
+import { STAGE3_TREE } from "@/content/stages/stage-3.content";
+import { STAGE4_TREE } from "@/content/stages/stage-4.content";
+import { STAGE5_TREE } from "@/content/stages/stage-5.content";
+import { STAGE6_TREE } from "@/content/stages/stage-6.content";
 
 /** Registro canónico de stageId → árbol de contenido. */
 const STAGE_REGISTRY: Record<string, SectionNode[]> = {
   "etapa-0": STAGE0_TREE,
   "etapa-1": STAGE1_TREE,
-  // "etapa-2": STAGE2_TREE,  ← agregar aquí al crear contenido de Etapa 2
-  // "etapa-3": STAGE3_TREE,
+  "etapa-2": STAGE2_TREE,
+  "etapa-3": STAGE3_TREE,
+  "etapa-4": STAGE4_TREE,
+  "etapa-5": STAGE5_TREE,
+  "etapa-6": STAGE6_TREE,
 };
 
 export class StaticStageContentRepository implements IStageContentRepository {
