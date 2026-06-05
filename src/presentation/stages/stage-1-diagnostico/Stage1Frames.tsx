@@ -91,7 +91,7 @@ export default function Stage1Frames({
         ) : (
           <>
             <div className={styles.modelStage}>
-              <StageViewer enableRotation />
+              <StageViewer enableRotation activeStage={1} />
             </div>
             <p className={styles.frameInstructions}>
               Puedes interactuar con el modelo usando el scroll para acercarte y
@@ -316,7 +316,7 @@ export default function Stage1Frames({
           ) : !f9VideoEnded ? (
             <div className={styles.f9Splash}>
               <div className={styles.f9ModelWrap}>
-                <StageViewer enableRotation />
+                <StageViewer enableRotation activeStage={1} />
               </div>
               <button
                 className={styles.btnVerAnimacion}

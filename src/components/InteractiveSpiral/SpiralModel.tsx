@@ -2,9 +2,10 @@
 
 import React, { useState, useRef } from "react";
 import { useGLTF, Html, Center } from "@react-three/drei";
+import { useFrame } from "@react-three/fiber";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
-import { STAGE_META, StageMeta } from "@/content/stages";
+import { STAGE_META } from "@/content/stages";
 import styles from "./InteractiveSpiral.module.css";
 
 // Definimos el tipo para los nodos del GLTF según lo generado
@@ -30,15 +31,21 @@ function Orb({
   scale,
   stageIndex,
   defaultMaterial,
+  isActive,
+  hideLabels,
 }: {
   geometry: THREE.BufferGeometry;
   position: [number, number, number];
   scale: number;
   stageIndex: number;
   defaultMaterial: THREE.Material;
+  isActive?: boolean;
+  hideLabels?: boolean;
 }) {
   const router = useRouter();
   const [hovered, setHovered] = useState(false);
+  const meshRef = useRef<THREE.Mesh>(null);
+  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
   
   // Obtenemos la etapa correspondiente (el index de stage-1 a stage-6 es de 1 a 6)
   // STAGE_META tiene index 0 = etapa 0, index 1 = etapa 1, etc.
@@ -47,8 +54,19 @@ function Orb({
   // Si no hay datos, no renderizamos el orbe
   if (!stageData) return null;
 
-  // Creamos un material único para este orbe para que el emissive solo afecte a este
-  const materialRef = useRef<THREE.MeshStandardMaterial>(null);
+  useFrame(({ clock }) => {
+    if (isActive && materialRef.current && meshRef.current) {
+      // Pulso entre 0 y 1
+      const pulse = (Math.sin(clock.getElapsedTime() * 3) + 1) / 2;
+      // Transiciona de 0 (se ve igual a las inactivas) hasta 2.5 (brillo amarillo)
+      materialRef.current.emissiveIntensity = pulse * 2.5;
+      
+      const s = scale * (1.0 + pulse * 0.1);
+      meshRef.current.scale.set(s, s, s);
+    } else if (meshRef.current) {
+      meshRef.current.scale.set(scale, scale, scale);
+    }
+  });
 
   const handlePointerOver = (e: any) => {
     e.stopPropagation();
@@ -73,6 +91,7 @@ function Orb({
 
   return (
     <mesh
+      ref={meshRef}
       geometry={geometry}
       position={position}
       scale={scale}
@@ -82,13 +101,13 @@ function Orb({
     >
       <meshStandardMaterial
         ref={materialRef}
-        color={hovered ? "#ff6666" : "#666666"}
-        emissive={hovered ? "#ff0000" : "#000000"}
-        emissiveIntensity={hovered ? 0.5 : 0}
+        color={hovered && !isActive ? "#ffcc00" : "#666666"}
+        emissive={isActive || hovered ? "#ffcc00" : "#000000"}
+        emissiveIntensity={hovered && !isActive ? 0.8 : 0}
         roughness={0.4}
         metalness={0.8}
       />
-      {hovered && (
+      {!hideLabels && hovered && (
         <Html distanceFactor={30} position={[0, 1.5, 0]} center zIndexRange={[100, 0]}>
           <div className={styles.labelContainer}>
             <div className={styles.labelOrder}>
@@ -102,7 +121,15 @@ function Orb({
   );
 }
 
-export default function SpiralModel(props: any) {
+export default function SpiralModel({ 
+  activeStageIndex,
+  hideLabels,
+  ...props 
+}: { 
+  activeStageIndex?: number;
+  hideLabels?: boolean;
+  [key: string]: any;
+}) {
   const { nodes, materials } = useGLTF("/models/espiral.glb") as unknown as GLTFResult;
 
   // Material default para la espiral
@@ -126,6 +153,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={1}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 1}
+          hideLabels={hideLabels}
         />
         <Orb
           geometry={nodes.Cube_E1002.geometry}
@@ -133,6 +162,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={2}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 2}
+          hideLabels={hideLabels}
         />
         <Orb
           geometry={nodes.Cube_E3001.geometry}
@@ -140,6 +171,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={3}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 3}
+          hideLabels={hideLabels}
         />
         <Orb
           geometry={nodes.Cube_E4001.geometry}
@@ -147,6 +180,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={4}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 4}
+          hideLabels={hideLabels}
         />
         <Orb
           geometry={nodes.Cube_E5001.geometry}
@@ -154,6 +189,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={5}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 5}
+          hideLabels={hideLabels}
         />
         <Orb
           geometry={nodes.Cube_E6001.geometry}
@@ -161,6 +198,8 @@ export default function SpiralModel(props: any) {
           scale={1.3}
           stageIndex={6}
           defaultMaterial={inactivaMaterial}
+          isActive={activeStageIndex === 6}
+          hideLabels={hideLabels}
         />
       </group>
     </Center>

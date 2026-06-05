@@ -3,9 +3,9 @@
 import { useRef } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Center, OrbitControls } from "@react-three/drei";
-import Model from "@/app/modelo/Model";
+import SpiralModel from "@/components/InteractiveSpiral/SpiralModel";
 
-function RotatingSpiral({ enableRotation }: { enableRotation: boolean }) {
+function RotatingSpiral({ enableRotation, activeStageIndex }: { enableRotation: boolean; activeStageIndex?: number }) {
   const spinRef = useRef<{ rotation: { y: number } } | null>(null);
 
   useFrame((_, delta) => {
@@ -15,9 +15,7 @@ function RotatingSpiral({ enableRotation }: { enableRotation: boolean }) {
 
   return (
     <group ref={spinRef}>
-      <Center>
-        <Model url="/models/espiral.glb" />
-      </Center>
+      <SpiralModel activeStageIndex={activeStageIndex} hideLabels={true} />
     </group>
   );
 }
@@ -25,15 +23,18 @@ function RotatingSpiral({ enableRotation }: { enableRotation: boolean }) {
 type StageViewerProps = {
   /** Si es false, el modelo queda estático (p. ej. prefers-reduced-motion). */
   enableRotation?: boolean;
+  /** Índice numérico de la etapa activa para titilar (ej. 1) */
+  activeStage?: number;
 };
 
 export default function StageViewer({
   enableRotation = true,
+  activeStage,
 }: StageViewerProps) {
   return (
     <Canvas
       flat
-      camera={{ position: [0, 0, 35], fov: 42 }}
+      camera={{ position: [0, 0, 45], fov: 42 }}
       style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
     >
       <ambientLight intensity={1.05} color="#ffffff" />
@@ -54,7 +55,7 @@ export default function StageViewer({
         maxDistance={50}
       />
 
-      <RotatingSpiral enableRotation={enableRotation} />
+      <RotatingSpiral enableRotation={enableRotation} activeStageIndex={activeStage} />
     </Canvas>
   );
 }
