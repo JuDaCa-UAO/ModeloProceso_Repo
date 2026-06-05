@@ -187,7 +187,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
   }, []);
 
   useEffect(() => {
-    writeProgress({ hasStarted: true, lastRoute: `/etapa/${stageId}` });
+    writeProgress({ hasStarted: true, lastRoute: `/etapas/${stageId}` });
   }, [stageId]);
 
   /**
@@ -394,7 +394,7 @@ export default function StageClient({ stageId, stageName }: StageClientProps) {
               {completedFrames >= 4 ? (
                 <div className={styles.f9NextRow}>
                   <a
-                    href="/etapa/etapa-1"
+                    href="/etapas/etapa-1"
                     className={styles.f9NextBtn}
                     aria-label="Ir a la siguiente etapa"
                   >

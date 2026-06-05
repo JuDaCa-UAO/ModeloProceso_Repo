@@ -1,6 +1,6 @@
 import { redirect } from "next/navigation";
 
 export default function ModeloPage() {
-  // Legacy redirect — new canonical route is /etapa/etapa-1
-  redirect("/etapa/etapa-1");
+  // Legacy redirect — new canonical route is /etapas/etapa-1
+  redirect("/etapas/etapa-1");
 }

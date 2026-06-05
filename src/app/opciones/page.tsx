@@ -75,7 +75,7 @@ export default function OpcionesPage() {
           <Link href="/inicio" className={styles.linkBtn}>
             Volver al inicio
           </Link>
-          <Link href="/etapa/etapa-0" className={styles.linkBtnSecondary}>
+          <Link href="/etapas/etapa-0" className={styles.linkBtnSecondary}>
             Ir a Etapa 0
           </Link>
         </div>
