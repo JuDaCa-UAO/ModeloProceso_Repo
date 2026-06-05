@@ -31,7 +31,11 @@ export default function StageViewer({
   enableRotation = true,
 }: StageViewerProps) {
   return (
-    <Canvas flat camera={{ position: [0, 0, 35], fov: 42 }}>
+    <Canvas
+      flat
+      camera={{ position: [0, 0, 35], fov: 42 }}
+      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+    >
       <ambientLight intensity={1.05} color="#ffffff" />
       <directionalLight position={[4, 5, 3]} intensity={0.55} color="#ffffff" />
       <directionalLight

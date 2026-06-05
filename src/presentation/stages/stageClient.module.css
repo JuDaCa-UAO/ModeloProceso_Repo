@@ -185,6 +185,7 @@
 /* ─── Frame 2: escenario del modelo 3D (panel con contraste) ────────────── */
 
 .modelStage {
+  position: relative; /* ancla el Canvas absoluto de r3f */
   width: 100%;
   height: clamp(300px, 55dvh, 560px);
   border-radius: 10px;
@@ -198,6 +199,7 @@
 
 /* Versión compacta para frames donde el modelo convive con el diálogo de Laia */
 .modelStageCompact {
+  position: relative; /* ancla el Canvas absoluto de r3f */
   width: 100%;
   height: clamp(160px, 28dvh, 260px);
   border-radius: 10px;
@@ -520,6 +522,7 @@
 }
 
 .f9ModelWrap {
+  position: relative; /* ancla el Canvas absoluto de r3f */
   width: 100%;
   height: clamp(300px, 48dvh, 460px);
   border-radius: 10px;
