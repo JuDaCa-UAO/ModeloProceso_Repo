@@ -1,8 +1,6 @@
 "use client";
 
 import { useCallback, useEffect, useState } from "react";
-import Image from "next/image";
-import { IoSend } from "react-icons/io5";
 import Frame from "@/components/stage/Frame";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
@@ -41,7 +39,6 @@ export default function Stage1Frames({
   const [autodiagDone, setAutodiagDone] = useState(false);
   const [f9VideoEnded, setF9VideoEnded] = useState(false);
   const [f9VideoPlaying, setF9VideoPlaying] = useState(false);
-  const [chatbotOpen, setChatbotOpen] = useState(false);
 
   // Restaura estados secundarios desde localStorage al montar
   useEffect(() => {
@@ -368,67 +365,6 @@ export default function Stage1Frames({
           ) : null}
         </Frame>
       ) : null}
-
-      {/* ═══ Chatbot flotante — siempre visible en etapa-1 ═════════════════ */}
-      <>
-        <button
-          type="button"
-          className={[
-            styles.chatbotBtn,
-            chatbotOpen ? styles.chatbotBtnPulseClose : "",
-          ].join(" ")}
-          onClick={() => setChatbotOpen((v) => !v)}
-        >
-          <Image
-            src="/ui/Laia-Icon.png"
-            alt="Chat con Laia"
-            width={44}
-            height={44}
-            unoptimized
-            className={styles.chatbotBtnIcon}
-          />
-        </button>
-
-        {chatbotOpen ? (
-          <div className={styles.chatPanel}>
-            <div className={styles.chatPanelInner}>
-              <div className={styles.chatBubble}>
-                <p className={styles.chatTitle}>Hola, soy Laia.</p>
-                <p className={styles.chatBody}>
-                  Este chatbot está aquí para acompañarte durante tu recorrido
-                  por la cartilla web. Puedes acudir a mí si necesitas aclarar
-                  algo puntual, entender mejor una parte de la página o
-                  profundizar en algún aspecto del modelo de proceso. Mi
-                  alcance se limita a esta experiencia: puedo explicarte el
-                  modelo, sus etapas, sus estados y el funcionamiento de la
-                  cartilla, pero no responder preguntas por fuera de este
-                  contexto.{" "}
-                  <strong>
-                    Siempre que lo necesites, estaré aquí para orientarte.
-                  </strong>
-                </p>
-              </div>
-              <div className={styles.chatInputRow}>
-                <Image
-                  src="/ui/Laia-Icon.png"
-                  alt="Laia"
-                  width={36}
-                  height={36}
-                  className={styles.chatAvatar}
-                />
-                <input
-                  className={styles.chatInput}
-                  placeholder="Escribe un mensaje…"
-                  disabled
-                />
-                <button className={styles.chatSendBtn} disabled aria-label="Enviar">
-                  <IoSend size={16} />
-                </button>
-              </div>
-            </div>
-          </div>
-        ) : null}
-      </>
     </>
   );
 }

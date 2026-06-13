@@ -123,16 +123,19 @@ export const F4_LAIA_STEPS: CharacterDialogStep[] = [
   },
 ];
 
-// ─── Diálogo de Laia — Frame 5 ────────────────────────────────────────────────
+// ─── Diálogo de Laia — Frame 5 (Asistencia guiada, no conversacional) ─────────
+// Nota: la EMI conserva una referencia histórica a un chatbot que el proyecto
+// eliminó. Laia acompaña como guía visual no conversacional: orienta, señala
+// controles y recuerda la ubicación dentro del modelo. (Ver contexto/context.md.)
 
 export const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
-    text: "“Oh, ¡es verdad! Podré asistirte cada vez que lo necesites. Si quieres apoyo adicional, puedes usar este chatbot. Te explicaré qué puede hacer, qué no puede hacer y cuándo te puede ayudar.”",
+    text: "A lo largo del recorrido te acompañaré como guía: te indicaré qué hacer en cada momento, señalaré los controles importantes y te recordaré en qué etapa del modelo te encuentras.",
     imgSrc: "/ui/Laia_explaining_holo.png",
     audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-1.ogg",
   },
   {
-    text: "¡Continuemos! Ya sabes que puedes contar con mi apoyo en cualquier momento del recorrido.",
+    text: "¡Continuemos! Recuerda que puedes ubicarte en cualquier momento abriendo el mapa del modelo y volver a una etapa anterior cuando lo necesites.",
     imgSrc: "/ui/laia_explaining.png",
     audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-2.ogg",
   },

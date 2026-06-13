@@ -103,7 +103,7 @@ export const STAGE_INFO: Record<string, StageInfo> = {
     extendedDescription: "Este es tu punto de partida. Aquí conocerás a Laia, tu asistente virtual, y entenderás cómo navegar por el modelo de proceso estructurado para integrar GenAI en tus experiencias de aprendizaje.",
     stagePurpose: "Familiarizarte con el entorno y la metodología del modelo.",
     currentFocus: "Estás explorando la interfaz y aprendiendo la lógica de progreso.",
-    completionGoal: "Completarás esta etapa al interactuar con el modelo y el chatbot de prueba.",
+    completionGoal: "Completarás esta etapa al conocer el modelo y aprender a navegarlo con la guía de Laia.",
     nextStagePreview: {
       title: "Reconócete para avanzar",
       context: "Una vez comprendido el modelo, es crucial saber desde dónde partes.",
