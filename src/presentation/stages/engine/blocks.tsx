@@ -24,10 +24,11 @@ import styles from "./engine.module.css";
 type BlockComponentProps = { block: StageBlock; ctx: BlockContext };
 
 function usePrefersReducedMotion(): boolean {
-  const [reduced, setReduced] = useState(false);
+  const [reduced, setReduced] = useState(
+    () => typeof window !== "undefined" && window.matchMedia("(prefers-reduced-motion: reduce)").matches
+  );
   useEffect(() => {
     const mql = window.matchMedia("(prefers-reduced-motion: reduce)");
-    setReduced(mql.matches);
     const onChange = () => setReduced(mql.matches);
     mql.addEventListener?.("change", onChange);
     return () => mql.removeEventListener?.("change", onChange);
@@ -273,7 +274,6 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
 
   if (block.type !== "download-resource") return null;
   const media = resolveMedia(block.mediaKey);
-  const resourceName = media.downloadName?.replace(/\.[a-z0-9]+$/i, "")?.replace(/-/g, " ") ?? "recurso";
 
   return (
     <div className={styles.actionRow}>

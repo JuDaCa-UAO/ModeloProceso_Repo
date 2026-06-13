@@ -123,7 +123,7 @@ export interface ResolvedMedia {
  * Nunca lanza: si el recurso está pendiente devuelve `available: false` y `url: null`.
  */
 export function resolveMedia(key: MediaKey): ResolvedMedia {
-  const entry = MEDIA_REGISTRY[key];
+  const entry: MediaEntry = MEDIA_REGISTRY[key];
 
   const base: ResolvedMedia = {
     key,

@@ -15,7 +15,7 @@ Plataforma interactiva basada en **Next.js 16 App Router** que guía a docentes 
 7. [Cómo agregar una nueva etapa](#cómo-agregar-una-nueva-etapa)
 8. [Cómo agregar un nuevo bloque de contenido](#cómo-agregar-un-nuevo-bloque-de-contenido)
 9. [Integración con N8N](#integración-con-n8n)
-10. [Chatbot Laia](#chatbot-laia)
+10. [Laia — guía no conversacional](#laia--guía-no-conversacional)
 11. [Testing](#testing)
 12. [Seguridad](#seguridad)
 13. [Decisiones de arquitectura](#decisiones-de-arquitectura)
@@ -29,7 +29,7 @@ El docente entra a la app y recorre 6 etapas del modelo espiral GenAI:
 | Etapa | Nombre | Estado |
 |---|---|---|
 | 1 | Reconócete para avanzar | ✅ Implementada |
-| 2 | Descubre nuevas posibilidades | 🔧 Próxima |
+| 2 | Descubre nuevas posibilidades | ✅ Implementada (motor dirigido por datos) |
 | 3 | Diseña con propósito | 🔧 Próxima |
 | 4 | Prepara el terreno para el éxito | 🔧 Próxima |
 | 5 | Hazlo realidad en el aula | 🔧 Próxima |
@@ -379,7 +379,35 @@ content: [
 
 ---
 
-## Sistema de Frames — Guía de implementación
+## Motor de etapas dirigido por datos (Etapa 2 en adelante)
+
+A partir de la Etapa 2, una etapa se define como **datos** (un árbol tipado) y un
+**motor recursivo** la renderiza. No se escribe JSX por etapa ni se añade una rama
+gigante por `stageId`.
+
+| Archivo | Responsabilidad |
+|---|---|
+| `src/presentation/stages/engine/types.ts` | `StageNode` (recursivo, `children`), unión `StageBlock`, `BlockContext` |
+| `src/presentation/stages/engine/StageRenderer.tsx` | Recorre el árbol; cada nodo de nivel superior es un frame progresivo; despacha bloques y procesa `children` recursivamente |
+| `src/presentation/stages/engine/blocks.tsx` | **Registro de bloques** (`BLOCK_REGISTRY`): `spiral-viewer`, `dialogue`, `paragraphs`, `narrative-video`, `criteria-infographic`, `comparison-example`, `download-resource`, `transition` |
+| `src/presentation/stages/engine/Modal.tsx` | Modal accesible reutilizable (portal, foco, Escape) |
+| `src/content/shared/media-registry.ts` | **Registro lógico de recursos** por clave (`stage2.pughMatrix`, …) con fallback y `NEXT_PUBLIC_MEDIA_BASE_URL` |
+| `src/components/guide-hand/GuideHand.tsx` | Guía con la mano de Laia (ver sección de Laia) |
+| `src/content/stages/stage-2.content.ts` | `STAGE2_DISCOVER_TREE`: definición de datos de la Etapa 2 |
+| `src/content/dialogs/stage-2-discover.dialogs.ts` | Diálogos de Laia (literales de EMI) |
+| `src/presentation/stages/stage-2-discover/Stage2Frames.tsx` | Vista delgada: `<StageRenderer tree={STAGE2_DISCOVER_TREE} …/>` |
+
+**Crear una etapa nueva con bloques existentes** = declarar su árbol de datos + sus
+diálogos + registrar recursos por clave. **No** hay que tocar `StageRenderer` ni
+`blocks.tsx`. Guía paso a paso en `contexto/planes/guia-crear-nueva-etapa.md`.
+
+> La Etapa 1 y la Introducción conservan su patrón de frames hecho a mano
+> (`*Frames.tsx`), documentado abajo. El motor dirigido por datos coexiste con
+> ellos y es el camino recomendado para etapas nuevas.
+
+---
+
+## Sistema de Frames — Guía de implementación (Etapa 1 / Introducción)
 
 Esta sección documenta el sistema visual de secciones progresivas usado en la Etapa 1 (y base para etapas futuras). Cada "frame" es un panel glassmorphism que aparece en la página cuando el frame anterior completa su secuencia interactiva.
 
@@ -590,7 +618,7 @@ El orden aprobado en `AGENTS_claude_stage1.md` que deben seguir los frames:
 6. Rail de etapas
 7. Estados
 8. Consentimiento
-9. Chatbot opcional
+9. Asistencia guiada (Laia no conversacional)
 10. Embebido (autodiagnóstico)
 11. Cierre con video
 12. Transición a la siguiente etapa
@@ -623,20 +651,26 @@ Para implementar la **recepción del resultado** vía webhook (pendiente):
 
 ---
 
-## Chatbot Laia
+## Laia — guía no conversacional
 
-Laia es la asistente pedagógica. Actualmente aparece como:
-- Diálogos paso a paso vía `CharacterStepDialog` (entrada de Etapa 1)
-- Chat inline en Frame 3 (chat panel con avatar + input)
-- Widget fijo `StageViewer` en esquina superior derecha desde Frame 3
+**El aplicativo no tiene chatbot.** Laia existe únicamente como personaje guía y
+narradora visual con diálogos predefinidos. No hay input de mensajes, ni botón de
+enviar, ni paneles de chat, ni servicios/endpoints de LLM (`/api/laia`).
 
-### Para activar Laia conversacional (pendiente)
+Laia aparece como:
+- **Diálogos paso a paso** vía `CharacterStepDialog` (typewriter, paginación, audio
+  opcional, teclado ←/→). Los textos se copian literalmente de
+  `contexto/fuentes/EMI_escrita.md`.
+- **Mano que señala controles** vía `components/guide-hand/GuideHand.tsx`: sistema
+  reusable, no conversacional, que apunta a un control identificado por
+  `data-guide-id`, muestra una instrucción breve (`aria-live`), permite "Omitir
+  guía", se muestra una sola vez (clave versionada `ai-tech-ed-guide-<stageId>-v1`),
+  respeta `prefers-reduced-motion` y usa `public/mano/Mano izq apunta.svg` (con
+  fallback si el SVG no carga).
+- **Localizador del modelo** (`MiniSpiralViewer` / visor 3D `StageViewer`).
 
-1. Crear `src/domain/chatbot/entities/ChatbotContext.ts` — estado: mood, nivel, etapa
-2. Crear `src/domain/chatbot/rules/LaiaContextRule.ts` — elige mood según progreso
-3. Crear `src/application/chatbot/usecases/BuildLaiaContextUseCase.ts`
-4. Crear `src/infrastructure/chatbot/LaiaServiceAdapter.ts`
-5. Crear `app/api/laia/route.ts` como BFF para el LLM
+> Las referencias históricas a un chatbot en el guion (`EMI_escrita.md`) quedaron
+> anuladas por decisión del proyecto. Ver `contexto/context.md`.
 
 ---
 
@@ -680,7 +714,7 @@ pnpm add -D vitest @vitest/ui jsdom @testing-library/react @testing-library/user
 
 ### Clean Architecture en lugar de colocación por feature
 
-El proyecto tiene tres dominios con distinto ritmo de cambio: **etapas** (contenido pedagógico, cambia por ciclo académico), **progreso** (lógica de estado del docente, estable) y **chatbot** (Laia, evoluciona hacia LLM). Clean Architecture separa estos dominios para que cada uno evolucione sin romper los otros.
+El proyecto tiene dominios con distinto ritmo de cambio: **etapas** (contenido pedagógico, cambia por ciclo académico) y **progreso** (lógica de estado del docente, estable). Clean Architecture separa estos dominios para que cada uno evolucione sin romper los otros. (Laia es una guía visual no conversacional; no hay dominio de chatbot.)
 
 ### `useSyncExternalStore` + localStorage en lugar de Zustand
 

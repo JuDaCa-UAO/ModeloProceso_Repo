@@ -63,15 +63,14 @@ function markSeen(stageId: string, guideKey: string) {
 
 export default function GuideHand({ stageId, guideKey, targetGuideId, text, placement = "bottom" }: GuideHandProps) {
   const [pos, setPos] = useState<{ top: number; left: number } | null>(null);
-  const [dismissed, setDismissed] = useState(true); // empieza oculto hasta verificar localStorage
+  // El host usa ssr:false, así que window existe al montar: se lee localStorage
+  // en el inicializador para mostrar la guía una sola vez (clave versionada).
+  const [dismissed, setDismissed] = useState<boolean>(
+    () => (typeof window === "undefined" ? true : readSeen(stageId).has(guideKey))
+  );
   const [svgFailed, setSvgFailed] = useState(false);
   const rafRef = useRef<number | null>(null);
   const hand = resolveMedia("laia.leftPointingHand");
-
-  // Decide si mostrar (no visto antes) tras montar (evita mismatch SSR — el host usa ssr:false).
-  useEffect(() => {
-    setDismissed(readSeen(stageId).has(guideKey));
-  }, [stageId, guideKey]);
 
   const recompute = useCallback(() => {
     const el = document.querySelector<HTMLElement>(`[data-guide-id="${targetGuideId}"]`);
