@@ -30,12 +30,14 @@ const securityHeaders = [
   // Instruye al browser para abrir conexiones con YouTube antes de parsear el HTML.
   // Llega antes que cualquier <link> del <head>, reduciendo la latencia del primer frame.
   {
+    // Solo preconnect/dns-prefetch (sin preload): el preload del iframe_api se
+    // disparaba en todas las rutas y avisaba "preloaded but not used" donde no hay
+    // reproductor de YouTube. El IFrame API se sigue cargando bajo demanda.
     key: "Link",
     value: [
       "<https://www.youtube-nocookie.com>; rel=preconnect",
       "<https://www.youtube.com>; rel=preconnect; crossorigin",
       "<https://i.ytimg.com>; rel=dns-prefetch",
-      "<https://www.youtube.com/iframe_api>; rel=preload; as=script",
     ].join(", "),
   },
 ];
