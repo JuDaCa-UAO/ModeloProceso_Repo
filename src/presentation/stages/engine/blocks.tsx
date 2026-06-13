@@ -13,7 +13,7 @@
  */
 
 import { useCallback, useEffect, useState } from "react";
-import StageViewer from "@/components/stage/StageViewer";
+import LazyStageViewer from "@/components/stage/LazyStageViewer";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import { resolveMedia } from "@/content/shared/media-registry";
 import type { ResolvedMedia } from "@/content/shared/media-registry";
@@ -44,7 +44,7 @@ function SpiralViewerBlock({ block }: BlockComponentProps) {
   return (
     <>
       <div className={block.variant === "compact" ? sc.modelStageCompact : sc.modelStage}>
-        <StageViewer enableRotation={!reduced} activeStage={block.activeStage} />
+        <LazyStageViewer enableRotation={!reduced} activeStage={block.activeStage} />
       </div>
       {block.instructions ? (
         <p className={sc.frameInstructions}>{block.instructions}</p>
@@ -247,7 +247,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
             aria-label={media.description}
           />
         ) : (
-          <StageViewer enableRotation={!reduced} activeStage={2} />
+          <LazyStageViewer enableRotation={!reduced} activeStage={2} />
         )}
       </div>
 
