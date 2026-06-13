@@ -1,18 +1,23 @@
 import type { NextConfig } from "next";
 
+// Host externo de multimedia (infografías SVG, Matriz de Pugh PDF, videos de etapa).
+// Vacío hasta definirse; al configurarlo se habilita en el CSP automáticamente.
+const MEDIA_BASE = process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "";
+
 const ContentSecurityPolicy = [
   `default-src 'self'`,
   // youtube.com needed for the IFrame API script (iframe_api.js)
   `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.youtube.com`,
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `font-src 'self' https://fonts.gstatic.com`,
-  // i.ytimg.com for YouTube video thumbnails rendered inside the player
-  `img-src 'self' blob: data: https://i.ytimg.com`,
-  `media-src 'self'`,
+  // i.ytimg.com for YouTube thumbnails; MEDIA_BASE for hosted infographics (SVG/img)
+  `img-src 'self' blob: data: https://i.ytimg.com ${MEDIA_BASE}`,
+  // MEDIA_BASE for hosted stage videos
+  `media-src 'self' ${MEDIA_BASE}`,
   // youtube-nocookie.com for the privacy-enhanced YouTube embed iframe
   `frame-src 'self' ${process.env.NEXT_PUBLIC_N8N_BASE_URL ?? ""} https://www.youtube-nocookie.com`,
-  // YouTube may issue XHR/fetch requests from the player for metadata
-  `connect-src 'self' ${process.env.NEXT_PUBLIC_N8N_BASE_URL ?? ""} https://www.youtube.com https://www.youtube-nocookie.com`,
+  // YouTube may issue XHR/fetch requests; MEDIA_BASE for fetching hosted assets
+  `connect-src 'self' ${process.env.NEXT_PUBLIC_N8N_BASE_URL ?? ""} ${MEDIA_BASE} https://www.youtube.com https://www.youtube-nocookie.com`,
 ].join("; ");
 
 const securityHeaders = [

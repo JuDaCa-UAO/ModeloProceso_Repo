@@ -42,8 +42,8 @@ export type StageBlock =
     }
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "narrative-video"; mediaKey: MediaKey; caption?: string }
-  | { type: "criteria-infographic"; openLabel: string }
-  | { type: "comparison-example"; openLabel: string }
+  | { type: "criteria-infographic"; openLabel: string; mediaKey: MediaKey }
+  | { type: "comparison-example"; openLabel: string; mediaKey: MediaKey }
   | { type: "download-resource"; mediaKey: MediaKey; label: string }
   | {
       type: "transition";

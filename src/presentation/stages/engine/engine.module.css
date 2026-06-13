@@ -147,7 +147,43 @@
   padding: 8px 22px 24px;
 }
 
-/* ── Infografía (criterios) ───────────────────────────────────────────────── */
+/* ── Infografía hosteada (SVG) / Próximamente ─────────────────────────────── */
+.infographicImg {
+  display: block;
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+}
+.comingSoon {
+  display: grid;
+  justify-items: center;
+  align-content: center;
+  gap: 12px;
+  min-height: clamp(220px, 34dvh, 360px);
+  border-radius: 14px;
+  border: 1px dashed rgba(248, 46, 53, 0.4);
+  background: rgba(4, 2, 3, 0.6);
+  padding: 28px;
+  text-align: center;
+}
+.comingSoonText {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: 15px;
+  line-height: 1.5;
+  max-width: 48ch;
+}
+.transitionNote {
+  margin: 0;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  color: #d1d1d1;
+  font-size: 13px;
+  text-align: center;
+}
+
+/* ── Infografía (criterios) — estilos heredados, disponibles para reutilizar ── */
 .infoTitle {
   margin: 4px 0 2px;
   color: #fff;

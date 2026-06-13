@@ -72,7 +72,7 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       { type: "dialogue", steps: STAGE2_S3_STEPS },
-      { type: "criteria-infographic", openLabel: "Observar criterios" },
+      { type: "criteria-infographic", openLabel: "Observar criterios", mediaKey: "stage2.criteriaInfographic" },
     ],
   },
 
@@ -85,7 +85,7 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       { type: "dialogue", steps: STAGE2_S4_STEPS },
-      { type: "comparison-example", openLabel: "Observar ejemplo" },
+      { type: "comparison-example", openLabel: "Observar ejemplo", mediaKey: "stage2.comparisonExample" },
     ],
   },
 
