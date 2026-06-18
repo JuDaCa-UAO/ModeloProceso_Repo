@@ -1,13 +1,19 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Chakra_Petch } from "next/font/google";
+import { VT323, Pixelify_Sans } from "next/font/google";
 import { VolumeProvider } from "@/context/VolumeContext";
 import { AccessibilityProvider } from "@/context/AccessibilityContext";
 
-const techFont = Chakra_Petch({
+const vt323 = VT323({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
+  weight: "400",
   variable: "--font-tech",
+});
+
+const pixelify = Pixelify_Sans({
+  subsets: ["latin"],
+  weight: ["400", "500", "600", "700"],
+  variable: "--font-pixelify",
 });
 
 export const metadata: Metadata = {
@@ -30,7 +36,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Descarga el script de la IFrame API en paralelo con el HTML */}
         <link rel="preload" as="script" href="https://www.youtube.com/iframe_api" />
       </head>
-      <body className={techFont.variable}>
+      <body className={`${vt323.variable} ${pixelify.variable}`}>
         <VolumeProvider><AccessibilityProvider>{children}</AccessibilityProvider></VolumeProvider>
       </body>
     </html>

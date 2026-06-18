@@ -185,7 +185,7 @@
 
 .stageTitleText {
   margin: 0;
-  font-family: 'Orbitron', 'Share Tech Mono', monospace;
+  font-family: var(--font-tech), monospace;
   font-size: clamp(0.85rem, 1.8vw, 1.55rem);
   font-weight: 700;
   letter-spacing: 0.12em;
