@@ -55,17 +55,17 @@
 
 .sectionTitle {
   position: absolute;
-  top: 0;
-  left: 0;
+  top: -2.8rem;
+  left: 12px;
   z-index: 3;
   /* bracket decorations via pseudo caret corners */
-  padding: 18px 20px 0;
+  padding: 0;
 }
 
 .sectionTitleText {
   display: inline-block;
-  padding: 6px 16px;
-  font-size: 12px;
+  padding: 8px 18px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.10em;
   text-transform: uppercase;
