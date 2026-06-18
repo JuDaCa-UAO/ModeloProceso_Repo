@@ -414,6 +414,7 @@ function DesignCanvasBlock({ block }: BlockComponentProps) {
         onClose={() => setOpen(false)}
         title={block.modalTitle ?? "Canvas de diseño de experiencia mediada por GenAI"}
         badge={block.modalBadge ?? "CANVAS"}
+        width="wide"
       >
         <InteractiveDesignCanvas />
       </Modal>

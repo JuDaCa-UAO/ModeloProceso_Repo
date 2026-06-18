@@ -32,7 +32,7 @@
   margin: 8px 0 0;
   border-radius: 4px;
   padding: 6px 8px;
-  font-size: 10px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 700;
   letter-spacing: 0.05em;
   text-align: center;
@@ -84,12 +84,13 @@
 
 .journeyBtn {
   margin-top: 8px;
-  padding: 6px 8px;
+  padding: 8px 10px;
   background: transparent;
   border: 1px solid rgba(248, 46, 53, 0.4);
   color: rgba(254, 106, 111, 0.9);
   border-radius: 4px;
-  font-size: 10px;
+  font-size: calc(15px * var(--text-scale, 1));
+  font-weight: 700;
   text-transform: uppercase;
   cursor: pointer;
   transition: all 0.2s;

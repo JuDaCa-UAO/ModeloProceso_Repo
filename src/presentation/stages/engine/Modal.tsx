@@ -13,13 +13,22 @@ type ModalProps = {
   badge?: string;
   closeLabel?: string;
   children: React.ReactNode;
+  width?: "normal" | "wide";
 };
 
 /**
  * Modal accesible reutilizable: portal a document.body, cierre por backdrop,
  * Escape y botón. Mueve el foco al cierre al abrir y lo restaura al cerrar.
  */
-export default function Modal({ open, onClose, title, badge, closeLabel = "Cerrar", children }: ModalProps) {
+export default function Modal({
+  open,
+  onClose,
+  title,
+  badge,
+  closeLabel = "Cerrar",
+  children,
+  width = "normal",
+}: ModalProps) {
   const closeRef = useRef<HTMLButtonElement | null>(null);
   const lastFocused = useRef<HTMLElement | null>(null);
 
@@ -49,7 +58,7 @@ export default function Modal({ open, onClose, title, badge, closeLabel = "Cerra
   return createPortal(
     <div className={styles.modalBackdrop} onClick={onClose}>
       <div
-        className={styles.modalCard}
+        className={`${styles.modalCard} ${width === "wide" ? styles.modalCardWide : ""}`}
         role="dialog"
         aria-modal="true"
         aria-label={title}
