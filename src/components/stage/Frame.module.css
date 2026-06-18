@@ -7,8 +7,8 @@
   --frame-base-h: clamp(420px, 78dvh, 800px);
   width: calc(var(--frame-base-w) * var(--ui-scale, 1));
   max-width: 100%;
-  /* Both scales affect height so the frame always contains its zoomed content */
-  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1) * var(--text-scale, 1));
+  /* Only ui-scale affects frame height to keep dimensions consistent; text-scale triggers reflow */
+  min-height: calc(var(--frame-base-h) * var(--ui-scale, 1));
   display: flex;
   flex-direction: column;
   /* overflow visible so the hint slot can extend below the frame border */
@@ -123,9 +123,8 @@
   /* give extra top room for the section title */
   padding-top: clamp(52px, 7dvh, 76px);
   gap: 8px;
-  /* Both scales compound: ui-scale shrinks the frame AND its content together
-     so the content always fits the smaller frame; text-scale layers on top. */
-  zoom: calc(var(--text-scale, 1) * var(--ui-scale, 1));
+  /* Only ui-scale shrinks the frame content together; text-scale will trigger reflow */
+  zoom: var(--ui-scale, 1);
 }
 
 /* ─── Bottom bar slot: barra que sobresale por debajo del borde del frame ── */

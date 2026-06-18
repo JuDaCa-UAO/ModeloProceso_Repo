@@ -67,7 +67,7 @@
   border: 1px solid rgba(254, 106, 111, 0.42);
   background: rgba(0, 0, 0, 0.46);
   padding: 9px 14px;
-  font-size: 14px;
+  font-size: calc(16px * var(--text-scale, 1));
   font-weight: 600;
   color: rgba(255, 237, 238, 0.96);
   letter-spacing: 0.06em;
@@ -76,7 +76,7 @@
 
 .compact .avatarTag {
   padding: 7px 11px;
-  font-size: 12px;
+  font-size: calc(14px * var(--text-scale, 1));
 }
 
 .avatarTagInside {
@@ -133,13 +133,13 @@
 }
 
 .dialogText {
-  font-size: clamp(16px, 2vw, 18px);
+  font-size: calc(clamp(18px, 2.2vw, 21px) * var(--text-scale, 1));
   line-height: 1.65;
   color: rgba(255, 255, 255, 0.96);
 }
 
 .compact .dialogText {
-  font-size: clamp(14px, 1.7vw, 15px);
+  font-size: calc(clamp(16px, 1.9vw, 18px) * var(--text-scale, 1));
   line-height: 1.5;
 }
 
@@ -195,9 +195,9 @@
   transition: all 0.25s cubic-bezier(0.25, 0.8, 0.25, 1);
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
   letter-spacing: 0.1em;
-  font-size: 14px;
+  font-size: calc(16px * var(--text-scale, 1));
   font-weight: 500;
-  white-space: nowrap;
+  white-space: normal;
   display: inline-flex;
   align-items: center;
   justify-content: center;
@@ -240,13 +240,13 @@
 .compact .nextBtn {
   border-radius: 12px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(15px * var(--text-scale, 1));
 }
 
 .compact .secondaryBtn {
   border-radius: 12px;
   padding: 8px 14px;
-  font-size: 13px;
+  font-size: calc(15px * var(--text-scale, 1));
 }
 
 .compact .navBtn {
@@ -302,7 +302,7 @@
   border-radius: 14px;
   padding: 10px;
   min-width: 44px;
-  font-size: 18px;
+  font-size: calc(20px * var(--text-scale, 1));
   line-height: 1;
   cursor: pointer;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
@@ -315,7 +315,7 @@
 .compact .audioBtn {
   padding: 8px;
   min-width: 38px;
-  font-size: 16px;
+  font-size: calc(18px * var(--text-scale, 1));
   border-radius: 12px;
 }
 
@@ -331,7 +331,7 @@
 }
 
 .counter {
-  font-size: 12px;
+  font-size: calc(14px * var(--text-scale, 1));
   color: rgba(255, 223, 224, 0.72);
   letter-spacing: 0.08em;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
@@ -341,7 +341,7 @@
 }
 
 .compact .counter {
-  font-size: 11px;
+  font-size: calc(13px * var(--text-scale, 1));
 }
 
 @media (max-width: 880px) {

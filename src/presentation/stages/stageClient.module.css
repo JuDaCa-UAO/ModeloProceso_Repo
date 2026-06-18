@@ -109,7 +109,7 @@
 
 .embedHeaderLabel {
   margin-left: 6px;
-  font-size: 10px;
+  font-size: calc(12px * var(--text-scale, 1));
   font-weight: 700;
   letter-spacing: 0.16em;
   color: rgba(0, 210, 255, 0.70);
@@ -143,7 +143,7 @@
 }
 
 .embedFooterStatus {
-  font-size: 11px;
+  font-size: calc(13px * var(--text-scale, 1));
   letter-spacing: 0.10em;
   color: rgba(0, 200, 255, 0.65);
   text-transform: uppercase;
@@ -181,7 +181,7 @@
 }
 
 .scrollLabel {
-  font-size: 13px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
@@ -237,7 +237,7 @@
 .frameInstructions {
   margin: 0;
   padding: clamp(8px, 1.5dvh, 14px) 0;
-  font-size: clamp(13px, 1.3vw, 15px);
+  font-size: calc(clamp(15px, 1.5vw, 17px) * var(--text-scale, 1));
   line-height: 1.6;
   color: rgba(255, 255, 255, 0.80);
   text-align: center;
@@ -255,7 +255,7 @@
   color: #fff;
   border: none;
   border-radius: 999px;
-  font-size: 13px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -277,7 +277,7 @@
   color: rgba(254, 106, 111, 0.95);
   border: 1.5px solid rgba(248, 46, 53, 0.55);
   border-radius: 999px;
-  font-size: 13px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.06em;
   cursor: default;
@@ -300,7 +300,7 @@
 .videoStatus {
   margin: 0;
   padding: clamp(8px, 1.5dvh, 14px) 0 clamp(6px, 1dvh, 10px);
-  font-size: clamp(12px, 1.2vw, 14px);
+  font-size: calc(clamp(14px, 1.4vw, 16px) * var(--text-scale, 1));
   font-style: italic;
   color: rgba(255, 255, 255, 0.65);
   text-align: center;
@@ -350,7 +350,7 @@
   color: rgba(255, 255, 255, 0.55);
   border: 1px solid rgba(255, 255, 255, 0.18);
   border-radius: 999px;
-  font-size: 12px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 500;
   letter-spacing: 0.04em;
   cursor: pointer;
@@ -385,7 +385,7 @@
   color: rgba(254, 106, 111, 0.95);
   border: 1.5px solid rgba(248, 46, 53, 0.60);
   border-radius: 999px;
-  font-size: 15px;
+  font-size: calc(17px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.06em;
   text-decoration: none;
