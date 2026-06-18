@@ -42,17 +42,51 @@ export type StageBlock =
     }
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "narrative-video"; mediaKey: MediaKey; caption?: string }
-  | { type: "criteria-infographic"; openLabel: string; mediaKey: MediaKey }
-  | { type: "comparison-example"; openLabel: string; mediaKey: MediaKey }
-  | { type: "download-resource"; mediaKey: MediaKey; label: string }
+  | {
+      type: "criteria-infographic";
+      openLabel: string;
+      mediaKey: MediaKey;
+      modalTitle?: string;
+      modalBadge?: string;
+      guideId?: string;
+    }
+  | {
+      type: "comparison-example";
+      openLabel: string;
+      mediaKey: MediaKey;
+      modalTitle?: string;
+      modalBadge?: string;
+      guideId?: string;
+    }
+  | {
+      type: "design-canvas";
+      openLabel: string;
+      mediaKey: MediaKey;
+      modalTitle?: string;
+      modalBadge?: string;
+      guideId?: string;
+    }
+  | {
+      type: "download-resource";
+      mediaKey: MediaKey;
+      label: string;
+      guideId?: string;
+      confirmationTitle?: string;
+      confirmationText?: string;
+      confirmationDescription?: string;
+    }
   | {
       type: "transition";
       mediaKey: MediaKey;
+      activeStage?: number;
       steps: CharacterDialogStep[];
       nextHref: string;
       nextLabel: string;
       /** Si false, el botón muestra estado "próximamente" y no navega. */
       nextAvailable: boolean;
+      guideId?: string;
+      playLabel?: string;
+      repeatLabel?: string;
     };
 
 /** Nodo del árbol de la etapa. Cada nodo de nivel superior es un frame. */

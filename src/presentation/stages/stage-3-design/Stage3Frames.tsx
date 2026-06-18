@@ -1,22 +1,38 @@
 "use client";
 
-import type { StageFramesProps } from "../shared/StageFramesProps";
+/**
+ * PRESENTATION — Etapa 3 (Diseña con propósito)
+ *
+ * Vista delgada: delega todo el render en el motor dirigido por datos
+ * (`StageRenderer`) consumiendo la definición `STAGE3_DESIGN_TREE`.
+ * No contiene JSX específico de la etapa ni una rama gigante por `stageId`.
+ */
 
-export default function Stage3Frames(_: StageFramesProps) {
+import StageRenderer from "../engine/StageRenderer";
+import { STAGE3_DESIGN_TREE } from "@/content/stages/stage-3.content";
+import type { StageFramesProps } from "../shared/StageFramesProps";
+import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
+
+export default function Stage3Frames({
+  stageId,
+  completedFrames,
+  completeFrame,
+  pushToast,
+  notifiedFrames,
+}: StageFramesProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "80vh",
-        color: "#c9b8e8",
-        fontSize: "1.1rem",
-        textAlign: "center",
-        padding: "2rem",
-      }}
-    >
-      <p>Esta etapa estará disponible próximamente.</p>
-    </div>
+    <>
+      {completedFrames >= 1 && (
+        <MiniSpiralViewer stageLabel="Etapa actual: Etapa 3" stageKey="etapa-3" />
+      )}
+      <StageRenderer
+        stageId={stageId}
+        tree={STAGE3_DESIGN_TREE}
+        completedFrames={completedFrames}
+        completeFrame={completeFrame}
+        pushToast={pushToast}
+        notifiedFrames={notifiedFrames}
+      />
+    </>
   );
 }

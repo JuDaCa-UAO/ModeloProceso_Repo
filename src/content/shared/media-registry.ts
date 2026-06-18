@@ -107,10 +107,85 @@ export const MEDIA_REGISTRY = {
   },
   "stage2.transitionVideo": {
     kind: "video-file",
-    status: "hosted",
-    remotePath: "/etapa-2/transicion-e2-e3.mp4",
+    status: "available",
+    localPath: "/media/transiciones/E2-a-E3.webm",
     description: "Animación de transición de la Etapa 2 hacia la Etapa 3.",
     fallbackLabel: "Animación de transición — próximamente.",
+  },
+
+  // ── Etapa 3 · recursos (Diseña con propósito) ─────────────────────────────
+  "stage3.section2Video": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-3/seccion-2-propositos.mp4",
+    description: "Animación de componentes pedagógicos conectados con soluciones de IA.",
+    fallbackLabel: "Animación de componentes pedagógicos — próximamente.",
+  },
+  "stage3.designMap": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-3/Canvas_etapa3.png",
+    description: "Canvas de diseño de experiencia mediada por GenAI (PNG).",
+    fallbackLabel: "El Canvas de diseño estará disponible próximamente.",
+  },
+  "stage3.caseExample": {
+    kind: "image",
+    status: "hosted",
+    remotePath: "/etapa-3/Ejemplo-diseno.webp",
+    description: "Caso práctico de diseño didáctico mediado por IA.",
+    fallbackLabel: "El ejemplo de diseño práctico estará disponible próximamente.",
+  },
+  "stage3.designCanvas": {
+    kind: "download",
+    status: "available",
+    localPath: "/media/etapa-3/Canvas-de-diseno.pdf",
+    downloadName: "Canvas-de-diseno.pdf",
+    description: "Canvas de diseño de experiencia mediada por GenAI (PDF).",
+    fallbackLabel: "El Canvas de diseño estará disponible para descarga próximamente.",
+  },
+
+  // ── Videos globales de transición (locales) ──────────────────────────────────
+  "transitions.stage1Intro": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E1.webm",
+    description: "Animación de introducción al modelo.",
+    fallbackLabel: "Animación de introducción al modelo — próximamente.",
+  },
+  "transitions.stage1ToStage2": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E1-a-E2.webm",
+    description: "Animación de transición de la Etapa 1 a la Etapa 2.",
+    fallbackLabel: "Animación de transición de Etapa 1 a 2 — próximamente.",
+  },
+  "transitions.stage2ToStage3": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E2-a-E3.webm",
+    description: "Animación de transición de la Etapa 2 a la Etapa 3.",
+    fallbackLabel: "Animación de transición de Etapa 2 a 3 — próximamente.",
+  },
+  "transitions.stage3ToStage4": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E3-a-E4.webm",
+    description: "Animación de transición de la Etapa 3 a la Etapa 4.",
+    fallbackLabel: "Animación de transición de Etapa 3 a 4 — próximamente.",
+  },
+  "transitions.stage4ToStage5": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E4-a-E5.webm",
+    description: "Animación de transición de la Etapa 4 a la Etapa 5.",
+    fallbackLabel: "Animación de transición de Etapa 4 a 5 — próximamente.",
+  },
+  "transitions.stage5ToStage6": {
+    kind: "video-file",
+    status: "available",
+    localPath: "/media/transiciones/E5-a-E6.webm",
+    description: "Animación de transición de la Etapa 5 a la Etapa 6.",
+    fallbackLabel: "Animación de transición de Etapa 5 a 6 — próximamente.",
   },
 } as const satisfies Record<string, MediaEntry>;
 
