@@ -11,6 +11,7 @@
 import StageRenderer from "../engine/StageRenderer";
 import { STAGE2_DISCOVER_TREE } from "@/content/stages/stage-2.content";
 import type { StageFramesProps } from "../shared/StageFramesProps";
+import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 
 export default function Stage2Frames({
   stageId,
@@ -20,13 +21,18 @@ export default function Stage2Frames({
   notifiedFrames,
 }: StageFramesProps) {
   return (
-    <StageRenderer
-      stageId={stageId}
-      tree={STAGE2_DISCOVER_TREE}
-      completedFrames={completedFrames}
-      completeFrame={completeFrame}
-      pushToast={pushToast}
-      notifiedFrames={notifiedFrames}
-    />
+    <>
+      {completedFrames >= 1 && (
+        <MiniSpiralViewer stageLabel="Etapa actual: Etapa 2" stageKey="etapa-2" />
+      )}
+      <StageRenderer
+        stageId={stageId}
+        tree={STAGE2_DISCOVER_TREE}
+        completedFrames={completedFrames}
+        completeFrame={completeFrame}
+        pushToast={pushToast}
+        notifiedFrames={notifiedFrames}
+      />
+    </>
   );
 }

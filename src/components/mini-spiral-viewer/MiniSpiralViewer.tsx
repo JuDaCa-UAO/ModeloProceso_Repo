@@ -53,7 +53,7 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
           return (
             <div 
               key={stage.id} 
-              className={`${styles.stepDot} ${stateClass}`} 
+              className={`${styles.stepDot} ${stateClass} ${i === 0 ? styles.intro : ""}`} 
               title={`${stage.name} (${stateName})`}
               aria-label={`${stage.name}: ${stateName}`}
             />

@@ -59,7 +59,17 @@
 }
 
 .stepDot.completed {
-  background: rgba(254, 106, 111, 0.5);
+  background: #ffffff;
+}
+
+.stepDot.intro.completed {
+  background: var(--hud-cyan, #54F5FF);
+  box-shadow: 0 0 6px rgba(84, 245, 255, 0.5);
+}
+
+.stepDot.intro.current {
+  background: var(--hud-cyan, #54F5FF);
+  box-shadow: 0 0 8px rgba(84, 245, 255, 0.8);
 }
 
 .stepDot.current {
