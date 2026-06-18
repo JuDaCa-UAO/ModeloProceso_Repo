@@ -1,6 +1,5 @@
 /* ─── PauseMenu: botón y panel de pausa para las etapas ─────────────────── */
 
-/* Visually Hidden para Lectores de Pantalla (srOnly) */
 .srOnly {
   position: absolute;
   width: 1px;
@@ -13,7 +12,7 @@
   border: 0;
 }
 
-/* ─── Botón trigger — arriba derecha ──────────────────────────────────── */
+/* ─── Botón trigger ── */
 
 .triggerBtn {
   position: fixed;
@@ -26,20 +25,18 @@
   width: 44px;
   height: 44px;
   border-radius: 10px;
-  border: 1.5px solid rgba(248, 46, 53, 0.55);
-  background: rgba(6, 4, 5, 0.90);
-  color: rgba(254, 106, 111, 0.95);
-  backdrop-filter: blur(12px);
+  border: 1.5px solid var(--uao-color-red-primary);
+  background: var(--uao-color-white);
+  color: var(--uao-color-red-primary);
   cursor: pointer;
-  box-shadow:
-    0 0 14px rgba(248, 46, 53, 0.18),
-    0 6px 24px rgba(0, 0, 0, 0.55);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
   transition: background 0.15s, border-color 0.15s, transform 0.12s;
 }
 
 .triggerBtn:hover {
-  background: rgba(158, 11, 15, 0.38);
-  border-color: rgba(254, 106, 111, 0.80);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+  border-color: var(--uao-color-red-primary);
   transform: scale(1.06);
 }
 
@@ -48,8 +45,7 @@
 }
 
 .triggerBtn:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 2px;
+  box-shadow: var(--uao-focus-ring);
 }
 
 .triggerIcon {
@@ -57,14 +53,14 @@
   line-height: 1;
 }
 
-/* ─── Overlay ────────────────────────────────────────────────────────────── */
+/* ─── Overlay ── */
 
 .overlay {
   position: fixed;
   inset: 0;
   z-index: 400;
-  background: rgba(2, 1, 2, 0.72);
-  backdrop-filter: blur(6px);
+  background: rgba(0, 0, 0, 0.5);
+  backdrop-filter: blur(4px);
   display: flex;
   align-items: center;
   justify-content: center;
@@ -76,26 +72,23 @@
   to   { opacity: 1; }
 }
 
-/* ─── Panel ──────────────────────────────────────────────────────────────── */
+/* ─── Panel ── */
 
 .panel {
   width: min(92vw, 420px);
   max-height: min(90dvh, 760px);
   overflow-y: auto;
   border-radius: 14px;
-  border: 1.5px solid rgba(248, 46, 53, 0.55);
-  background: rgba(6, 4, 5, 0.96);
-  backdrop-filter: blur(20px);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  background: var(--uao-color-white);
   padding: 32px clamp(20px, 3vw, 36px) 28px;
-  box-shadow:
-    0 0 32px rgba(248, 46, 53, 0.18),
-    0 24px 80px rgba(0, 0, 0, 0.65);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.15);
   animation: slideUp 0.20s ease-out;
   display: flex;
   flex-direction: column;
   gap: 24px;
   scrollbar-width: thin;
-  scrollbar-color: rgba(248, 46, 53, 0.35) transparent;
+  scrollbar-color: var(--uao-color-red-primary) transparent;
 }
 
 @keyframes slideUp {
@@ -111,13 +104,13 @@
   margin: 0;
   font-size: calc(16px * var(--text-scale, 1));
   font-weight: 700;
-  letter-spacing: 0.20em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.55);
+  color: var(--uao-grey-3);
   text-align: center;
 }
 
-/* ─── Lista de opciones ──────────────────────────────────────────────────── */
+/* ─── Lista de opciones ── */
 
 .menuList {
   display: flex;
@@ -131,9 +124,9 @@
   justify-content: center;
   padding: 14px 20px;
   border-radius: 10px;
-  border: 1.5px solid rgba(248, 46, 53, 0.45);
-  background: rgba(80, 6, 8, 0.28);
-  color: rgba(255, 230, 231, 0.92);
+  border: 1.5px solid var(--uao-color-red-primary);
+  background: var(--uao-color-white);
+  color: var(--uao-color-red-primary);
   text-decoration: none;
   font-size: calc(17px * var(--text-scale, 1));
   font-weight: 600;
@@ -144,8 +137,9 @@
 }
 
 .menuItem:hover {
-  background: rgba(158, 11, 15, 0.42);
-  border-color: rgba(254, 106, 111, 0.75);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+  border-color: var(--uao-color-red-primary);
   transform: translateY(-1px);
 }
 
@@ -154,11 +148,10 @@
 }
 
 .menuItem:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 2px;
+  box-shadow: var(--uao-focus-ring);
 }
 
-/* ─── Controles de Audio ─────────────────────────────────────────────────── */
+/* ─── Controles de Audio ── */
 
 .volumeControl {
   display: flex;
@@ -178,7 +171,7 @@
   font-weight: 600;
   letter-spacing: 0.1em;
   text-transform: uppercase;
-  color: rgba(255, 230, 231, 0.7);
+  color: var(--uao-color-black);
 }
 
 .volumeRow {
@@ -188,17 +181,17 @@
 }
 
 .volumeIcon {
-  color: rgba(254, 106, 111, 0.8);
+  color: var(--uao-color-red-primary);
 }
 
 .volumeSlider {
   -webkit-appearance: none;
   flex: 1;
   height: 6px;
-  background: rgba(80, 6, 8, 0.5);
+  background: rgba(0, 0, 0, 0.08);
   border-radius: 4px;
   outline: none;
-  border: 1px solid rgba(248, 46, 53, 0.3);
+  border: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .volumeSlider::-webkit-slider-thumb {
@@ -207,9 +200,10 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(255, 230, 231, 0.95);
+  background: var(--uao-color-red-primary);
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(248, 46, 53, 0.6);
+  border: 2px solid var(--uao-color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
   transition: transform 0.1s;
 }
 
@@ -217,10 +211,10 @@
   width: 18px;
   height: 18px;
   border-radius: 50%;
-  background: rgba(255, 230, 231, 0.95);
+  background: var(--uao-color-red-primary);
   cursor: pointer;
-  box-shadow: 0 0 10px rgba(248, 46, 53, 0.6);
-  border: none;
+  border: 2px solid var(--uao-color-white);
+  box-shadow: 0 1px 4px rgba(0, 0, 0, 0.2);
 }
 
 .volumeSlider::-webkit-slider-thumb:hover {
@@ -232,27 +226,26 @@
 }
 
 .volumeSlider:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 4px;
+  box-shadow: var(--uao-focus-ring);
 }
 
-/* ─── Sección de Accesibilidad ───────────────────────────────────────────── */
+/* ─── Sección de Accesibilidad ── */
 
 .accessibilitySection {
   display: flex;
   flex-direction: column;
   gap: 14px;
   padding-top: 8px;
-  border-top: 1px solid rgba(248, 46, 53, 0.25);
+  border-top: 1px solid rgba(0, 0, 0, 0.08);
 }
 
 .sectionLabel {
   margin: 0;
   font-size: calc(14px * var(--text-scale, 1));
   font-weight: 700;
-  letter-spacing: 0.16em;
+  letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: rgba(255, 230, 231, 0.55);
+  color: var(--uao-grey-3);
   text-align: center;
 }
 
@@ -267,7 +260,7 @@
   font-weight: 600;
   letter-spacing: 0.10em;
   text-transform: uppercase;
-  color: rgba(255, 230, 231, 0.65);
+  color: rgba(0, 0, 0, 0.6);
 }
 
 .scaleRow {
@@ -284,9 +277,9 @@
   align-items: center;
   justify-content: center;
   border-radius: 8px;
-  border: 1.5px solid rgba(248, 46, 53, 0.45);
-  background: rgba(80, 6, 8, 0.28);
-  color: rgba(255, 230, 231, 0.92);
+  border: 1.5px solid var(--uao-color-red-primary);
+  background: var(--uao-color-white);
+  color: var(--uao-color-red-primary);
   font-size: calc(16px * var(--text-scale, 1));
   font-weight: 700;
   cursor: pointer;
@@ -294,8 +287,9 @@
 }
 
 .scaleBtn:hover:not(:disabled) {
-  background: rgba(158, 11, 15, 0.42);
-  border-color: rgba(254, 106, 111, 0.75);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+  border-color: var(--uao-color-red-primary);
   transform: scale(1.08);
 }
 
@@ -309,8 +303,7 @@
 }
 
 .scaleBtn:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 2px;
+  box-shadow: var(--uao-focus-ring);
 }
 
 .scaleValue {
@@ -319,7 +312,7 @@
   font-size: calc(17px * var(--text-scale, 1));
   font-weight: 700;
   letter-spacing: 0.05em;
-  color: rgba(254, 106, 111, 0.95);
+  color: var(--uao-color-red-primary);
   font-variant-numeric: tabular-nums;
 }
 
@@ -327,9 +320,9 @@
   align-self: center;
   padding: 8px 20px;
   border-radius: 999px;
-  border: 1px solid rgba(255, 255, 255, 0.20);
+  border: 1px solid rgba(0, 0, 0, 0.15);
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
+  color: rgba(0, 0, 0, 0.5);
   font-size: calc(13px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.08em;
@@ -339,16 +332,15 @@
 }
 
 .resetBtn:hover {
-  color: rgba(254, 106, 111, 0.90);
-  border-color: rgba(254, 106, 111, 0.50);
+  color: var(--uao-color-red-primary);
+  border-color: var(--uao-color-red-primary);
 }
 
 .resetBtn:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 2px;
+  box-shadow: var(--uao-focus-ring);
 }
 
-/* ─── Confirmación de salida ─────────────────────────────────────────────── */
+/* ─── Confirmación de salida ── */
 
 .confirmBox {
   display: flex;
@@ -356,8 +348,8 @@
   gap: 12px;
   padding: 16px;
   border-radius: 12px;
-  border: 1px solid rgba(248, 46, 53, 0.45);
-  background: rgba(80, 6, 8, 0.15);
+  border: 1px solid var(--uao-color-red-primary);
+  background: rgba(255, 5, 30, 0.04);
   animation: fadeIn 0.15s ease-out;
 }
 
@@ -365,7 +357,7 @@
   margin: 0;
   font-size: calc(15px * var(--text-scale, 1));
   text-align: center;
-  color: rgba(255, 230, 231, 0.85);
+  color: var(--uao-color-wine);
   line-height: 1.4;
 }
 
@@ -386,9 +378,9 @@
   justify-content: center;
   padding: 10px 14px;
   border-radius: 10px;
-  border: 1.5px solid rgba(248, 46, 53, 0.8);
-  background: rgba(248, 46, 53, 0.2);
-  color: rgba(255, 230, 231, 0.95);
+  border: 1.5px solid var(--uao-color-red-primary);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
   text-decoration: none;
   font-size: calc(14px * var(--text-scale, 1));
   font-weight: 700;
@@ -400,7 +392,7 @@
 }
 
 .menuItemPrimary:hover {
-  background: rgba(248, 46, 53, 0.4);
+  background: var(--uao-color-burgundy);
   transform: translateY(-1px);
 }
 
@@ -409,6 +401,5 @@
 }
 
 .menuItemPrimary:focus-visible {
-  outline: 2px solid var(--hud-cyan, #54F5FF);
-  outline-offset: 2px;
+  box-shadow: var(--uao-focus-ring);
 }

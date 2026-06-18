@@ -1,24 +1,19 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { VT323, Pixelify_Sans } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { VolumeProvider } from "@/context/VolumeContext";
 import { AccessibilityProvider } from "@/context/AccessibilityContext";
+import { BRAND } from "@/config/brand";
 
-const vt323 = VT323({
-  subsets: ["latin"],
-  weight: "400",
-  variable: "--font-tech",
-});
-
-const pixelify = Pixelify_Sans({
+const dmSans = DM_Sans({
   subsets: ["latin"],
   weight: ["400", "500", "600", "700"],
-  variable: "--font-pixelify",
+  variable: "--font-dm-sans",
 });
 
 export const metadata: Metadata = {
-  title: "AI TECH-ED",
-  description: "Demo del modelo de proceso",
+  title: BRAND.fullName,
+  description: `${BRAND.shortName}: modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de inteligencia artificial generativa`,
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -36,7 +31,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Descarga el script de la IFrame API en paralelo con el HTML */}
         <link rel="preload" as="script" href="https://www.youtube.com/iframe_api" />
       </head>
-      <body className={`${vt323.variable} ${pixelify.variable}`}>
+      <body className={`${dmSans.variable}`}>
         <VolumeProvider><AccessibilityProvider>{children}</AccessibilityProvider></VolumeProvider>
       </body>
     </html>

@@ -10,13 +10,42 @@ body {
 }
 
 :root {
-  /* La fuente --font-tech se inyecta desde layout.tsx usando VT323 por defecto (como en tu captura).
-     Si deseas cambiarla a la fuente pixelada moderna (Pixelify Sans), descomenta la siguiente línea:
-     --font-tech: var(--font-pixelify); */
-  --hud-cyan: rgba(84, 245, 255, 1);
-  --hud-cyan-soft: rgba(84, 245, 255, 0.34);
-  --hud-bg-deep: rgba(2, 12, 24, 0.84);
-  --hud-bg-mid: rgba(6, 26, 42, 0.84);
+  --uao-color-red-primary: #ff051e;
+  --uao-color-cream: #fbf5ec;
+  --uao-color-coral: #ff836c;
+  --uao-color-wine: #8a1428;
+  --uao-color-burgundy: #ac0b32;
+  --uao-color-white: #ffffff;
+  --uao-color-black: #000000;
+
+  --uao-color-mint-soft: #e0eee6;
+  --uao-color-blue-soft: #c4d3ee;
+  --uao-color-orange-soft: #ffb166;
+  --uao-color-purple: #9b4cd7;
+  --uao-color-blue: #009ae6;
+  --uao-color-green: #00c6a1;
+  --uao-color-pink: #ff74c4;
+  --uao-color-orange: #ff4503;
+  --uao-color-amber: #fe9800;
+
+  --uao-font-sans: var(--font-dm-sans), "DM Sans", Arial, sans-serif;
+
+  --uao-radius-sm: 0.5rem;
+  --uao-radius-md: 0.875rem;
+  --uao-radius-lg: 1.25rem;
+
+  --uao-space-1: 0.25rem;
+  --uao-space-2: 0.5rem;
+  --uao-space-3: 0.75rem;
+  --uao-space-4: 1rem;
+  --uao-space-6: 1.5rem;
+  --uao-space-8: 2rem;
+  --uao-space-12: 3rem;
+
+  --uao-content-max: 75rem;
+  --uao-logo-min-size: 50px;
+  --uao-focus-ring: 0 0 0 3px rgba(255, 5, 30, 0.28);
+
   /* Accessibility: overridden at runtime by AccessibilityContext */
   --text-scale: 1;
   --ui-scale: 1;
@@ -24,6 +53,34 @@ body {
 
 body {
   margin: 0;
-  font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
-  background-color: #050304;
+  font-family: var(--uao-font-sans);
+  background-color: var(--uao-color-cream);
+  color: var(--uao-color-black);
+  line-height: 1.6;
+}
+
+a {
+  color: var(--uao-color-red-primary);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+  transition: color 0.15s ease;
+}
+
+a:hover {
+  color: var(--uao-color-wine);
+}
+
+a:focus-visible {
+  outline: none;
+  box-shadow: var(--uao-focus-ring);
+}
+
+::selection {
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+}
+
+:focus-visible {
+  outline: none;
+  box-shadow: var(--uao-focus-ring);
 }

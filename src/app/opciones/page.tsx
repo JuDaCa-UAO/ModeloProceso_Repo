@@ -34,8 +34,6 @@ export default function OpcionesPage() {
 
   return (
     <main className={styles.page}>
-      <div className={styles.bgGlow} aria-hidden="true" />
-
       <section className={styles.card} aria-labelledby="opciones-title">
         <header className={styles.header}>
           <p className={styles.kicker}>Configuración</p>

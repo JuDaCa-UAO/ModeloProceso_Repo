@@ -27,11 +27,7 @@ function ButtonUI({
       : styles.btnSecondary;
 
   const content = (
-    <>
-      <span className={styles.btnGlow} aria-hidden="true" />
-      <span className={styles.btnHud} aria-hidden="true" />
-      <span className={styles.btnText}>{label}</span>
-    </>
+    <span className={styles.btnText}>{label}</span>
   );
 
   if (as === "link" && href) {

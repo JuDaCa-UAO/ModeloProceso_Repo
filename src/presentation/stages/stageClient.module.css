@@ -1,30 +1,28 @@
-/* ─── StageClient: contenedor raíz de la etapa ───────────────────────────── */
+/* ─── StageClient: contenedor raíz de la etapa ──────────────────────────── */
 
 .root {
   position: relative;
   height: 100dvh;
   overflow-y: scroll;
   scroll-snap-type: y mandatory;
-  scrollbar-width: none; /* Firefox */
+  scrollbar-width: none;
   display: flex;
   flex-direction: column;
   align-items: center;
-  /* Extra top padding gives room for the stageTitle bar that sits above the frame border */
   padding: clamp(3.5rem, 8dvh, 5rem) 1.5rem clamp(2rem, 6dvh, 4rem);
   gap: clamp(2rem, 6dvh, 4rem);
-  color: #fff;
+  color: var(--uao-color-black);
 }
 
 @media (min-width: 1024px) {
   .root {
-    /* Safe zones for MiniSpiralViewer (left) and PauseMenu (right) so the centered Frame never overlaps them */
     padding-left: clamp(184px, calc(14vw + 2rem), 262px);
     padding-right: clamp(184px, calc(14vw + 2rem), 262px);
   }
 }
 
 .root::-webkit-scrollbar {
-  display: none; /* Chrome / Safari / Edge */
+  display: none;
 }
 
 .background {
@@ -34,7 +32,8 @@
   height: 100dvh;
   z-index: 0;
 }
-/* ─── Frame 4: autodiagnostico layout ─────────────────────────────────────── */
+
+/* ─── Frame 4: autodiagnostico layout ──────────────────────────────────── */
 
 .autodiagLayout {
   display: grid;
@@ -44,8 +43,7 @@
   gap: clamp(10px, 2vh, 16px);
 }
 
-/* ─── Frame 8: marco futurista del embebido ─────────────────────────────── */
-
+/* ─── Frame 8: marco del embebido ───────────────────────────────────────── */
 
 .embedShell {
   position: relative;
@@ -55,56 +53,27 @@
   margin: 0 auto;
   display: flex;
   flex-direction: column;
-  border-radius: 4px;
-  background: rgba(2, 4, 10, 0.88);
-  border: 1.5px solid rgba(0, 200, 255, 0.30);
-  box-shadow:
-    0 0 0 1px rgba(0, 200, 255, 0.08),
-    0 0 18px rgba(0, 180, 255, 0.10),
-    inset 0 0 32px rgba(0, 0, 0, 0.45);
+  border-radius: 10px;
+  background: var(--uao-color-white);
+  border: 1.5px solid rgba(0, 0, 0, 0.1);
+  box-shadow: 0 2px 12px rgba(0, 0, 0, 0.06);
   overflow: hidden;
-  /* Escanlines sutiles */
-  background-image: repeating-linear-gradient(
-    0deg,
-    transparent,
-    transparent 3px,
-    rgba(0, 0, 0, 0.06) 3px,
-    rgba(0, 0, 0, 0.06) 4px
-  );
 }
 
-/* Esquinas bracket estilo Tron */
-.embedCornerTL,
-.embedCornerTR,
-.embedCornerBL,
-.embedCornerBR {
-  position: absolute;
-  width: 14px;
-  height: 14px;
-  z-index: 2;
-  pointer-events: none;
-}
-.embedCornerTL { top: -1px; left: -1px;  border-top: 2px solid rgba(0, 210, 255, 0.85); border-left: 2px solid rgba(0, 210, 255, 0.85); }
-.embedCornerTR { top: -1px; right: -1px; border-top: 2px solid rgba(0, 210, 255, 0.85); border-right: 2px solid rgba(0, 210, 255, 0.85); }
-.embedCornerBL { bottom: -1px; left: -1px;  border-bottom: 2px solid rgba(0, 210, 255, 0.85); border-left: 2px solid rgba(0, 210, 255, 0.85); }
-.embedCornerBR { bottom: -1px; right: -1px; border-bottom: 2px solid rgba(0, 210, 255, 0.85); border-right: 2px solid rgba(0, 210, 255, 0.85); }
-
-/* Barra de cabecera */
 .embedHeader {
   display: flex;
   align-items: center;
   gap: 7px;
   padding: 9px 14px;
-  background: rgba(0, 12, 32, 0.75);
-  border-bottom: 1px solid rgba(0, 195, 255, 0.18);
+  background: var(--uao-color-off-white);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.06);
 }
 
 .embedHeaderDot {
   width: 8px;
   height: 8px;
   border-radius: 999px;
-  background: rgba(0, 200, 255, 0.55);
-  box-shadow: 0 0 5px rgba(0, 200, 255, 0.40);
+  background: var(--uao-color-red-primary);
 }
 
 .embedHeaderLabel {
@@ -112,16 +81,14 @@
   font-size: calc(12px * var(--text-scale, 1));
   font-weight: 700;
   letter-spacing: 0.16em;
-  color: rgba(0, 210, 255, 0.70);
+  color: var(--uao-color-wine);
   text-transform: uppercase;
 }
 
-/* Viewport del iframe — reducida para que siempre haya espacio para Laia */
 .embedViewport {
   width: 100%;
   flex: 1;
   overflow: hidden;
-  /* Fondo blanco para que el form de n8n no muestre transparencia */
   background: #fff;
 }
 
@@ -132,11 +99,10 @@
   display: block;
 }
 
-/* Barra inferior */
 .embedFooter {
   padding: 7px 14px;
-  background: rgba(0, 10, 28, 0.70);
-  border-top: 1px solid rgba(0, 195, 255, 0.14);
+  background: var(--uao-color-off-white);
+  border-top: 1px solid rgba(0, 0, 0, 0.06);
   display: flex;
   align-items: center;
   gap: 8px;
@@ -145,11 +111,11 @@
 .embedFooterStatus {
   font-size: calc(13px * var(--text-scale, 1));
   letter-spacing: 0.10em;
-  color: rgba(0, 200, 255, 0.65);
+  color: var(--uao-grey-3);
   text-transform: uppercase;
 }
 
-/* ─── Indicador de scroll (renderizado dentro del frame vía hint prop) ────── */
+/* ─── Indicador de scroll ───────────────────────────────────────────────── */
 
 .scrollHint {
   display: flex;
@@ -171,12 +137,11 @@
   width: 48px;
   height: 48px;
   border-radius: 999px;
-  border: 2px solid rgba(248, 46, 53, 0.55);
-  background: rgba(8, 4, 5, 0.72);
-  color: rgba(254, 106, 111, 0.95);
+  border: 2px solid var(--uao-color-red-primary);
+  background: var(--uao-color-white);
+  color: var(--uao-color-red-primary);
   font-size: 20px;
-  backdrop-filter: blur(8px);
-  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.45);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
   animation: bounceDown 1.4s ease-in-out infinite;
 }
 
@@ -185,13 +150,12 @@
   font-weight: 600;
   letter-spacing: 0.12em;
   text-transform: uppercase;
-  color: #ffffff;
-  background: rgba(8, 4, 5, 0.85);
-  border: 1px solid rgba(248, 46, 53, 0.4);
+  color: var(--uao-color-red-primary);
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-color-red-primary);
   padding: 8px 16px;
   border-radius: 6px;
-  backdrop-filter: blur(4px);
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.6);
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
 }
 
 @keyframes bounceDown {
@@ -205,32 +169,27 @@
   }
 }
 
-/* ─── Frame 2: escenario del modelo 3D (panel con contraste) ────────────── */
+/* ─── Frame 2: escenario del modelo 3D ──────────────────────────────────── */
 
 .modelStage {
-  position: relative; /* ancla el Canvas absoluto de r3f */
+  position: relative;
   width: 100%;
   height: clamp(300px, 55dvh, 560px);
   border-radius: 10px;
-  background: rgba(2, 1, 2, 0.80);
-  border: 1px solid rgba(254, 106, 111, 0.14);
-  box-shadow:
-    inset 0 0 48px rgba(0, 0, 0, 0.55),
-    0 4px 24px rgba(0, 0, 0, 0.35);
+  background: var(--uao-color-off-white);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.02), 0 4px 24px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
-/* Versión compacta para frames donde el modelo convive con el diálogo de Laia */
 .modelStageCompact {
-  position: relative; /* ancla el Canvas absoluto de r3f */
+  position: relative;
   width: 100%;
   height: clamp(160px, 28dvh, 260px);
   border-radius: 10px;
-  background: rgba(2, 1, 2, 0.80);
-  border: 1px solid rgba(254, 106, 111, 0.14);
-  box-shadow:
-    inset 0 0 48px rgba(0, 0, 0, 0.55),
-    0 4px 24px rgba(0, 0, 0, 0.35);
+  background: var(--uao-color-off-white);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.02), 0 4px 24px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
@@ -239,7 +198,7 @@
   padding: clamp(8px, 1.5dvh, 14px) 0;
   font-size: calc(clamp(15px, 1.5vw, 17px) * var(--text-scale, 1));
   line-height: 1.6;
-  color: rgba(255, 255, 255, 0.80);
+  color: var(--uao-grey-3);
   text-align: center;
 }
 
@@ -251,8 +210,8 @@
 
 .btnVerAnimacion {
   padding: 10px 22px;
-  background: #9e0b0f;
-  color: #fff;
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
   border: none;
   border-radius: 999px;
   font-size: calc(15px * var(--text-scale, 1));
@@ -263,7 +222,7 @@
 }
 
 .btnVerAnimacion:hover {
-  background: #c8181e;
+  background: var(--uao-color-burgundy);
   transform: translateY(-1px);
 }
 
@@ -274,17 +233,16 @@
 .btnAvancemos {
   padding: 10px 28px;
   background: transparent;
-  color: rgba(254, 106, 111, 0.95);
-  border: 1.5px solid rgba(248, 46, 53, 0.55);
+  color: var(--uao-color-red-primary);
+  border: 1.5px solid var(--uao-color-red-primary);
   border-radius: 999px;
   font-size: calc(15px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.06em;
   cursor: default;
-  backdrop-filter: blur(6px);
 }
 
-/* ─── Frame 2: reproductor de video ──────────────────────────────────────── */
+/* ─── Frame 2: reproductor de video ─────────────────────────────────────── */
 
 .videoPlayer {
   flex: 1;
@@ -293,7 +251,6 @@
   object-fit: contain;
   border-radius: 4px;
   background: #000;
-  /* No pointer-events to prevent any accidental interaction */
   pointer-events: none;
 }
 
@@ -302,21 +259,18 @@
   padding: clamp(8px, 1.5dvh, 14px) 0 clamp(6px, 1dvh, 10px);
   font-size: calc(clamp(14px, 1.4vw, 16px) * var(--text-scale, 1));
   font-style: italic;
-  color: rgba(255, 255, 255, 0.65);
+  color: var(--uao-grey-3);
   text-align: center;
 }
 
-/* ─── Frame 3: tipo con barra de Laia en el pie ──────────────────────────── */
+/* ─── Frame 3: tipo con barra de Laia en el pie ─────────────────────────── */
 
-/* Extra margin-bottom para que la LaiaChatBar (que sobresale ~30px + ~90px alto)
-   no se acerque demasiado al siguiente frame. Se suma al gap del .root. */
 .frameWithBar {
   margin-bottom: clamp(4rem, 8dvh, 6rem);
 }
 
 /* ─── Frame 9: Transición a Etapa 2 ─────────────────────────────────────── */
 
-/* Pantalla inicial: modelo grande centrado + botón ver animación */
 .f9Splash {
   display: flex;
   flex-direction: column;
@@ -326,17 +280,16 @@
 }
 
 .f9ModelWrap {
-  position: relative; /* ancla el Canvas absoluto de r3f */
+  position: relative;
   width: 100%;
   height: clamp(300px, 48dvh, 460px);
   border-radius: 10px;
-  background: rgba(2, 1, 2, 0.80);
-  border: 1px solid rgba(254, 106, 111, 0.14);
-  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.55), 0 4px 24px rgba(0, 0, 0, 0.35);
+  background: var(--uao-color-off-white);
+  border: 1px solid rgba(0, 0, 0, 0.06);
+  box-shadow: inset 0 0 48px rgba(0, 0, 0, 0.02), 0 4px 24px rgba(0, 0, 0, 0.04);
   overflow: hidden;
 }
 
-/* Fila del botón "Repetir animación" — discreta, arriba */
 .f9RepeatRow {
   display: flex;
   justify-content: flex-end;
@@ -347,8 +300,8 @@
 .f9RepeatBtn {
   padding: 7px 16px;
   background: transparent;
-  color: rgba(255, 255, 255, 0.55);
-  border: 1px solid rgba(255, 255, 255, 0.18);
+  color: var(--uao-grey-3);
+  border: 1px solid rgba(0, 0, 0, 0.12);
   border-radius: 999px;
   font-size: calc(14px * var(--text-scale, 1));
   font-weight: 500;
@@ -358,17 +311,15 @@
 }
 
 .f9RepeatBtn:hover {
-  color: rgba(254, 106, 111, 0.90);
-  border-color: rgba(254, 106, 111, 0.40);
+  color: var(--uao-color-red-primary);
+  border-color: var(--uao-color-red-primary);
 }
 
-/* Laia a tamaño protagonista — ocupa más espacio vertical */
 .f9LaiaWrap {
   width: 100%;
   flex: 1;
 }
 
-/* Fila inferior con el botón de siguiente etapa */
 .f9NextRow {
   display: flex;
   justify-content: center;
@@ -381,34 +332,24 @@
   align-items: center;
   gap: 10px;
   padding: 13px 32px;
-  background: transparent;
-  color: rgba(254, 106, 111, 0.95);
-  border: 1.5px solid rgba(248, 46, 53, 0.60);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+  border: 1.5px solid var(--uao-color-red-primary);
   border-radius: 999px;
   font-size: calc(17px * var(--text-scale, 1));
   font-weight: 600;
   letter-spacing: 0.06em;
   text-decoration: none;
   cursor: pointer;
-  backdrop-filter: blur(8px);
   transition: background 0.2s, border-color 0.2s, box-shadow 0.2s;
-  animation: nextBtnPulse 2.2s ease-in-out infinite;
 }
 
 .f9NextBtn:hover {
-  background: rgba(158, 11, 15, 0.18);
-  border-color: rgba(248, 46, 53, 0.88);
-  box-shadow: 0 0 22px rgba(248, 46, 53, 0.28);
-  animation: none;
-}
-
-@keyframes nextBtnPulse {
-  0%, 100% { box-shadow: 0 0 0 0 rgba(248, 46, 53, 0); }
-  50%       { box-shadow: 0 0 16px 4px rgba(248, 46, 53, 0.25); }
+  background: var(--uao-color-burgundy);
+  border-color: var(--uao-color-burgundy);
 }
 
 /* El video de transición ocupa todo el ancho sin pointer-events */
-/* (reutiliza .videoPlayer — solo necesitamos overrides de altura) */
 .f9Video {
   width: 100%;
   min-height: clamp(260px, 44dvh, 440px);
@@ -418,9 +359,8 @@
   pointer-events: none;
 }
 
-/* ─── Slot inferior de Laia (compartido entre frames) ──────────────────── */
-/* Reemplaza el inline style { marginTop:"auto", width:"100%", paddingTop:"16px" }
-   repetido en cada frame que tiene CharacterStepDialog al pie. */
+/* ─── Slot inferior de Laia ─────────────────────────────────────────────── */
+
 .laiaSlot {
   margin-top: auto;
   width: 100%;
@@ -428,19 +368,11 @@
 }
 
 /* ─── YouTubeNarrativePlayer: alturas por contexto de uso ───────────────── */
-/*
- * El wrapper usa aspect-ratio: 16/9 con width: 100%.
- * Sin max-height, en frames anchos el video puede superar el espacio disponible
- * dentro del Frame (≈ 66dvh neto tras paddings) y desbordarse visualmente.
- * max-height lo acota; YouTube letterboxea el contenido automáticamente.
- */
 
-/* Frame 1 de etapa-1: video de introducción del modelo */
 .ytIntro {
   max-height: clamp(220px, 52dvh, 480px);
 }
 
-/* Frame 5 de etapa-1: video de transición E1 → E2 */
 .ytTransicion {
   max-height: clamp(220px, 52dvh, 480px);
 }

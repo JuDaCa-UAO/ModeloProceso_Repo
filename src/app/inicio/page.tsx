@@ -1,24 +1,25 @@
 import Image from "next/image";
-import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
 import styles from "./inicio.module.css";
 import ActionButtons from "./ActionButtons";
+import { BRAND } from "@/config/brand";
 
 export default function InicioPage() {
   return (
     <div className={styles.stage}>
-      <TechTrailBackground
-        className={styles.techBackground}
-        backgroundImageSrc="/ui/bg-home.png"
-        backgroundImageOpacity={1}
-      />
+      <div className={styles.bgGradient} aria-hidden="true" />
 
       <main className={styles.main}>
         <section className={styles.card}>
-          <div className={styles.cardRing} />
-
           <header className={styles.headerPlate}>
-            <h1 className={styles.title}>AI TECH-ED</h1>
-            <p className={styles.subtitle}>DEMO • MODELO DE PROCESO</p>
+            <Image
+              src="/uao-logo-red.webp"
+              alt={BRAND.institution}
+              width={180}
+              height={56}
+              className={styles.logo}
+              priority
+            />
+            <h1 className={styles.title}>{BRAND.fullName}</h1>
           </header>
 
           <div className={styles.content}>
@@ -34,14 +35,13 @@ export default function InicioPage() {
               </div>
             </div>
 
-            {/* ✅ TODOS los botones en el mismo bloque/estilo */}
             <ActionButtons />
           </div>
 
           <footer className={styles.footer}>
             <span className={styles.tipBadge}>Laia</span>
             <span>
-              Yo seré la asistente especializada que se encargará de guiarte a través de esta aventura tecnológica de aprendizaje sobre IA.
+              Yo seré la asistente especializada que se encargará de guiarte a través de esta experiencia de aprendizaje sobre IA.
             </span>
           </footer>
         </section>
