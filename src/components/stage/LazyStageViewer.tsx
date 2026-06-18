@@ -19,12 +19,14 @@ type LazyStageViewerProps = {
   activeStage?: number;
   /** Margen para montar el canvas un poco antes de entrar en pantalla. */
   rootMargin?: string;
+  lowPower?: boolean;
 };
 
 export default function LazyStageViewer({
   enableRotation = true,
   activeStage,
   rootMargin = "250px",
+  lowPower = false,
 }: LazyStageViewerProps) {
   const ref = useRef<HTMLDivElement | null>(null);
   const [inView, setInView] = useState(false);
@@ -42,7 +44,7 @@ export default function LazyStageViewer({
 
   return (
     <div ref={ref} style={{ position: "absolute", inset: 0 }} aria-hidden={!inView}>
-      {inView ? <StageViewer enableRotation={enableRotation} activeStage={activeStage} /> : null}
+      {inView ? <StageViewer enableRotation={enableRotation} activeStage={activeStage} lowPower={lowPower} /> : null}
     </div>
   );
 }

@@ -26,19 +26,28 @@ type StageViewerProps = {
   enableRotation?: boolean;
   /** Índice numérico de la etapa activa para titilar (ej. 1) */
   activeStage?: number;
+  /** Si es true, el modelo se renderiza en bajo consumo (DPR bajo, WebGL de baja potencia, sin antialias). */
+  lowPower?: boolean;
 };
 
 export default function StageViewer({
   enableRotation = true,
   activeStage,
+  lowPower = false,
 }: StageViewerProps) {
   return (
     <Canvas
       flat
       camera={{ position: [0, 0, 45], fov: 42 }}
-      // Limita la resolución del render para reducir presión de memoria GPU.
-      dpr={[1, 1.8]}
-      gl={{ powerPreference: "high-performance", antialias: true, failIfMajorPerformanceCaveat: false }}
+      // Limita la resolución del render para reducir presión de memoria GPU (1x para bajo consumo, hasta 1.5x en modo normal).
+      dpr={lowPower ? 1 : [1, 1.5]}
+      gl={{
+        powerPreference: lowPower ? "low-power" : "high-performance",
+        antialias: !lowPower,
+        stencil: false,
+        depth: true,
+        failIfMajorPerformanceCaveat: false,
+      }}
       // Recuperación de contexto: preventDefault permite que el navegador restaure
       // el contexto WebGL en vez de matarlo (p. ej. tras un Fast Refresh en dev).
       onCreated={({ gl }) => {
