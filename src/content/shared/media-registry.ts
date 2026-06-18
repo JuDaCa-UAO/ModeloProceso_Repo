@@ -80,16 +80,18 @@ export const MEDIA_REGISTRY = {
       "Animación de propósitos educativos — próximamente.",
   },
   "stage2.criteriaInfographic": {
-    kind: "svg",
+    kind: "image",
     status: "hosted",
-    remotePath: "/etapa-2/infografia-criterios.svg",
+    localPath: "/media/etapa-2/Etapa_2_1.webp",
+    remotePath: "/etapa-2/Etapa_2_1.webp",
     description: "Infografía: cómo se miran las posibilidades (seis criterios).",
     fallbackLabel: "La infografía de criterios estará disponible próximamente.",
   },
   "stage2.comparisonExample": {
-    kind: "svg",
+    kind: "image",
     status: "hosted",
-    remotePath: "/etapa-2/infografia-comparacion.svg",
+    localPath: "/media/etapa-2/Etapa_2_2.webp",
+    remotePath: "/etapa-2/Etapa_2_2.webp",
     description:
       "Infografía del ejemplo comparativo: tres posibilidades de IA para fortalecer un debate.",
     fallbackLabel: "El ejemplo comparativo estará disponible próximamente.",
@@ -97,6 +99,7 @@ export const MEDIA_REGISTRY = {
   "stage2.pughMatrix": {
     kind: "download",
     status: "hosted",
+    localPath: "/media/etapa-2/Matriz-de-Pugh.pdf",
     remotePath: "/etapa-2/Matriz-de-Pugh.pdf",
     downloadName: "Matriz-de-Pugh.pdf",
     description: "Matriz de Pugh para el análisis de herramientas de GenAI (PDF).",
@@ -153,17 +156,17 @@ export function resolveMedia(key: MediaKey): ResolvedMedia {
     };
   }
 
-  // Recurso local ya presente.
-  if (entry.status === "available" && entry.localPath) {
-    const url = MEDIA_BASE_URL ? `${MEDIA_BASE_URL}${entry.localPath}` : entry.localPath;
-    return { ...base, available: true, url };
-  }
-
-  // Recurso hosteado: disponible solo cuando el host está configurado.
+  // Recurso hosteado: disponible cuando el host de backend está configurado.
   if (entry.status === "hosted" && entry.remotePath && MEDIA_BASE_URL) {
     return { ...base, available: true, url: `${MEDIA_BASE_URL}${entry.remotePath}` };
   }
 
-  // Sin host configurado → fallback "Próximamente".
+  // Fallback local: si hay un localPath definido (sea status hosted sin host configurado, o status available), lo usamos.
+  if (entry.localPath) {
+    const url = MEDIA_BASE_URL ? `${MEDIA_BASE_URL}${entry.localPath}` : entry.localPath;
+    return { ...base, available: true, url };
+  }
+
+  // Sin host configurado ni localPath → fallback "Próximamente".
   return base;
 }
