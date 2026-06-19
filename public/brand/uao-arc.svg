@@ -1,0 +1,13 @@
+<svg
+  xmlns="http://www.w3.org/2000/svg"
+  viewBox="0 0 434 217"
+  width="434"
+  height="217"
+  color="#FF051E"
+  role="img"
+  aria-labelledby="uao-arc-title"
+  preserveAspectRatio="xMidYMid meet"
+>
+  <title id="uao-arc-title">Arco institucional UAO</title>
+  <path d="M 8 0 H 426 A 8 8 0 0 1 434 8 V 209 A 8 8 0 0 1 426 217 H 378 A 12 12 0 0 1 369 213 C 330 170 276 148 217 148 C 158 148 104 170 65 213 A 12 12 0 0 1 56 217 H 8 A 8 8 0 0 1 0 209 V 8 A 8 8 0 0 1 8 0 Z" fill="currentColor" />
+</svg>

@@ -27,6 +27,7 @@ import type { Toast } from "@/components/stage/ToastStack";
 import PauseMenu from "@/components/stage/PauseMenu";
 import { writeProgress } from "@/lib/progress";
 import BackgroundAudio from "@/components/audio/BackgroundAudio";
+import UaoArcBackground from "@/components/uao-arc-background/UaoArcBackground";
 import styles from "./stageClient.module.css";
 import { readFrameProgress, saveFrameProgress } from "./shared/frameProgress";
 import IntroduccionFrames from "./introduccion/IntroduccionFrames";
@@ -102,6 +103,7 @@ export default function StageClient({ stageId }: StageClientProps) {
 
   return (
     <div className={styles.root}>
+      <UaoArcBackground />
       {(stageId === "introduccion" || stageId === "etapa-1") && (
         <BackgroundAudio src="/audio/fondo.ogg" />
       )}
