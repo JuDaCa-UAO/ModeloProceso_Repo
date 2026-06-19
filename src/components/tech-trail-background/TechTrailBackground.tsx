@@ -149,9 +149,9 @@ export default function TechTrailBackground({
         context.clearRect(0, 0, width, height);
         if (!cachedBaseGradient) {
           const mask = context.createLinearGradient(0, 0, 0, height);
-          mask.addColorStop(0, "rgba(2, 8, 18, 0.34)");
-          mask.addColorStop(0.52, "rgba(1, 6, 16, 0.24)");
-          mask.addColorStop(1, "rgba(1, 5, 12, 0.38)");
+          mask.addColorStop(0, "rgba(251, 245, 236, 0.45)");
+          mask.addColorStop(0.52, "rgba(255, 255, 255, 0.35)");
+          mask.addColorStop(1, "rgba(251, 245, 236, 0.45)");
           cachedBaseGradient = mask;
         }
         context.fillStyle = cachedBaseGradient;
@@ -159,9 +159,9 @@ export default function TechTrailBackground({
       } else {
         if (!cachedBaseGradient) {
           const gradient = context.createLinearGradient(0, 0, 0, height);
-          gradient.addColorStop(0, "rgba(5, 11, 25, 0.99)");
-          gradient.addColorStop(0.5, "rgba(3, 8, 19, 0.985)");
-          gradient.addColorStop(1, "rgba(2, 6, 14, 0.995)");
+          gradient.addColorStop(0, "rgba(251, 245, 236, 0.98)");
+          gradient.addColorStop(0.5, "rgba(255, 255, 255, 0.99)");
+          gradient.addColorStop(1, "rgba(251, 245, 236, 0.98)");
           cachedBaseGradient = gradient;
         }
         context.fillStyle = cachedBaseGradient;
@@ -172,9 +172,9 @@ export default function TechTrailBackground({
             width * 0.2, height * 0.16, 40,
             width * 0.2, height * 0.16, Math.max(width, height) * 0.75
           );
-          redGlow.addColorStop(0, "rgba(248, 46, 53, 0.14)");
-          redGlow.addColorStop(0.6, "rgba(248, 46, 53, 0.05)");
-          redGlow.addColorStop(1, "rgba(248, 46, 53, 0)");
+          redGlow.addColorStop(0, "rgba(255, 131, 108, 0.06)");
+          redGlow.addColorStop(0.6, "rgba(255, 131, 108, 0.02)");
+          redGlow.addColorStop(1, "rgba(255, 131, 108, 0)");
           cachedRedGlow = redGlow;
         }
         context.fillStyle = cachedRedGlow;
@@ -185,9 +185,9 @@ export default function TechTrailBackground({
             width * 0.83, height * 0.88, 40,
             width * 0.83, height * 0.88, Math.max(width, height) * 0.65
           );
-          crimsonGlow.addColorStop(0, "rgba(196, 22, 28, 0.18)");
-          crimsonGlow.addColorStop(0.6, "rgba(196, 22, 28, 0.06)");
-          crimsonGlow.addColorStop(1, "rgba(196, 22, 28, 0)");
+          crimsonGlow.addColorStop(0, "rgba(138, 20, 40, 0.04)");
+          crimsonGlow.addColorStop(0.6, "rgba(138, 20, 40, 0.01)");
+          crimsonGlow.addColorStop(1, "rgba(138, 20, 40, 0)");
           cachedCrimsonGlow = crimsonGlow;
         }
         context.fillStyle = cachedCrimsonGlow;
@@ -198,9 +198,7 @@ export default function TechTrailBackground({
       const gridSize = 52;
       const offset = (time * 0.02) % gridSize;
       context.lineWidth = 1;
-      context.strokeStyle = hasBackgroundImage
-        ? "rgba(254, 106, 111, 0.13)"
-        : "rgba(254, 106, 111, 0.08)";
+      context.strokeStyle = "rgba(138, 20, 40, 0.03)";
       context.beginPath();
 
       for (let x = -gridSize + offset; x < width + gridSize; x += gridSize) {
@@ -229,14 +227,8 @@ export default function TechTrailBackground({
         const life = 1 - age;
         if (life <= 0) continue;
 
-        const mix = i / points.length;
-        const red = Math.round(196 + mix * 58);
-        const green = Math.round(22 + mix * 54);
-        const blue = Math.round(28 + mix * 42);
-        context.strokeStyle = `rgba(${red}, ${green}, ${blue}, ${0.08 + life * 0.62})`;
-        // No shadowBlur — it forces an off-screen compositor buffer per segment,
-        // causing runaway memory growth on long sessions.
-        context.lineWidth = 1.8 + life * 2.8;
+        context.strokeStyle = `rgba(255, 5, 30, ${0.03 + life * 0.22})`;
+        context.lineWidth = 1.2 + life * 1.8;
 
         context.beginPath();
         context.moveTo(previous.x, previous.y);
@@ -250,9 +242,9 @@ export default function TechTrailBackground({
         const life = 1 - age;
         if (life <= 0) continue;
 
-        context.fillStyle = `rgba(254, 200, 202, ${0.16 + life * 0.5})`;
+        context.fillStyle = `rgba(255, 131, 108, ${0.08 + life * 0.25})`;
         context.beginPath();
-        context.arc(point.x, point.y, 1 + life * 1.8, 0, Math.PI * 2);
+        context.arc(point.x, point.y, 1 + life * 1.2, 0, Math.PI * 2);
         context.fill();
       }
     }
@@ -274,8 +266,8 @@ export default function TechTrailBackground({
         const tailX = x - spark.vx * 20;
         const tailY = y - spark.vy * 20;
 
-        context.strokeStyle = `rgba(254, 166, 170, ${life * 0.66})`;
-        context.lineWidth = 0.9 + life * 1.2;
+        context.strokeStyle = `rgba(255, 131, 108, ${life * 0.25})`;
+        context.lineWidth = 0.6 + life * 0.8;
         context.beginPath();
         context.moveTo(tailX, tailY);
         context.lineTo(x, y);
@@ -286,8 +278,8 @@ export default function TechTrailBackground({
     function drawCursor(time: number) {
       if (!pointer.active || prefersReducedMotion) return;
       const pulse = 0.7 + Math.sin(time * 0.01) * 0.3;
-      context.strokeStyle = `rgba(254, 186, 188, ${0.2 + pulse * 0.35})`;
-      context.lineWidth = 1.2;
+      context.strokeStyle = `rgba(255, 5, 30, ${0.1 + pulse * 0.15})`;
+      context.lineWidth = 1;
       context.beginPath();
       context.arc(pointer.x, pointer.y, 12 + pulse * 4, 0, Math.PI * 2);
       context.stroke();

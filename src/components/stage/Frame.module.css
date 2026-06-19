@@ -21,16 +21,12 @@
   /* Empuja el siguiente frame fuera del viewport hasta que el usuario scrollee */
   margin-bottom: clamp(40dvh, 55dvh, 65dvh);
 
-  /* Panel surface */
-  background: rgba(6, 4, 5, 0.82);
-  backdrop-filter: blur(16px);
-  border-radius: 6px;
-
-  /* Tech border — UAO red */
-  border: 1.5px solid rgba(248, 46, 53, 0.55);
-  box-shadow:
-    0 0 18px rgba(248, 46, 53, 0.15),
-    0 12px 48px rgba(0, 0, 0, 0.55);
+  /* Panel surface - UAO light */
+  background: var(--uao-color-white, #ffffff);
+  border-radius: var(--uao-radius-md, 0.875rem);
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
+  color: var(--uao-color-text-primary, #0f172b);
 }
 
 /* ─── Background layer ───────────────────────────────────────────────────── */
@@ -55,7 +51,7 @@
 
 .sectionTitle {
   position: absolute;
-  top: -2.8rem;
+  top: -2.2rem;
   left: 12px;
   z-index: 3;
   /* bracket decorations via pseudo caret corners */
@@ -64,49 +60,22 @@
 
 .sectionTitleText {
   display: inline-block;
-  padding: 8px 18px;
-  font-size: calc(15px * var(--text-scale, 1));
+  padding: 6px 14px;
+  font-size: calc(14px * var(--text-scale, 1));
   font-weight: 600;
-  letter-spacing: 0.10em;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(255, 255, 255, 0.88);
-  background: rgba(8, 5, 6, 0.72);
-  border: 1px solid rgba(255, 255, 255, 0.18);
-  border-radius: 6px;
-  backdrop-filter: blur(8px);
-  /* bracket corners — top-left and top-right only */
-  box-shadow:
-    -6px -6px 0 -4px rgba(255, 255, 255, 0.55),
-    6px -6px 0 -4px rgba(255, 255, 255, 0.55);
-  /* full top bracket via outline trick */
-  outline: none;
+  color: var(--uao-color-burgundy, #ac0b32);
+  background: var(--uao-color-cream, #fbf5ec);
+  border: 1px solid var(--uao-color-coral, #ff836c);
+  border-radius: var(--uao-radius-sm, 0.5rem);
   position: relative;
 }
 
-/* Top-left corner bracket */
-.sectionTitleText::before {
-  content: "";
-  position: absolute;
-  top: -5px;
-  left: -5px;
-  width: 12px;
-  height: 12px;
-  border-top: 2px solid rgba(255, 255, 255, 0.65);
-  border-left: 2px solid rgba(255, 255, 255, 0.65);
-  pointer-events: none;
-}
-
-/* Top-right corner bracket */
+/* Hide corner brackets */
+.sectionTitleText::before,
 .sectionTitleText::after {
-  content: "";
-  position: absolute;
-  top: -5px;
-  right: -5px;
-  width: 12px;
-  height: 12px;
-  border-top: 2px solid rgba(255, 255, 255, 0.65);
-  border-right: 2px solid rgba(255, 255, 255, 0.65);
-  pointer-events: none;
+  display: none;
 }
 
 /* ─── Content layer ──────────────────────────────────────────────────────── */
@@ -173,7 +142,7 @@
 .stageTitleBar {
   position: absolute;
   /* Sube el título por encima del borde del frame */
-  top: -2.8rem;
+  top: -4.8rem;
   left: 0;
   right: 0;
   z-index: 4;
@@ -185,19 +154,25 @@
 
 .stageTitleText {
   margin: 0;
-  font-family: var(--font-tech), monospace;
-  font-size: clamp(0.85rem, 1.8vw, 1.55rem);
-  font-weight: 700;
-  letter-spacing: 0.12em;
+  font-family: var(--font-tech), sans-serif;
+  font-size: clamp(1.2rem, 2.5vw, 1.85rem);
+  font-weight: 800;
+  letter-spacing: 0.06em;
   text-transform: uppercase;
-  color: rgba(254, 106, 111, 0.95);
-  text-shadow:
-    0 0 18px rgba(248, 46, 53, 0.5),
-    0 0 40px rgba(248, 46, 53, 0.2);
+  color: var(--uao-color-burgundy, #ac0b32);
   text-align: center;
   white-space: nowrap;
   overflow: hidden;
   text-overflow: ellipsis;
   max-width: 100%;
   padding: 0 1rem;
+}
+
+/* Hide cyber corner brackets */
+.corner,
+.cornerTL,
+.cornerTR,
+.cornerBL,
+.cornerBR {
+  display: none !important;
 }

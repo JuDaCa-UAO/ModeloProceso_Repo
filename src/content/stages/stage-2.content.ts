@@ -25,7 +25,7 @@ import {
 /** Compatibilidad con el repositorio estático (validación de ruta). */
 export const STAGE2_TREE: SectionNode[] = [];
 
-const BG = "/ui/backgroundUAO.png";
+const BG = "/ui/uao-hero-img_1.webp";
 const OVERLAY = "rgba(4, 2, 3, 0.45)";
 const SPIRAL_INSTRUCTIONS =
   "Puedes interactuar con el modelo usando el scroll para acercarte y arrastrando con el click presionado para girarlo.";

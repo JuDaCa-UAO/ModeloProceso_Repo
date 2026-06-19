@@ -124,7 +124,7 @@ export default function Frame({
 
       {/* Overlay layer */}
       {overlay ? (
-        <div className={styles.overlay} style={{ background: overlay }} />
+        <div className={styles.overlay} style={{ background: "var(--uao-overlay-bg, rgba(251, 245, 236, 0.65))" }} />
       ) : null}
 
       {/* Corner bracket accents */}

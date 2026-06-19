@@ -1,5 +1,6 @@
 import Image from "next/image";
 import TechTrailBackground from "@/components/tech-trail-background/TechTrailBackground";
+import { BRAND } from "@/config/brand";
 import styles from "./inicio.module.css";
 import ActionButtons from "./ActionButtons";
 
@@ -8,7 +9,7 @@ export default function InicioPage() {
     <div className={styles.stage}>
       <TechTrailBackground
         className={styles.techBackground}
-        backgroundImageSrc="/ui/bg-home.png"
+        backgroundImageSrc="/ui/uao-hero-img_2.webp"
         backgroundImageOpacity={1}
       />
 
@@ -17,8 +18,18 @@ export default function InicioPage() {
           <div className={styles.cardRing} />
 
           <header className={styles.headerPlate}>
-            <h1 className={styles.title}>AI TECH-ED</h1>
-            <p className={styles.subtitle}>DEMO • MODELO DE PROCESO</p>
+            <div className={styles.logoContainer}>
+              <Image
+                src="/ui/uao-logo-red.webp"
+                alt={`Logo ${BRAND.institution}`}
+                width={140}
+                height={70}
+                className={styles.logoImg}
+                priority
+              />
+            </div>
+            <h1 className={styles.title}>{BRAND.shortName}</h1>
+            <p className={styles.subtitle}>{BRAND.fullName}</p>
           </header>
 
           <div className={styles.content}>

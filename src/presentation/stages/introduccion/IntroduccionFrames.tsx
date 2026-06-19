@@ -41,7 +41,7 @@ export default function IntroduccionFrames({
         id="frame-intro"
         sectionTitle="Sección 1: Bienvenido a esta iteración"
         stageTitle="Introducción: Bienvenido a esta iteración"
-        backgroundImage="/ui/backgroundUAO.png"
+        backgroundImage="/ui/uao-hero-img_1.webp"
         overlay="rgba(4, 2, 3, 0.45)"
         hint={completedFrames >= 1 ? <ScrollHint label="Iniciar recorrido" /> : null}
       >
@@ -69,7 +69,7 @@ export default function IntroduccionFrames({
           <Frame
             id="frame-modelo-interactivo"
             sectionTitle="Sección 2: Tu lugar en el modelo"
-            backgroundImage="/ui/backgroundUAO.png"
+            backgroundImage="/ui/uao-hero-img_1.webp"
             overlay="rgba(4, 2, 3, 0.45)"
             hint={completedFrames >= 2 ? <ScrollHint label="Continuar" /> : null}
           >
@@ -125,7 +125,7 @@ export default function IntroduccionFrames({
         <Frame
           id="frame-rail"
           sectionTitle="Sección 3: Familiárizándote con el modelo"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 3 ? <ScrollHint label="¡Continuemos!" /> : null}
         >
@@ -153,7 +153,7 @@ export default function IntroduccionFrames({
         <Frame
           id="frame-asistencia"
           sectionTitle="Sección 4: Asistencia guiada"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={null}
         >

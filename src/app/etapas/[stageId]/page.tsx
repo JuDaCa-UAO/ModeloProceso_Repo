@@ -19,6 +19,7 @@ import { GetStageContentUseCase } from "@application/stage/usecases/GetStageCont
 import { getStageMeta } from "@/content/stages";
 import StageClient from "./StageClientLoader";
 import type { Metadata } from "next";
+import { BRAND } from "@/config/brand";
 
 type Props = { params: Promise<{ stageId: string }> };
 
@@ -26,10 +27,10 @@ type Props = { params: Promise<{ stageId: string }> };
 export async function generateMetadata({ params }: Props): Promise<Metadata> {
   const { stageId } = await params;
   const meta = getStageMeta(stageId);
-  if (!meta) return { title: "AI TECH-ED" };
+  if (!meta) return { title: BRAND.shortName };
   return {
-    title: `${meta.name} | AI TECH-ED`,
-    description: `Etapa ${meta.order} del modelo de proceso GenAI educativo.`,
+    title: `${meta.name} | ${BRAND.shortName}`,
+    description: `Etapa ${meta.order} del ${BRAND.fullName}.`,
   };
 }
 

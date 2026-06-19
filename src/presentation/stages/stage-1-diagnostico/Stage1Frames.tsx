@@ -73,7 +73,7 @@ export default function Stage1Frames({
         id="frame-modelo"
         sectionTitle="Sección 1: Reconociendo nuestros pasos"
         stageTitle="Etapa 1: Reconócete para avanzar"
-        backgroundImage="/ui/backgroundUAO.png"
+        backgroundImage="/ui/uao-hero-img_1.webp"
         overlay="rgba(4, 2, 3, 0.45)"
         hint={completedFrames >= 1 ? <ScrollHint label="¡Avancemos!" /> : null}
       >
@@ -110,7 +110,7 @@ export default function Stage1Frames({
         <Frame
           id="frame-consentimiento"
           sectionTitle="Sección 2: Condiciones de confianza"
-          backgroundImage="/ui/fondo_biblioteca.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 2 ? <ScrollHint label="Iniciar diagnóstico" /> : null}
         >
@@ -199,7 +199,7 @@ export default function Stage1Frames({
         <Frame
           id="frame-estados"
           sectionTitle="Sección 3: Estados iniciales"
-          backgroundImage="/ui/fondo_biblioteca.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 3 ? <ScrollHint label="Continuar" /> : null}
         >
@@ -235,7 +235,7 @@ export default function Stage1Frames({
         <Frame
           id="frame-autodiagnostico"
           sectionTitle="Sección 4: Autodiagnóstico"
-          backgroundImage="/ui/fondo_biblioteca.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={completedFrames >= 4 ? <ScrollHint label="Continuar" /> : null}
         >
@@ -298,7 +298,7 @@ export default function Stage1Frames({
         <Frame
           id="frame-transicion"
           sectionTitle="Sección 5: Transición"
-          backgroundImage="/ui/backgroundUAO.png"
+          backgroundImage="/ui/uao-hero-img_1.webp"
           overlay="rgba(4, 2, 3, 0.45)"
           hint={null}
         >

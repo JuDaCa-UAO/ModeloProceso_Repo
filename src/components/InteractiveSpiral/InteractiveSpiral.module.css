@@ -15,11 +15,10 @@
   align-items: center;
   gap: 0.75rem;
   padding: 0.5rem 1rem;
-  background-color: rgba(20, 0, 0, 0.85);
-  border: 1px solid rgba(255, 50, 50, 0.4);
-  border-radius: 1rem;
-  box-shadow: 0 4px 12px rgba(255, 0, 0, 0.15);
-  backdrop-filter: blur(4px);
+  background-color: var(--uao-color-white, #ffffff);
+  border: 1.5px solid var(--uao-color-coral, #ff836c);
+  border-radius: var(--uao-radius-md, 0.875rem);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.05);
   pointer-events: none;
   white-space: nowrap;
   animation: fadeIn 0.2s ease-out;
@@ -27,16 +26,16 @@
 }
 
 .labelOrder {
-  font-family: monospace;
+  font-family: var(--font-tech), monospace;
   font-size: 0.875rem;
-  color: #ff6666;
-  opacity: 0.8;
+  color: var(--uao-color-red-primary, #ff051e);
+  font-weight: bold;
 }
 
 .labelName {
   font-size: 0.95rem;
-  color: #ffffff;
-  font-weight: 500;
+  color: var(--uao-color-text-primary, #0f172b);
+  font-weight: 600;
   letter-spacing: 0.02em;
 }
 

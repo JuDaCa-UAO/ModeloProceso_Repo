@@ -12,6 +12,8 @@ const eslintConfig = defineConfig([
     "out/**",
     "build/**",
     "next-env.d.ts",
+    "uao-next-template (1)/**",
+    "uao-next-template - copia/**",
   ]),
 ]);
 
