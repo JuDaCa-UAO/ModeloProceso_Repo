@@ -1,53 +1,8 @@
 "use client";
 
-import Link from "next/link";
 import styles from "./inicio.module.css";
 import { useProgress } from "../../lib/useProgress";
-
-type BtnVariant = "primary" | "secondary" | "danger";
-
-function ButtonUI({
-  label,
-  variant,
-  as = "button",
-  href,
-  onClick,
-}: {
-  label: string;
-  variant: BtnVariant;
-  as?: "link" | "button";
-  href?: string;
-  onClick?: () => void;
-}) {
-  const cls =
-    variant === "primary"
-      ? styles.btnPrimary
-      : variant === "danger"
-      ? styles.btnDanger
-      : styles.btnSecondary;
-
-  const content = (
-    <>
-      <span className={styles.btnGlow} aria-hidden="true" />
-      <span className={styles.btnHud} aria-hidden="true" />
-      <span className={styles.btnText}>{label}</span>
-    </>
-  );
-
-  if (as === "link" && href) {
-    return (
-      <Link href={href} className={`${styles.btnBase} ${cls}`}>
-        {content}
-      </Link>
-    );
-  }
-
-  return (
-    <button type="button" className={`${styles.btnBase} ${cls}`} onClick={onClick}>
-      {content}
-    </button>
-  );
-}
+import { UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 
 export default function ActionButtons() {
   const { progress } = useProgress();
@@ -56,19 +11,26 @@ export default function ActionButtons() {
   return (
     <div className={styles.buttonsCol}>
       {showContinue && (
-        <ButtonUI
-          label="Continuar"
+        <UaoButtonLink
           variant="secondary"
-          as="link"
+          size="lg"
           href={progress.lastRoute || "/etapas/introduccion"}
-        />
+        >
+          Continuar
+        </UaoButtonLink>
       )}
 
-      <ButtonUI label="Iniciar" variant="primary" as="link" href="/etapas/introduccion" />
+      <UaoButtonLink variant="primary" size="lg" href="/etapas/introduccion">
+        Iniciar
+      </UaoButtonLink>
 
-      <ButtonUI label="Etapas" variant="secondary" as="link" href="/etapas" />
+      <UaoButtonLink variant="secondary" size="lg" href="/etapas">
+        Etapas
+      </UaoButtonLink>
 
-      <ButtonUI label="Opciones" variant="danger" as="link" href="/opciones" />
+      <UaoButtonLink variant="danger" size="lg" href="/opciones">
+        Opciones
+      </UaoButtonLink>
     </div>
   );
 }

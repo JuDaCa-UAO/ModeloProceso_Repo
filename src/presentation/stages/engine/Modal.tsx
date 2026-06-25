@@ -2,6 +2,8 @@
 
 import { useCallback, useEffect, useRef } from "react";
 import { createPortal } from "react-dom";
+import { FiX } from "react-icons/fi";
+import { UaoIconButton } from "@/components/uao/UaoButton/UaoButton";
 import styles from "./engine.module.css";
 
 type ModalProps = {
@@ -66,15 +68,14 @@ export default function Modal({
       >
         <div className={styles.modalHeader}>
           {badge ? <span className={styles.modalBadge}>{badge}</span> : <span />}
-          <button
+          <UaoIconButton
             ref={closeRef}
-            type="button"
-            className={styles.modalClose}
+            variant="ghost"
+            round
+            icon={<FiX />}
             onClick={onClose}
             aria-label={closeLabel}
-          >
-            ✕
-          </button>
+          />
         </div>
         <div className={styles.modalBody}>{children}</div>
       </div>

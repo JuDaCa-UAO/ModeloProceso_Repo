@@ -14,6 +14,8 @@ import {
   F5_LAIA_STEPS,
 } from "@/content/dialogs/introduccion.dialogs";
 import styles from "../stageClient.module.css";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
+import { FiArrowRight } from "react-icons/fi";
 import ScrollHint from "../shared/ScrollHint";
 import { readFrameProgress } from "../shared/frameProgress";
 import type { StageFramesProps } from "../shared/StageFramesProps";
@@ -84,12 +86,13 @@ export default function IntroduccionFrames({
                 </p>
                 {f3Phase === "initial" ? (
                   <div className={styles.frameActions}>
-                    <button
-                      className={styles.btnVerAnimacion}
+                    <UaoButton
+                      pill
+                      trailingIcon={<FiArrowRight />}
                       onClick={() => setF3Phase("laia-model")}
                     >
-                      Continuar →
-                    </button>
+                      Continuar
+                    </UaoButton>
                   </div>
                 ) : null}
               </>
@@ -174,13 +177,15 @@ export default function IntroduccionFrames({
 
           {completedFrames >= 4 ? (
             <div className={styles.f9NextRow}>
-              <a
+              <UaoButtonLink
                 href="/etapas/etapa-1"
-                className={styles.f9NextBtn}
+                pill
+                size="lg"
+                trailingIcon={<FiArrowRight />}
                 aria-label="Ir a la siguiente etapa"
               >
                 Ir a la siguiente etapa
-              </a>
+              </UaoButtonLink>
             </div>
           ) : null}
         </Frame>

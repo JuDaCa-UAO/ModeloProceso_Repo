@@ -14,11 +14,11 @@
 
 "use client";
 
-import React, { useState, useEffect, useRef } from "react";
-import Link from "next/link";
+import { useState, useEffect, useRef } from "react";
 import { useVolume } from "@/context/VolumeContext";
 import { useAccessibility, TEXT_SCALES, UI_SCALES } from "@/context/AccessibilityContext";
-import { HiOutlineSpeakerWave, HiOutlineSpeakerXMark } from "react-icons/hi2";
+import { FiVolume2, FiVolumeX, FiMenu, FiX } from "react-icons/fi";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import styles from "./PauseMenu.module.css";
 
 interface PauseMenuProps {
@@ -151,7 +151,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
         aria-controls="pause-menu-dialog"
       >
         <span className={styles.triggerIcon} aria-hidden>
-          {open ? "✕" : "≡"}
+          {open ? <FiX /> : <FiMenu />}
         </span>
       </button>
 
@@ -184,7 +184,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                 <span className={styles.volumeLabel}>{Math.round(musicVolume * 100)}%</span>
               </div>
               <div className={styles.volumeRow}>
-                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} aria-hidden />
+                <FiVolumeX className={styles.volumeIcon} size={18} aria-hidden />
                 <input
                   type="range"
                   min="0"
@@ -195,7 +195,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   className={styles.volumeSlider}
                   aria-label="Volumen de música de fondo"
                 />
-                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} aria-hidden />
+                <FiVolume2 className={styles.volumeIcon} size={20} aria-hidden />
               </div>
 
               <div className={styles.volumeHeader} style={{ marginTop: "12px" }}>
@@ -203,7 +203,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                 <span className={styles.volumeLabel}>{Math.round(sfxVolume * 100)}%</span>
               </div>
               <div className={styles.volumeRow}>
-                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} aria-hidden />
+                <FiVolumeX className={styles.volumeIcon} size={18} aria-hidden />
                 <input
                   type="range"
                   min="0"
@@ -214,7 +214,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   className={styles.volumeSlider}
                   aria-label="Volumen de efectos de sonido"
                 />
-                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} aria-hidden />
+                <FiVolume2 className={styles.volumeIcon} size={20} aria-hidden />
               </div>
 
               <div className={styles.volumeHeader} style={{ marginTop: "12px" }}>
@@ -222,7 +222,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                 <span className={styles.volumeLabel}>{Math.round(voiceVolume * 100)}%</span>
               </div>
               <div className={styles.volumeRow}>
-                <HiOutlineSpeakerXMark className={styles.volumeIcon} size={18} aria-hidden />
+                <FiVolumeX className={styles.volumeIcon} size={18} aria-hidden />
                 <input
                   type="range"
                   min="0"
@@ -233,7 +233,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   className={styles.volumeSlider}
                   aria-label="Volumen de voz del personaje guía"
                 />
-                <HiOutlineSpeakerWave className={styles.volumeIcon} size={20} aria-hidden />
+                <FiVolume2 className={styles.volumeIcon} size={20} aria-hidden />
               </div>
             </div>
 
@@ -291,13 +291,15 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
 
               {/* Reset button */}
               {textScale !== 1.0 || uiScale !== 1.0 ? (
-                <button
-                  className={styles.resetBtn}
+                <UaoButton
+                  variant="ghost"
+                  size="sm"
+                  pill
                   onClick={handleReset}
                   aria-label="Restablecer configuración de accesibilidad"
                 >
                   Restablecer
-                </button>
+                </UaoButton>
               ) : null}
             </div>
 
@@ -307,18 +309,18 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                 <div className={styles.confirmBox}>
                   <p className={styles.confirmText}>¿Seguro que deseas salir al menú principal?</p>
                   <div className={styles.confirmActions}>
-                    <button className={styles.menuItem} onClick={() => setConfirmExit(false)}>
+                    <UaoButton variant="secondary" onClick={() => setConfirmExit(false)}>
                       Cancelar
-                    </button>
-                    <Link href="/inicio" className={styles.menuItemPrimary}>
+                    </UaoButton>
+                    <UaoButtonLink href="/inicio">
                       Sí, Salir
-                    </Link>
+                    </UaoButtonLink>
                   </div>
                 </div>
               ) : (
-                <button className={styles.menuItem} onClick={() => setConfirmExit(true)}>
+                <UaoButton variant="secondary" onClick={() => setConfirmExit(true)}>
                   Volver al menú principal
-                </button>
+                </UaoButton>
               )}
             </nav>
           </section>

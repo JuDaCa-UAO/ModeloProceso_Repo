@@ -1,9 +1,9 @@
 "use client";
 
-import Link from "next/link";
 import { useState } from "react";
 import { useProgress } from "@/lib/useProgress";
 import { resetStore } from "@/lib/state/StageProgressStore";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import styles from "./opciones.module.css";
 
 export default function OpcionesPage() {
@@ -56,9 +56,9 @@ export default function OpcionesPage() {
               navegador.
             </p>
           </div>
-          <button type="button" className={styles.dangerBtn} onClick={handleFactoryReset}>
+          <UaoButton variant="danger" onClick={handleFactoryReset}>
             Borrar datos y reiniciar
-          </button>
+          </UaoButton>
         </div>
 
         {feedback === "done" ? (
@@ -72,12 +72,12 @@ export default function OpcionesPage() {
         ) : null}
 
         <div className={styles.links}>
-          <Link href="/inicio" className={styles.linkBtn}>
+          <UaoButtonLink href="/inicio" variant="primary">
             Volver al inicio
-          </Link>
-          <Link href="/etapas/introduccion" className={styles.linkBtnSecondary}>
+          </UaoButtonLink>
+          <UaoButtonLink href="/etapas/introduccion" variant="secondary">
             Ir a Introducción
-          </Link>
+          </UaoButtonLink>
         </div>
       </section>
     </main>

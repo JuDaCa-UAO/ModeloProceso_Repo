@@ -127,8 +127,8 @@ export const STAGE3_DESIGN_TREE: StageNode[] = [
         nextLabel: "Ir a la siguiente etapa",
         nextAvailable: true,
         guideId: "etapa3-ver-animacion",
-        playLabel: "Ver animación →",
-        repeatLabel: "↺ Repetir animación"
+        playLabel: "Ver animación",
+        repeatLabel: "Repetir animación"
       },
     ],
   },

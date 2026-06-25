@@ -21,7 +21,11 @@ import Modal from "./Modal";
 import type { BlockContext, StageBlock } from "./types";
 import sc from "../stageClient.module.css";
 import styles from "./engine.module.css";
-import { FiTarget, FiEdit3, FiCpu, FiShield, FiFileText, FiCompass, FiHelpCircle } from "react-icons/fi";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
+import {
+  FiTarget, FiEdit3, FiCpu, FiShield, FiFileText, FiCompass, FiHelpCircle,
+  FiArrowRight, FiPlay, FiRotateCcw, FiDownload,
+} from "react-icons/fi";
 
 type BlockComponentProps = { block: StageBlock; ctx: BlockContext };
 
@@ -103,7 +107,7 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
       ) : (
         <div className={styles.videoFallback} role="img" aria-label={media.fallbackLabel}>
           <span className={styles.videoFallbackIcon} aria-hidden>
-            ▶
+            <FiPlay />
           </span>
           <p className={styles.videoFallbackText}>{media.fallbackLabel}</p>
           <span className={styles.pendingTag}>Recurso pendiente</span>
@@ -138,14 +142,14 @@ function CriteriaInfographicBlock({ block }: BlockComponentProps) {
   const media = resolveMedia(block.mediaKey);
   return (
     <div className={styles.actionRow}>
-      <button
-        type="button"
-        className={sc.btnVerAnimacion}
+      <UaoButton
+        pill
+        trailingIcon={<FiArrowRight />}
         data-guide-id={block.guideId ?? "etapa2-observar-criterios"}
         onClick={() => setOpen(true)}
       >
-        {block.openLabel} →
-      </button>
+        {block.openLabel}
+      </UaoButton>
 
       <Modal
         open={open}
@@ -166,14 +170,14 @@ function ComparisonExampleBlock({ block }: BlockComponentProps) {
   const media = resolveMedia(block.mediaKey);
   return (
     <div className={styles.actionRow}>
-      <button
-        type="button"
-        className={sc.btnVerAnimacion}
+      <UaoButton
+        pill
+        trailingIcon={<FiArrowRight />}
         data-guide-id={block.guideId ?? "etapa2-observar-ejemplo"}
         onClick={() => setOpen(true)}
       >
-        {block.openLabel} →
-      </button>
+        {block.openLabel}
+      </UaoButton>
 
       <Modal
         open={open}
@@ -400,14 +404,14 @@ function DesignCanvasBlock({ block }: BlockComponentProps) {
   if (block.type !== "design-canvas") return null;
   return (
     <div className={styles.actionRow}>
-      <button
-        type="button"
-        className={sc.btnVerAnimacion}
+      <UaoButton
+        pill
+        trailingIcon={<FiArrowRight />}
         data-guide-id={block.guideId ?? "etapa3-observar-canvas"}
         onClick={() => setOpen(true)}
       >
-        {block.openLabel} →
-      </button>
+        {block.openLabel}
+      </UaoButton>
 
       <Modal
         open={open}
@@ -440,9 +444,9 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
 
   return (
     <div className={styles.actionRow}>
-      <button
-        type="button"
-        className={sc.btnVerAnimacion}
+      <UaoButton
+        pill
+        leadingIcon={<FiDownload />}
         data-guide-id={block.guideId ?? "etapa2-descargar-matriz"}
         disabled={!media.available}
         aria-disabled={!media.available}
@@ -453,7 +457,7 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
         }}
       >
         {block.label}
-      </button>
+      </UaoButton>
       {!media.available ? (
         <p className={styles.downloadNote}>{media.fallbackLabel}</p>
       ) : null}
@@ -507,23 +511,29 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
       </div>
 
       {showVideoIntro ? (
-        <button
-          type="button"
-          className={sc.btnVerAnimacion}
+        <UaoButton
+          pill
+          trailingIcon={<FiPlay />}
           data-guide-id={block.guideId ?? "etapa2-ver-animacion"}
           onClick={() => setPhase("playing")}
         >
-          {block.playLabel ?? "Ver animación →"}
-        </button>
+          {block.playLabel ?? "Ver animación"}
+        </UaoButton>
       ) : null}
 
       {showEnded ? (
         <>
           {media.available ? (
             <div className={sc.f9RepeatRow}>
-              <button type="button" className={sc.f9RepeatBtn} onClick={() => setPhase("idle")}>
-                {block.repeatLabel ?? "↺ Repetir animación"}
-              </button>
+              <UaoButton
+                variant="ghost"
+                size="sm"
+                pill
+                leadingIcon={<FiRotateCcw />}
+                onClick={() => setPhase("idle")}
+              >
+                {block.repeatLabel ?? "Repetir animación"}
+              </UaoButton>
             </div>
           ) : (
             <p className={styles.transitionNote}>
@@ -543,13 +553,19 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
           {ctx.frameDone ? (
             <div className={sc.f9NextRow}>
               {block.nextAvailable ? (
-                <a href={block.nextHref} className={sc.f9NextBtn} aria-label={block.nextLabel}>
+                <UaoButtonLink
+                  href={block.nextHref}
+                  pill
+                  size="lg"
+                  trailingIcon={<FiArrowRight />}
+                  aria-label={block.nextLabel}
+                >
                   {block.nextLabel}
-                </a>
+                </UaoButtonLink>
               ) : (
-                <button type="button" className={sc.f9NextBtn} disabled aria-disabled>
+                <UaoButton pill size="lg" disabled aria-disabled>
                   Próximamente: {block.nextLabel}
-                </button>
+                </UaoButton>
               )}
             </div>
           ) : null}

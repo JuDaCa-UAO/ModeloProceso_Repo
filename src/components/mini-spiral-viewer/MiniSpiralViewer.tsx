@@ -2,6 +2,8 @@
 
 import { useState, useEffect } from "react";
 import { createPortal } from "react-dom";
+import { FiX } from "react-icons/fi";
+import { UaoButton, UaoIconButton } from "@/components/uao/UaoButton/UaoButton";
 import styles from "../stage/StageViewer.module.css";
 import blockStyles from "../stage/blocks/blocks.module.css";
 import LazyStageViewer from "../stage/LazyStageViewer";
@@ -63,9 +65,14 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
         })}
       </div>
 
-      <button className={styles.journeyBtn} onClick={() => setPanelOpen(true)}>
+      <UaoButton
+        variant="secondary"
+        size="sm"
+        className={styles.journeyBtn}
+        onClick={() => setPanelOpen(true)}
+      >
         Ver más
-      </button>
+      </UaoButton>
 
       {panelOpen && typeof document !== "undefined" && createPortal(
         <div className={styles.modalBackdrop} onClick={() => setPanelOpen(false)}>
@@ -74,7 +81,14 @@ export default function MiniSpiralViewer({ stageLabel, stageKey }: MiniSpiralVie
             style={{ width: '90%', maxWidth: '560px', position: 'relative', cursor: 'default' }}
             onClick={(e) => e.stopPropagation()}
           >
-            <button className={styles.closeBtn} onClick={() => setPanelOpen(false)} aria-label="Cerrar">✕</button>
+            <UaoIconButton
+              variant="ghost"
+              round
+              className={styles.closeBtn}
+              icon={<FiX />}
+              onClick={() => setPanelOpen(false)}
+              aria-label="Cerrar"
+            />
             
             {/* Bloque Principal: Etapa Actual */}
             <div className={blockStyles.stageCopy} style={{ marginTop: '8px' }}>

@@ -73,28 +73,10 @@
   border: 1px solid rgba(255, 5, 30, 0.45);
 }
 
+/* Solo layout: la apariencia la aporta UaoButton. */
 .journeyBtn {
   margin-top: 8px;
-  padding: 8px 10px;
-  background: var(--uao-color-white, #ffffff);
-  border: 1px solid rgba(138, 20, 40, 0.28);
-  color: var(--uao-color-wine, #8a1428);
-  border-radius: var(--uao-radius-sm, 0.5rem);
-  font-size: calc(15px * var(--text-scale, 1));
-  font-weight: 700;
-  text-transform: uppercase;
-  letter-spacing: 0.04em;
-  cursor: pointer;
-  transition: background 0.2s, border-color 0.2s;
   width: 100%;
-}
-.journeyBtn:hover {
-  background: var(--uao-color-cream, #fbf5ec);
-  border-color: var(--uao-color-wine, #8a1428);
-}
-.journeyBtn:focus-visible {
-  outline: none;
-  box-shadow: var(--uao-focus-ring, 0 0 0 3px rgba(255, 5, 30, 0.28));
 }
 
 .modalBackdrop {
@@ -124,24 +106,12 @@
   gap: 16px;
 }
 
+/* Solo posicionamiento: la apariencia la aporta UaoIconButton. */
 .closeBtn {
   position: absolute;
   top: 12px;
   right: 16px;
-  background: transparent;
-  border: none;
-  color: var(--uao-color-text-secondary, #475569);
-  font-size: 20px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.closeBtn:hover {
-  color: var(--uao-color-red-primary, #ff051e);
-}
-.closeBtn:focus-visible {
-  outline: none;
-  box-shadow: var(--uao-focus-ring, 0 0 0 3px rgba(255, 5, 30, 0.28));
-  border-radius: var(--uao-radius-sm, 0.5rem);
+  z-index: 1;
 }
 
 .modalHeader {

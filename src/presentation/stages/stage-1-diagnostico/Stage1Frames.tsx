@@ -17,6 +17,8 @@ import {
 } from "@/content/dialogs/stage-1.dialogs";
 import styles from "../stageClient.module.css";
 import blockStyles from "@/components/stage/blocks/blocks.module.css";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
+import { FiArrowRight, FiPlay, FiRotateCcw } from "react-icons/fi";
 import ScrollHint from "../shared/ScrollHint";
 import { readFrameProgress } from "../shared/frameProgress";
 import type { StageFramesProps } from "../shared/StageFramesProps";
@@ -96,9 +98,9 @@ export default function Stage1Frames({
             </p>
             {completedFrames < 1 ? (
               <div className={styles.frameActions}>
-                <button className={styles.btnVerAnimacion} onClick={handleStartVideo}>
-                  Ver animación →
-                </button>
+                <UaoButton pill trailingIcon={<FiPlay />} onClick={handleStartVideo}>
+                  Ver animación
+                </UaoButton>
               </div>
             ) : null}
           </>
@@ -159,9 +161,9 @@ export default function Stage1Frames({
               ) : null}
 
               <div className={blockStyles.actionRow}>
-                <button
-                  type="button"
-                  className={styles.btnVerAnimacion}
+                <UaoButton
+                  pill
+                  trailingIcon={<FiArrowRight />}
                   onClick={() => {
                     setConsentTouched(true);
                     if (!consentValid) return;
@@ -172,8 +174,8 @@ export default function Stage1Frames({
                     }
                   }}
                 >
-                  Iniciar autodiagnóstico →
-                </button>
+                  Iniciar autodiagnóstico
+                </UaoButton>
               </div>
             </form>
           ) : (
@@ -315,24 +317,28 @@ export default function Stage1Frames({
               <div className={styles.f9ModelWrap}>
                 <StageViewer enableRotation activeStage={1} />
               </div>
-              <button
-                className={styles.btnVerAnimacion}
+              <UaoButton
+                pill
+                trailingIcon={<FiPlay />}
                 onClick={() => setF9VideoPlaying(true)}
               >
-                Ver animación →
-              </button>
+                Ver animación
+              </UaoButton>
             </div>
           ) : null}
 
           {f9VideoEnded ? (
             <>
               <div className={styles.f9RepeatRow}>
-                <button
-                  className={styles.f9RepeatBtn}
+                <UaoButton
+                  variant="ghost"
+                  size="sm"
+                  pill
+                  leadingIcon={<FiRotateCcw />}
                   onClick={() => { setF9VideoEnded(false); setF9VideoPlaying(true); }}
                 >
-                  ↺ Repetir animación
-                </button>
+                  Repetir animación
+                </UaoButton>
               </div>
 
               <div className={styles.f9LaiaWrap}>
@@ -352,13 +358,15 @@ export default function Stage1Frames({
 
               {completedFrames >= 5 ? (
                 <div className={styles.f9NextRow}>
-                  <a
+                  <UaoButtonLink
                     href="/inicio"
-                    className={styles.f9NextBtn}
+                    pill
+                    size="lg"
+                    trailingIcon={<FiArrowRight />}
                     aria-label="Ir a la siguiente etapa"
                   >
                     Ir a la siguiente etapa
-                  </a>
+                  </UaoButtonLink>
                 </div>
               ) : null}
             </>
