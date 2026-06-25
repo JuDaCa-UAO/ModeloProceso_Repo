@@ -2,7 +2,7 @@
 
 import React, { Suspense } from "react";
 import { Canvas } from "@react-three/fiber";
-import { OrbitControls, Environment, Lightformer } from "@react-three/drei";
+import { OrbitControls, Environment, Lightformer, Bounds } from "@react-three/drei";
 import SpiralModel from "./SpiralModel";
 import styles from "./InteractiveSpiral.module.css";
 
@@ -35,7 +35,9 @@ export default function InteractiveSpiral() {
         </Environment>
 
         <Suspense fallback={null}>
-          <SpiralModel />
+          <Bounds fit clip observe margin={1.1}>
+            <SpiralModel />
+          </Bounds>
         </Suspense>
       </Canvas>
     </div>

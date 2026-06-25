@@ -1,6 +1,6 @@
 "use client";
 
-import React, { useState, useRef } from "react";
+import React, { useState, useRef, useMemo } from "react";
 import { useGLTF, Html, Center } from "@react-three/drei";
 import { useFrame } from "@react-three/fiber";
 import { useRouter } from "next/navigation";
@@ -135,8 +135,17 @@ export default function SpiralModel({
 }) {
   const { nodes, materials } = useGLTF("/models/espiral.glb") as unknown as GLTFResult;
 
-  // Material default para la espiral
-  const spiralMaterial = materials.Spiral;
+  // Material de la espiral con un rojo institucional más intenso (mejor contraste
+  // sobre el fondo crema). Se clona para no mutar la caché del GLTF.
+  const spiralMaterial = useMemo(() => {
+    const base = materials.Spiral.clone() as THREE.MeshStandardMaterial;
+    if (base.color) base.color.set("#e3001b");
+    if ("emissive" in base && base.emissive) {
+      base.emissive.set("#3d0008");
+      base.emissiveIntensity = 0.35;
+    }
+    return base;
+  }, [materials.Spiral]);
   const inactivaMaterial = materials.Etapa_Inactiva;
 
   return (

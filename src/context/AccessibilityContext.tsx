@@ -12,10 +12,30 @@ interface AccessibilityContextType {
 
 const AccessibilityContext = createContext<AccessibilityContextType | undefined>(undefined);
 
-const TEXT_SCALES = [1.0, 1.125, 1.25, 1.375, 1.5];
+const TEXT_SCALES = [1.0, 1.25, 1.5];
 const UI_SCALES = [0.8, 0.9, 1.0];
 const DEFAULT_TEXT_SCALE = 1.0;
 const DEFAULT_UI_SCALE = 1.0;
+
+const SIZE_LABELS = ["Pequeño", "Mediano", "Grande"];
+
+/**
+ * Traduce un valor de escala a un nombre simple (Pequeño/Mediano/Grande)
+ * según su posición dentro del arreglo de pasos correspondiente.
+ * Pensado para presentar las opciones de forma clara a usuarios adultos.
+ */
+function sizeLabel(value: number, scales: number[]): string {
+  const idx = scales.reduce(
+    (best, curr, i) =>
+      Math.abs(curr - value) < Math.abs(scales[best] - value) ? i : best,
+    0
+  );
+  // Mapea el índice a 3 etiquetas (primero = Pequeño, último = Grande).
+  if (scales.length <= 1) return SIZE_LABELS[2];
+  const ratio = idx / (scales.length - 1);
+  const labelIdx = Math.round(ratio * (SIZE_LABELS.length - 1));
+  return SIZE_LABELS[labelIdx];
+}
 
 function clampTextScale(value: number): number {
   return TEXT_SCALES.reduce((prev, curr) =>
@@ -143,4 +163,4 @@ export function useAccessibility() {
   return context;
 }
 
-export { TEXT_SCALES, UI_SCALES, DEFAULT_TEXT_SCALE, DEFAULT_UI_SCALE };
+export { TEXT_SCALES, UI_SCALES, DEFAULT_TEXT_SCALE, DEFAULT_UI_SCALE, sizeLabel };

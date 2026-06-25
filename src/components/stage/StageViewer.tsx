@@ -1,22 +1,104 @@
 "use client";
 
-import { useRef } from "react";
-import { Canvas, useFrame } from "@react-three/fiber";
+import { useEffect, useRef } from "react";
+import { Canvas, useFrame, useThree } from "@react-three/fiber";
 import { OrbitControls } from "@react-three/drei";
+import * as THREE from "three";
 import SpiralModel from "@/components/InteractiveSpiral/SpiralModel";
+import { useAccessibility } from "@/context/AccessibilityContext";
 
-function RotatingSpiral({ enableRotation, activeStageIndex }: { enableRotation: boolean; activeStageIndex?: number }) {
-  const spinRef = useRef<{ rotation: { y: number } } | null>(null);
+/**
+ * Encuadre determinista: ajusta la cámara para que el modelo llene su contenedor
+ * y quede centrado, sin importar el tamaño/aspecto del canvas ni la escala de
+ * interfaz. Se recalcula ante cambios de tamaño del canvas (resize de ventana o
+ * `zoom` del `--ui-scale`) y ante cambios de `uiScale`.
+ *
+ * Mide la caja del modelo una sola vez (rotación ≈ 0). Como la espiral gira sobre
+ * su eje Y y sus extensiones X/Z son similares, la silueta es estable durante la
+ * rotación, por lo que basta una medición y recalcular solo la distancia.
+ */
+function FitCamera({
+  targetRef,
+  uiScale,
+  margin = 1.12,
+}: {
+  targetRef: React.RefObject<THREE.Group | null>;
+  uiScale: number;
+  margin?: number;
+}) {
+  const size = useThree((s) => s.size);
+  const boxSize = useRef<THREE.Vector3 | null>(null);
+  const needsFit = useRef(true);
 
+  // Marca refit cuando cambian las dimensiones del canvas o la escala de interfaz.
+  useEffect(() => {
+    needsFit.current = true;
+  }, [size.width, size.height, uiScale]);
+
+  useFrame((state) => {
+    const target = targetRef.current;
+    if (!target) return;
+
+    // Medición única de la caja del modelo (cuando ya está cargado).
+    if (!boxSize.current) {
+      const box = new THREE.Box3().setFromObject(target);
+      if (box.isEmpty()) return;
+      boxSize.current = box.getSize(new THREE.Vector3());
+      needsFit.current = true;
+    }
+
+    if (!needsFit.current) return;
+
+    const cam = state.camera as THREE.PerspectiveCamera;
+    if (!cam.isPerspectiveCamera) return;
+
+    const { x: w, y: h, z: d } = boxSize.current;
+    const fov = (cam.fov * Math.PI) / 180;
+    const aspect = state.size.width / state.size.height;
+    // Extensión horizontal: la mayor entre ancho y profundidad (la rotación en Y
+    // intercambia X/Z), para que no se recorte en ninguna orientación.
+    const horiz = Math.max(w, d);
+    const distH = horiz / 2 / (Math.tan(fov / 2) * aspect);
+    const distV = h / 2 / Math.tan(fov / 2);
+    const dist = Math.max(distH, distV) * margin + d / 2;
+
+    cam.position.set(0, 0, dist);
+    cam.near = Math.max(0.1, dist - d);
+    cam.far = dist + d * 2;
+    cam.updateProjectionMatrix();
+
+    const controls = state.controls as unknown as
+      | { target: THREE.Vector3; update: () => void }
+      | null;
+    if (controls?.target) {
+      controls.target.set(0, 0, 0);
+      controls.update();
+    }
+
+    needsFit.current = false;
+  });
+
+  return null;
+}
+
+function RotatingSpiral({
+  enableRotation,
+  activeStageIndex,
+  groupRef,
+}: {
+  enableRotation: boolean;
+  activeStageIndex?: number;
+  groupRef: React.RefObject<THREE.Group | null>;
+}) {
   useFrame((_, delta) => {
     // No gastar ciclos cuando la pestaña está oculta.
-    if (!enableRotation || !spinRef.current || (typeof document !== "undefined" && document.hidden)) return;
-    spinRef.current.rotation.y += delta * 0.5;
+    if (!enableRotation || !groupRef.current || (typeof document !== "undefined" && document.hidden)) return;
+    groupRef.current.rotation.y += delta * 0.5;
   });
 
   return (
-    <group ref={spinRef}>
-      <SpiralModel activeStageIndex={activeStageIndex} hideLabels={true} position={[-2, 1.5, 0]} />
+    <group ref={groupRef}>
+      <SpiralModel activeStageIndex={activeStageIndex} hideLabels={true} />
     </group>
   );
 }
@@ -35,6 +117,9 @@ export default function StageViewer({
   activeStage,
   lowPower = false,
 }: StageViewerProps) {
+  // Se lee fuera del <Canvas>: el contexto de React no cruza el reconciler de r3f.
+  const { uiScale } = useAccessibility();
+  const groupRef = useRef<THREE.Group | null>(null);
   return (
     <Canvas
       flat
@@ -73,11 +158,16 @@ export default function StageViewer({
         enableZoom
         enableRotate
         target={[0, 0, 0]}
-        minDistance={20}
-        maxDistance={50}
+        minDistance={5}
+        maxDistance={500}
       />
 
-      <RotatingSpiral enableRotation={enableRotation} activeStageIndex={activeStage} />
+      <FitCamera targetRef={groupRef} uiScale={uiScale} />
+      <RotatingSpiral
+        enableRotation={enableRotation}
+        activeStageIndex={activeStage}
+        groupRef={groupRef}
+      />
     </Canvas>
   );
 }

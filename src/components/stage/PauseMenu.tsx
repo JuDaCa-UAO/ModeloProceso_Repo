@@ -16,7 +16,7 @@
 
 import { useState, useEffect, useRef } from "react";
 import { useVolume } from "@/context/VolumeContext";
-import { useAccessibility, TEXT_SCALES, UI_SCALES } from "@/context/AccessibilityContext";
+import { useAccessibility, TEXT_SCALES, UI_SCALES, sizeLabel } from "@/context/AccessibilityContext";
 import { FiVolume2, FiVolumeX, FiMenu, FiX } from "react-icons/fi";
 import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import styles from "./PauseMenu.module.css";
@@ -113,11 +113,11 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
     if (increase && currentIndex < TEXT_SCALES.length - 1) {
       const nextVal = TEXT_SCALES[currentIndex + 1];
       setTextScale(nextVal);
-      setSrAnnouncement(`Tamaño de texto aumentado al ${Math.round(nextVal * 100)}%`);
+      setSrAnnouncement(`Tamaño de texto: ${sizeLabel(nextVal, TEXT_SCALES)}`);
     } else if (!increase && currentIndex > 0) {
       const prevVal = TEXT_SCALES[currentIndex - 1];
       setTextScale(prevVal);
-      setSrAnnouncement(`Tamaño de texto reducido al ${Math.round(prevVal * 100)}%`);
+      setSrAnnouncement(`Tamaño de texto: ${sizeLabel(prevVal, TEXT_SCALES)}`);
     }
   };
 
@@ -126,11 +126,11 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
     if (increase && currentIndex < UI_SCALES.length - 1) {
       const nextVal = UI_SCALES[currentIndex + 1];
       setUiScale(nextVal);
-      setSrAnnouncement(`Escala de interfaz aumentada al ${Math.round(nextVal * 100)}%`);
+      setSrAnnouncement(`Tamaño de la interfaz: ${sizeLabel(nextVal, UI_SCALES)}`);
     } else if (!increase && currentIndex > 0) {
       const prevVal = UI_SCALES[currentIndex - 1];
       setUiScale(prevVal);
-      setSrAnnouncement(`Escala de interfaz reducida al ${Math.round(prevVal * 100)}%`);
+      setSrAnnouncement(`Tamaño de la interfaz: ${sizeLabel(prevVal, UI_SCALES)}`);
     }
   };
 
@@ -253,7 +253,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   >
                     A−
                   </button>
-                  <span className={styles.scaleValue}>{Math.round(textScale * 100)}%</span>
+                  <span className={styles.scaleValue}>{sizeLabel(textScale, TEXT_SCALES)}</span>
                   <button
                     className={styles.scaleBtn}
                     onClick={() => handleTextScaleChange(true)}
@@ -267,7 +267,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
 
               {/* UI scale */}
               <div className={styles.scaleControl}>
-                <span className={styles.scaleLabel}>Escala de interfaz</span>
+                <span className={styles.scaleLabel}>Tamaño de la interfaz</span>
                 <div className={styles.scaleRow}>
                   <button
                     className={styles.scaleBtn}
@@ -277,7 +277,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
                   >
                     −
                   </button>
-                  <span className={styles.scaleValue}>{Math.round(uiScale * 100)}%</span>
+                  <span className={styles.scaleValue}>{sizeLabel(uiScale, UI_SCALES)}</span>
                   <button
                     className={styles.scaleBtn}
                     onClick={() => handleUiScaleChange(true)}
