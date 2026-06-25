@@ -44,11 +44,15 @@ type StageClientProps = {
 };
 
 export default function StageClient({ stageId }: StageClientProps) {
-  const [completedFrames, setCompletedFrames] = useState(0);
+  const [completedFrames, setCompletedFrames] = useState(() => readFrameProgress(stageId));
   const [menuOpen, setMenuOpen] = useState(false);
   const [toasts, setToasts] = useState<Toast[]>([]);
   const toastCounter = useRef(0);
-  const notifiedFrames = useRef(new Set<number>());
+  const notifiedFrames = useRef<Set<number>>(
+    new Set(Array.from({ length: readFrameProgress(stageId) }, (_, i) => i + 1))
+  );
+  const rootRef = useRef<HTMLDivElement>(null);
+  const hasRestoredScroll = useRef(false);
 
   const pushToast = useCallback((text: string) => {
     const id = ++toastCounter.current;
@@ -71,16 +75,39 @@ export default function StageClient({ stageId }: StageClientProps) {
     [stageId]
   );
 
+  // Resetea el control de scroll cuando cambia la etapa
+  useEffect(() => {
+    hasRestoredScroll.current = false;
+  }, [stageId]);
+
   // Hidrata completedFrames desde localStorage al montar.
   // Seguro: page.tsx usa dynamic({ ssr: false }), no hay SSR de este componente.
   useEffect(() => {
     const saved = readFrameProgress(stageId);
     if (saved > 0) {
-      notifiedFrames.current = new Set(Array.from({ length: saved }, (_, i) => i + 1));
-      setCompletedFrames(saved);
+      // Restaurar scroll al último frame activo al montar inicialmente
+      if (!hasRestoredScroll.current) {
+        hasRestoredScroll.current = true;
+
+        const scrollAttempt = (retryCount = 0) => {
+          if (!rootRef.current) return;
+          const sections = rootRef.current.querySelectorAll("section[id^='frame-'], section[id^='etapa']");
+          if (sections.length > 0) {
+            const activeSection = sections[sections.length - 1];
+            activeSection.scrollIntoView({ behavior: "smooth", block: "center" });
+
+            // Si el scroll sigue arriba y quedan reintentos, reintentar
+            if (rootRef.current.scrollTop === 0 && retryCount < 5) {
+              setTimeout(() => scrollAttempt(retryCount + 1), 150);
+            }
+          }
+        };
+
+        const timer = setTimeout(() => scrollAttempt(), 500);
+        return () => clearTimeout(timer);
+      }
     }
-    // eslint-disable-next-line react-hooks/exhaustive-deps
-  }, []);
+  }, [stageId]);
 
   useEffect(() => {
     writeProgress({ hasStarted: true, lastRoute: `/etapas/${stageId}` });
@@ -102,7 +129,7 @@ export default function StageClient({ stageId }: StageClientProps) {
   }
 
   return (
-    <div className={styles.root}>
+    <div ref={rootRef} className={styles.root}>
       <UaoArcBackground />
       {(stageId === "introduccion" || stageId === "etapa-1") && (
         <BackgroundAudio src="/audio/fondo.ogg" />

@@ -2,7 +2,8 @@
 
 import type { StageFramesProps } from "../shared/StageFramesProps";
 
-export default function Stage6Frames(_: StageFramesProps) {
+export default function Stage6Frames({ stageId }: StageFramesProps) {
+  console.debug("Rendering stage:", stageId);
   return (
     <div
       style={{

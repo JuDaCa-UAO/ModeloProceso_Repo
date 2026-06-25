@@ -1,6 +1,6 @@
 "use client";
 
-import React, { createContext, useContext, useState, useEffect } from "react";
+import React, { createContext, useContext, useState } from "react";
 
 interface VolumeContextType {
   musicVolume: number;
@@ -17,31 +17,34 @@ const VolumeContext = createContext<VolumeContextType | undefined>(undefined);
 
 export function VolumeProvider({ children }: { children: React.ReactNode }) {
   // Inicializamos volúmenes
-  const [musicVolume, setMusicVolumeState] = useState(0.25);
-  const [sfxVolume, setSfxVolumeState] = useState(0.5);
-  const [voiceVolume, setVoiceVolumeState] = useState(0.8);
-  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
-
-  useEffect(() => {
-    // Al cargar el cliente, recuperar de localStorage si existe
+  const [musicVolume, setMusicVolumeState] = useState(() => {
+    if (typeof window === "undefined") return 0.25;
     const savedMusic = localStorage.getItem("app-music-volume");
     if (savedMusic !== null) {
       const parsed = parseFloat(savedMusic);
-      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) setMusicVolumeState(parsed);
+      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) return parsed;
     }
-    
+    return 0.25;
+  });
+  const [sfxVolume, setSfxVolumeState] = useState(() => {
+    if (typeof window === "undefined") return 0.5;
     const savedSfx = localStorage.getItem("app-sfx-volume");
     if (savedSfx !== null) {
       const parsed = parseFloat(savedSfx);
-      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) setSfxVolumeState(parsed);
+      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) return parsed;
     }
-
+    return 0.5;
+  });
+  const [voiceVolume, setVoiceVolumeState] = useState(() => {
+    if (typeof window === "undefined") return 0.8;
     const savedVoice = localStorage.getItem("app-voice-volume");
     if (savedVoice !== null) {
       const parsed = parseFloat(savedVoice);
-      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) setVoiceVolumeState(parsed);
+      if (!isNaN(parsed) && parsed >= 0 && parsed <= 1) return parsed;
     }
-  }, []);
+    return 0.8;
+  });
+  const [isVideoPlaying, setIsVideoPlaying] = useState(false);
 
   const setMusicVolume = (newVolume: number) => {
     const clamped = Math.max(0, Math.min(1, newVolume));
