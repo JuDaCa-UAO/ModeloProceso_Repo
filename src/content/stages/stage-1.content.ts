@@ -280,7 +280,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                   {
                                     type: "navigate",
                                     label: "Continuar a Etapa 2",
-                                    href: "/etapa/etapa-2",
+                                    href: "/etapas/etapa-2",
                                     variant: "primary",
                                     requires: ["transitionAnimationViewed"],
                                   },

@@ -8,13 +8,10 @@
   width: clamp(160px, 14vw, 230px);
   display: flex;
   flex-direction: column;
-  background: rgba(4, 2, 3, 0.95); /* Color de fondo igual al del label y el general de la app */
-  border: 1px solid rgba(248, 46, 53, 0.4);
-  border-radius: 8px;
-  backdrop-filter: blur(14px);
-  box-shadow:
-    0 4px 16px rgba(0, 0, 0, 0.50),
-    0 0 12px rgba(248, 46, 53, 0.15);
+  background: var(--uao-color-white, #ffffff);
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  border-radius: var(--uao-radius-md, 0.875rem);
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.05);
   overflow: hidden;
   padding: 8px; /* Un padding que envuelve y da ese borde homogeneo */
 }
@@ -22,24 +19,25 @@
 .canvas {
   width: 100%;
   aspect-ratio: 16 / 9;
-  background-color: #000000;
-  border-radius: 4px;
+  background-color: var(--uao-color-cream, #fbf5ec);
+  border-radius: var(--uao-radius-sm, 0.5rem);
   overflow: hidden;
+  position: relative;
 }
 
 .label {
   margin: 8px 0 0;
-  border-radius: 4px;
+  border-radius: var(--uao-radius-sm, 0.5rem);
   padding: 6px 8px;
-  font-size: 10px;
+  font-size: calc(15px * var(--text-scale, 1));
   font-weight: 700;
-  letter-spacing: 0.05em;
+  letter-spacing: 0.04em;
   text-align: center;
-  color: rgba(254, 106, 111, 0.90);
+  color: var(--uao-color-burgundy, #ac0b32);
   text-transform: uppercase;
   line-height: 1.4;
-  border-top: 1px solid rgba(248, 46, 53, 0.25);
-  background: rgba(4, 2, 3, 0.85);
+  border-top: 1px solid rgba(138, 20, 40, 0.12);
+  background: var(--uao-color-cream, #fbf5ec);
 }
 
 .stepperTrack {
@@ -53,46 +51,39 @@
   flex: 1;
   height: 4px;
   border-radius: 2px;
-  background: rgba(255, 255, 255, 0.1);
+  background: rgba(138, 20, 40, 0.12);
   transition: all 0.3s;
 }
 
-.stepDot.completed {
-  background: rgba(254, 106, 111, 0.5);
+/* Etapas completadas: coral institucional sólido */
+.stepDot.completed,
+.stepDot.intro.completed {
+  background: var(--uao-color-coral, #ff836c);
 }
 
-.stepDot.current {
-  background: #F82E35;
-  box-shadow: 0 0 6px rgba(248, 46, 53, 0.8);
+/* Etapa actual: rojo principal UAO, sin glow neón */
+.stepDot.current,
+.stepDot.intro.current {
+  background: var(--uao-color-red-primary, #ff051e);
 }
 
+/* Etapa siguiente: contorno rojo sutil */
 .stepDot.next {
   background: transparent;
-  border: 1px solid rgba(248, 46, 53, 0.6);
+  border: 1px solid rgba(255, 5, 30, 0.45);
 }
 
+/* Solo layout: la apariencia la aporta UaoButton. */
 .journeyBtn {
   margin-top: 8px;
-  padding: 6px 8px;
-  background: transparent;
-  border: 1px solid rgba(248, 46, 53, 0.4);
-  color: rgba(254, 106, 111, 0.9);
-  border-radius: 4px;
-  font-size: 10px;
-  text-transform: uppercase;
-  cursor: pointer;
-  transition: all 0.2s;
   width: 100%;
-}
-.journeyBtn:hover {
-  background: rgba(248, 46, 53, 0.1);
 }
 
 .modalBackdrop {
   position: fixed;
   inset: 0;
-  background: rgba(0, 0, 0, 0.75);
-  backdrop-filter: blur(6px);
+  background: rgba(15, 23, 43, 0.45);
+  backdrop-filter: blur(4px);
   z-index: 9999;
   display: flex;
   align-items: center;
@@ -115,19 +106,12 @@
   gap: 16px;
 }
 
+/* Solo posicionamiento: la apariencia la aporta UaoIconButton. */
 .closeBtn {
   position: absolute;
   top: 12px;
   right: 16px;
-  background: transparent;
-  border: none;
-  color: rgba(255, 255, 255, 0.5);
-  font-size: 20px;
-  cursor: pointer;
-  transition: color 0.2s;
-}
-.closeBtn:hover {
-  color: #F82E35;
+  z-index: 1;
 }
 
 .modalHeader {

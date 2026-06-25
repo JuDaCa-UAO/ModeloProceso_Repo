@@ -1,3 +1,5 @@
+@import "../styles/uao-tokens.css";
+
 *,
 *::before,
 *::after {
@@ -10,11 +12,14 @@ body {
 }
 
 :root {
-  --font-tech: "Chakra Petch";
-  --hud-cyan: rgba(84, 245, 255, 1);
-  --hud-cyan-soft: rgba(84, 245, 255, 0.34);
-  --hud-bg-deep: rgba(2, 12, 24, 0.84);
-  --hud-bg-mid: rgba(6, 26, 42, 0.84);
+  /* Fallback overrides for cyber HUD variables to ensure compatibility */
+  --hud-cyan: var(--uao-color-red-primary, #ff051e);
+  --hud-cyan-soft: rgba(255, 5, 30, 0.18);
+  --hud-bg-deep: var(--uao-color-cream, #fbf5ec);
+  --hud-bg-mid: var(--uao-color-white, #ffffff);
+
+  --font-tech: var(--font-dm-sans), "DM Sans", Arial, sans-serif;
+
   /* Accessibility: overridden at runtime by AccessibilityContext */
   --text-scale: 1;
   --ui-scale: 1;
@@ -23,5 +28,6 @@ body {
 body {
   margin: 0;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
-  background-color: #050304;
+  background-color: var(--uao-color-cream, #fbf5ec);
+  color: var(--uao-color-text-primary, #0f172b);
 }

@@ -1,18 +1,20 @@
 import "./globals.css";
 import type { Metadata } from "next";
-import { Chakra_Petch } from "next/font/google";
+import { DM_Sans } from "next/font/google";
 import { VolumeProvider } from "@/context/VolumeContext";
 import { AccessibilityProvider } from "@/context/AccessibilityContext";
 
-const techFont = Chakra_Petch({
+const dmSans = DM_Sans({
   subsets: ["latin"],
-  weight: ["300", "400", "500", "600", "700"],
-  variable: "--font-tech",
+  weight: ["300", "400", "500", "600", "700", "800", "900"],
+  variable: "--font-dm-sans",
 });
 
 export const metadata: Metadata = {
-  title: "AI TECH-ED",
-  description: "Demo del modelo de proceso",
+  title:
+    "Cartilla Web: modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de inteligencia artificial generativa",
+  description:
+    "Cartilla Web y modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de inteligencia artificial generativa. Universidad Autónoma de Occidente.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {
@@ -30,7 +32,7 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
         {/* Descarga el script de la IFrame API en paralelo con el HTML */}
         <link rel="preload" as="script" href="https://www.youtube.com/iframe_api" />
       </head>
-      <body className={techFont.variable}>
+      <body className={`${dmSans.className} ${dmSans.variable}`}>
         <VolumeProvider><AccessibilityProvider>{children}</AccessibilityProvider></VolumeProvider>
       </body>
     </html>

@@ -1,0 +1,82 @@
+/* GUIDE HAND — guía animada con la mano de Laia */
+
+.layer {
+  position: fixed;
+  z-index: 950;
+  transform: translateX(-50%);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 6px;
+  pointer-events: none; /* no bloquear clicks del control objetivo */
+  max-width: min(280px, 90vw);
+}
+
+.hand {
+  width: 78px;
+  height: auto;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+  animation: guideFloat 1.6s ease-in-out infinite;
+}
+
+.handFallback {
+  font-size: 34px;
+  line-height: 1;
+  filter: drop-shadow(0 4px 10px rgba(0, 0, 0, 0.45));
+  animation: guideFloat 1.6s ease-in-out infinite;
+}
+
+@keyframes guideFloat {
+  0%, 100% { transform: translateY(0); }
+  50% { transform: translateY(-6px); }
+}
+
+.bubble {
+  pointer-events: auto;
+  display: grid;
+  gap: 8px;
+  justify-items: center;
+  text-align: center;
+  padding: 10px 14px;
+  border-radius: 14px;
+  border: 1px solid rgba(248, 46, 53, 0.4);
+  background: rgba(10, 6, 7, 0.92);
+  backdrop-filter: blur(8px);
+  box-shadow: 0 8px 28px rgba(0, 0, 0, 0.5);
+}
+
+.text {
+  margin: 0;
+  color: #f4f4f4;
+  font-size: 13px;
+  line-height: 1.4;
+}
+
+.skip {
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  background: transparent;
+  color: #fe6a6f;
+  border-radius: 999px;
+  padding: 4px 12px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+  transition: border-color 150ms ease, color 150ms ease;
+}
+
+.skip:hover {
+  border-color: rgba(248, 46, 53, 0.6);
+  color: #fff;
+}
+
+.skip:focus-visible {
+  outline: 2px solid #f82e35;
+  outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .hand,
+  .handFallback {
+    animation: none;
+  }
+}

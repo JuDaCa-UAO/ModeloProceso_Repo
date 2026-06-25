@@ -46,3 +46,28 @@ next-env.d.ts
 *.md
 AGENTS_claude_stage1.md
 .env.local
+.agents
+skills-lock.json
+
+# designs
+/disenos/
+
+/contexto/
+
+# Diseños locales para consulta del agente
+/contexto/disenos/**
+!/contexto/disenos/.gitkeep
+
+# Cachés y renderizados
+/contexto/.cache/
+/contexto/tmp/
+/contexto/renderizados/
+/contexto/contact-sheets/
+
+# Exportaciones multimedia de trabajo
+/public/media/_source/
+/public/media/_temp/
+/public/media/_exports/
+/public/mano/Mano izq apunta.svg
+manual-identidad.pdf
+uao-next-template (1)

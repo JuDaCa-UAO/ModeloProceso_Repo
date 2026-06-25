@@ -12,19 +12,41 @@ interface AccessibilityContextType {
 
 const AccessibilityContext = createContext<AccessibilityContextType | undefined>(undefined);
 
-const SCALE_MIN = 0.8;
-const TEXT_SCALE_MAX = 1.1;
-const UI_SCALE_MAX = 1.0;
-const SCALE_STEP = 0.1;
+const TEXT_SCALES = [1.0, 1.25, 1.5];
+const UI_SCALES = [0.8, 0.9, 1.0];
 const DEFAULT_TEXT_SCALE = 1.0;
 const DEFAULT_UI_SCALE = 1.0;
 
+const SIZE_LABELS = ["Pequeño", "Mediano", "Grande"];
+
+/**
+ * Traduce un valor de escala a un nombre simple (Pequeño/Mediano/Grande)
+ * según su posición dentro del arreglo de pasos correspondiente.
+ * Pensado para presentar las opciones de forma clara a usuarios adultos.
+ */
+function sizeLabel(value: number, scales: number[]): string {
+  const idx = scales.reduce(
+    (best, curr, i) =>
+      Math.abs(curr - value) < Math.abs(scales[best] - value) ? i : best,
+    0
+  );
+  // Mapea el índice a 3 etiquetas (primero = Pequeño, último = Grande).
+  if (scales.length <= 1) return SIZE_LABELS[2];
+  const ratio = idx / (scales.length - 1);
+  const labelIdx = Math.round(ratio * (SIZE_LABELS.length - 1));
+  return SIZE_LABELS[labelIdx];
+}
+
 function clampTextScale(value: number): number {
-  return Math.round(Math.max(SCALE_MIN, Math.min(TEXT_SCALE_MAX, value)) * 10) / 10;
+  return TEXT_SCALES.reduce((prev, curr) =>
+    Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+  );
 }
 
 function clampUiScale(value: number): number {
-  return Math.round(Math.max(SCALE_MIN, Math.min(UI_SCALE_MAX, value)) * 10) / 10;
+  return UI_SCALES.reduce((prev, curr) =>
+    Math.abs(curr - value) < Math.abs(prev - value) ? curr : prev
+  );
 }
 
 /**
@@ -32,6 +54,7 @@ function clampUiScale(value: number): number {
  * to the root <html> element so every component can respond to them.
  */
 function applyCSSVars(textScale: number, uiScale: number) {
+  if (typeof document === "undefined") return;
   const root = document.documentElement;
   root.style.setProperty("--text-scale", String(textScale));
   root.style.setProperty("--ui-scale", String(uiScale));
@@ -44,40 +67,83 @@ export function AccessibilityProvider({ children }: { children: React.ReactNode 
   // Hydrate from localStorage on mount
   useEffect(() => {
     try {
-      const savedText = localStorage.getItem("app-text-scale");
-      const savedUi = localStorage.getItem("app-ui-scale");
+      let tScale = DEFAULT_TEXT_SCALE;
+      let uScale = DEFAULT_UI_SCALE;
 
-      const tScale = savedText !== null ? clampTextScale(parseFloat(savedText)) : DEFAULT_TEXT_SCALE;
-      const uScale = savedUi !== null ? clampUiScale(parseFloat(savedUi)) : DEFAULT_UI_SCALE;
+      const savedPrefs = localStorage.getItem("app-accessibility-v2");
+      if (savedPrefs !== null) {
+        const parsed = JSON.parse(savedPrefs);
+        if (typeof parsed.textScale === "number") {
+          tScale = clampTextScale(parsed.textScale);
+        }
+        if (typeof parsed.uiScale === "number") {
+          uScale = clampUiScale(parsed.uiScale);
+        }
+      } else {
+        // Migration of legacy keys if present
+        const oldText = localStorage.getItem("app-text-scale");
+        const oldUi = localStorage.getItem("app-ui-scale");
 
-      setTextScaleState(tScale);
-      setUiScaleState(uScale);
-      applyCSSVars(tScale, uScale);
+        if (oldText !== null || oldUi !== null) {
+          if (oldText !== null) tScale = clampTextScale(parseFloat(oldText));
+          if (oldUi !== null) uScale = clampUiScale(parseFloat(oldUi));
+
+          // Save migrated preferences under versioned key
+          localStorage.setItem(
+            "app-accessibility-v2",
+            JSON.stringify({ textScale: tScale, uiScale: uScale })
+          );
+
+          // Cleanup legacy keys
+          localStorage.removeItem("app-text-scale");
+          localStorage.removeItem("app-ui-scale");
+        }
+      }
+
+      setTimeout(() => {
+        setTextScaleState(tScale);
+        setUiScaleState(uScale);
+        applyCSSVars(tScale, uScale);
+      }, 0);
     } catch {
-      /* localStorage unavailable — keep defaults */
+      /* localStorage unavailable or JSON parsing failed — keep defaults */
     }
   }, []);
 
   const setTextScale = useCallback((newScale: number) => {
     const clamped = clampTextScale(newScale);
     setTextScaleState(clamped);
-    localStorage.setItem("app-text-scale", clamped.toString());
     applyCSSVars(clamped, uiScale);
+    try {
+      localStorage.setItem(
+        "app-accessibility-v2",
+        JSON.stringify({ textScale: clamped, uiScale })
+      );
+    } catch {}
   }, [uiScale]);
 
   const setUiScale = useCallback((newScale: number) => {
     const clamped = clampUiScale(newScale);
     setUiScaleState(clamped);
-    localStorage.setItem("app-ui-scale", clamped.toString());
     applyCSSVars(textScale, clamped);
+    try {
+      localStorage.setItem(
+        "app-accessibility-v2",
+        JSON.stringify({ textScale, uiScale: clamped })
+      );
+    } catch {}
   }, [textScale]);
 
   const resetAccessibility = useCallback(() => {
     setTextScaleState(DEFAULT_TEXT_SCALE);
     setUiScaleState(DEFAULT_UI_SCALE);
-    localStorage.setItem("app-text-scale", DEFAULT_TEXT_SCALE.toString());
-    localStorage.setItem("app-ui-scale", DEFAULT_UI_SCALE.toString());
     applyCSSVars(DEFAULT_TEXT_SCALE, DEFAULT_UI_SCALE);
+    try {
+      localStorage.setItem(
+        "app-accessibility-v2",
+        JSON.stringify({ textScale: DEFAULT_TEXT_SCALE, uiScale: DEFAULT_UI_SCALE })
+      );
+    } catch {}
   }, []);
 
   return (
@@ -97,4 +163,4 @@ export function useAccessibility() {
   return context;
 }
 
-export { SCALE_MIN, TEXT_SCALE_MAX, UI_SCALE_MAX, SCALE_STEP };
+export { TEXT_SCALES, UI_SCALES, DEFAULT_TEXT_SCALE, DEFAULT_UI_SCALE, sizeLabel };

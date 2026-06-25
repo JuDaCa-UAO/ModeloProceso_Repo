@@ -2,7 +2,8 @@
 
 import { memo, useCallback, useEffect, useMemo, useRef, useState } from "react";
 import Image from "next/image";
-import { HiChevronLeft, HiChevronRight, HiOutlineSpeakerWave, HiOutlineArrowPath, HiOutlinePause } from "react-icons/hi2";
+import { FiChevronLeft, FiChevronRight, FiVolume2, FiRotateCcw, FiPause } from "react-icons/fi";
+import { UaoButton, UaoIconButton } from "@/components/uao/UaoButton/UaoButton";
 import { useVolume } from "@/context/VolumeContext";
 import styles from "./CharacterStepDialog.module.css";
 
@@ -331,6 +332,8 @@ export default function CharacterStepDialog({
 
   if (!step) return null;
 
+  const controlSize = size === "compact" ? "sm" : "md";
+
   return (
     <div
       ref={shellRef}
@@ -355,27 +358,25 @@ export default function CharacterStepDialog({
           <div className={styles.actions}>
             <div className={styles.leftActions}>
               {showAudioButton ? (
-                <button
-                  type="button"
-                  className={styles.audioBtn}
+                <UaoIconButton
+                  variant="secondary"
+                  size={controlSize}
+                  icon={isVoicePlaying ? <FiPause /> : <FiVolume2 />}
                   aria-label={isVoicePlaying ? "Pausar audio" : "Reproducir audio"}
                   onClick={toggleVoiceAudio}
                   disabled={!step.audioSrc}
                   title={step.audioSrc ? (isVoicePlaying ? "Pausar narración" : "Escuchar narración") : "Audio próximamente"}
-                >
-                  {isVoicePlaying ? <HiOutlinePause /> : <HiOutlineSpeakerWave />}
-                </button>
+                />
               ) : null}
-              <button
-                type="button"
-                className={styles.navBtn}
+              <UaoIconButton
+                variant="secondary"
+                size={controlSize}
+                icon={<FiChevronLeft />}
                 onClick={goPrevious}
                 disabled={idx <= 0}
                 aria-label="Anterior"
                 title="Anterior (flecha izquierda)"
-              >
-                <span className={styles.arrow}><HiChevronLeft size={20} /></span>
-              </button>
+              />
             </div>
 
             <div className={styles.counter}>
@@ -384,32 +385,35 @@ export default function CharacterStepDialog({
 
             {isDecisionStep ? (
               <div className={styles.endActions}>
-                <button
-                  type="button"
-                  className={styles.secondaryBtn}
+                <UaoButton
+                  variant="secondary"
+                  size={controlSize}
+                  leadingIcon={<FiRotateCcw />}
                   onClick={restartDialog}
                 >
-                  <HiOutlineArrowPath size={16} /> Repetir
-                </button>
-                <button
-                  type="button"
-                  className={styles.nextBtn}
+                  Repetir
+                </UaoButton>
+                <UaoButton
+                  variant="primary"
+                  size={controlSize}
+                  trailingIcon={<FiChevronRight />}
                   onClick={completeDialog}
                   disabled={disableNext || isCompleted}
                 >
-                  Continuar <span className={styles.arrow}><HiChevronRight size={18} /></span>
-                </button>
+                  Continuar
+                </UaoButton>
               </div>
             ) : (
-              <button
-                type="button"
-                className={styles.nextBtn}
+              <UaoButton
+                variant="primary"
+                size={controlSize}
+                trailingIcon={<FiChevronRight />}
                 onClick={goNext}
                 disabled={disableNext}
                 title="Siguiente (flecha derecha)"
               >
-                {nextLabel} <span className={styles.arrow}><HiChevronRight size={18} /></span>
-              </button>
+                {nextLabel}
+              </UaoButton>
             )}
           </div>
         </div>

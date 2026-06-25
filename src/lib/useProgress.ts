@@ -7,7 +7,7 @@ const PROGRESS_EVENT = "ai-tech-ed-progress-changed";
 
 const SERVER_SNAPSHOT: ProgressState = {
   hasStarted: false,
-  lastRoute: "/etapa/etapa-0",
+  lastRoute: "/etapas/introduccion",
   updatedAt: 0,
 };
 
