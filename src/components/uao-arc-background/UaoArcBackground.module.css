@@ -19,28 +19,28 @@
 /* Arco grande, esquina inferior derecha. Crema ligeramente más cálida que el
    fondo (mezcla crema + coral) para dar volumen sin competir con los frames. */
 .arcBottomRight {
-  right: -8vw;
-  bottom: -10vh;
+  right: -2vw;
+  bottom: -3vh;
   width: clamp(420px, 52vw, 880px);
-  color: color-mix(in srgb, var(--uao-color-coral, #ff836c) 12%, var(--uao-color-cream, #fbf5ec));
+  color: color-mix(in srgb, var(--uao-color-coral, #ff836c) 45%, var(--uao-color-cream, #fbf5ec));
   transform: rotate(180deg);
 }
 
 /* Acento coral muy tenue, esquina superior izquierda (detrás del widget 3D). */
 .arcTopLeft {
-  left: -10vw;
-  top: -12vh;
+  left: -3vw;
+  top: -4vh;
   width: clamp(320px, 38vw, 620px);
-  color: color-mix(in srgb, var(--uao-color-coral, #ff836c) 8%, var(--uao-color-cream, #fbf5ec));
+  color: color-mix(in srgb, var(--uao-color-coral, #ff836c) 45%, var(--uao-color-cream, #fbf5ec));
 }
 
 /* Fallback para navegadores sin color-mix: tonos crema/coral planos. */
 @supports not (background: color-mix(in srgb, red, blue)) {
   .arcBottomRight {
-    color: #f7e7dc;
+    color: #f2d6c9;
   }
   .arcTopLeft {
-    color: #faeee6;
+    color: #f5ded2;
   }
 }
 
