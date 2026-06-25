@@ -120,54 +120,72 @@ export default function StageViewer({
   // Se lee fuera del <Canvas>: el contexto de React no cruza el reconciler de r3f.
   const { uiScale } = useAccessibility();
   const groupRef = useRef<THREE.Group | null>(null);
+
   return (
-    <Canvas
-      flat
-      camera={{ position: [0, 0, 45], fov: 42 }}
-      // Limita la resolución del render para reducir presión de memoria GPU (1x para bajo consumo, hasta 1.5x en modo normal).
-      dpr={lowPower ? 1 : [1, 1.5]}
-      gl={{
-        powerPreference: lowPower ? "low-power" : "high-performance",
-        antialias: !lowPower,
-        stencil: false,
-        depth: true,
-        failIfMajorPerformanceCaveat: false,
-      }}
-      // Recuperación de contexto: preventDefault permite que el navegador restaure
-      // el contexto WebGL en vez de matarlo (p. ej. tras un Fast Refresh en dev).
-      onCreated={({ gl }) => {
-        gl.domElement.addEventListener(
-          "webglcontextlost",
-          (e) => e.preventDefault(),
-          false
-        );
-      }}
-      style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
-    >
-      <ambientLight intensity={1.05} color="#ffffff" />
-      <directionalLight position={[4, 5, 3]} intensity={0.55} color="#ffffff" />
-      <directionalLight
-        position={[-3, -2, -4]}
-        intensity={0.25}
-        color="#ffffff"
-      />
+    <div style={{ position: "relative", width: "100%", height: "100%" }}>
+      {/* 
+        Forzar que el elemento <canvas> y su contenedor interno de R3F llenen el 100%
+        del espacio del div absolute. Sin esto, en navegadores con zoom CSS (--ui-scale),
+        R3F mide el tamaño lógico pero el canvas se dibuja encogido por el zoom de Chrome,
+        lo que desalinea y desvia el modelo 3D hacia la izquierda y deja un vacío a la derecha.
+      */}
+      <style>{`
+        .r3f-canvas-container canvas {
+          width: 100% !important;
+          height: 100% !important;
+        }
+      `}</style>
 
-      <OrbitControls
-        makeDefault
-        enablePan={false}
-        enableZoom
-        enableRotate
-        target={[0, 0, 0]}
-        minDistance={5}
-        maxDistance={500}
-      />
+      <div className="r3f-canvas-container" style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}>
+        <Canvas
+          flat
+          camera={{ position: [0, 0, 45], fov: 42 }}
+          // Limita la resolución del render para reducir presión de memoria GPU (1x para bajo consumo, hasta 1.5x en modo normal).
+          dpr={lowPower ? 1 : [1, 1.5]}
+          gl={{
+            powerPreference: lowPower ? "low-power" : "high-performance",
+            antialias: !lowPower,
+            stencil: false,
+            depth: true,
+            failIfMajorPerformanceCaveat: false,
+          }}
+          // Recuperación de contexto: preventDefault permite que el navegador restaure
+          // el contexto WebGL en vez de matarlo (p. ej. tras un Fast Refresh en dev).
+          onCreated={({ gl }) => {
+            gl.domElement.addEventListener(
+              "webglcontextlost",
+              (e) => e.preventDefault(),
+              false
+            );
+          }}
+          style={{ position: "absolute", top: 0, left: 0, width: "100%", height: "100%" }}
+        >
+          <ambientLight intensity={1.05} color="#ffffff" />
+          <directionalLight position={[4, 5, 3]} intensity={0.55} color="#ffffff" />
+          <directionalLight
+            position={[-3, -2, -4]}
+            intensity={0.25}
+            color="#ffffff"
+          />
 
-      <FitCamera targetRef={groupRef} uiScale={uiScale} />
-      <RotatingSpiral
-        enableRotation={enableRotation}
-        activeStageIndex={activeStage}
-        groupRef={groupRef}
-      />
-    </Canvas>
+          <OrbitControls
+            makeDefault
+            enablePan={false}
+            enableZoom
+            enableRotate
+            target={[0, 0, 0]}
+            minDistance={5}
+            maxDistance={500}
+          />
+
+          <FitCamera targetRef={groupRef} uiScale={uiScale} />
+          <RotatingSpiral
+            enableRotation={enableRotation}
+            activeStageIndex={activeStage}
+            groupRef={groupRef}
+          />
+        </Canvas>
+      </div>
+    </div>
   );
 }
