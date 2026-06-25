@@ -25,6 +25,7 @@ import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import {
   FiTarget, FiEdit3, FiCpu, FiShield, FiFileText, FiCompass, FiHelpCircle,
   FiArrowRight, FiPlay, FiRotateCcw, FiDownload,
+  FiCheckCircle, FiClock, FiAlertCircle,
 } from "react-icons/fi";
 
 type BlockComponentProps = { block: StageBlock; ctx: BlockContext };
@@ -97,13 +98,23 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
   return (
     <figure className={styles.videoFrame}>
       {media.available && media.url ? (
-        <video
-          className={styles.videoEl}
-          src={media.url}
-          controls
-          preload="metadata"
-          aria-label={media.description}
-        />
+        media.kind === "image" || media.kind === "svg" ? (
+          // eslint-disable-next-line @next/next/no-img-element
+          <img
+            className={styles.videoEl}
+            src={media.url}
+            alt={media.description ?? ""}
+            style={{ objectFit: "contain", background: "var(--uao-color-cream, #fbf5ec)" }}
+          />
+        ) : (
+          <video
+            className={styles.videoEl}
+            src={media.url}
+            controls
+            preload="metadata"
+            aria-label={media.description}
+          />
+        )
       ) : (
         <div className={styles.videoFallback} role="img" aria-label={media.fallbackLabel}>
           <span className={styles.videoFallbackIcon} aria-hidden>
@@ -575,6 +586,120 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
   );
 }
 
+// ── checklist-board ───────────────────────────────────────────────────────────
+function ChecklistBoardBlock({ block }: BlockComponentProps) {
+  const [open, setOpen] = useState(false);
+  if (block.type !== "checklist-board") return null;
+
+  return (
+    <div className={styles.actionRow}>
+      <UaoButton
+        pill
+        trailingIcon={<FiArrowRight />}
+        data-guide-id={block.guideId ?? "etapa4-observar-tablero"}
+        onClick={() => setOpen(true)}
+      >
+        {block.openLabel}
+      </UaoButton>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title={block.modalTitle ?? "Tablero de preparación"}
+        badge={block.modalBadge ?? "PREPARACIÓN"}
+      >
+        <div className={styles.checklistContainer}>
+          <div className={styles.checklistGrid}>
+            {block.items.map((item, i) => {
+              let statusClass = styles.statusPending;
+              let statusIcon = <FiClock aria-hidden />;
+              if (item.status === "ready") {
+                statusClass = styles.statusReady;
+                statusIcon = <FiCheckCircle aria-hidden />;
+              } else if (item.status === "review") {
+                statusClass = styles.statusReview;
+                statusIcon = <FiAlertCircle aria-hidden />;
+              }
+
+              return (
+                <div key={i} className={styles.checklistCard}>
+                  <div className={styles.checklistCardHeader}>
+                    <span className={styles.checklistCategory}>{item.category}</span>
+                    <span className={`${styles.checklistStatusBadge} ${statusClass}`} style={{ display: "inline-flex", alignItems: "center", gap: "4px" }}>
+                      {statusIcon}
+                      {item.statusLabel}
+                    </span>
+                  </div>
+                  <h4 className={styles.checklistCardTitle}>{item.title}</h4>
+                  <p className={styles.checklistCardDesc}>{item.description}</p>
+                </div>
+              );
+            })}
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+}
+
+// ── guided-scenario ───────────────────────────────────────────────────────────
+function GuidedScenarioBlock({ block }: BlockComponentProps) {
+  const [open, setOpen] = useState(false);
+  if (block.type !== "guided-scenario") return null;
+  const { scenario } = block;
+
+  return (
+    <div className={styles.actionRow}>
+      <UaoButton
+        pill
+        trailingIcon={<FiArrowRight />}
+        data-guide-id={block.guideId ?? "etapa4-observar-microcaso"}
+        onClick={() => setOpen(true)}
+      >
+        {block.openLabel}
+      </UaoButton>
+
+      <Modal
+        open={open}
+        onClose={() => setOpen(false)}
+        title={block.modalTitle ?? "Ejemplo de riesgo y recomendación"}
+        badge={block.modalBadge ?? "MICROCASO"}
+      >
+        <div className={styles.scenarioContainer}>
+          <div className={styles.scenarioCard}>
+            <div className={styles.scenarioHeader}>
+              <span className={styles.scenarioIcon} aria-hidden>
+                <FiAlertCircle />
+              </span>
+              <h3 className={styles.scenarioTitle}>{scenario.title}</h3>
+            </div>
+            
+            <div className={styles.scenarioSection}>
+              <span className={styles.scenarioLabel}>Situación:</span>
+              <p className={styles.scenarioContentText}>{scenario.situation}</p>
+            </div>
+            
+            <div className={styles.scenarioAlert}>
+              <span className={styles.scenarioLabel} style={{ marginTop: "2px" }}>Riesgo:</span>
+              <p className={styles.scenarioAlertText}>{scenario.risk}</p>
+            </div>
+            
+            <div className={styles.scenarioSection}>
+              <span className={styles.scenarioLabel}>Recomendación:</span>
+              <p className={styles.scenarioContentText}>{scenario.recommendation}</p>
+            </div>
+            
+            <div className={styles.scenarioSection} style={{ borderTop: "1px solid rgba(138, 20, 40, 0.08)", paddingTop: "12px" }}>
+              <span className={styles.scenarioLabel}>Rol Docente:</span>
+              <p className={styles.scenarioContentText} style={{ fontStyle: "italic" }}>{scenario.teacherRole}</p>
+            </div>
+          </div>
+        </div>
+      </Modal>
+    </div>
+  );
+}
+
 /** Registro de bloques: tipo → componente. */
 export const BLOCK_REGISTRY: Record<
   StageBlock["type"],
@@ -589,4 +714,6 @@ export const BLOCK_REGISTRY: Record<
   "design-canvas": DesignCanvasBlock,
   "download-resource": DownloadResourceBlock,
   transition: TransitionBlock,
+  "checklist-board": ChecklistBoardBlock,
+  "guided-scenario": GuidedScenarioBlock,
 };

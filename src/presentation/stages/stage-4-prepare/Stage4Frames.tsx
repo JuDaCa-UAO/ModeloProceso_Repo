@@ -1,22 +1,38 @@
 "use client";
 
-import type { StageFramesProps } from "../shared/StageFramesProps";
+/**
+ * PRESENTATION — Etapa 4 (Prepara el terreno para el éxito)
+ *
+ * Vista delgada: delega todo el render en el motor dirigido por datos
+ * (`StageRenderer`) consumiendo la definición `STAGE4_PREPARE_TREE`.
+ * No contiene JSX específico de la etapa ni una rama gigante por `stageId`.
+ */
 
-export default function Stage4Frames(_: StageFramesProps) {
+import StageRenderer from "../engine/StageRenderer";
+import { STAGE4_PREPARE_TREE } from "@/content/stages/stage-4.content";
+import type { StageFramesProps } from "../shared/StageFramesProps";
+import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
+
+export default function Stage4Frames({
+  stageId,
+  completedFrames,
+  completeFrame,
+  pushToast,
+  notifiedFrames,
+}: StageFramesProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "80vh",
-        color: "#c9b8e8",
-        fontSize: "1.1rem",
-        textAlign: "center",
-        padding: "2rem",
-      }}
-    >
-      <p>Esta etapa estará disponible próximamente.</p>
-    </div>
+    <>
+      {completedFrames >= 1 && (
+        <MiniSpiralViewer stageLabel="Etapa actual: Etapa 4" stageKey="etapa-4" />
+      )}
+      <StageRenderer
+        stageId={stageId}
+        tree={STAGE4_PREPARE_TREE}
+        completedFrames={completedFrames}
+        completeFrame={completeFrame}
+        pushToast={pushToast}
+        notifiedFrames={notifiedFrames}
+      />
+    </>
   );
 }

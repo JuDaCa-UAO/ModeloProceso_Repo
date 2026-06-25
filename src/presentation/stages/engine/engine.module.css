@@ -505,3 +505,158 @@
     grid-row: auto;
   }
 }
+
+/* ── Tablero de Preparación / Checklist Board (Stage 4) ──────────────────── */
+.checklistContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.checklistGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.checklistCard {
+  border-radius: 12px;
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  background: var(--uao-color-white, #ffffff);
+  box-shadow: 0 6px 16px rgba(64, 17, 25, 0.06);
+  padding: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.checklistCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(64, 17, 25, 0.1);
+}
+.checklistCardHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  border-bottom: 1px solid rgba(138, 20, 40, 0.12);
+  padding-bottom: 8px;
+}
+.checklistCategory {
+  font-size: calc(12px * var(--text-scale, 1));
+  font-weight: 700;
+  text-transform: uppercase;
+  color: var(--uao-color-text-secondary, #475569);
+  letter-spacing: 0.05em;
+}
+.checklistStatusBadge {
+  border-radius: 999px;
+  padding: 2px 8px;
+  font-size: calc(11px * var(--text-scale, 1));
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+.statusReady {
+  background: rgba(255, 5, 30, 0.08);
+  border: 1px solid rgba(255, 5, 30, 0.3);
+  color: var(--uao-color-burgundy, #ac0b32);
+}
+.statusReview {
+  background: rgba(217, 119, 6, 0.08);
+  border: 1px solid rgba(217, 119, 6, 0.3);
+  color: #b45309;
+}
+.statusPending {
+  background: rgba(100, 116, 139, 0.08);
+  border: 1px solid rgba(100, 116, 139, 0.3);
+  color: #475569;
+}
+.checklistCardTitle {
+  margin: 0;
+  font-size: calc(16px * var(--text-scale, 1));
+  color: var(--uao-color-wine, #8a1428);
+  font-weight: 700;
+}
+.checklistCardDesc {
+  margin: 0;
+  font-size: calc(14px * var(--text-scale, 1));
+  color: var(--uao-color-text-secondary, #475569);
+  line-height: 1.45;
+}
+
+/* ── Escenario Guiado / Guided Scenario (Stage 4) ────────────────────────── */
+.scenarioContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.scenarioCard {
+  border-radius: 14px;
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  background: var(--uao-color-white, #ffffff);
+  box-shadow: 0 8px 24px rgba(64, 17, 25, 0.08);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+.scenarioHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  border-bottom: 1px solid rgba(138, 20, 40, 0.12);
+  padding-bottom: 10px;
+}
+.scenarioIcon {
+  color: var(--uao-color-red-primary, #ff051e);
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+}
+.scenarioTitle {
+  margin: 0;
+  font-size: calc(18px * var(--text-scale, 1));
+  color: var(--uao-color-wine, #8a1428);
+  font-weight: 700;
+}
+.scenarioSection {
+  display: grid;
+  grid-template-columns: 140px 1fr;
+  gap: 12px;
+  align-items: start;
+}
+.scenarioLabel {
+  font-weight: 700;
+  color: var(--uao-color-burgundy, #ac0b32);
+  font-size: calc(14.5px * var(--text-scale, 1));
+  text-transform: uppercase;
+  letter-spacing: 0.02em;
+}
+.scenarioContentText {
+  margin: 0;
+  color: var(--uao-color-text-primary, #0f172b);
+  font-size: calc(15px * var(--text-scale, 1));
+  line-height: 1.5;
+}
+.scenarioAlert {
+  background: rgba(255, 5, 30, 0.04);
+  border: 1px solid rgba(255, 5, 30, 0.15);
+  border-radius: 8px;
+  padding: 12px;
+  display: flex;
+  gap: 10px;
+  align-items: start;
+}
+.scenarioAlertText {
+  margin: 0;
+  color: var(--uao-color-burgundy, #ac0b32);
+  font-size: calc(14.5px * var(--text-scale, 1));
+  line-height: 1.45;
+}
+@media (max-width: 600px) {
+  .scenarioSection {
+    grid-template-columns: 1fr;
+    gap: 4px;
+  }
+}
+

@@ -144,6 +144,23 @@ export const MEDIA_REGISTRY = {
     fallbackLabel: "El Canvas de diseño estará disponible para descarga próximamente.",
   },
 
+  // ── Etapa 4 · recursos (Prepara el terreno para el éxito) ──────────────────
+  "stage4.section2Media": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-4/imagenes/Etapa_4_2.webp",
+    description: "Infografía: preparar no es repetir el diseño (capas técnica, pedagógica y ético-emocional).",
+    fallbackLabel: "El recurso de la sección 2 estará disponible próximamente.",
+  },
+  "stage4.readinessCanvas": {
+    kind: "download",
+    status: "available",
+    localPath: "/media/etapa-4/descargas/Canvas-de-alistamiento-GenAI.pdf",
+    downloadName: "Canvas-de-alistamiento-GenAI.pdf",
+    description: "Canvas de alistamiento de la experiencia (PDF).",
+    fallbackLabel: "El Canvas de alistamiento estará disponible para descarga próximamente.",
+  },
+
   // ── Videos globales de transición (locales) ──────────────────────────────────
   "transitions.stage1Intro": {
     kind: "video-file",

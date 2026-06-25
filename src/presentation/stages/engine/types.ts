@@ -87,6 +87,34 @@ export type StageBlock =
       guideId?: string;
       playLabel?: string;
       repeatLabel?: string;
+    }
+  | {
+      type: "checklist-board";
+      openLabel: string;
+      modalTitle?: string;
+      modalBadge?: string;
+      guideId?: string;
+      items: {
+        category: string;
+        title: string;
+        status: "ready" | "review" | "pending";
+        statusLabel: string;
+        description: string;
+      }[];
+    }
+  | {
+      type: "guided-scenario";
+      openLabel: string;
+      modalTitle?: string;
+      modalBadge?: string;
+      guideId?: string;
+      scenario: {
+        title: string;
+        situation: string;
+        risk: string;
+        recommendation: string;
+        teacherRole: string;
+      };
     };
 
 /** Nodo del árbol de la etapa. Cada nodo de nivel superior es un frame. */
