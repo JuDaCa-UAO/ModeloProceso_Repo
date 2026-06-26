@@ -507,20 +507,20 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
 
   return (
     <div className={sc.f9Splash}>
-      <div className={sc.f9ModelWrap}>
-        {showVideo && media.url ? (
-          <video
-            className={styles.videoEl}
-            src={media.url}
-            autoPlay
-            controls
-            onEnded={() => setPhase("ended")}
-            aria-label={media.description}
-          />
-        ) : (
+      {showVideo && media.url ? (
+        <video
+          className={styles.videoEl}
+          src={media.url}
+          autoPlay
+          controls
+          onEnded={() => setPhase("ended")}
+          aria-label={media.description}
+        />
+      ) : (
+        <div className={sc.f9ModelWrap}>
           <LazyStageViewer enableRotation={!reduced} activeStage={block.activeStage ?? 2} />
-        )}
-      </div>
+        </div>
+      )}
 
       {showVideoIntro ? (
         <UaoButton
