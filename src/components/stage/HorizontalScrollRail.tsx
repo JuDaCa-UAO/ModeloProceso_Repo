@@ -32,22 +32,6 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
   const activeVideo = activePanel?.videoKey ? VIDEO_REGISTRY[activePanel.videoKey] : null;
 
   useEffect(() => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-
-    const onWheel = (event: WheelEvent) => {
-      const atLeft = vp.scrollLeft <= 0;
-      const atRight = vp.scrollLeft >= vp.scrollWidth - vp.clientWidth - 1;
-      if ((event.deltaY < 0 && atLeft) || (event.deltaY > 0 && atRight)) return;
-      event.preventDefault();
-      vp.scrollLeft += event.deltaY + event.deltaX;
-    };
-
-    vp.addEventListener("wheel", onWheel, { passive: false });
-    return () => vp.removeEventListener("wheel", onWheel);
-  }, []);
-
-  useEffect(() => {
     if (!activePanel) return;
 
     const previousOverflow = document.body.style.overflow;
@@ -131,6 +115,9 @@ export default function HorizontalScrollRail({ panels }: HorizontalScrollRailPro
           })}
         </div>
       </div>
+      <p className={styles.railScrollNote}>
+        * Tip: Puedes desplazarte horizontalmente usando <strong>Shift + Rueda del ratón</strong> o deslizando lateralmente.
+      </p>
 
       {preloadedVideo ? (
         <div className={styles.railVideoPreload} aria-hidden="true">

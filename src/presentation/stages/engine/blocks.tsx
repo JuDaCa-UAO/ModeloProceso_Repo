@@ -745,24 +745,6 @@ function ImageRailBlock({ block }: BlockComponentProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
   if (block.type !== "image-rail") return null;
 
-  // Add horizontal scrolling with mouse wheel (same as HorizontalScrollRail)
-  // eslint-disable-next-line react-hooks/rules-of-hooks
-  useEffect(() => {
-    const vp = viewportRef.current;
-    if (!vp) return;
-
-    const onWheel = (event: WheelEvent) => {
-      const atLeft = vp.scrollLeft <= 0;
-      const atRight = vp.scrollLeft >= vp.scrollWidth - vp.clientWidth - 1;
-      if ((event.deltaY < 0 && atLeft) || (event.deltaY > 0 && atRight)) return;
-      event.preventDefault();
-      vp.scrollLeft += event.deltaY + event.deltaX;
-    };
-
-    vp.addEventListener("wheel", onWheel, { passive: false });
-    return () => vp.removeEventListener("wheel", onWheel);
-  }, []);
-
   return (
     <div className={styles.imageRailContainer}>
       {block.title ? <h3 className={styles.imageRailTitle}>{block.title}</h3> : null}
@@ -805,6 +787,9 @@ function ImageRailBlock({ block }: BlockComponentProps) {
           })}
         </div>
       </div>
+      <p className={styles.railScrollNote}>
+        * Tip: Puedes desplazarte horizontalmente usando <strong>Shift + Rueda del ratón</strong> o deslizando lateralmente.
+      </p>
     </div>
   );
 }

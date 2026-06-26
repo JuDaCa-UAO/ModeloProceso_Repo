@@ -1166,3 +1166,11 @@
     animation: none;
   }
 }
+
+.railScrollNote {
+  margin: 4px 0 0;
+  font-size: calc(13px * var(--text-scale, 1));
+  color: var(--uao-color-text-secondary, #475569);
+  text-align: center;
+  font-style: italic;
+}
