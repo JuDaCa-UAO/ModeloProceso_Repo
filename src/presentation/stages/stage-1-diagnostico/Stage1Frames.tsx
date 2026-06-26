@@ -341,7 +341,7 @@ export default function Stage1Frames({
                 </UaoButton>
               </div>
 
-              <div className={styles.f9LaiaWrap}>
+              <div className={styles.f9LaIAWrap}>
                 <CharacterStepDialog
                   steps={F9_LAIA_STEPS}
                   size="default"

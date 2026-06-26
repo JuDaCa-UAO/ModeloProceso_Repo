@@ -1,5 +1,5 @@
 /**
- * CONTENT — Diálogos de Laia · Cierre (La espiral continúa)
+ * CONTENT — Diálogos de LaIA · Cierre (La espiral continúa)
  *
  * PLACEHOLDER INERTE. El cierre aún no está implementado. Reserva el espacio
  * estructural y la convención de nombres; NO se importa en ningún lado todavía.

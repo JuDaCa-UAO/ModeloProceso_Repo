@@ -118,6 +118,7 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
     blocks: [
       {
         type: "transition",
+        activeStage: 5,
         mediaKey: "transitions.stage5ToStage6",
         steps: STAGE5_TRANSITION_STEPS,
         nextHref: "/etapas/etapa-6",

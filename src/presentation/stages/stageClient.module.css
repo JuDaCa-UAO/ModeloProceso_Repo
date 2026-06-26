@@ -95,7 +95,7 @@
   text-transform: uppercase;
 }
 
-/* Viewport del iframe — reducida para que siempre haya espacio para Laia */
+/* Viewport del iframe — reducida para que siempre haya espacio para LaIA */
 .embedViewport {
   width: 100%;
   flex: 1;
@@ -199,7 +199,7 @@
   height: clamp(300px, 55dvh, 560px);
 }
 
-/* Versión compacta para frames donde el modelo convive con el diálogo de Laia */
+/* Versión compacta para frames donde el modelo convive con el diálogo de LaIA */
 .modelStageCompact {
   height: clamp(160px, 28dvh, 260px);
 }
@@ -275,9 +275,9 @@
   text-align: center;
 }
 
-/* ─── Frame 3: tipo con barra de Laia en el pie ──────────────────────────── */
+/* ─── Frame 3: tipo con barra de LaIA en el pie ──────────────────────────── */
 
-/* Extra margin-bottom para que la LaiaChatBar (que sobresale ~30px + ~90px alto)
+/* Extra margin-bottom para que la LaIAChatBar (que sobresale ~30px + ~90px alto)
    no se acerque demasiado al siguiente frame. Se suma al gap del .root. */
 .frameWithBar {
   margin-bottom: clamp(4rem, 8dvh, 6rem);
@@ -297,7 +297,7 @@
 .f9ModelWrap {
   position: relative; /* ancla el Canvas absoluto de r3f */
   width: 100%;
-  height: clamp(300px, 48dvh, 460px);
+  height: clamp(200px, 32dvh, 320px);
   border-radius: var(--uao-radius-md, 0.875rem);
   background: var(--uao-color-cream, #fbf5ec);
   border: 1px solid rgba(138, 20, 40, 0.12);
@@ -331,8 +331,8 @@
   border-color: var(--uao-color-red-primary, #ff051e);
 }
 
-/* Laia a tamaño protagonista — ocupa más espacio vertical */
-.f9LaiaWrap {
+/* LaIA a tamaño protagonista — ocupa más espacio vertical */
+.f9LaIAWrap {
   width: 100%;
   flex: 1;
 }
@@ -386,7 +386,7 @@
   pointer-events: none;
 }
 
-/* ─── Slot inferior de Laia (compartido entre frames) ──────────────────── */
+/* ─── Slot inferior de LaIA (compartido entre frames) ──────────────────── */
 /* Reemplaza el inline style { marginTop:"auto", width:"100%", paddingTop:"16px" }
    repetido en cada frame que tiene CharacterStepDialog al pie. */
 .laiaSlot {

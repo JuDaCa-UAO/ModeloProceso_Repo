@@ -1,5 +1,5 @@
 /**
- * CONTENT — Diálogos de Laia · Etapa 6 (Reflexiona, aprende y mejora)
+ * CONTENT — Diálogos de LaIA · Etapa 6 (Reflexiona, aprende y mejora)
  *
  * PLACEHOLDER INERTE. La Etapa 6 aún no está implementada. Reserva el espacio
  * estructural y la convención de nombres; NO se importa en ningún lado todavía.

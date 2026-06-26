@@ -3,7 +3,7 @@
  *
  * Nivel jerárquico del docente dentro del modelo de madurez GenAI.
  * Determina el ritmo de acompañamiento, el tipo de recomendaciones y
- * el avatar/mood de Laia (sin acoplarse a ningún componente de UI).
+ * el avatar/mood de LaIA (sin acoplarse a ningún componente de UI).
  *
  * Depende de: nada.
  */

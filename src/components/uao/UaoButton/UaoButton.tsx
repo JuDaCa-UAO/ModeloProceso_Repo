@@ -6,7 +6,7 @@
  * - `UaoIconButton` → botón solo-icono con `aria-label` obligatorio.
  *
  * Propaga `...props` (incluye `data-*`, `aria-*`, `onClick`, `disabled`), por lo
- * que conserva contratos existentes como `data-guide-id` (guía de Laia).
+ * que conserva contratos existentes como `data-guide-id` (guía de LaIA).
  */
 import {
   forwardRef,

@@ -65,7 +65,7 @@ export const MEDIA_REGISTRY = {
     kind: "svg",
     status: "available",
     localPath: "/mano/Mano izq apunta.svg",
-    description: "Mano de Laia señalando un control",
+    description: "Mano de LaIA señalando un control",
     fallbackLabel: "👉",
   },
 

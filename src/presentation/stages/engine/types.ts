@@ -13,7 +13,7 @@
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import type { MediaKey } from "@/content/shared/media-registry";
 
-/** Paso de la guía animada con la mano de Laia. */
+/** Paso de la guía animada con la mano de LaIA. */
 export interface GuideStep {
   id: string;
   /** Texto operativo breve (microcopy de interfaz, no parlamento narrativo). */
@@ -149,7 +149,7 @@ export interface StageNode {
   blocks: StageBlock[];
   /** Microcopy del indicador de avance hacia el siguiente frame. */
   scrollHintLabel?: string;
-  /** Pasos de guía con la mano de Laia, activos cuando el frame está visible. */
+  /** Pasos de guía con la mano de LaIA, activos cuando el frame está visible. */
   guide?: GuideStep[];
   /** Nodos hijos, renderizados recursivamente dentro del frame. */
   children?: StageNode[];

@@ -61,7 +61,7 @@ type CharacterStepDialogProps = {
   disableNext?: boolean;
 };
 
-const DEFAULT_CHARACTER_NAME = "Laia";
+const DEFAULT_CHARACTER_NAME = "LaIA";
 const DEFAULT_NEXT_LABEL = "Siguiente";
 const DEFAULT_CHARACTER_IMAGE = "/ui/laia.png";
 const TYPEWRITER_MS = 22;

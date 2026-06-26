@@ -58,7 +58,7 @@ export type FrameProps = {
   hint?: ReactNode;
   /**
    * Barra inferior que sobresale por debajo del borde del frame.
-   * Usar para LaiaChatBar u otros elementos que "salen" del frame.
+   * Usar para LaIAChatBar u otros elementos que "salen" del frame.
    * El contenido del frame recibe padding-bottom automático para no quedar oculto.
    */
   bottomBar?: ReactNode;

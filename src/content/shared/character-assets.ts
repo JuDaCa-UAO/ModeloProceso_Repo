@@ -1,7 +1,7 @@
 /**
  * CONTENT — Shared Assets
  *
- * Mapa de assets visuales del personaje Laia.
+ * Mapa de assets visuales del personaje LaIA.
  * Separado del contenido de etapas para que cambiar el personaje,
  * renombrar assets o agregar nuevos modos no requiera editar todos
  * los archivos de definición de etapas.
@@ -12,9 +12,9 @@
 export const LAIA_ASSETS = {
   neutral: "/ui/laia.png",
   explain: "/ui/laia_explaining.png",
-  holo: "/ui/Laia_explaining_holo.png",
-  triumphant: "/ui/Laia_triumphant.png",
+  holo: "/ui/LaIA_explaining_holo.png",
+  triumphant: "/ui/LaIA_triumphant.png",
   confused: "/ui/laia_confused.png",
 } as const;
 
-export type LaiaAssetKey = keyof typeof LAIA_ASSETS;
+export type LaIAAssetKey = keyof typeof LAIA_ASSETS;

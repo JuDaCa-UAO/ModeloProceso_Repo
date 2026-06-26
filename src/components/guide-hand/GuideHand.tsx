@@ -1,7 +1,7 @@
 "use client";
 
 /**
- * GUIDE HAND — Guía animada con la mano de Laia (no conversacional).
+ * GUIDE HAND — Guía animada con la mano de LaIA (no conversacional).
  *
  * Señala un control objetivo identificado por `data-guide-id` y muestra una
  * instrucción breve. Sistema reusable por cualquier etapa.

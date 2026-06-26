@@ -15,7 +15,7 @@ Plataforma interactiva basada en **Next.js 16 App Router** que guía a docentes 
 7. [Cómo agregar una nueva etapa](#cómo-agregar-una-nueva-etapa)
 8. [Cómo agregar un nuevo bloque de contenido](#cómo-agregar-un-nuevo-bloque-de-contenido)
 9. [Integración con N8N](#integración-con-n8n)
-10. [Laia — guía no conversacional](#laia--guía-no-conversacional)
+10. [LaIA — guía no conversacional](#laia--guía-no-conversacional)
 11. [Testing](#testing)
 12. [Seguridad](#seguridad)
 13. [Decisiones de arquitectura](#decisiones-de-arquitectura)
@@ -37,7 +37,7 @@ El docente entra a la app y recorre 6 etapas del modelo espiral GenAI:
 
 Cada etapa tiene:
 - Animaciones de introducción y transición
-- Diálogos con la asistente Laia
+- Diálogos con la asistente LaIA
 - Formularios de consentimiento, autodiagnóstico e intención
 - Contenido progresivo desbloqueado por hitos completados
 
@@ -100,7 +100,7 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │   ├── page.tsx                     # Redirige a /inicio
 │   │   ├── globals.css
 │   │   ├── inicio/
-│   │   │   ├── page.tsx                 # Página de bienvenida con Laia
+│   │   │   ├── page.tsx                 # Página de bienvenida con LaIA
 │   │   │   └── ActionButtons.tsx
 │   │   ├── etapa/
 │   │   │   └── [stageId]/               # ← Ruta dinámica para TODAS las etapas
@@ -118,7 +118,7 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │       └── page.tsx
 │   │
 │   ├── components/
-│   │   ├── character-step-dialog/       # Diálogo paso a paso con avatar de Laia
+│   │   ├── character-step-dialog/       # Diálogo paso a paso con avatar de LaIA
 │   │   │   ├── CharacterStepDialog.tsx
 │   │   │   └── CharacterStepDialog.module.css
 │   │   ├── mini-spiral-viewer/          # Visor 3D del modelo espiral (canvas compacto)
@@ -140,7 +140,7 @@ Los archivos de configuración (`next.config.ts`, `tsconfig.json`, `package.json
 │   │   │   ├── index.ts                 # Metadatos de todas las etapas (StageMeta)
 │   │   │   └── stage-1.content.ts       # Árbol de contenido de Etapa 1
 │   │   └── shared/
-│   │       └── character-assets.ts      # Rutas de assets visuales de Laia
+│   │       └── character-assets.ts      # Rutas de assets visuales de LaIA
 │   │
 │   ├── hooks/                           # (actualmente vacío — lógica de estado directamente en StageClient)
 │   │
@@ -242,7 +242,7 @@ La app estará disponible en [http://localhost:3000](http://localhost:3000).
 
 Rutas principales:
 - `/` → redirige a `/inicio`
-- `/inicio` → página de bienvenida con Laia
+- `/inicio` → página de bienvenida con LaIA
 - `/etapas` → selector de todas las etapas del modelo
 - `/etapa/etapa-1` → Etapa 1 (activa)
 - `/modelo` → redirect legacy a `/etapa/etapa-1`
@@ -392,9 +392,9 @@ gigante por `stageId`.
 | `src/presentation/stages/engine/blocks.tsx` | **Registro de bloques** (`BLOCK_REGISTRY`): `spiral-viewer`, `dialogue`, `paragraphs`, `narrative-video`, `criteria-infographic`, `comparison-example`, `download-resource`, `transition` |
 | `src/presentation/stages/engine/Modal.tsx` | Modal accesible reutilizable (portal, foco, Escape) |
 | `src/content/shared/media-registry.ts` | **Registro lógico de recursos** por clave (`stage2.pughMatrix`, …) con fallback y `NEXT_PUBLIC_MEDIA_BASE_URL` |
-| `src/components/guide-hand/GuideHand.tsx` | Guía con la mano de Laia (ver sección de Laia) |
+| `src/components/guide-hand/GuideHand.tsx` | Guía con la mano de LaIA (ver sección de LaIA) |
 | `src/content/stages/stage-2.content.ts` | `STAGE2_DISCOVER_TREE`: definición de datos de la Etapa 2 |
-| `src/content/dialogs/stage-2-discover.dialogs.ts` | Diálogos de Laia (literales de EMI) |
+| `src/content/dialogs/stage-2-discover.dialogs.ts` | Diálogos de LaIA (literales de EMI) |
 | `src/presentation/stages/stage-2-discover/Stage2Frames.tsx` | Vista delgada: `<StageRenderer tree={STAGE2_DISCOVER_TREE} …/>` |
 
 **Crear una etapa nueva con bloques existentes** = declarar su árbol de datos + sus
@@ -428,12 +428,12 @@ Esta sección documenta el sistema visual de secciones progresivas usado en la E
 | Fondo estándar | `/ui/backgroundUAO.png` |
 | Fondo biblioteca | `/ui/fondo_biblioteca.png` |
 | Fondo home | `/ui/bg-home.png` |
-| Avatar Laia (neutral) | `/ui/laia.png` |
-| Avatar Laia (explicando) | `/ui/laia_explaining.png` |
-| Avatar Laia (explicando holo) | `/ui/Laia_explaining_holo.png` |
-| Avatar Laia (confundida) | `/ui/laia_confused.png` |
-| Avatar Laia (triunfante) | `/ui/Laia_triumphant.png` |
-| Ícono Laia | `/ui/Laia-Icon.png` |
+| Avatar LaIA (neutral) | `/ui/laia.png` |
+| Avatar LaIA (explicando) | `/ui/laia_explaining.png` |
+| Avatar LaIA (explicando holo) | `/ui/LaIA_explaining_holo.png` |
+| Avatar LaIA (confundida) | `/ui/laia_confused.png` |
+| Avatar LaIA (triunfante) | `/ui/LaIA_triumphant.png` |
+| Ícono LaIA | `/ui/LaIA-Icon.png` |
 | Modelo 3D espiral | `/models/espiral.glb` |
 | Video intro modelo | `/videos/intro-modelo.mp4` |
 | Video transición E1 → E2 | `/videos/TransicionE1-a-E2.mp4` |
@@ -571,20 +571,20 @@ Reglas del video:
 |---|---|---|
 | Frame 1 | `frame-intro` | `CharacterStepDialog` → último paso → `completeFrame(1)` |
 | Frame 2 | `frame-modelo` | Video `intro-modelo.mp4` termina → `handleVideoEnded` → `completeFrame(2)` |
-| Frame 3 | `frame-modelo-interactivo` | `LaiaChatBar` Fase B → último paso → `completeFrame(3)`. Añade `className={styles.frameWithBar}` + `hintOffset={200}` |
+| Frame 3 | `frame-modelo-interactivo` | `LaIAChatBar` Fase B → último paso → `completeFrame(3)`. Añade `className={styles.frameWithBar}` + `hintOffset={200}` |
 
-### Frame tipo "con barra de Laia" (usado en Frame 3)
+### Frame tipo "con barra de LaIA" (usado en Frame 3)
 
-Este tipo de frame tiene una `LaiaChatBar` que sobresale por debajo del borde inferior del frame. Se configura con dos props adicionales de `<Frame>`:
+Este tipo de frame tiene una `LaIAChatBar` que sobresale por debajo del borde inferior del frame. Se configura con dos props adicionales de `<Frame>`:
 
-- `bottomBar={<LaiaChatBar ... />}` — renderiza en `.bottomBarSlot` (`position: absolute; bottom: -30px`), parcialmente fuera del borde
+- `bottomBar={<LaIAChatBar ... />}` — renderiza en `.bottomBarSlot` (`position: absolute; bottom: -30px`), parcialmente fuera del borde
 - `hintOffset={200}` — empuja el ScrollHint 200px hacia abajo para dejarlo por debajo de la barra
 - `className={styles.frameWithBar}` — añade `margin-bottom` extra para que la barra no choque con el siguiente frame
 
 El frame tiene dos fases internas gestionadas con `f3Phase: 'initial' | 'laia-model' | 'laia-viewer'`:
 - **`initial`**: Modelo 3D visible + instrucciones + botón "Continuar"
-- **`laia-model`**: Modelo 3D visible + `LaiaChatBar` con `F3_LAIA_STEPS_A`
-- **`laia-viewer`**: Modelo oculto + `StageViewer` fijo top-right + `LaiaChatBar` con `F3_LAIA_STEPS_B`
+- **`laia-model`**: Modelo 3D visible + `LaIAChatBar` con `F3_LAIA_STEPS_A`
+- **`laia-viewer`**: Modelo oculto + `StageViewer` fijo top-right + `LaIAChatBar` con `F3_LAIA_STEPS_B`
 
 ### StageViewer (widget fijo top-right)
 
@@ -595,12 +595,12 @@ Componente `src/components/stage/StageViewer.tsx`. Aparece en Frame 3 fase B y p
 - Prop: `stageLabel: string` — texto mostrado bajo el canvas (ej: `"Etapa actual: Etapa 1"`)
 - **TODO pendiente**: animación de brillo/pulso intermitente en el anillo de la etapa activa. Ver comentario en `StageViewer.tsx` para instrucciones de implementación (Three.js mesh traversal + `emissiveIntensity` en `useFrame`)
 
-### LaiaChatBar
+### LaIAChatBar
 
-Componente `src/components/stage/LaiaChatBar.tsx`. Barra de diálogo de Laia anclada al pie de un frame.
+Componente `src/components/stage/LaIAChatBar.tsx`. Barra de diálogo de LaIA anclada al pie de un frame.
 
 - Maneja internamente el avance de pasos (estado `current`)
-- Prop `steps: LaiaChatStep[]` — array de `{ text, imgSrc? }`
+- Prop `steps: LaIAChatStep[]` — array de `{ text, imgSrc? }`
 - Prop `onComplete: () => void` — llamado al avanzar más allá del último paso
 - Usa `key={f3Phase}` en StageClient para resetear el índice al cambiar de fase
 - Avatar con `next/image` (`fill` + `unoptimized`)
@@ -610,7 +610,7 @@ Componente `src/components/stage/LaiaChatBar.tsx`. Barra de diálogo de Laia anc
 
 El orden aprobado en `AGENTS_claude_stage1.md` que deben seguir los frames:
 
-1. ✅ Entrada guiada con Laia (Frame 1)
+1. ✅ Entrada guiada con LaIA (Frame 1)
 2. ✅ Presentación del modelo 3D + video (Frame 2)
 3. Animación grande para ubicar al usuario en la espiral
 4. Viewer 3D que luego queda fijo arriba a la derecha
@@ -618,7 +618,7 @@ El orden aprobado en `AGENTS_claude_stage1.md` que deben seguir los frames:
 6. Rail de etapas
 7. Estados
 8. Consentimiento
-9. Asistencia guiada (Laia no conversacional)
+9. Asistencia guiada (LaIA no conversacional)
 10. Embebido (autodiagnóstico)
 11. Cierre con video
 12. Transición a la siguiente etapa
@@ -651,13 +651,13 @@ Para implementar la **recepción del resultado** vía webhook (pendiente):
 
 ---
 
-## Laia — guía no conversacional
+## LaIA — guía no conversacional
 
-**El aplicativo no tiene chatbot.** Laia existe únicamente como personaje guía y
+**El aplicativo no tiene chatbot.** LaIA existe únicamente como personaje guía y
 narradora visual con diálogos predefinidos. No hay input de mensajes, ni botón de
 enviar, ni paneles de chat, ni servicios/endpoints de LLM (`/api/laia`).
 
-Laia aparece como:
+LaIA aparece como:
 - **Diálogos paso a paso** vía `CharacterStepDialog` (typewriter, paginación, audio
   opcional, teclado ←/→). Los textos se copian literalmente de
   `contexto/fuentes/EMI_escrita.md`.
@@ -714,7 +714,7 @@ pnpm add -D vitest @vitest/ui jsdom @testing-library/react @testing-library/user
 
 ### Clean Architecture en lugar de colocación por feature
 
-El proyecto tiene dominios con distinto ritmo de cambio: **etapas** (contenido pedagógico, cambia por ciclo académico) y **progreso** (lógica de estado del docente, estable). Clean Architecture separa estos dominios para que cada uno evolucione sin romper los otros. (Laia es una guía visual no conversacional; no hay dominio de chatbot.)
+El proyecto tiene dominios con distinto ritmo de cambio: **etapas** (contenido pedagógico, cambia por ciclo académico) y **progreso** (lógica de estado del docente, estable). Clean Architecture separa estos dominios para que cada uno evolucione sin romper los otros. (LaIA es una guía visual no conversacional; no hay dominio de chatbot.)
 
 ### `useSyncExternalStore` + localStorage en lugar de Zustand
 

@@ -1,7 +1,7 @@
 /**
  * CONTENT — Diálogos y copy de la Introducción
  *
- * Textos de Laia y datos de secciones extraídos de StageClient (frames 1-4).
+ * Textos de LaIA y datos de secciones extraídos de StageClient (frames 1-4).
  * Son DATOS PUROS: el texto, los assets y los audios son idénticos a los que
  * antes vivían hardcodeados dentro del componente. La presentación (JSX) no
  * cambió; solo se movió el contenido aquí para organizarlo por etapa.
@@ -15,33 +15,33 @@
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import type { RailPanel } from "@/types/stage";
 
-// ─── Diálogo de Laia — Frame 1 ───────────────────────────────────────────────
+// ─── Diálogo de LaIA — Frame 1 ───────────────────────────────────────────────
 
 export const LAIA_INTRO_STEPS: CharacterDialogStep[] = [
   {
     text: "Bienvenido/a. Este recorrido te guiará por un modelo por etapas para integrar GenAI en experiencias de aprendizaje. Avanzaremos de forma estructurada: reconocer tu punto de partida, explorar posibilidades, diseñar con propósito, preparar el terreno, desplegar en el aula y evaluar para mejorar.",
     imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion1-1.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion1-1.ogg",
   },
   {
     text: "Este modelo se recorre por etapas. Cada una cumple una función distinta dentro del proceso y te ayudará a avanzar con mayor claridad y sentido pedagógico.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion1-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion1-2.ogg",
   },
 ];
 
-// ─── Diálogo de Laia — Frame 3 Fase A (modelo visible) ────────────────────────
+// ─── Diálogo de LaIA — Frame 3 Fase A (modelo visible) ────────────────────────
 
 export const F3_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Comenzamos en la primera etapa: Reconócete para avanzar. Aquí establecerás tu punto de partida para orientar el resto del recorrido.",
-    imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion2-1.ogg",
+    imgSrc: "/ui/LaIA_explaining_holo.png",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion2-1.ogg",
   },
   {
     text: "A partir de ahora podrás ver siempre en qué etapa del modelo te encuentras. Cuando termines esta introducción, también podrás acceder al resto de etapas desde la pantalla principal.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion2-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion2-2.ogg",
   },
 ];
 
@@ -113,30 +113,30 @@ export const STAGE_RAIL_CARDS: RailPanel[] = [
   },
 ];
 
-// ─── Diálogo de Laia — Frame 4 ────────────────────────────────────────────────
+// ─── Diálogo de LaIA — Frame 4 ────────────────────────────────────────────────
 
 export const F4_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "Este recorrido no es lineal ni rígido. Cada etapa te ayudará a avanzar con mayor claridad, y podrás volver sobre ellas cuando lo necesites.",
     imgSrc: "/ui/laia.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion3.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion3.ogg",
   },
 ];
 
-// ─── Diálogo de Laia — Frame 5 (Asistencia guiada, no conversacional) ─────────
+// ─── Diálogo de LaIA — Frame 5 (Asistencia guiada, no conversacional) ─────────
 // Nota: la EMI conserva una referencia histórica a un chatbot que el proyecto
-// eliminó. Laia acompaña como guía visual no conversacional: orienta, señala
+// eliminó. LaIA acompaña como guía visual no conversacional: orienta, señala
 // controles y recuerda la ubicación dentro del modelo. (Ver contexto/context.md.)
 
 export const F5_LAIA_STEPS: CharacterDialogStep[] = [
   {
     text: "A lo largo del recorrido te acompañaré como guía: te indicaré qué hacer en cada momento, señalaré los controles importantes y te recordaré en qué etapa del modelo te encuentras.",
-    imgSrc: "/ui/Laia_explaining_holo.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-1.ogg",
+    imgSrc: "/ui/LaIA_explaining_holo.png",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion4-1.ogg",
   },
   {
     text: "¡Continuemos! Recuerda que puedes ubicarte en cualquier momento abriendo el mapa del modelo y volver a una etapa anterior cuando lo necesites.",
     imgSrc: "/ui/laia_explaining.png",
-    audioSrc: "/audio/Audios_laia/introduccion/LaiaAudio-seccion4-2.ogg",
+    audioSrc: "/audio/Audios_laia/introduccion/LaIAAudio-seccion4-2.ogg",
   },
 ];

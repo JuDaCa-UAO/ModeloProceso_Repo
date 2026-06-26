@@ -13,7 +13,7 @@ import type { StageResultId } from "../value-objects/HierarchyLevel";
 export type Stage1ProgressState = {
   /** IDs de secciones ya «continuadas» por el usuario (persistido). */
   continuedSectionIds: string[];
-  /** Diálogo inicial de la sección 1 completado (ambos textos de Laia). */
+  /** Diálogo inicial de la sección 1 completado (ambos textos de LaIA). */
   stage1IntroDialogueCompleted: boolean;
   /** La animación de introducción comenzó a reproducirse. */
   stage1AnimationStarted: boolean;

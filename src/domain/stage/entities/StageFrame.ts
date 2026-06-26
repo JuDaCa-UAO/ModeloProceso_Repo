@@ -16,7 +16,7 @@ export type StageFrame = {
   title: string;
   /** Clave del componente de presentación que renderiza el frame. */
   componentKey: string;
-  /** IDs de los diálogos de Laia asociados a este frame. */
+  /** IDs de los diálogos de LaIA asociados a este frame. */
   dialogIds: string[];
   backgroundImage?: string;
   downloadableResourceIds?: string[];

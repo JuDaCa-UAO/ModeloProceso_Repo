@@ -38,7 +38,7 @@ export default function IntroduccionFrames({
 
   return (
     <>
-      {/* ═══ FRAME 1: Bienvenida con Laia ══════════════════════════════════ */}
+      {/* ═══ FRAME 1: Bienvenida con LaIA ══════════════════════════════════ */}
       <Frame
         id="frame-intro"
         sectionTitle="Sección 1: Bienvenido a esta iteración"
@@ -49,7 +49,7 @@ export default function IntroduccionFrames({
       >
         <CharacterStepDialog
           steps={LAIA_INTRO_STEPS}
-          characterName="Laia"
+          characterName="LaIA"
           nextLabel="Siguiente"
           onComplete={() => {
             completeFrame(1);

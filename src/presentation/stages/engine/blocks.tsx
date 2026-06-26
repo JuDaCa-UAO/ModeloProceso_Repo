@@ -498,7 +498,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
   if (block.type !== "transition") return null;
   const media = resolveMedia(block.mediaKey);
 
-  // Cuando el video aún no está hosteado, el cierre (diálogo de Laia + botón a la
+  // Cuando el video aún no está hosteado, el cierre (diálogo de LaIA + botón a la
   // siguiente etapa) debe quedar accesible sin pasos muertos: se omite el paso de
   // "Ver animación" y se muestra el modelo 3D con un aviso de "próximamente".
   const showVideoIntro = media.available && phase === "idle";
@@ -553,7 +553,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
             </p>
           )}
 
-          <div className={sc.f9LaiaWrap}>
+          <div className={sc.f9LaIAWrap}>
             <CharacterStepDialog
               steps={block.steps}
               size="default"
