@@ -1,14 +1,30 @@
 "use client";
 
-import React, { Suspense } from "react";
+import React, { Suspense, useState } from "react";
 import { Canvas } from "@react-three/fiber";
 import { OrbitControls, Environment, Lightformer, Bounds } from "@react-three/drei";
 import SpiralModel from "./SpiralModel";
 import styles from "./InteractiveSpiral.module.css";
+import { STAGE_META } from "@/content/stages";
 
 export default function InteractiveSpiral() {
+  const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
+  const hoveredStageData = hoveredStageIndex !== null ? STAGE_META[hoveredStageIndex] : null;
+
   return (
     <div className={styles.canvasContainer}>
+      {/* Etiqueta fija superior */}
+      {hoveredStageData && (
+        <div className={styles.fixedLabelContainer}>
+          <div className={styles.labelContainer}>
+            <div className={styles.labelOrder}>
+              {String(hoveredStageData.order).padStart(2, "0")}
+            </div>
+            <div className={styles.labelName}>{hoveredStageData.name}</div>
+          </div>
+        </div>
+      )}
+
       <Canvas camera={{ position: [0, 5, 40], fov: 45 }}>
         {/* Luces base */}
         <ambientLight intensity={0.5} />
@@ -36,7 +52,7 @@ export default function InteractiveSpiral() {
 
         <Suspense fallback={null}>
           <Bounds fit clip observe margin={1.1}>
-            <SpiralModel />
+            <SpiralModel onHoverStageChange={setHoveredStageIndex} />
           </Bounds>
         </Suspense>
       </Canvas>
