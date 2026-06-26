@@ -104,7 +104,7 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
             className={styles.videoEl}
             src={media.url}
             alt={media.description ?? ""}
-            style={{ objectFit: "contain", background: "var(--uao-color-cream, #fbf5ec)" }}
+            style={{ objectFit: "contain", background: "var(--uao-color-cream, #fbf5ec)", ...(block.maxHeight ? { maxHeight: block.maxHeight } : {}) }}
           />
         ) : (
           <video
@@ -113,6 +113,7 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
             controls
             preload="metadata"
             aria-label={media.description}
+            style={block.maxHeight ? { maxHeight: block.maxHeight } : undefined}
           />
         )
       ) : (

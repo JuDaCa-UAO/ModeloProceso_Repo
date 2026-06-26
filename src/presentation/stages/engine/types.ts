@@ -41,7 +41,7 @@ export type StageBlock =
       completesFrame?: boolean;
     }
   | { type: "paragraphs"; paragraphs: string[] }
-  | { type: "narrative-video"; mediaKey: MediaKey; caption?: string }
+  | { type: "narrative-video"; mediaKey: MediaKey; caption?: string; maxHeight?: string }
   | {
       type: "criteria-infographic";
       openLabel: string;

@@ -79,11 +79,9 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "comparison-example",
-        openLabel: "Ver momentos críticos",
+        type: "narrative-video",
         mediaKey: "stage5.criticalMoments",
-        modalTitle: "Momentos críticos durante la experiencia",
-        modalBadge: "MOMENTOS",
+        maxHeight: "45dvh",
       },
       { type: "dialogue", steps: STAGE5_S4_STEPS, size: "default" },
     ],
