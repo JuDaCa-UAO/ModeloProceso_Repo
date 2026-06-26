@@ -745,15 +745,23 @@
 .imageRailViewport {
   width: 100%;
   overflow-x: auto;
+  overflow-y: hidden;
   scroll-behavior: smooth;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 12px;
-  /* Ocultar barra de scroll para estetica */
-  scrollbar-width: none;
-  -ms-overflow-style: none;
+  scrollbar-width: thin;
+  scrollbar-color: rgba(138, 20, 40, 0.4) rgba(0, 0, 0, 0.05);
 }
 .imageRailViewport::-webkit-scrollbar {
-  display: none;
+  height: 8px;
+}
+.imageRailViewport::-webkit-scrollbar-track {
+  background: rgba(0, 0, 0, 0.05);
+  border-radius: 999px;
+}
+.imageRailViewport::-webkit-scrollbar-thumb {
+  background: rgba(138, 20, 40, 0.4);
+  border-radius: 999px;
 }
 .imageRailTrack {
   display: flex;
