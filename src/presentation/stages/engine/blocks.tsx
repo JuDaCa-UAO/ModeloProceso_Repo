@@ -12,7 +12,7 @@
  * la identidad visual.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import LazyStageViewer from "@/components/stage/LazyStageViewer";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import { resolveMedia } from "@/content/shared/media-registry";
@@ -25,7 +25,7 @@ import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import {
   FiTarget, FiEdit3, FiCpu, FiShield, FiFileText, FiCompass, FiHelpCircle,
   FiArrowRight, FiPlay, FiRotateCcw, FiDownload,
-  FiCheckCircle, FiClock, FiAlertCircle,
+  FiCheckCircle, FiClock, FiAlertCircle, FiEye, FiMessageCircle, FiTool, FiSliders
 } from "react-icons/fi";
 
 type BlockComponentProps = { block: StageBlock; ctx: BlockContext };
@@ -700,6 +700,112 @@ function GuidedScenarioBlock({ block }: BlockComponentProps) {
   );
 }
 
+// ── action-cards ──────────────────────────────────────────────────────────────
+function ActionCardsBlock({ block }: BlockComponentProps) {
+  if (block.type !== "action-cards") return null;
+
+  const getIcon = (iconName?: string) => {
+    switch (iconName) {
+      case "guide": return <FiCompass />;
+      case "observe": return <FiEye />;
+      case "clarify": return <FiMessageCircle />;
+      case "intervene": return <FiTool />;
+      case "adjust": return <FiSliders />;
+      case "protect": return <FiShield />;
+      default: return <FiCheckCircle />;
+    }
+  };
+
+  return (
+    <div className={styles.actionCardsContainer}>
+      {block.title ? <h3 className={styles.actionCardsTitle}>{block.title}</h3> : null}
+      {block.description ? <p className={styles.actionCardsDesc}>{block.description}</p> : null}
+      <div className={styles.actionCardsGrid}>
+        {block.cards.map((card, idx) => (
+          <div key={idx} className={styles.actionCard}>
+            <div className={styles.actionCardIcon} aria-hidden>
+              {getIcon(card.icon)}
+            </div>
+            <div className={styles.actionCardContent}>
+              <h4 className={styles.actionCardTitle}>{card.title}</h4>
+              <p className={styles.actionCardDesc}>{card.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── image-rail ────────────────────────────────────────────────────────────────
+function ImageRailBlock({ block }: BlockComponentProps) {
+  const viewportRef = useRef<HTMLDivElement>(null);
+  if (block.type !== "image-rail") return null;
+
+  // Add horizontal scrolling with mouse wheel (same as HorizontalScrollRail)
+  // eslint-disable-next-line react-hooks/rules-of-hooks
+  useEffect(() => {
+    const vp = viewportRef.current;
+    if (!vp) return;
+
+    const onWheel = (event: WheelEvent) => {
+      const atLeft = vp.scrollLeft <= 0;
+      const atRight = vp.scrollLeft >= vp.scrollWidth - vp.clientWidth - 1;
+      if ((event.deltaY < 0 && atLeft) || (event.deltaY > 0 && atRight)) return;
+      event.preventDefault();
+      vp.scrollLeft += event.deltaY + event.deltaX;
+    };
+
+    vp.addEventListener("wheel", onWheel, { passive: false });
+    return () => vp.removeEventListener("wheel", onWheel);
+  }, []);
+
+  return (
+    <div className={styles.imageRailContainer}>
+      {block.title ? <h3 className={styles.imageRailTitle}>{block.title}</h3> : null}
+      <div ref={viewportRef} className={styles.imageRailViewport}>
+        <div className={styles.imageRailTrack}>
+          {block.panels.map((panel) => {
+            const media = resolveMedia(panel.mediaKey);
+            return (
+              <article key={panel.id} className={styles.imageRailCard}>
+                  {(panel.label || panel.title || panel.description) && (
+                    <div className={styles.imageRailCardInner}>
+                      {panel.label ? (
+                        <span className={styles.imageRailCardBadge}>{panel.label}</span>
+                      ) : null}
+                      {panel.title ? (
+                        <h4 className={styles.imageRailCardTitle}>{panel.title}</h4>
+                      ) : null}
+                      {panel.description ? (
+                        <p className={styles.imageRailCardDesc}>{panel.description}</p>
+                      ) : null}
+                    </div>
+                  )}
+                <div className={styles.imageRailCardMedia}>
+                  {media.available && media.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={media.url}
+                      alt={media.description ?? panel.title}
+                      className={styles.imageRailImg}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.imageRailFallback}>
+                      <span>{media.fallbackLabel}</span>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+    </div>
+  );
+}
+
 /** Registro de bloques: tipo → componente. */
 export const BLOCK_REGISTRY: Record<
   StageBlock["type"],
@@ -716,4 +822,6 @@ export const BLOCK_REGISTRY: Record<
   transition: TransitionBlock,
   "checklist-board": ChecklistBoardBlock,
   "guided-scenario": GuidedScenarioBlock,
+  "action-cards": ActionCardsBlock,
+  "image-rail": ImageRailBlock,
 };

@@ -115,6 +115,27 @@ export type StageBlock =
         recommendation: string;
         teacherRole: string;
       };
+    }
+  | {
+      type: "action-cards";
+      title?: string;
+      description?: string;
+      cards: {
+        title: string;
+        description: string;
+        icon?: "guide" | "observe" | "clarify" | "intervene" | "adjust" | "protect";
+      }[];
+    }
+  | {
+      type: "image-rail";
+      title?: string;
+      panels: {
+        id: string;
+        title?: string;
+        label?: string;
+        description?: string;
+        mediaKey: MediaKey;
+      }[];
     };
 
 /** Nodo del árbol de la etapa. Cada nodo de nivel superior es un frame. */

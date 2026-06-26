@@ -161,6 +161,57 @@ export const MEDIA_REGISTRY = {
     fallbackLabel: "El Canvas de alistamiento estará disponible para descarga próximamente.",
   },
 
+  // ── Etapa 5 · recursos (Hazlo realidad en el aula) ───────────────────────────
+  "stage5.classroomSimulation": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-5/simulacion.mp4",
+    description: "Simulación de aula interactiva.",
+    fallbackLabel: "Simulación de aula interactiva — próximamente.",
+  },
+  "stage5.criticalMoments": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Etapa 5.webp",
+    description: "Momentos críticos durante la experiencia.",
+    fallbackLabel: "Recurso de momentos críticos — próximamente.",
+  },
+  "stage5.rail.1": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_1.webp",
+    description: "Evidencia 1",
+    fallbackLabel: "Evidencia 1 — próximamente.",
+  },
+  "stage5.rail.2": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_2.webp",
+    description: "Evidencia 2",
+    fallbackLabel: "Evidencia 2 — próximamente.",
+  },
+  "stage5.rail.3": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_3.webp",
+    description: "Evidencia 3",
+    fallbackLabel: "Evidencia 3 — próximamente.",
+  },
+  "stage5.rail.4": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_4.webp",
+    description: "Evidencia 4",
+    fallbackLabel: "Evidencia 4 — próximamente.",
+  },
+  "stage5.rail.5": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_5.webp",
+    description: "Evidencia 5",
+    fallbackLabel: "Evidencia 5 — próximamente.",
+  },
+
   // ── Videos globales de transición (locales) ──────────────────────────────────
   "transitions.stage1Intro": {
     kind: "video-file",

@@ -660,3 +660,166 @@
   }
 }
 
+/* ── Tarjetas de Acción / Action Cards (Stage 5) ────────────────────────── */
+.actionCardsContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.actionCardsTitle {
+  margin: 0;
+  color: var(--uao-color-wine, #8a1428);
+  font-size: calc(20px * var(--text-scale, 1));
+  font-weight: 700;
+  text-align: center;
+}
+.actionCardsDesc {
+  margin: 0;
+  color: var(--uao-color-text-secondary, #475569);
+  font-size: calc(15px * var(--text-scale, 1));
+  text-align: center;
+}
+.actionCardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 16px;
+}
+.actionCard {
+  border-radius: 14px;
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  background: var(--uao-color-white, #ffffff);
+  box-shadow: 0 6px 16px rgba(64, 17, 25, 0.06);
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+.actionCard:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 10px 24px rgba(64, 17, 25, 0.1);
+}
+.actionCardIcon {
+  width: 48px;
+  height: 48px;
+  border-radius: 50%;
+  background: rgba(255, 5, 30, 0.08);
+  color: var(--uao-color-red-primary, #ff051e);
+  display: grid;
+  place-items: center;
+  font-size: 24px;
+}
+.actionCardContent {
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+}
+.actionCardTitle {
+  margin: 0;
+  font-size: calc(17px * var(--text-scale, 1));
+  color: var(--uao-color-wine, #8a1428);
+  font-weight: 700;
+}
+.actionCardDesc {
+  margin: 0;
+  font-size: calc(14.5px * var(--text-scale, 1));
+  color: var(--uao-color-text-secondary, #475569);
+  line-height: 1.45;
+}
+
+/* ── Image Rail (Stage 5) ────────────────────────────────────────────────── */
+.imageRailContainer {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  width: 100%;
+}
+.imageRailTitle {
+  margin: 0;
+  color: var(--uao-color-wine, #8a1428);
+  font-size: calc(20px * var(--text-scale, 1));
+  font-weight: 700;
+  text-align: center;
+}
+.imageRailViewport {
+  width: 100%;
+  overflow-x: auto;
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 12px;
+  /* Ocultar barra de scroll para estetica */
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+.imageRailViewport::-webkit-scrollbar {
+  display: none;
+}
+.imageRailTrack {
+  display: flex;
+  gap: 16px;
+  width: max-content;
+  padding: 0 4px;
+}
+.imageRailCard {
+  width: 320px;
+  display: flex;
+  flex-direction: column;
+  border-radius: 14px;
+  border: 1px solid rgba(138, 20, 40, 0.18);
+  background: var(--uao-color-white, #ffffff);
+  box-shadow: 0 6px 16px rgba(64, 17, 25, 0.06);
+  overflow: hidden;
+}
+.imageRailCardInner {
+  padding: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 6px;
+  flex-shrink: 0;
+}
+.imageRailCardBadge {
+  align-self: flex-start;
+  border-radius: 999px;
+  border: 1px solid rgba(255, 5, 30, 0.3);
+  background: rgba(255, 5, 30, 0.08);
+  color: var(--uao-color-burgundy, #ac0b32);
+  padding: 3px 10px;
+  font-size: calc(11px * var(--text-scale, 1));
+  font-weight: 700;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+}
+.imageRailCardTitle {
+  margin: 0;
+  color: var(--uao-color-wine, #8a1428);
+  font-size: calc(16px * var(--text-scale, 1));
+  font-weight: 700;
+}
+.imageRailCardDesc {
+  margin: 0;
+  color: var(--uao-color-text-secondary, #475569);
+  font-size: calc(14px * var(--text-scale, 1));
+  line-height: 1.4;
+}
+.imageRailCardMedia {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  background: var(--uao-color-cream, #fbf5ec);
+  border-top: 1px solid rgba(138, 20, 40, 0.12);
+}
+.imageRailImg {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+.imageRailFallback {
+  width: 100%;
+  height: 100%;
+  display: grid;
+  place-items: center;
+  color: var(--uao-color-text-secondary, #475569);
+  font-size: calc(14px * var(--text-scale, 1));
+}
