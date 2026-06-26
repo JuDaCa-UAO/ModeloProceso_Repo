@@ -110,7 +110,9 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
           <video
             className={styles.videoEl}
             src={media.url}
-            controls
+            autoPlay
+            muted
+            loop
             preload="metadata"
             aria-label={media.description}
             style={block.maxHeight ? { maxHeight: block.maxHeight } : undefined}
@@ -512,7 +514,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
           className={styles.videoEl}
           src={media.url}
           autoPlay
-          controls
+          muted
           onEnded={() => setPhase("ended")}
           aria-label={media.description}
         />
