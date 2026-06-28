@@ -74,6 +74,12 @@ export type StageBlock =
       confirmationTitle?: string;
       confirmationText?: string;
       confirmationDescription?: string;
+      /** Cuando true y el recurso está disponible, muestra una vista previa embebida del PDF antes del botón. */
+      previewEmbed?: boolean;
+      /** Título accesible del iframe de vista previa. */
+      previewTitle?: string;
+      /** Altura máxima del embed (ej. "50dvh"). Por defecto "45dvh". */
+      previewMaxHeight?: string;
     }
   | {
       type: "transition";

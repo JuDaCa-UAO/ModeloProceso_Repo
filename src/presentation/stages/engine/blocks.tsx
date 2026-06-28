@@ -456,25 +456,49 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
   if (block.type !== "download-resource") return null;
   const media = resolveMedia(block.mediaKey);
 
+  const showPreview = block.previewEmbed && media.available && media.url;
+  const previewMaxHeight = block.previewMaxHeight ?? "45dvh";
+  const previewTitle = block.previewTitle ?? block.label;
+
   return (
-    <div className={styles.actionRow}>
-      <UaoButton
-        pill
-        leadingIcon={<FiDownload />}
-        data-guide-id={block.guideId ?? "etapa2-descargar-matriz"}
-        disabled={!media.available}
-        aria-disabled={!media.available}
-        onClick={() => {
-          if (!media.available || !media.url) return;
-          handleDownload(media.url, media.downloadName);
-          setConfirmOpen(true);
-        }}
-      >
-        {block.label}
-      </UaoButton>
-      {!media.available ? (
-        <p className={styles.downloadNote}>{media.fallbackLabel}</p>
-      ) : null}
+    <div className={styles.downloadBlock}>
+      {showPreview && (
+        <div className={styles.pdfPreviewFrame} style={{ maxHeight: previewMaxHeight }}>
+          <object
+            data={media.url!}
+            type="application/pdf"
+            className={styles.pdfPreviewObject}
+            aria-label={previewTitle}
+            title={previewTitle}
+          >
+            <iframe
+              src={media.url!}
+              className={styles.pdfPreviewObject}
+              title={previewTitle}
+              aria-label={previewTitle}
+            />
+          </object>
+        </div>
+      )}
+      <div className={styles.actionRow}>
+        <UaoButton
+          pill
+          leadingIcon={<FiDownload />}
+          data-guide-id={block.guideId ?? "etapa2-descargar-matriz"}
+          disabled={!media.available}
+          aria-disabled={!media.available}
+          onClick={() => {
+            if (!media.available || !media.url) return;
+            handleDownload(media.url, media.downloadName);
+            setConfirmOpen(true);
+          }}
+        >
+          {block.label}
+        </UaoButton>
+        {!media.available ? (
+          <p className={styles.downloadNote}>{media.fallbackLabel}</p>
+        ) : null}
+      </div>
 
       <Modal
         open={confirmOpen}
