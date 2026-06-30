@@ -113,6 +113,10 @@
   justify-items: center;
 }
 
+.actionBtn {
+  width: min(280px, 100%);
+}
+
 .btnBase {
   position: relative;
   width: min(430px, 100%);
