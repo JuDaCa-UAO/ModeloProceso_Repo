@@ -7,7 +7,7 @@
  *
  * Las reglas de acceso (gate.requires) son evaluadas por GatingRule en el dominio.
  * Las acciones (actions) son ejecutadas por la capa de presentación.
- * Los assets de Laia se obtienen de content/shared/character-assets.ts.
+ * Los assets de LaIA se obtienen de content/shared/character-assets.ts.
  *
  * Para agregar o modificar contenido: editar solo este archivo.
  * Para agregar una nueva etapa: crear content/stages/stage-2.content.ts
@@ -21,10 +21,10 @@ import { LAIA_ASSETS } from "@/content/shared/character-assets";
 
 // ─── Constantes exportadas para uso en StageShell y StageClient ───────────────
 
-const STAGE1_ID = "etapa-1";
-const STAGE1_NAME = "Reconócete para avanzar";
+export const STAGE1_ID = "etapa-1";
+export const STAGE1_NAME = "Reconócete para avanzar";
 
-const ALL_STAGE_NAMES = [
+export const ALL_STAGE_NAMES = [
   "Reconócete para avanzar",
   "Descubre nuevas posibilidades",
   "Diseña con propósito",
@@ -150,12 +150,12 @@ export const STAGE1_TREE: SectionNode[] = [
       {
         text: "Este recorrido acompaña la integración responsable de GenAI en experiencias de aprendizaje. Avanzarás por etapas conectadas, de forma progresiva y reflexiva.",
         imgSrc: LAIA_ASSETS.neutral,
-        imgAlt: "Laia introduce el recorrido",
+        imgAlt: "LaIA introduce el recorrido",
       },
       {
         text: "Desliza hacia abajo para recorrer cada etapa.",
         imgSrc: LAIA_ASSETS.explain,
-        imgAlt: "Laia invita a recorrer las etapas",
+        imgAlt: "LaIA invita a recorrer las etapas",
       },
     ],
     gate: { completionFlag: "stage1IntroDialogueCompleted" },
@@ -179,7 +179,7 @@ export const STAGE1_TREE: SectionNode[] = [
               {
                 text: "Los estados no son etiquetas ni juicios; solo ajustan recomendaciones y apoyos para acompañarte mejor.",
                 imgSrc: LAIA_ASSETS.explain,
-                imgAlt: "Laia aclara el uso de los estados",
+                imgAlt: "LaIA aclara el uso de los estados",
               },
             ],
             gate: { requires: ["stage1AnimationViewed"] },
@@ -203,7 +203,7 @@ export const STAGE1_TREE: SectionNode[] = [
                   {
                     text: "Antes de explorar herramientas o diseñar actividades, conviene reconocer desde dónde se empieza. Esta etapa propone un autodiagnóstico para orientar el recorrido.",
                     imgSrc: LAIA_ASSETS.explain,
-                    imgAlt: "Laia encuadra la etapa 1",
+                    imgAlt: "LaIA encuadra la etapa 1",
                   },
                 ],
                 gate: { requires: ["stage1AnimationViewed"] },
@@ -229,7 +229,7 @@ export const STAGE1_TREE: SectionNode[] = [
                       {
                         text: "Este ejercicio es individual, objetivo y confidencial. No tiene efectos administrativos. Su único propósito es orientar el camino formativo.",
                         imgSrc: LAIA_ASSETS.explain,
-                        imgAlt: "Laia explica confidencialidad",
+                        imgAlt: "LaIA explica confidencialidad",
                       },
                     ],
                     content: [{ type: "consent-form" }],
@@ -256,7 +256,7 @@ export const STAGE1_TREE: SectionNode[] = [
                               {
                                 text: "Este resultado no define capacidades; orienta condiciones de partida. El valor está en tomar decisiones formativas más coherentes.",
                                 imgSrc: LAIA_ASSETS.explain,
-                                imgAlt: "Laia presenta el resultado",
+                                imgAlt: "LaIA presenta el resultado",
                               },
                             ],
                             content: [{ type: "result-summary" }],
@@ -272,7 +272,7 @@ export const STAGE1_TREE: SectionNode[] = [
                                   {
                                     text: "Con tu punto de partida identificado, el siguiente paso es explorar posibilidades reales de GenAI para fortalecer actividades concretas de aprendizaje.",
                                     imgSrc: LAIA_ASSETS.explain,
-                                    imgAlt: "Laia enlaza con la etapa 2",
+                                    imgAlt: "LaIA enlaza con la etapa 2",
                                   },
                                 ],
                                 content: [{ type: "transition-animation" }],

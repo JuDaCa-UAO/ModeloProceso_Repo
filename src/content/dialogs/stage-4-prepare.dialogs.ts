@@ -1,7 +1,7 @@
 /**
- * CONTENT — Diálogos de Laia · Etapa 4 (Prepara el terreno para el éxito)
+ * CONTENT — Diálogos de LaIA · Etapa 4 (Prepara el terreno para el éxito)
  *
- * DATOS PUROS. Los parlamentos de Laia se copian LITERALMENTE desde
+ * DATOS PUROS. Los parlamentos de LaIA se copian LITERALMENTE desde
  * `contexto/fuentes/EMI_escrita.md` (Etapa 4, secciones 1–5 y transición),
  * conservando el orden y la paginación (1/2, 1/3, …). No se parafrasean ni se resumen.
  *

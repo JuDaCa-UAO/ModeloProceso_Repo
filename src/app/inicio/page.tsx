@@ -37,7 +37,7 @@ export default function InicioPage() {
               <div className={styles.avatarFrame}>
                 <Image
                   src="/ui/laia.png"
-                  alt="Personaje (Laia)"
+                  alt="Personaje (LaIA)"
                   fill
                   unoptimized
                   className={styles.avatarImg}
@@ -50,7 +50,7 @@ export default function InicioPage() {
           </div>
 
           <footer className={styles.footer}>
-            <span className={styles.tipBadge}>Laia</span>
+            <span className={styles.tipBadge}>LaIA</span>
             <span>
               Yo seré la asistente especializada que se encargará de guiarte a través de esta aventura tecnológica de aprendizaje sobre IA.
             </span>

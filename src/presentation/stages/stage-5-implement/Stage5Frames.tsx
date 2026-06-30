@@ -1,22 +1,24 @@
 "use client";
 
+import StageRenderer from "../engine/StageRenderer";
+import { STAGE5_IMPLEMENT_TREE } from "@/content/stages/stage-5.content";
 import type { StageFramesProps } from "../shared/StageFramesProps";
 
-export default function Stage5Frames(_: StageFramesProps) {
+export default function Stage5Frames({
+  stageId,
+  completedFrames,
+  completeFrame,
+  pushToast,
+  notifiedFrames,
+}: StageFramesProps) {
   return (
-    <div
-      style={{
-        display: "flex",
-        alignItems: "center",
-        justifyContent: "center",
-        minHeight: "80vh",
-        color: "#c9b8e8",
-        fontSize: "1.1rem",
-        textAlign: "center",
-        padding: "2rem",
-      }}
-    >
-      <p>Esta etapa estará disponible próximamente.</p>
-    </div>
+    <StageRenderer
+      stageId={stageId}
+      tree={STAGE5_IMPLEMENT_TREE}
+      completedFrames={completedFrames}
+      completeFrame={completeFrame}
+      pushToast={pushToast}
+      notifiedFrames={notifiedFrames}
+    />
   );
 }

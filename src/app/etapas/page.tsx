@@ -18,12 +18,14 @@ export default function EtapasPage() {
           <InteractiveSpiral />
 
           {STAGE_META[0] && (
-            <Link href={STAGE_META[0].href} className={styles.stage0Button}>
-              <span className={styles.stage0Order}>
-                {String(STAGE_META[0].order).padStart(2, "0")}
-              </span>
-              <span>{STAGE_META[0].name}</span>
-            </Link>
+            <div className={styles.introSection}>
+              <p className={styles.introText}>
+                <strong>Introducción:</strong> Aquí podrás reconocer de qué se trata el modelo de proceso para la integración responsable de GenAI en la formación docente.
+              </p>
+              <Link href={STAGE_META[0].href} className={styles.stage0Button}>
+                <span>Regresar a la Introducción</span>
+              </Link>
+            </div>
           )}
 
           <div className={styles.footer}>

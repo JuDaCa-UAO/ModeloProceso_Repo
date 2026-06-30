@@ -77,10 +77,27 @@
   transform: translateY(-2px);
 }
 
-.stage0Order {
-  font-family: var(--font-tech), monospace;
-  font-size: 13px;
-  font-weight: bold;
+.introSection {
+  margin-top: 16px;
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+  background: rgba(251, 245, 236, 0.4);
+  padding: 16px;
+  border-radius: var(--uao-radius-md, 0.875rem);
+  border: 1px dashed rgba(138, 20, 40, 0.2);
+}
+
+.introText {
+  margin: 0;
+  font-size: 14px;
+  line-height: 1.5;
+  color: var(--uao-color-text-secondary, #475569);
+  text-align: center;
+}
+
+.introText strong {
+  color: var(--uao-color-burgundy, #ac0b32);
 }
 
 /* ─── Footer ─────────────────────────────────────────────────────────────── */

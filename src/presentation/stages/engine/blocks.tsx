@@ -12,7 +12,7 @@
  * la identidad visual.
  */
 
-import { useCallback, useEffect, useState } from "react";
+import { useCallback, useEffect, useState, useRef } from "react";
 import LazyStageViewer from "@/components/stage/LazyStageViewer";
 import CharacterStepDialog from "@/components/character-step-dialog/CharacterStepDialog";
 import { resolveMedia } from "@/content/shared/media-registry";
@@ -25,7 +25,7 @@ import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 import {
   FiTarget, FiEdit3, FiCpu, FiShield, FiFileText, FiCompass, FiHelpCircle,
   FiArrowRight, FiPlay, FiRotateCcw, FiDownload,
-  FiCheckCircle, FiClock, FiAlertCircle,
+  FiCheckCircle, FiClock, FiAlertCircle, FiEye, FiMessageCircle, FiTool, FiSliders
 } from "react-icons/fi";
 
 type BlockComponentProps = { block: StageBlock; ctx: BlockContext };
@@ -104,15 +104,18 @@ function NarrativeVideoBlock({ block }: BlockComponentProps) {
             className={styles.videoEl}
             src={media.url}
             alt={media.description ?? ""}
-            style={{ objectFit: "contain", background: "var(--uao-color-cream, #fbf5ec)" }}
+            style={{ objectFit: "contain", background: "var(--uao-color-cream, #fbf5ec)", ...(block.maxHeight ? { maxHeight: block.maxHeight } : {}) }}
           />
         ) : (
           <video
             className={styles.videoEl}
             src={media.url}
-            controls
+            autoPlay
+            muted
+            loop
             preload="metadata"
             aria-label={media.description}
+            style={block.maxHeight ? { maxHeight: block.maxHeight } : undefined}
           />
         )
       ) : (
@@ -453,25 +456,49 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
   if (block.type !== "download-resource") return null;
   const media = resolveMedia(block.mediaKey);
 
+  const showPreview = block.previewEmbed && media.available && media.url;
+  const previewMaxHeight = block.previewMaxHeight ?? "45dvh";
+  const previewTitle = block.previewTitle ?? block.label;
+
   return (
-    <div className={styles.actionRow}>
-      <UaoButton
-        pill
-        leadingIcon={<FiDownload />}
-        data-guide-id={block.guideId ?? "etapa2-descargar-matriz"}
-        disabled={!media.available}
-        aria-disabled={!media.available}
-        onClick={() => {
-          if (!media.available || !media.url) return;
-          handleDownload(media.url, media.downloadName);
-          setConfirmOpen(true);
-        }}
-      >
-        {block.label}
-      </UaoButton>
-      {!media.available ? (
-        <p className={styles.downloadNote}>{media.fallbackLabel}</p>
-      ) : null}
+    <div className={styles.downloadBlock}>
+      {showPreview && (
+        <div className={styles.pdfPreviewFrame} style={{ maxHeight: previewMaxHeight }}>
+          <object
+            data={media.url!}
+            type="application/pdf"
+            className={styles.pdfPreviewObject}
+            aria-label={previewTitle}
+            title={previewTitle}
+          >
+            <iframe
+              src={media.url!}
+              className={styles.pdfPreviewObject}
+              title={previewTitle}
+              aria-label={previewTitle}
+            />
+          </object>
+        </div>
+      )}
+      <div className={styles.actionRow}>
+        <UaoButton
+          pill
+          leadingIcon={<FiDownload />}
+          data-guide-id={block.guideId ?? "etapa2-descargar-matriz"}
+          disabled={!media.available}
+          aria-disabled={!media.available}
+          onClick={() => {
+            if (!media.available || !media.url) return;
+            handleDownload(media.url, media.downloadName);
+            setConfirmOpen(true);
+          }}
+        >
+          {block.label}
+        </UaoButton>
+        {!media.available ? (
+          <p className={styles.downloadNote}>{media.fallbackLabel}</p>
+        ) : null}
+      </div>
 
       <Modal
         open={confirmOpen}
@@ -497,7 +524,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
   if (block.type !== "transition") return null;
   const media = resolveMedia(block.mediaKey);
 
-  // Cuando el video aún no está hosteado, el cierre (diálogo de Laia + botón a la
+  // Cuando el video aún no está hosteado, el cierre (diálogo de LaIA + botón a la
   // siguiente etapa) debe quedar accesible sin pasos muertos: se omite el paso de
   // "Ver animación" y se muestra el modelo 3D con un aviso de "próximamente".
   const showVideoIntro = media.available && phase === "idle";
@@ -506,20 +533,20 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
 
   return (
     <div className={sc.f9Splash}>
-      <div className={sc.f9ModelWrap}>
-        {showVideo && media.url ? (
-          <video
-            className={styles.videoEl}
-            src={media.url}
-            autoPlay
-            controls
-            onEnded={() => setPhase("ended")}
-            aria-label={media.description}
-          />
-        ) : (
+      {showVideo && media.url ? (
+        <video
+          className={styles.videoEl}
+          src={media.url}
+          autoPlay
+          muted
+          onEnded={() => setPhase("ended")}
+          aria-label={media.description}
+        />
+      ) : (
+        <div className={sc.f9ModelWrap}>
           <LazyStageViewer enableRotation={!reduced} activeStage={block.activeStage ?? 2} />
-        )}
-      </div>
+        </div>
+      )}
 
       {showVideoIntro ? (
         <UaoButton
@@ -552,7 +579,7 @@ function TransitionBlock({ block, ctx }: BlockComponentProps) {
             </p>
           )}
 
-          <div className={sc.f9LaiaWrap}>
+          <div className={sc.f9LaIAWrap}>
             <CharacterStepDialog
               steps={block.steps}
               size="default"
@@ -700,6 +727,97 @@ function GuidedScenarioBlock({ block }: BlockComponentProps) {
   );
 }
 
+// ── action-cards ──────────────────────────────────────────────────────────────
+function ActionCardsBlock({ block }: BlockComponentProps) {
+  if (block.type !== "action-cards") return null;
+
+  const getIcon = (iconName?: string) => {
+    switch (iconName) {
+      case "guide": return <FiCompass />;
+      case "observe": return <FiEye />;
+      case "clarify": return <FiMessageCircle />;
+      case "intervene": return <FiTool />;
+      case "adjust": return <FiSliders />;
+      case "protect": return <FiShield />;
+      default: return <FiCheckCircle />;
+    }
+  };
+
+  return (
+    <div className={styles.actionCardsContainer}>
+      {block.title ? <h3 className={styles.actionCardsTitle}>{block.title}</h3> : null}
+      {block.description ? <p className={styles.actionCardsDesc}>{block.description}</p> : null}
+      <div className={styles.actionCardsGrid}>
+        {block.cards.map((card, idx) => (
+          <div key={idx} className={styles.actionCard}>
+            <div className={styles.actionCardIcon} aria-hidden>
+              {getIcon(card.icon)}
+            </div>
+            <div className={styles.actionCardContent}>
+              <h4 className={styles.actionCardTitle}>{card.title}</h4>
+              <p className={styles.actionCardDesc}>{card.description}</p>
+            </div>
+          </div>
+        ))}
+      </div>
+    </div>
+  );
+}
+
+// ── image-rail ────────────────────────────────────────────────────────────────
+function ImageRailBlock({ block }: BlockComponentProps) {
+  const viewportRef = useRef<HTMLDivElement>(null);
+  if (block.type !== "image-rail") return null;
+
+  return (
+    <div className={styles.imageRailContainer}>
+      {block.title ? <h3 className={styles.imageRailTitle}>{block.title}</h3> : null}
+      <div ref={viewportRef} className={styles.imageRailViewport}>
+        <div className={styles.imageRailTrack}>
+          {block.panels.map((panel) => {
+            const media = resolveMedia(panel.mediaKey);
+            return (
+              <article key={panel.id} className={styles.imageRailCard}>
+                  {(panel.label || panel.title || panel.description) && (
+                    <div className={styles.imageRailCardInner}>
+                      {panel.label ? (
+                        <span className={styles.imageRailCardBadge}>{panel.label}</span>
+                      ) : null}
+                      {panel.title ? (
+                        <h4 className={styles.imageRailCardTitle}>{panel.title}</h4>
+                      ) : null}
+                      {panel.description ? (
+                        <p className={styles.imageRailCardDesc}>{panel.description}</p>
+                      ) : null}
+                    </div>
+                  )}
+                <div className={styles.imageRailCardMedia}>
+                  {media.available && media.url ? (
+                    // eslint-disable-next-line @next/next/no-img-element
+                    <img
+                      src={media.url}
+                      alt={media.description ?? panel.title}
+                      className={styles.imageRailImg}
+                      loading="lazy"
+                    />
+                  ) : (
+                    <div className={styles.imageRailFallback}>
+                      <span>{media.fallbackLabel}</span>
+                    </div>
+                  )}
+                </div>
+              </article>
+            );
+          })}
+        </div>
+      </div>
+      <p className={styles.railScrollNote}>
+        * Tip: Puedes desplazarte horizontalmente usando <strong>Shift + Rueda del ratón</strong> o deslizando lateralmente.
+      </p>
+    </div>
+  );
+}
+
 /** Registro de bloques: tipo → componente. */
 export const BLOCK_REGISTRY: Record<
   StageBlock["type"],
@@ -716,4 +834,6 @@ export const BLOCK_REGISTRY: Record<
   transition: TransitionBlock,
   "checklist-board": ChecklistBoardBlock,
   "guided-scenario": GuidedScenarioBlock,
+  "action-cards": ActionCardsBlock,
+  "image-rail": ImageRailBlock,
 };

@@ -2,12 +2,21 @@
   width: calc(100% + 40px);
   margin-left: -20px;
   margin-top: -10px;
-  height: 650px;
+  height: 400px;
   position: relative;
   display: flex;
   justify-content: center;
   align-items: center;
   border-radius: 12px;
+}
+
+.fixedLabelContainer {
+  position: absolute;
+  top: 24px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
 }
 
 .labelContainer {

@@ -1,7 +1,7 @@
 /**
- * DOMAIN — Tipo LaiaDialog
+ * DOMAIN — Tipo LaIADialog
  *
- * Tipo puro (sin React ni CSS) que describe un diálogo de Laia de forma
+ * Tipo puro (sin React ni CSS) que describe un diálogo de LaIA de forma
  * declarativa e independiente de la presentación.
  *
  * TODO (diferido por riesgo funcional): hoy los diálogos viven en
@@ -10,7 +10,7 @@
  * datos cuando se centralice la configuración por frames. No se consume aún.
  */
 
-export type LaiaDialog = {
+export type LaIADialog = {
   id: string;
   stageId: string;
   frameId: string;

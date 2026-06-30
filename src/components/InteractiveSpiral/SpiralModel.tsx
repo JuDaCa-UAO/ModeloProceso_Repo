@@ -1,12 +1,11 @@
 "use client";
 
 import React, { useState, useRef, useMemo } from "react";
-import { useGLTF, Html, Center } from "@react-three/drei";
-import { useFrame } from "@react-three/fiber";
+import { useGLTF, Center } from "@react-three/drei";
+import { useFrame, ThreeEvent } from "@react-three/fiber";
 import { useRouter } from "next/navigation";
 import * as THREE from "three";
 import { STAGE_META } from "@/content/stages";
-import styles from "./InteractiveSpiral.module.css";
 
 // Definimos el tipo para los nodos del GLTF según lo generado
 type GLTFResult = {
@@ -30,17 +29,17 @@ function Orb({
   position,
   scale,
   stageIndex,
-  defaultMaterial,
   isActive,
   hideLabels,
+  onHover,
 }: {
   geometry: THREE.BufferGeometry;
   position: [number, number, number];
   scale: number;
   stageIndex: number;
-  defaultMaterial: THREE.Material;
   isActive?: boolean;
   hideLabels?: boolean;
+  onHover?: (isHovered: boolean) => void;
 }) {
   const router = useRouter();
   const [hovered, setHovered] = useState(false);
@@ -50,11 +49,9 @@ function Orb({
   // Obtenemos la etapa correspondiente (el index de stage-1 a stage-6 es de 1 a 6)
   // STAGE_META tiene index 0 = introducción, index 1 = etapa 1, etc.
   const stageData = STAGE_META[stageIndex];
-  
-  // Si no hay datos, no renderizamos el orbe
-  if (!stageData) return null;
 
   useFrame(({ clock }) => {
+    if (!stageData) return;
     if (isActive && materialRef.current && meshRef.current) {
       // Pulso entre 0 y 1
       const pulse = (Math.sin(clock.getElapsedTime() * 3) + 1) / 2;
@@ -67,22 +64,27 @@ function Orb({
       meshRef.current.scale.set(scale, scale, scale);
     }
   });
+  
+  // Si no hay datos, no renderizamos el orbe
+  if (!stageData) return null;
 
-  const handlePointerOver = (e: any) => {
+  const handlePointerOver = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     if (hideLabels) return;
     setHovered(true);
+    if (onHover) onHover(true);
     document.body.style.cursor = "pointer";
   };
 
-  const handlePointerOut = (e: any) => {
+  const handlePointerOut = (e: ThreeEvent<PointerEvent>) => {
     e.stopPropagation();
     if (hideLabels) return;
     setHovered(false);
+    if (onHover) onHover(false);
     document.body.style.cursor = "default";
   };
 
-  const handleClick = (e: any) => {
+  const handleClick = (e: ThreeEvent<MouseEvent>) => {
     e.stopPropagation();
     if (hideLabels) return;
     // Si available es true, navegamos a la ruta
@@ -95,7 +97,7 @@ function Orb({
   return (
     <mesh
       ref={meshRef}
-      geometry={geometry}
+      geometry={geometry as any}
       position={position}
       scale={scale}
       onPointerOver={handlePointerOver}
@@ -110,16 +112,6 @@ function Orb({
         roughness={0.4}
         metalness={0.8}
       />
-      {!hideLabels && hovered && (
-        <Html distanceFactor={30} position={[0, 1.5, 0]} center zIndexRange={[100, 0]}>
-          <div className={styles.labelContainer}>
-            <div className={styles.labelOrder}>
-              {String(stageData.order).padStart(2, "0")}
-            </div>
-            <div className={styles.labelName}>{stageData.name}</div>
-          </div>
-        </Html>
-      )}
     </mesh>
   );
 }
@@ -127,12 +119,13 @@ function Orb({
 export default function SpiralModel({ 
   activeStageIndex,
   hideLabels,
+  onHoverStageChange,
   ...props 
 }: { 
   activeStageIndex?: number;
   hideLabels?: boolean;
-  [key: string]: any;
-}) {
+  onHoverStageChange?: (stageIndex: number | null) => void;
+} & React.ComponentPropsWithoutRef<"group">) {
   const { nodes, materials } = useGLTF("/models/espiral.glb") as unknown as GLTFResult;
 
   // Material de la espiral con un rojo institucional más intenso (mejor contraste
@@ -146,15 +139,13 @@ export default function SpiralModel({
     }
     return base;
   }, [materials.Spiral]);
-  const inactivaMaterial = materials.Etapa_Inactiva;
-
   return (
     <Center>
       <group {...props} dispose={null}>
         {/* Estructura central de la espiral */}
         <mesh 
-          geometry={nodes.Spiral002.geometry} 
-          material={spiralMaterial} 
+          geometry={nodes.Spiral002.geometry as any}
+          material={spiralMaterial as any}
           position={[-0.437, 0.827, 44.286]} 
         />
         
@@ -164,54 +155,54 @@ export default function SpiralModel({
           position={[8.455, 0.89, 43.561]}
           scale={1.3}
           stageIndex={1}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 1}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 1 : null)}
         />
         <Orb
           geometry={nodes.Cube_E1002.geometry}
           position={[-10.93, 4.349, 43.561]}
           scale={1.3}
           stageIndex={2}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 2}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 2 : null)}
         />
         <Orb
           geometry={nodes.Cube_E3001.geometry}
           position={[-0.503, 6.408, 55.74]}
           scale={1.3}
           stageIndex={3}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 3}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 3 : null)}
         />
         <Orb
           geometry={nodes.Cube_E4001.geometry}
           position={[3.275, 9.688, 31.997]}
           scale={1.3}
           stageIndex={4}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 4}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 4 : null)}
         />
         <Orb
           geometry={nodes.Cube_E5001.geometry}
           position={[-12.233, 12.511, 52.109]}
           scale={1.3}
           stageIndex={5}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 5}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 5 : null)}
         />
         <Orb
           geometry={nodes.Cube_E6001.geometry}
           position={[14.599, 15.712, 40.562]}
           scale={1.3}
           stageIndex={6}
-          defaultMaterial={inactivaMaterial}
           isActive={activeStageIndex === 6}
           hideLabels={hideLabels}
+          onHover={(hovered) => onHoverStageChange?.(hovered ? 6 : null)}
         />
       </group>
     </Center>

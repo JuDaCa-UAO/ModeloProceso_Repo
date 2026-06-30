@@ -1,6 +1,6 @@
 "use client";
 
-import { useMemo, useRef } from "react";
+import { useEffect, useMemo, useRef } from "react";
 import { useFrame } from "@react-three/fiber";
 import { useGLTF } from "@react-three/drei";
 import * as THREE from "three";
@@ -48,7 +48,6 @@ export default function Model({ url, animatedNodes = [], animatedColor }: ModelP
 
   const tunedScene = useMemo(() => {
     const cloned = scene.clone(true);
-    animatedTargets.current = [];
 
     cloned.traverse((node: unknown) => {
       const mesh = node as MeshLike;
@@ -82,23 +81,36 @@ export default function Model({ url, animatedNodes = [], animatedColor }: ModelP
           } else {
              // Asegurar que el material pueda brillar si no tiene color emisivo
              if (localMat.emissive && localMat.emissive.getHex() === 0) {
-               if (localMat.color) {
-                 localMat.emissive.copy(localMat.color);
-               }
+                if (localMat.color) {
+                  localMat.emissive.copy(localMat.color);
+                }
              }
           }
-        });
-
-        animatedTargets.current.push({
-          mesh,
-          baseScale: mesh.scale ? mesh.scale.clone() : new THREE.Vector3(1, 1, 1),
-          materials: localMaterials,
         });
       }
     });
 
     return cloned;
   }, [scene, animatedNodes, animatedColor]);
+
+  useEffect(() => {
+    animatedTargets.current = [];
+    tunedScene.traverse((node: unknown) => {
+      const mesh = node as MeshLike;
+      if (!mesh.isMesh || !mesh.material) return;
+
+      if (mesh.name && animatedNodes.some((prefix) => mesh.name!.includes(prefix))) {
+        const materials = Array.isArray(mesh.material)
+          ? mesh.material
+          : [mesh.material];
+        animatedTargets.current.push({
+          mesh,
+          baseScale: mesh.scale ? mesh.scale.clone() : new THREE.Vector3(1, 1, 1),
+          materials: materials as MaterialLike[],
+        });
+      }
+    });
+  }, [tunedScene, animatedNodes]);
 
   useFrame(({ clock }, delta) => {
     // 1. Animación de aparición (Entrada)

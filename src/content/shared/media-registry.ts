@@ -65,7 +65,7 @@ export const MEDIA_REGISTRY = {
     kind: "svg",
     status: "available",
     localPath: "/mano/Mano izq apunta.svg",
-    description: "Mano de Laia señalando un control",
+    description: "Mano de LaIA señalando un control",
     fallbackLabel: "👉",
   },
 
@@ -159,6 +159,95 @@ export const MEDIA_REGISTRY = {
     downloadName: "Canvas-de-alistamiento-GenAI.pdf",
     description: "Canvas de alistamiento de la experiencia (PDF).",
     fallbackLabel: "El Canvas de alistamiento estará disponible para descarga próximamente.",
+  },
+
+  // ── Etapa 5 · recursos (Hazlo realidad en el aula) ───────────────────────────
+  "stage5.classroomSimulation": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-5/simulacion.mp4",
+    description: "Simulación de aula interactiva.",
+    fallbackLabel: "Simulación de aula interactiva — próximamente.",
+  },
+  "stage5.criticalMoments": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Etapa 5.webp",
+    description: "Momentos críticos durante la experiencia.",
+    fallbackLabel: "Recurso de momentos críticos — próximamente.",
+  },
+  "stage5.rail.1": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_1.webp",
+    description: "Evidencia 1",
+    fallbackLabel: "Evidencia 1 — próximamente.",
+  },
+  "stage5.rail.2": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_2.webp",
+    description: "Evidencia 2",
+    fallbackLabel: "Evidencia 2 — próximamente.",
+  },
+  "stage5.rail.3": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_3.webp",
+    description: "Evidencia 3",
+    fallbackLabel: "Evidencia 3 — próximamente.",
+  },
+  "stage5.rail.4": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_4.webp",
+    description: "Evidencia 4",
+    fallbackLabel: "Evidencia 4 — próximamente.",
+  },
+  "stage5.rail.5": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-5/Slider Etapa 5_5.webp",
+    description: "Evidencia 5",
+    fallbackLabel: "Evidencia 5 — próximamente.",
+  },
+
+  // ── Etapa 6 · recursos (Reflexiona, aprende y mejora) ────────────────────────
+  "stage6.evaluationDimensions": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-6/imagenes/dimensiones-evaluacion.webp",
+    description: "Infografía: evaluar no es solo calificar (dimensiones pedagógica, técnica, ética, emocional y cognitiva).",
+    fallbackLabel: "Infografía de dimensiones de evaluación — próximamente.",
+  },
+  "stage6.twoPerspectives": {
+    kind: "image",
+    status: "available",
+    localPath: "/media/etapa-6/imagenes/dos-miradas.webp",
+    description: "Infografía: dos miradas sobre la experiencia (mirada docente y mirada estudiante).",
+    fallbackLabel: "Infografía de dos miradas — próximamente.",
+  },
+  "stage6.evaluationCanvas": {
+    kind: "download",
+    status: "available",
+    localPath: "/media/etapa-6/descargas/Canvas-de-evaluacion-GenAI.pdf",
+    downloadName: "Canvas-de-evaluacion-GenAI.pdf",
+    description: "Canvas de evaluación docente-estudiante de la experiencia mediada por IA (PDF).",
+    fallbackLabel: "El Canvas de evaluación estará disponible para descarga próximamente.",
+  },
+  "stage6.improvementSequence": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-6/hallazgo-aprendizaje-ajuste.mp4",
+    description: "Animación: de hallazgo a mejora (hallazgo → aprendizaje → ajuste).",
+    fallbackLabel: "Animación de hallazgo a mejora — próximamente.",
+  },
+  "stage6.newLoopVideo": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-6/nueva-vuelta-espiral.mp4",
+    description: "Animación de cierre: la espiral continúa hacia una nueva vuelta.",
+    fallbackLabel: "Animación de cierre de la espiral — próximamente.",
   },
 
   // ── Videos globales de transición (locales) ──────────────────────────────────

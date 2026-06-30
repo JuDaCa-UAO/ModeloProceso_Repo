@@ -8,7 +8,7 @@
  *     el frame N (1-based) se muestra cuando `completedFrames >= N-1`.
  *   - Despacha cada bloque por `BLOCK_REGISTRY[type]` (registro reutilizable).
  *   - Procesa `children` de forma RECURSIVA dentro del frame.
- *   - Inyecta la guía animada de Laia (mano) declarada por el nodo.
+ *   - Inyecta la guía animada de LaIA (mano) declarada por el nodo.
  *
  * Una etapa nueva que use bloques existentes no requiere modificar este archivo.
  */

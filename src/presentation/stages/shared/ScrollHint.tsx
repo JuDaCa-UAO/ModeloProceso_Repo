@@ -15,7 +15,7 @@ export default function ScrollHint({ label, guideId }: { label?: string; guideId
       className={styles.scrollHint}
       onClick={handleClick}
       data-guide-id={guideId}
-      aria-label="Ir al siguiente paso"
+      aria-label={label || "Ir al siguiente paso"}
     >
       <span className={styles.scrollArrow} aria-hidden>
         ▼

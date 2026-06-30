@@ -341,7 +341,7 @@ export default function Stage1Frames({
                 </UaoButton>
               </div>
 
-              <div className={styles.f9LaiaWrap}>
+              <div className={styles.f9LaIAWrap}>
                 <CharacterStepDialog
                   steps={F9_LAIA_STEPS}
                   size="default"
@@ -359,7 +359,7 @@ export default function Stage1Frames({
               {completedFrames >= 5 ? (
                 <div className={styles.f9NextRow}>
                   <UaoButtonLink
-                    href="/inicio"
+                    href="/etapas/etapa-2"
                     pill
                     size="lg"
                     trailingIcon={<FiArrowRight />}

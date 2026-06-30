@@ -61,7 +61,7 @@ type CharacterStepDialogProps = {
   disableNext?: boolean;
 };
 
-const DEFAULT_CHARACTER_NAME = "Laia";
+const DEFAULT_CHARACTER_NAME = "LaIA";
 const DEFAULT_NEXT_LABEL = "Siguiente";
 const DEFAULT_CHARACTER_IMAGE = "/ui/laia.png";
 const TYPEWRITER_MS = 22;
@@ -127,9 +127,16 @@ export default function CharacterStepDialog({
     };
   }, []);
 
+  const [prevSteps, setPrevSteps] = useState(safeSteps);
+  if (safeSteps !== prevSteps) {
+    setPrevSteps(safeSteps);
+    setIsCompleted(false);
+    setIdx(0);
+    setTypedChars(0);
+  }
+
   useEffect(() => {
     completionSent.current = false;
-    setIsCompleted(false);
   }, [safeSteps]);
 
   const step = safeSteps[idx] ?? safeSteps[0];
@@ -198,7 +205,7 @@ export default function CharacterStepDialog({
         // Ignorar el error si el navegador bloquea la reproducción automática
         console.debug("Audio play prevented:", e);
       });
-    } catch (e) {
+    } catch {
       // Ignorar si Audio no está disponible
     }
   }, [sfxVolume]);
@@ -232,7 +239,7 @@ export default function CharacterStepDialog({
         setIsVoicePlaying(false);
       };
     }
-  }, [step?.audioSrc, isVoicePlaying, voiceVolume, stopVoiceAudio]);
+  }, [step, isVoicePlaying, voiceVolume, stopVoiceAudio]);
 
   const goNext = useCallback(() => {
     if (!step) return;

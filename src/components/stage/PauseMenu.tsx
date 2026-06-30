@@ -218,7 +218,7 @@ export default function PauseMenu({ open, onToggle }: PauseMenuProps) {
               </div>
 
               <div className={styles.volumeHeader} style={{ marginTop: "12px" }}>
-                <span className={styles.volumeLabel}>Voz de Laia</span>
+                <span className={styles.volumeLabel}>Voz de LaIA</span>
                 <span className={styles.volumeLabel}>{Math.round(voiceVolume * 100)}%</span>
               </div>
               <div className={styles.volumeRow}>

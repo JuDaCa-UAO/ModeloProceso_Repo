@@ -13,7 +13,7 @@
 import type { CharacterDialogStep } from "@/components/character-step-dialog/CharacterStepDialog";
 import type { MediaKey } from "@/content/shared/media-registry";
 
-/** Paso de la guía animada con la mano de Laia. */
+/** Paso de la guía animada con la mano de LaIA. */
 export interface GuideStep {
   id: string;
   /** Texto operativo breve (microcopy de interfaz, no parlamento narrativo). */
@@ -41,7 +41,7 @@ export type StageBlock =
       completesFrame?: boolean;
     }
   | { type: "paragraphs"; paragraphs: string[] }
-  | { type: "narrative-video"; mediaKey: MediaKey; caption?: string }
+  | { type: "narrative-video"; mediaKey: MediaKey; caption?: string; maxHeight?: string }
   | {
       type: "criteria-infographic";
       openLabel: string;
@@ -74,6 +74,12 @@ export type StageBlock =
       confirmationTitle?: string;
       confirmationText?: string;
       confirmationDescription?: string;
+      /** Cuando true y el recurso está disponible, muestra una vista previa embebida del PDF antes del botón. */
+      previewEmbed?: boolean;
+      /** Título accesible del iframe de vista previa. */
+      previewTitle?: string;
+      /** Altura máxima del embed (ej. "50dvh"). Por defecto "45dvh". */
+      previewMaxHeight?: string;
     }
   | {
       type: "transition";
@@ -115,6 +121,27 @@ export type StageBlock =
         recommendation: string;
         teacherRole: string;
       };
+    }
+  | {
+      type: "action-cards";
+      title?: string;
+      description?: string;
+      cards: {
+        title: string;
+        description: string;
+        icon?: "guide" | "observe" | "clarify" | "intervene" | "adjust" | "protect";
+      }[];
+    }
+  | {
+      type: "image-rail";
+      title?: string;
+      panels: {
+        id: string;
+        title?: string;
+        label?: string;
+        description?: string;
+        mediaKey: MediaKey;
+      }[];
     };
 
 /** Nodo del árbol de la etapa. Cada nodo de nivel superior es un frame. */
@@ -128,7 +155,7 @@ export interface StageNode {
   blocks: StageBlock[];
   /** Microcopy del indicador de avance hacia el siguiente frame. */
   scrollHintLabel?: string;
-  /** Pasos de guía con la mano de Laia, activos cuando el frame está visible. */
+  /** Pasos de guía con la mano de LaIA, activos cuando el frame está visible. */
   guide?: GuideStep[];
   /** Nodos hijos, renderizados recursivamente dentro del frame. */
   children?: StageNode[];
