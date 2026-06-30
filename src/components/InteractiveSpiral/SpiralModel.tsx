@@ -97,7 +97,7 @@ function Orb({
   return (
     <mesh
       ref={meshRef}
-      geometry={geometry as THREE.BufferGeometry}
+      geometry={geometry as any}
       position={position}
       scale={scale}
       onPointerOver={handlePointerOver}
@@ -144,8 +144,8 @@ export default function SpiralModel({
       <group {...props} dispose={null}>
         {/* Estructura central de la espiral */}
         <mesh 
-          geometry={nodes.Spiral002.geometry as THREE.BufferGeometry}
-          material={spiralMaterial as THREE.Material}
+          geometry={nodes.Spiral002.geometry as any}
+          material={spiralMaterial as any}
           position={[-0.437, 0.827, 44.286]} 
         />
         
