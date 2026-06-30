@@ -45,5 +45,16 @@ export function writeProgress(patch: Partial<ProgressState>) {
 
 export function clearProgress() {
   if (typeof window === "undefined") return;
-  window.localStorage.removeItem(STORAGE_KEY);
+  
+  // Limpiar no solo el progreso global, sino todos los datos persistidos de las etapas
+  // (frames, guide hand, data-driven engine progress)
+  const keysToRemove: string[] = [];
+  for (let i = 0; i < window.localStorage.length; i++) {
+    const key = window.localStorage.key(i);
+    if (key && key.startsWith("ai-tech-ed-")) {
+      keysToRemove.push(key);
+    }
+  }
+  
+  keysToRemove.forEach((k) => window.localStorage.removeItem(k));
 }
