@@ -83,7 +83,7 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
         mediaKey: "stage5.criticalMoments",
         maxHeight: "45dvh",
       },
-      { type: "dialogue", steps: STAGE5_S4_STEPS, size: "default" },
+      { type: "dialogue", steps: STAGE5_S4_STEPS },
     ],
   },
 
@@ -105,7 +105,7 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
           { id: "ev5", mediaKey: "stage5.rail.5" },
         ]
       },
-      { type: "dialogue", steps: STAGE5_S5_STEPS, size: "default" },
+      { type: "dialogue", steps: STAGE5_S5_STEPS },
     ],
   },
 

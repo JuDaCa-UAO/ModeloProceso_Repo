@@ -14,6 +14,7 @@ import {
   type ButtonHTMLAttributes,
   type ReactNode,
 } from "react";
+import Link from "next/link";
 import styles from "./UaoButton.module.css";
 
 export type UaoButtonVariant =
@@ -142,20 +143,22 @@ export const UaoButtonLink = forwardRef<HTMLAnchorElement, UaoButtonLinkProps>(
       trailingIcon,
       className,
       children,
+      href = "#",
       ...props
     },
     ref,
   ) {
     return (
-      <a
+      <Link
         ref={ref}
+        href={href}
         className={visualClasses(variant, size, pill, className)}
         {...props}
       >
         <Content leadingIcon={leadingIcon} trailingIcon={trailingIcon}>
           {children}
         </Content>
-      </a>
+      </Link>
     );
   },
 );

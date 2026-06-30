@@ -51,6 +51,7 @@ export default async function StagePage({ params }: Props) {
 
   return (
     <StageClient
+      key={stageId}
       stageId={stageId}
       stageName={meta.name}
     />
