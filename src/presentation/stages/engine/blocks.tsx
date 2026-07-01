@@ -767,6 +767,8 @@ function ActionCardsBlock({ block }: BlockComponentProps) {
 // ── image-rail ────────────────────────────────────────────────────────────────
 function ImageRailBlock({ block }: BlockComponentProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
+  const [activeMedia, setActiveMedia] = useState<{ media: ResolvedMedia; title: string } | null>(null);
+
   if (block.type !== "image-rail") return null;
 
   return (
@@ -793,13 +795,21 @@ function ImageRailBlock({ block }: BlockComponentProps) {
                   )}
                 <div className={styles.imageRailCardMedia}>
                   {media.available && media.url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={media.url}
-                      alt={media.description ?? panel.title}
-                      className={styles.imageRailImg}
-                      loading="lazy"
-                    />
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
+                      <img
+                        src={media.url}
+                        alt={media.description ?? panel.title ?? "Evidencia"}
+                        className={styles.imageRailImg}
+                        loading="lazy"
+                      />
+                      <UaoButton
+                        size="sm"
+                        pill
+                        onClick={() => setActiveMedia({ media, title: panel.title || "Evidencia" })}
+                      >
+                        Ampliar imagen
+                      </UaoButton>
+                    </div>
                   ) : (
                     <div className={styles.imageRailFallback}>
                       <span>{media.fallbackLabel}</span>
@@ -814,6 +824,15 @@ function ImageRailBlock({ block }: BlockComponentProps) {
       <p className={styles.railScrollNote}>
         * Tip: Puedes desplazarte horizontalmente usando <strong>Shift + Rueda del ratón</strong> o deslizando lateralmente.
       </p>
+
+      <Modal
+        open={!!activeMedia}
+        onClose={() => setActiveMedia(null)}
+        title={activeMedia?.title ?? "Evidencia"}
+        badge="EVIDENCIA"
+      >
+        {activeMedia && <HostedInfographic media={activeMedia.media} />}
+      </Modal>
     </div>
   );
 }
