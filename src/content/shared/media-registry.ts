@@ -169,6 +169,13 @@ export const MEDIA_REGISTRY = {
     description: "Simulación de aula interactiva.",
     fallbackLabel: "Simulación de aula interactiva — próximamente.",
   },
+  "stage5.teacherAsMediator": {
+    kind: "video-file",
+    status: "hosted",
+    remotePath: "/etapa-5/mediador.mp4",
+    description: "Animación de acciones docentes durante el despliegue.",
+    fallbackLabel: "Acciones del docente como mediador — próximamente.",
+  },
   "stage5.criticalMoments": {
     kind: "image",
     status: "available",

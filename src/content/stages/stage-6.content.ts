@@ -40,9 +40,11 @@ export const STAGE6_REFLECT_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "narrative-video",
+        type: "criteria-infographic",
+        openLabel: "Observar dimensiones",
+        modalTitle: "Dimensiones de la experiencia",
+        modalBadge: "EVALUACIÓN",
         mediaKey: "stage6.evaluationDimensions",
-        caption: "Evaluar no es solo calificar: dimensiones de la experiencia mediada por IA.",
       },
       { type: "dialogue", steps: STAGE6_S2_STEPS },
     ],
@@ -57,9 +59,11 @@ export const STAGE6_REFLECT_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "narrative-video",
+        type: "criteria-infographic",
+        openLabel: "Observar perspectivas",
+        modalTitle: "Dos miradas sobre la experiencia",
+        modalBadge: "PERSPECTIVAS",
         mediaKey: "stage6.twoPerspectives",
-        caption: "Dos miradas sobre la experiencia: docente y estudiante.",
       },
       { type: "dialogue", steps: STAGE6_S3_STEPS },
     ],
@@ -74,9 +78,11 @@ export const STAGE6_REFLECT_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "narrative-video",
+        type: "criteria-infographic",
+        openLabel: "Observar secuencia de mejora",
+        modalTitle: "De hallazgo a mejora",
+        modalBadge: "MEJORA CONTINUA",
         mediaKey: "stage6.improvementSequence",
-        caption: "De hallazgo a mejora (próximamente).",
       },
       { type: "dialogue", steps: STAGE6_S4_STEPS },
     ],

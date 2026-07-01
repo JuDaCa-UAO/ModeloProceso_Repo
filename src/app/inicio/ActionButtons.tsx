@@ -1,36 +1,85 @@
 "use client";
 
+import { useState } from "react";
+import { useRouter } from "next/navigation";
 import styles from "./inicio.module.css";
 import { useProgress } from "../../lib/useProgress";
-import { UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
+import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
 
 export default function ActionButtons() {
-  const { progress } = useProgress();
+  const { progress, reset } = useProgress();
   const showContinue = progress.hasStarted;
+  const router = useRouter();
+  const [showConfirmModal, setShowConfirmModal] = useState(false);
+
+  const handleStartOver = () => {
+    if (showContinue) {
+      setShowConfirmModal(true);
+    } else {
+      router.push("/etapas/introduccion");
+    }
+  };
+
+  const confirmReset = () => {
+    reset();
+    setShowConfirmModal(false);
+    router.push("/etapas/introduccion");
+  };
+
+  const cancelReset = () => {
+    setShowConfirmModal(false);
+  };
 
   return (
-    <div className={styles.buttonsCol}>
-      {showContinue && (
-        <UaoButtonLink
+    <>
+      <div className={styles.buttonsCol}>
+        {showContinue && (
+          <UaoButtonLink
+            variant="secondary"
+            size="lg"
+            className={styles.actionBtn}
+            href={progress.lastRoute || "/etapas/introduccion"}
+          >
+            Continuar
+          </UaoButtonLink>
+        )}
+
+        <UaoButton
           variant="secondary"
           size="lg"
-          href={progress.lastRoute || "/etapas/introduccion"}
+          className={styles.actionBtn}
+          onClick={handleStartOver}
         >
-          Continuar
+          {showContinue ? "Comenzar de nuevo" : "Iniciar"}
+        </UaoButton>
+
+        <UaoButtonLink variant="secondary" size="lg" className={styles.actionBtn} href="/etapas">
+          Etapas
         </UaoButtonLink>
+
+        <UaoButtonLink variant="secondary" size="lg" className={styles.actionBtn} href="/opciones">
+          Opciones
+        </UaoButtonLink>
+      </div>
+
+      {showConfirmModal && (
+        <div className={styles.modalOverlay}>
+          <div className={styles.modalContent}>
+            <h2 className={styles.modalTitle}>¿Comenzar de nuevo?</h2>
+            <p className={styles.modalText}>
+              Esta acción borrará todo tu progreso actual y regresarás a la introducción. ¿Estás seguro?
+            </p>
+            <div className={styles.modalActions}>
+              <UaoButton variant="secondary" onClick={cancelReset}>
+                Cancelar
+              </UaoButton>
+              <UaoButton variant="danger" onClick={confirmReset}>
+                Sí, borrar todo
+              </UaoButton>
+            </div>
+          </div>
+        </div>
       )}
-
-      <UaoButtonLink variant="primary" size="lg" href="/etapas/introduccion">
-        Iniciar
-      </UaoButtonLink>
-
-      <UaoButtonLink variant="secondary" size="lg" href="/etapas">
-        Etapas
-      </UaoButtonLink>
-
-      <UaoButtonLink variant="danger" size="lg" href="/opciones">
-        Opciones
-      </UaoButtonLink>
-    </div>
+    </>
   );
 }

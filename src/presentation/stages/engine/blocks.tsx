@@ -170,6 +170,7 @@ function CriteriaInfographicBlock({ block }: BlockComponentProps) {
         onClose={() => setOpen(false)}
         title={block.modalTitle ?? "Cómo se miran las posibilidades"}
         badge={block.modalBadge ?? "INFOGRAFÍA"}
+        width="wide"
       >
         <HostedInfographic media={media} />
       </Modal>
@@ -198,6 +199,7 @@ function ComparisonExampleBlock({ block }: BlockComponentProps) {
         onClose={() => setOpen(false)}
         title={block.modalTitle ?? "Ejemplo demostrativo de comparación"}
         badge={block.modalBadge ?? "EJEMPLO"}
+        width="wide"
       >
         <HostedInfographic media={media} />
       </Modal>
@@ -443,6 +445,7 @@ function DesignCanvasBlock({ block }: BlockComponentProps) {
 // ── download-resource ─────────────────────────────────────────────────────────
 function DownloadResourceBlock({ block }: BlockComponentProps) {
   const [confirmOpen, setConfirmOpen] = useState(false);
+  const [previewOpen, setPreviewOpen] = useState(false);
   const handleDownload = useCallback((url: string, name?: string) => {
     const a = document.createElement("a");
     a.href = url;
@@ -462,25 +465,16 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
 
   return (
     <div className={styles.downloadBlock}>
-      {showPreview && (
-        <div className={styles.pdfPreviewFrame} style={{ maxHeight: previewMaxHeight }}>
-          <object
-            data={media.url!}
-            type="application/pdf"
-            className={styles.pdfPreviewObject}
-            aria-label={previewTitle}
-            title={previewTitle}
+      <div className={styles.actionRow} style={{ flexWrap: "wrap", justifyContent: "center" }}>
+        {showPreview && (
+          <UaoButton
+            pill
+            leadingIcon={<FiEye />}
+            onClick={() => setPreviewOpen(true)}
           >
-            <iframe
-              src={media.url!}
-              className={styles.pdfPreviewObject}
-              title={previewTitle}
-              aria-label={previewTitle}
-            />
-          </object>
-        </div>
-      )}
-      <div className={styles.actionRow}>
+            Ver vista previa
+          </UaoButton>
+        )}
         <UaoButton
           pill
           leadingIcon={<FiDownload />}
@@ -499,6 +493,31 @@ function DownloadResourceBlock({ block }: BlockComponentProps) {
           <p className={styles.downloadNote}>{media.fallbackLabel}</p>
         ) : null}
       </div>
+
+      <Modal
+        open={previewOpen}
+        onClose={() => setPreviewOpen(false)}
+        title={previewTitle}
+        badge="VISTA PREVIA"
+        width="wide"
+      >
+        <div className={styles.pdfPreviewFrame} style={{ height: "70vh", maxHeight: "none" }}>
+          <object
+            data={media.url!}
+            type="application/pdf"
+            className={styles.pdfPreviewObject}
+            aria-label={previewTitle}
+            title={previewTitle}
+          >
+            <iframe
+              src={media.url!}
+              className={styles.pdfPreviewObject}
+              title={previewTitle}
+              aria-label={previewTitle}
+            />
+          </object>
+        </div>
+      </Modal>
 
       <Modal
         open={confirmOpen}
@@ -767,6 +786,8 @@ function ActionCardsBlock({ block }: BlockComponentProps) {
 // ── image-rail ────────────────────────────────────────────────────────────────
 function ImageRailBlock({ block }: BlockComponentProps) {
   const viewportRef = useRef<HTMLDivElement>(null);
+  const [activeMedia, setActiveMedia] = useState<{ media: ResolvedMedia; title: string } | null>(null);
+
   if (block.type !== "image-rail") return null;
 
   return (
@@ -793,13 +814,21 @@ function ImageRailBlock({ block }: BlockComponentProps) {
                   )}
                 <div className={styles.imageRailCardMedia}>
                   {media.available && media.url ? (
-                    // eslint-disable-next-line @next/next/no-img-element
-                    <img
-                      src={media.url}
-                      alt={media.description ?? panel.title}
-                      className={styles.imageRailImg}
-                      loading="lazy"
-                    />
+                    <div style={{ display: "flex", flexDirection: "column", gap: "1rem", alignItems: "center" }}>
+                      <img
+                        src={media.url}
+                        alt={media.description ?? panel.title ?? "Evidencia"}
+                        className={styles.imageRailImg}
+                        loading="lazy"
+                      />
+                      <UaoButton
+                        size="sm"
+                        pill
+                        onClick={() => setActiveMedia({ media, title: panel.title || "Evidencia" })}
+                      >
+                        Ampliar imagen
+                      </UaoButton>
+                    </div>
                   ) : (
                     <div className={styles.imageRailFallback}>
                       <span>{media.fallbackLabel}</span>
@@ -814,6 +843,16 @@ function ImageRailBlock({ block }: BlockComponentProps) {
       <p className={styles.railScrollNote}>
         * Tip: Puedes desplazarte horizontalmente usando <strong>Shift + Rueda del ratón</strong> o deslizando lateralmente.
       </p>
+
+      <Modal
+        open={!!activeMedia}
+        onClose={() => setActiveMedia(null)}
+        title={activeMedia?.title ?? "Evidencia"}
+        badge="EVIDENCIA"
+        width="wide"
+      >
+        {activeMedia && <HostedInfographic media={activeMedia.media} />}
+      </Modal>
     </div>
   );
 }

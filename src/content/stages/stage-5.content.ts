@@ -56,17 +56,12 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
     overlay: OVERLAY,
     scrollHintLabel: "Continuar",
     blocks: [
-      { type: "dialogue", steps: STAGE5_S3_STEPS },
       {
-        type: "action-cards",
-        cards: [
-          { icon: "guide", title: "Guiar", description: "Mantiene el rumbo de la actividad." },
-          { icon: "observe", title: "Observar", description: "Presta atención a cómo interactúan los estudiantes con la IA." },
-          { icon: "clarify", title: "Aclarar", description: "Resuelve dudas técnicas o pedagógicas." },
-          { icon: "intervene", title: "Intervenir", description: "Hace pausas para verificar y contrastar cuando es necesario." },
-          { icon: "protect", title: "Proteger", description: "Asegura el cuidado ético y el propósito pedagógico." }
-        ]
-      }
+        type: "narrative-video",
+        mediaKey: "stage5.teacherAsMediator",
+        caption: "Acciones del docente como mediador (próximamente).",
+      },
+      { type: "dialogue", steps: STAGE5_S3_STEPS },
     ],
   },
 
@@ -79,9 +74,11 @@ export const STAGE5_IMPLEMENT_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "narrative-video",
+        type: "criteria-infographic",
+        openLabel: "Observar momentos críticos",
+        modalTitle: "Momentos críticos durante la experiencia",
+        modalBadge: "EVIDENCIAS",
         mediaKey: "stage5.criticalMoments",
-        maxHeight: "45dvh",
       },
       { type: "dialogue", steps: STAGE5_S4_STEPS },
     ],
