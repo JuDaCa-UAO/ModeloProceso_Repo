@@ -173,6 +173,8 @@
   display: block;
   width: 100%;
   height: auto;
+  max-height: calc(88dvh - 120px);
+  object-fit: contain;
   border-radius: 8px;
   border: 1px solid rgba(138, 20, 40, 0.12);
 }

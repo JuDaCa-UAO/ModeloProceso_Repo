@@ -39,10 +39,11 @@ export const STAGE4_PREPARE_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       {
-        type: "narrative-video",
+        type: "criteria-infographic",
+        openLabel: "Observar checklist",
+        modalTitle: "Checklist de preparación",
+        modalBadge: "PREPARACIÓN",
         mediaKey: "stage4.section2Media",
-        caption: "Preparar el terreno implica cuidar aspectos técnicos, pedagógicos y éticos antes de ingresar al aula.",
-        maxHeight: "45vh",
       },
       { type: "dialogue", steps: STAGE4_S2_STEPS },
     ],
