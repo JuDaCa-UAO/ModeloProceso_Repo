@@ -18,7 +18,7 @@ import CharacterStepDialog from "@/components/character-step-dialog/CharacterSte
 import { resolveMedia } from "@/content/shared/media-registry";
 import type { ResolvedMedia } from "@/content/shared/media-registry";
 import Modal from "./Modal";
-import type { BlockContext, StageBlock } from "./types";
+import type { BlockContext, StageBlock, DesignCanvasData } from "./types";
 import sc from "../stageClient.module.css";
 import styles from "./engine.module.css";
 import { UaoButton, UaoButtonLink } from "@/components/uao/UaoButton/UaoButton";
@@ -207,208 +207,51 @@ function ComparisonExampleBlock({ block }: BlockComponentProps) {
   );
 }
 
-// ── InteractiveDesignCanvas (HTML/CSS Stage 3) ──────────────────────────────
-function InteractiveDesignCanvas() {
+// ── InteractiveDesignCanvas (layout fijo; contenido vía DesignCanvasData) ────
+const CANVAS_LAYOUT: {
+  key: keyof Omit<DesignCanvasData, "citation" | "citationBadge">;
+  number: number;
+  icon: React.ReactNode;
+  className: string;
+}[] = [
+  { key: "activities", number: 2, icon: <FiEdit3 />, className: "block2" },
+  { key: "objective", number: 1, icon: <FiTarget />, className: "block1" },
+  { key: "tools", number: 3, icon: <FiCpu />, className: "block3" },
+  { key: "criticalThinking", number: 4, icon: <FiHelpCircle />, className: "block4" },
+  { key: "ethics", number: 5, icon: <FiShield />, className: "block5" },
+  { key: "evaluation", number: 6, icon: <FiFileText />, className: "block6" },
+  { key: "followUp", number: 7, icon: <FiCompass />, className: "block7" },
+];
+
+function InteractiveDesignCanvas({ data }: { data: DesignCanvasData }) {
   return (
     <div className={styles.canvasContainer}>
       <div className={styles.canvasGrid}>
-        
-        {/* Block 2: Actividades académicas (Col 1, Row 1) */}
-        <div className={`${styles.canvasBlock} ${styles.block2}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>2</span>
-            <span className={styles.canvasBlockIcon}><FiEdit3 /></span>
-            <h4 className={styles.canvasBlockTitle}>Actividades académicas</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué harán los estudiantes?</h5>
-              <p className={styles.canvasDescription}>
-                Describe tareas retadoras (proyectos, estudios de caso, debates, simulaciones) que los sitúen en el centro del aprendizaje, con protagonismo activo.
-              </p>
+        {CANVAS_LAYOUT.map(({ key, number, icon, className }) => {
+          const section = data[key];
+          return (
+            <div key={key} className={`${styles.canvasBlock} ${styles[className]}`}>
+              <div className={styles.canvasBlockHeader}>
+                <span className={styles.canvasBlockNumber}>{number}</span>
+                <span className={styles.canvasBlockIcon}>{icon}</span>
+                <h4 className={styles.canvasBlockTitle}>{section.title}</h4>
+              </div>
+              <div className={styles.canvasBlockContent}>
+                {section.questions.map((q, i) => (
+                  <div key={i} className={styles.canvasQuestionGroup}>
+                    <h5 className={styles.canvasQuestion}>{q.question}</h5>
+                    <p className={styles.canvasDescription}>{q.description}</p>
+                  </div>
+                ))}
+              </div>
             </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué estrategia didáctica usaré?</h5>
-              <p className={styles.canvasDescription}>
-                Indica si será aprendizaje basado en problemas, proyectos, aula invertida, etc. Estas estrategias deben alinear contenidos, objetivos y evaluación.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo y cuándo interviene la GenAI?</h5>
-              <p className={styles.canvasDescription}>
-                Explica los momentos y modos de participación de la IA: ideación, retroalimentación, edición, simulación, evaluación. Asegúrate de que complemente el esfuerzo cognitivo del estudiante, sin sustituirlo.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 1: Objetivo y propuesta de valor (Col 2, Row 1) */}
-        <div className={`${styles.canvasBlock} ${styles.block1}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>1</span>
-            <span className={styles.canvasBlockIcon}><FiTarget /></span>
-            <h4 className={styles.canvasBlockTitle}>Objetivo y propuesta de valor</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué quiero lograr?</h5>
-              <p className={styles.canvasDescription}>
-                Formula la gran meta pedagógica (competencias, aprendizajes significativos). El objetivo debe trascender lo instrumental y apuntar a transformar al estudiante en sus dimensiones cognitivas y éticas.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cuál es el valor agregado de usar GenAI en esta experiencia?</h5>
-              <p className={styles.canvasDescription}>
-                Explica cómo la GenAI contribuye no solo a la eficiencia docente, sino también a enriquecer el proceso formativo del estudiante: más reflexión, creatividad, personalización, retroalimentación o apertura de perspectivas.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 3: Soluciones de GenAI seleccionadas (Col 3, Row 1) */}
-        <div className={`${styles.canvasBlock} ${styles.block3}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>3</span>
-            <span className={styles.canvasBlockIcon}><FiCpu /></span>
-            <h4 className={styles.canvasBlockTitle}>Soluciones de GenAI seleccionadas</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué herramienta de GenAI usaré?</h5>
-              <p className={styles.canvasDescription}>
-                Especifica la herramienta elegida y justifica su pertinencia en la experiencia.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Para qué propósito específico?</h5>
-              <p className={styles.canvasDescription}>
-                Indica el uso pedagógico (ej.: lluvia de ideas, edición, generación de escenarios). Evita la adopción por moda.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cuál es el nivel de uso esperado (escala Perkins 1-5)?</h5>
-              <p className={styles.canvasDescription}>
-                Define el grado de integración permitido, desde &apos;No IA&apos; hasta &apos;Full IA&apos;. Esto da transparencia y evita el enfoque binario de prohibir/permitir.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 4: Razonamiento crítico y mediaciones (Col 1-2, Row 2) */}
-        <div className={`${styles.canvasBlock} ${styles.block4}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>4</span>
-            <span className={styles.canvasBlockIcon}><FiHelpCircle /></span>
-            <h4 className={styles.canvasBlockTitle}>Razonamiento crítico y mediaciones</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué preguntas o reflexiones plantearé?</h5>
-              <p className={styles.canvasDescription}>
-                Integra retos de pensamiento crítico (sesgos, validez, alternativas). Estas preguntas convierten a la GenAI en detonador de reflexión y no en atajo cognitivo.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo promoveré que cuestionen y analicen lo generado por la IA?</h5>
-              <p className={styles.canvasDescription}>
-                Diseña actividades metacognitivas: discusión, contraste con fuentes, evaluación de calidad.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cuál será mi rol como docente?</h5>
-              <p className={styles.canvasDescription}>
-                Asume el papel de mediador y curador: enseña prompting, acompaña el análisis, modela el uso crítico y ético.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 5: Consideraciones éticas y de diseño responsable (Col 3, Row 2) */}
-        <div className={`${styles.canvasBlock} ${styles.block5}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>5</span>
-            <span className={styles.canvasBlockIcon}><FiShield /></span>
-            <h4 className={styles.canvasBlockTitle}>Consideraciones éticas y de diseño responsable</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué reglas de uso comunicaré?</h5>
-              <p className={styles.canvasDescription}>
-                Define políticas claras: citación de IA, límites de ayuda permitida, responsabilidad individual.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo asegurar inclusión, equidad, privacidad y transparencia?</h5>
-              <p className={styles.canvasDescription}>
-                Integra principios éticos desde el diseño (UNESCO, Comisión Europea). Asegura acceso para todos y protección de datos.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué haré si un estudiante no usa GenAI?</h5>
-              <p className={styles.canvasDescription}>
-                Diseña rutas paralelas que aseguren aprendizaje equivalente, respetando convicciones personales.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 6: Mecanismos de evaluación y retroalimentación (Col 1-2, Row 3) */}
-        <div className={`${styles.canvasBlock} ${styles.block6}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>6</span>
-            <span className={styles.canvasBlockIcon}><FiFileText /></span>
-            <h4 className={styles.canvasBlockTitle}>Mecanismos de evaluación y retroalimentación</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo evaluaré los aprendizajes?</h5>
-              <p className={styles.canvasDescription}>
-                La evaluación debe medir no solo el producto, sino el proceso y las decisiones críticas tomadas.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué criterios usaré (pensamiento crítico, creatividad, metacognición)?</h5>
-              <p className={styles.canvasDescription}>
-                Diseña instrumentos como rúbricas u otros que privilegien la reflexión, la originalidad y la justificación del uso de GenAI.
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo integraré la escala Perkins o rúbricas adaptadas?</h5>
-              <p className={styles.canvasDescription}>
-                Aplica escalas para evaluar el nivel de autonomía y reflexión en el uso de IA.
-              </p>
-            </div>
-          </div>
-        </div>
-
-        {/* Block 7: Mecanismos de seguimiento y mejora continua (Col 3, Row 3) */}
-        <div className={`${styles.canvasBlock} ${styles.block7}`}>
-          <div className={styles.canvasBlockHeader}>
-            <span className={styles.canvasBlockNumber}>7</span>
-            <span className={styles.canvasBlockIcon}><FiCompass /></span>
-            <h4 className={styles.canvasBlockTitle}>Mecanismos de seguimiento y mejora continua</h4>
-          </div>
-          <div className={styles.canvasBlockContent}>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Qué mecanismos de retroalimentación continua usaré?</h5>
-              <p className={styles.canvasDescription}>
-                Combina retroalimentación inmediata (GenAI, quizzes) y formativa (docente, pares).
-              </p>
-            </div>
-            <div className={styles.canvasQuestionGroup}>
-              <h5 className={styles.canvasQuestion}>¿Cómo verificaré el progreso y apoyaré a quienes lo necesiten?</h5>
-              <p className={styles.canvasDescription}>
-                Usa analítica de aprendizaje o revisión continua para detectar dificultades. Garantiza equidad y validez en estos mecanismos.
-              </p>
-            </div>
-          </div>
-        </div>
-
+          );
+        })}
       </div>
 
       <div className={styles.canvasCitation}>
-        <span>Modelo de proceso para la apropiación de la inteligencia artificial generativa en la formación docente de la Universidad Autónoma de Occidente. Peláez, C., Solano, A., Castillo, P., López J. (2026)</span>
-        <strong>Creative Commons CC BY-NC-SA</strong>
+        <span>{data.citation}</span>
+        <strong>{data.citationBadge}</strong>
       </div>
     </div>
   );
@@ -436,7 +279,7 @@ function DesignCanvasBlock({ block }: BlockComponentProps) {
         badge={block.modalBadge ?? "CANVAS"}
         width="wide"
       >
-        <InteractiveDesignCanvas />
+        <InteractiveDesignCanvas data={block.canvas} />
       </Modal>
     </div>
   );

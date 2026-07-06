@@ -114,13 +114,6 @@ export const MEDIA_REGISTRY = {
     description: "Animación de componentes pedagógicos conectados con soluciones de IA.",
     fallbackLabel: "Animación de componentes pedagógicos — próximamente.",
   },
-  "stage3.designMap": {
-    kind: "image",
-    status: "available",
-    localPath: "/media/etapa-3/Canvas_etapa3.png",
-    description: "Canvas de diseño de experiencia mediada por GenAI (PNG).",
-    fallbackLabel: "El Canvas de diseño estará disponible próximamente.",
-  },
   "stage3.caseExample": {
     kind: "image",
     status: "hosted",

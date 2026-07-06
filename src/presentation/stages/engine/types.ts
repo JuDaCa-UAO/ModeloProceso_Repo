@@ -23,6 +23,31 @@ export interface GuideStep {
   placement?: "top" | "bottom" | "left" | "right";
 }
 
+/** Par pregunta/descripción dentro de una sección del canvas de diseño. */
+export interface DesignCanvasQuestion {
+  question: string;
+  description: string;
+}
+
+/** Sección temática del canvas de diseño (título + preguntas guía). */
+export interface DesignCanvasSection {
+  title: string;
+  questions: DesignCanvasQuestion[];
+}
+
+/** Contenido de datos del bloque `design-canvas` (hoy solo usado por Etapa 3). */
+export interface DesignCanvasData {
+  objective: DesignCanvasSection;
+  activities: DesignCanvasSection;
+  tools: DesignCanvasSection;
+  criticalThinking: DesignCanvasSection;
+  ethics: DesignCanvasSection;
+  evaluation: DesignCanvasSection;
+  followUp: DesignCanvasSection;
+  citation: string;
+  citationBadge: string;
+}
+
 /** Unión discriminada de bloques de contenido reutilizables. */
 export type StageBlock =
   | {
@@ -61,10 +86,10 @@ export type StageBlock =
   | {
       type: "design-canvas";
       openLabel: string;
-      mediaKey: MediaKey;
       modalTitle?: string;
       modalBadge?: string;
       guideId?: string;
+      canvas: DesignCanvasData;
     }
   | {
       type: "download-resource";
