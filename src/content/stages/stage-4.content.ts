@@ -14,6 +14,8 @@ export const STAGE4_TREE: SectionNode[] = [];
 
 const BG = "/ui/uao-hero-img_1.webp";
 const OVERLAY = "rgba(251, 245, 236, 0.65)"; // Light cream mask (UAO visual identity overlay)
+const SPIRAL_INSTRUCTIONS =
+  "Puedes interactuar con el modelo usando el scroll para acercarte y arrastrando con el click presionado para girarlo.";
 
 export const STAGE4_PREPARE_TREE: StageNode[] = [
   // ── Frame 1 · Sección 1: Del diseño al alistamiento ──────────────────────────
@@ -25,7 +27,7 @@ export const STAGE4_PREPARE_TREE: StageNode[] = [
     overlay: OVERLAY,
     scrollHintLabel: "¡Avancemos!",
     blocks: [
-      { type: "spiral-viewer", activeStage: 4, variant: "compact" },
+      { type: "spiral-viewer", activeStage: 4, instructions: SPIRAL_INSTRUCTIONS, variant: "compact" },
       { type: "dialogue", steps: STAGE4_S1_STEPS },
     ],
   },
@@ -44,6 +46,7 @@ export const STAGE4_PREPARE_TREE: StageNode[] = [
         modalTitle: "Checklist de preparación",
         modalBadge: "PREPARACIÓN",
         mediaKey: "stage4.section2Media",
+        guideId: "etapa4-observar-checklist",
       },
       { type: "dialogue", steps: STAGE4_S2_STEPS },
     ],
