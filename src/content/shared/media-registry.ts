@@ -105,13 +105,6 @@ export const MEDIA_REGISTRY = {
     description: "Matriz de Pugh para el análisis de herramientas de GenAI (PDF).",
     fallbackLabel: "La Matriz de Pugh estará disponible para descarga próximamente.",
   },
-  "stage2.transitionVideo": {
-    kind: "video-file",
-    status: "available",
-    localPath: "/media/transiciones/E2-a-E3.webm",
-    description: "Animación de transición de la Etapa 2 hacia la Etapa 3.",
-    fallbackLabel: "Animación de transición — próximamente.",
-  },
 
   // ── Etapa 3 · recursos (Diseña con propósito) ─────────────────────────────
   "stage3.section2Video": {
