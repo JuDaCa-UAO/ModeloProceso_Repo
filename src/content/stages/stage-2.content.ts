@@ -72,7 +72,14 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       { type: "dialogue", steps: STAGE2_S3_STEPS },
-      { type: "criteria-infographic", openLabel: "Observar criterios", mediaKey: "stage2.criteriaInfographic" },
+      {
+        type: "criteria-infographic",
+        openLabel: "Observar criterios",
+        mediaKey: "stage2.criteriaInfographic",
+        modalTitle: "Cómo se miran las posibilidades",
+        modalBadge: "INFOGRAFÍA",
+        guideId: "etapa2-observar-criterios",
+      },
     ],
   },
 
@@ -85,7 +92,14 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     scrollHintLabel: "Continuar",
     blocks: [
       { type: "dialogue", steps: STAGE2_S4_STEPS },
-      { type: "comparison-example", openLabel: "Observar ejemplo", mediaKey: "stage2.comparisonExample" },
+      {
+        type: "comparison-example",
+        openLabel: "Observar ejemplo",
+        mediaKey: "stage2.comparisonExample",
+        modalTitle: "Ejemplo demostrativo de comparación",
+        modalBadge: "EJEMPLO",
+        guideId: "etapa2-observar-ejemplo",
+      },
     ],
   },
 
@@ -98,7 +112,15 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     scrollHintLabel: "Avancemos",
     blocks: [
       { type: "dialogue", steps: STAGE2_S5_STEPS },
-      { type: "download-resource", mediaKey: "stage2.pughMatrix", label: "Descargar matriz" },
+      {
+        type: "download-resource",
+        mediaKey: "stage2.pughMatrix",
+        label: "Descargar matriz",
+        guideId: "etapa2-descargar-matriz",
+        confirmationTitle: "Descarga",
+        confirmationText: "¡Matriz de Pugh descargada exitosamente!",
+        confirmationDescription: "Matriz de Pugh para el análisis de herramientas de GenAI (PDF).",
+      },
     ],
   },
 
@@ -111,11 +133,15 @@ export const STAGE2_DISCOVER_TREE: StageNode[] = [
     blocks: [
       {
         type: "transition",
-        mediaKey: "stage2.transitionVideo",
+        mediaKey: "transitions.stage2ToStage3",
+        activeStage: 2,
         steps: STAGE2_TRANSITION_STEPS,
         nextHref: "/etapas/etapa-3",
         nextLabel: "Ir a la siguiente etapa",
         nextAvailable: true,
+        guideId: "etapa2-ver-animacion",
+        playLabel: "Ver animación",
+        repeatLabel: "Repetir animación",
       },
     ],
   },

@@ -105,13 +105,6 @@ export const MEDIA_REGISTRY = {
     description: "Matriz de Pugh para el análisis de herramientas de GenAI (PDF).",
     fallbackLabel: "La Matriz de Pugh estará disponible para descarga próximamente.",
   },
-  "stage2.transitionVideo": {
-    kind: "video-file",
-    status: "available",
-    localPath: "/media/transiciones/E2-a-E3.webm",
-    description: "Animación de transición de la Etapa 2 hacia la Etapa 3.",
-    fallbackLabel: "Animación de transición — próximamente.",
-  },
 
   // ── Etapa 3 · recursos (Diseña con propósito) ─────────────────────────────
   "stage3.section2Video": {
@@ -120,13 +113,6 @@ export const MEDIA_REGISTRY = {
     remotePath: "/etapa-3/seccion-2-propositos.mp4",
     description: "Animación de componentes pedagógicos conectados con soluciones de IA.",
     fallbackLabel: "Animación de componentes pedagógicos — próximamente.",
-  },
-  "stage3.designMap": {
-    kind: "image",
-    status: "available",
-    localPath: "/media/etapa-3/Canvas_etapa3.png",
-    description: "Canvas de diseño de experiencia mediada por GenAI (PNG).",
-    fallbackLabel: "El Canvas de diseño estará disponible próximamente.",
   },
   "stage3.caseExample": {
     kind: "image",
