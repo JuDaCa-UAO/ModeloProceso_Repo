@@ -71,3 +71,9 @@ skills-lock.json
 /public/mano/Mano izq apunta.svg
 manual-identidad.pdf
 uao-next-template (1)
+
+# Export del proyecto Claude Design (masters/raw, no se versiona; ver contexto/context.md Fase 0)
+/*.zip
+
+# Entrega local de videos-resumen (masters ya copiados a public/media/resumenes/)
+/Animaciones por etapa/
