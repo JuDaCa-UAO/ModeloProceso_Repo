@@ -18,6 +18,10 @@ export interface ResolvedMedia {
   playback?: VideoPlayback;
   downloadName?: string;
   description?: string;
+  /** Dimensiones intrínsecas (imágenes): permiten a next/image reservar el
+   *  aspect-ratio y evitar layout shift. */
+  width?: number;
+  height?: number;
   /** Texto visible cuando `available` es false. */
   fallback: string;
 }

@@ -61,7 +61,7 @@ export default function TransitionAnimation({ url, fallback, captionLabel, capti
             loop
             playsInline
             autoPlay={!reduced}
-            preload="auto"
+            preload="none"
             className={styles.video}
             aria-label={captionLabel}
           />

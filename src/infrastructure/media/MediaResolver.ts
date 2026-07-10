@@ -25,6 +25,8 @@ export class MediaResolver implements IMediaResolver {
       return { key, kind: "image", available: false, url: null, fallback: "Recurso no encontrado." };
     }
 
+    const isImage = asset.kind === "image" || asset.kind === "svg";
+
     const unavailable: ResolvedMedia = {
       key,
       kind: asset.kind,
@@ -35,6 +37,8 @@ export class MediaResolver implements IMediaResolver {
       playback: asset.kind === "video" ? asset.playback : undefined,
       captions: asset.kind === "video" ? asset.captions : undefined,
       downloadName: asset.kind === "download" ? asset.downloadName : undefined,
+      width: isImage ? asset.width : undefined,
+      height: isImage ? asset.height : undefined,
     };
 
     if (asset.availability === "pending") {
