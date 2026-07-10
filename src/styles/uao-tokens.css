@@ -22,6 +22,8 @@
   --uao-radius-sm: 0.5rem;
   --uao-radius-md: 0.875rem;
   --uao-radius-lg: 1.25rem;
+  --uao-radius-xl: 1.5rem;
+  --uao-radius-pill: 999px;
 
   --uao-space-1: 0.25rem;
   --uao-space-2: 0.5rem;
@@ -41,5 +43,54 @@
   /* Custom additions for light theme contrast */
   --uao-color-text-primary: #0f172b;
   --uao-color-text-secondary: #475569;
+  --uao-color-text-muted: #64748b;
   --uao-overlay-bg: rgba(251, 245, 236, 0.65);
+
+  /* Bordes translúcidos (rango 0.10–0.18 usado en el diseño Cartilla) */
+  --uao-border-faint: rgba(138, 20, 40, 0.1);
+  --uao-border-soft: rgba(138, 20, 40, 0.14);
+  --uao-border-default: rgba(138, 20, 40, 0.18);
+
+  /* Sombras suaves del diseño Cartilla */
+  --uao-shadow-soft: 0 10px 30px rgba(0, 0, 0, 0.04);
+  --uao-shadow-hero: 0 20px 80px rgba(0, 0, 0, 0.06);
+  --uao-shadow-panel: 0 14px 44px rgba(15, 23, 43, 0.06);
+
+  /*
+   * Acentos por etapa — fuente única de verdad (ver contexto/planes/rework-frontend-diseno-uao.md §3.1
+   * y el plan de rework §1.3). El contenido tipado (Fase 5) referencia estos nombres vía var(),
+   * nunca duplica los valores hexadecimales.
+   *
+   * -accent/-chip: color de portada de capítulo (gradiente + borde + badge) y borde de contenido.
+   * -closing-accent/-closing-soft: color de la tarjeta CierreEtapa (distinto del de portada por diseño).
+   */
+  --uao-stage-1-accent: #ff836c;
+  --uao-stage-1-chip: #ff836c;
+  --uao-stage-1-closing-accent: #ff836c;
+  --uao-stage-1-closing-soft: #fff4f0;
+
+  --uao-stage-2-accent: #009ae6;
+  --uao-stage-2-chip: #7cd0ff;
+  --uao-stage-2-closing-accent: #f4813e;
+  --uao-stage-2-closing-soft: #fff5ec;
+
+  --uao-stage-3-accent: #9b4cd7;
+  --uao-stage-3-chip: #d9b8f5;
+  --uao-stage-3-closing-accent: #e05d3c;
+  --uao-stage-3-closing-soft: #fdefe9;
+
+  --uao-stage-4-accent: #fe9800;
+  --uao-stage-4-chip: #ffb166;
+  --uao-stage-4-closing-accent: #fe9800;
+  --uao-stage-4-closing-soft: #fff6e6;
+
+  --uao-stage-5-accent: #ff4503;
+  --uao-stage-5-chip: #ff9a73;
+  --uao-stage-5-closing-accent: #ff4503;
+  --uao-stage-5-closing-soft: #fff0ea;
+
+  --uao-stage-6-accent: #00c6a1;
+  --uao-stage-6-chip: #7fe8d4;
+  --uao-stage-6-closing-accent: #c81e3a;
+  --uao-stage-6-closing-soft: #fdeef1;
 }
