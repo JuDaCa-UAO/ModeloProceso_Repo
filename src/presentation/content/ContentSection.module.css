@@ -1,0 +1,287 @@
+.section {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uao-space-6);
+  max-width: var(--uao-content-max);
+  margin: 0 auto;
+  padding: var(--uao-space-12) var(--uao-space-6);
+}
+
+.title {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
+  color: var(--uao-color-burgundy);
+}
+
+.blocks {
+  display: flex;
+  flex-direction: column;
+  gap: var(--uao-space-6);
+}
+
+/* ── paragraphs ─────────────────────────────────────────────────────────── */
+.paragraph {
+  margin: 0;
+  max-width: 48rem;
+  font-family: var(--uao-font-sans);
+  font-size: 17px;
+  line-height: 1.65;
+  color: var(--uao-color-text-primary);
+}
+
+/* ── bullets ────────────────────────────────────────────────────────────── */
+.bulletsList {
+  margin: 0;
+  padding-left: 1.25rem;
+  display: flex;
+  flex-direction: column;
+  gap: var(--uao-space-2);
+  font-family: var(--uao-font-sans);
+  color: var(--uao-color-text-primary);
+}
+
+.pillsRow {
+  display: flex;
+  flex-wrap: wrap;
+  gap: var(--uao-space-3);
+  list-style: none;
+  margin: 0;
+  padding: 0;
+}
+
+.pill {
+  background: var(--uao-color-cream);
+  border: 1px solid var(--uao-border-default);
+  border-radius: var(--uao-radius-pill);
+  padding: 8px 16px;
+  font-family: var(--uao-font-sans);
+  font-size: 14px;
+  font-weight: 600;
+  color: var(--uao-color-wine);
+}
+
+/* ── action-cards ───────────────────────────────────────────────────────── */
+.cardsGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  gap: var(--uao-space-4);
+}
+
+.card {
+  background: var(--uao-color-cream);
+  border: 1px solid var(--uao-border-soft);
+  border-radius: var(--uao-radius-md);
+  padding: 20px;
+}
+
+.cardIcon {
+  font-size: 26px;
+  font-weight: 800;
+  color: var(--uao-color-red-primary);
+  margin-bottom: 8px;
+}
+
+.cardTitle {
+  margin: 0 0 6px;
+  font-family: var(--uao-font-sans);
+  font-size: 16px;
+  font-weight: 700;
+  color: var(--uao-color-text-primary);
+}
+
+.cardDescription {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14px;
+  line-height: 1.55;
+  color: var(--uao-color-text-secondary);
+}
+
+/* ── infographic ────────────────────────────────────────────────────────── */
+.figure {
+  margin: 0;
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+}
+
+.figureImage {
+  width: 100%;
+  height: auto;
+  border-radius: var(--uao-radius-md);
+  border: 1px solid var(--uao-border-soft);
+  display: block;
+}
+
+.figcaption {
+  font-family: var(--uao-font-sans);
+  font-size: 13px;
+  color: var(--uao-color-text-secondary);
+  text-align: center;
+}
+
+/* ── narrative-video ────────────────────────────────────────────────────── */
+.videoFrame {
+  margin: 0;
+  border-radius: var(--uao-radius-md);
+  overflow: hidden;
+  border: 1px solid rgba(15, 23, 43, 0.18);
+  background: #0f172b;
+}
+
+.videoEl {
+  width: 100%;
+  display: block;
+}
+
+.videoPending {
+  height: 180px;
+  border: 1.5px dashed var(--uao-border-default);
+  border-radius: var(--uao-radius-md);
+  background: repeating-linear-gradient(
+    45deg,
+    var(--uao-color-white),
+    var(--uao-color-white) 10px,
+    var(--uao-color-cream) 10px,
+    var(--uao-color-cream) 20px
+  );
+  display: grid;
+  place-items: center;
+}
+
+.videoPendingLabel {
+  font-family: ui-monospace, Menlo, monospace;
+  font-size: 12px;
+  color: var(--uao-color-wine);
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-border-default);
+  border-radius: 6px;
+  padding: 6px 12px;
+  text-align: center;
+}
+
+/* ── download ───────────────────────────────────────────────────────────── */
+.downloadCard {
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-border-default);
+  border-radius: var(--uao-radius-lg);
+  padding: 24px 28px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 20px;
+  align-items: center;
+}
+
+@media (max-width: 560px) {
+  .downloadCard {
+    grid-template-columns: 1fr;
+  }
+}
+
+.downloadTitle {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 19px;
+  font-weight: 800;
+  color: var(--uao-color-burgundy);
+}
+
+.downloadDescription {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--uao-color-text-secondary);
+}
+
+.downloadButton {
+  border: 1px solid var(--uao-color-red-primary);
+  background: var(--uao-color-red-primary);
+  color: var(--uao-color-white);
+  border-radius: var(--uao-radius-md);
+  padding: 12px 22px;
+  font-family: var(--uao-font-sans);
+  font-weight: 700;
+  font-size: 14px;
+  text-decoration: none;
+  white-space: nowrap;
+}
+
+.downloadButton:hover {
+  background: var(--uao-color-wine);
+  border-color: var(--uao-color-wine);
+}
+
+/* ── callout ────────────────────────────────────────────────────────────── */
+.callout {
+  background: var(--uao-color-cream);
+  border: 1px solid var(--uao-border-default);
+  border-radius: var(--uao-radius-md);
+  padding: 16px 20px;
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+.calloutBadge {
+  background: var(--uao-color-wine);
+  color: var(--uao-color-white);
+  border-radius: var(--uao-radius-sm);
+  padding: 5px 10px;
+  font-family: var(--uao-font-sans);
+  font-weight: 700;
+  font-size: 12px;
+  flex: none;
+}
+
+.calloutBody {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14.5px;
+  line-height: 1.55;
+  color: var(--uao-color-text-secondary);
+}
+
+/* ── state-cards ────────────────────────────────────────────────────────── */
+.stateGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  gap: var(--uao-space-4);
+}
+
+.stateCard {
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-border-default);
+  border-top: 5px solid var(--state-accent, var(--uao-color-coral));
+  border-radius: var(--uao-radius-md);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+}
+
+.stateLabel {
+  font-family: var(--uao-font-sans);
+  font-size: 12px;
+  font-weight: 700;
+  letter-spacing: 0.1em;
+  color: var(--state-accent, var(--uao-color-coral));
+}
+
+.stateTitle {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 20px;
+  font-weight: 800;
+  color: var(--uao-color-text-primary);
+}
+
+.stateDescription {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14.5px;
+  line-height: 1.6;
+  color: var(--uao-color-text-secondary);
+}

@@ -1,0 +1,124 @@
+.cover {
+  position: relative;
+  min-height: 70vh;
+  display: grid;
+  place-items: center;
+  padding: 64px 24px;
+  background: linear-gradient(135deg, var(--uao-color-wine) 0%, var(--uao-color-burgundy) 55%, var(--stage-accent) 175%);
+  border-bottom: 6px solid var(--stage-accent);
+  overflow: hidden;
+}
+
+.watermark {
+  position: absolute;
+  right: -60px;
+  top: 50%;
+  transform: translateY(-50%);
+  font-size: clamp(280px, 38vw, 520px);
+  font-weight: 800;
+  color: var(--stage-accent);
+  opacity: 0.22;
+  line-height: 1;
+  user-select: none;
+  font-family: var(--uao-font-sans);
+}
+
+.inner {
+  position: relative;
+  width: min(980px, 100%);
+  display: grid;
+  grid-template-columns: 1fr 260px;
+  gap: 36px;
+  align-items: center;
+  color: var(--uao-color-white);
+}
+
+@media (max-width: 720px) {
+  .inner {
+    grid-template-columns: 1fr;
+  }
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+}
+
+.eyebrow {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+}
+
+.badge {
+  background: var(--uao-color-white);
+  color: var(--uao-color-wine);
+  border-radius: var(--uao-radius-sm);
+  padding: 5px 12px;
+  font-family: var(--uao-font-sans);
+  font-weight: 700;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.chapterLabel {
+  color: var(--stage-chip);
+  font-family: var(--uao-font-sans);
+  font-weight: 600;
+  font-size: 13px;
+  letter-spacing: 0.08em;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: clamp(32px, 4.5vw, 54px);
+  line-height: 1.05;
+  font-weight: 800;
+  color: var(--uao-color-white);
+}
+
+.description {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 18px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.9);
+  max-width: 560px;
+}
+
+.tags {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.tag {
+  border: 1px solid rgba(255, 255, 255, 0.4);
+  border-radius: var(--uao-radius-pill);
+  padding: 7px 14px;
+  font-family: var(--uao-font-sans);
+  font-size: 13px;
+  font-weight: 600;
+}
+
+.avatarWrap {
+  display: grid;
+  place-items: center;
+}
+
+.avatarCircle {
+  position: relative;
+  width: 230px;
+  height: 230px;
+  border-radius: 50%;
+  border: 2px solid rgba(255, 255, 255, 0.35);
+  background: rgba(255, 255, 255, 0.08);
+  overflow: hidden;
+}
+
+.avatarImg {
+  object-fit: contain;
+  padding: 6%;
+}

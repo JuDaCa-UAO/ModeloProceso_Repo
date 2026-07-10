@@ -1,0 +1,68 @@
+.section {
+  display: grid;
+  place-items: center;
+  padding: 56px 24px 88px;
+}
+
+.panel {
+  width: min(980px, 100%);
+  background: var(--uao-color-wine);
+  border-radius: var(--uao-radius-lg);
+  padding: 40px 36px;
+  display: grid;
+  grid-template-columns: 1fr 200px;
+  gap: 28px;
+  align-items: center;
+  color: var(--uao-color-white);
+}
+
+@media (max-width: 640px) {
+  .panel {
+    grid-template-columns: 1fr;
+  }
+}
+
+.textCol {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.title {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: clamp(24px, 3vw, 34px);
+  font-weight: 800;
+  color: var(--uao-color-white);
+}
+
+.message {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 16px;
+  line-height: 1.65;
+  color: rgba(255, 255, 255, 0.9);
+}
+
+.note {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14px;
+  line-height: 1.6;
+  color: rgba(255, 255, 255, 0.75);
+}
+
+.avatarWrap {
+  display: grid;
+  place-items: center;
+}
+
+.avatarFrame {
+  position: relative;
+  width: 200px;
+  height: 200px;
+}
+
+.avatarImg {
+  object-fit: contain;
+}

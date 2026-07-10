@@ -1,0 +1,133 @@
+.wrapper {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.counter {
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+.counterLabel {
+  font-family: var(--uao-font-sans);
+  font-size: 13px;
+  font-weight: 700;
+  color: var(--uao-color-orange);
+}
+
+.stage {
+  position: relative;
+  width: min(560px, 100%);
+  margin: 0 auto;
+  aspect-ratio: 1 / 1;
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-border-default);
+  border-radius: var(--uao-radius-md);
+  padding: 16px;
+  overflow: hidden;
+}
+
+.stage:focus-visible {
+  outline: 2px solid var(--uao-color-orange);
+  outline-offset: 2px;
+}
+
+/* Todas las diapositivas apiladas; solo la activa es visible (crossfade). */
+.slide {
+  position: absolute;
+  inset: 16px;
+  display: grid;
+  place-items: center;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.28s ease;
+}
+
+.slide[data-active="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .slide {
+    transition: none;
+  }
+}
+
+.slideImage {
+  object-fit: contain;
+  border-radius: var(--uao-radius-sm);
+}
+
+.fallback {
+  font-family: var(--uao-font-sans);
+  font-size: 13px;
+  color: var(--uao-color-text-secondary);
+  text-align: center;
+}
+
+.controls {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.navButtonSecondary {
+  border: 1.5px solid var(--uao-color-orange);
+  background: var(--uao-color-white);
+  color: var(--uao-color-orange);
+  border-radius: var(--uao-radius-md);
+  padding: 9px 18px;
+  font-family: var(--uao-font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.navButtonSecondary:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.navButtonPrimary {
+  border: 1px solid var(--uao-color-orange);
+  background: var(--uao-color-orange);
+  color: var(--uao-color-white);
+  border-radius: var(--uao-radius-md);
+  padding: 9px 20px;
+  font-family: var(--uao-font-sans);
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+}
+
+.navButtonPrimary:disabled {
+  opacity: 0.4;
+  cursor: default;
+}
+
+.dots {
+  display: flex;
+  gap: 8px;
+  align-items: center;
+}
+
+.dot {
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--uao-color-orange);
+  background: var(--uao-color-white);
+  cursor: pointer;
+  padding: 0;
+}
+
+.dotActive {
+  background: var(--uao-color-orange);
+}
