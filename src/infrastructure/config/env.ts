@@ -25,4 +25,20 @@ export const ENV = {
   VERBOSE_LOGGING:
     process.env.NEXT_PUBLIC_VERBOSE_LOGGING === "true" ||
     process.env.NEXT_PUBLIC_APP_ENV === "development",
+
+  /**
+   * Base del CDN genérico de multimedia (misma variable que ya usa
+   * `next.config.ts` para el CSP — no se duplica bajo otro nombre).
+   * Vacía hasta que exista un host configurado.
+   */
+  MEDIA_BASE_URL: process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "",
+
+  /** URL pública de Cloudflare R2 (adaptador `CloudflareR2Adapter`, aún sin bucket real). */
+  CLOUDFLARE_R2_PUBLIC_URL: process.env.NEXT_PUBLIC_CLOUDFLARE_R2_PUBLIC_URL ?? "",
+
+  /** Customer code de Cloudflare Stream (adaptador `CloudflareStreamAdapter`, aún sin cuenta real). */
+  CLOUDFLARE_STREAM_CUSTOMER_CODE: process.env.NEXT_PUBLIC_CLOUDFLARE_STREAM_CUSTOMER_CODE ?? "",
+
+  /** Account hash de Cloudflare Images (adaptador `CloudflareImagesAdapter`, aún sin cuenta real). */
+  CLOUDFLARE_IMAGES_ACCOUNT_HASH: process.env.NEXT_PUBLIC_CLOUDFLARE_IMAGES_ACCOUNT_HASH ?? "",
 } as const;
