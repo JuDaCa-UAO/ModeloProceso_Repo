@@ -90,27 +90,9 @@ export const STAGE_1: Stage = {
           ],
         },
         {
-          type: "state-cards",
-          items: [
-            {
-              hierarchy: "Inicial",
-              title: "Aprendiendo sin miedo",
-              description:
-                "Estás dando tus primeros pasos con la GenAI y es natural sentir incertidumbre. El objetivo no es saberlo todo, sino familiarizarte, perder el miedo y ganar confianza con acompañamiento y formación básica.",
-            },
-            {
-              hierarchy: "Intermedio",
-              title: "Explorando con propósito",
-              description:
-                "Ya integras herramientas de GenAI en tu día a día: creas materiales, actividades o retroalimentación. El reto es seguir explorando con intención hacia un uso más estratégico y creativo.",
-            },
-            {
-              hierarchy: "Avanzado",
-              title: "Innovando e inspirando",
-              description:
-                "Usas la GenAI de forma crítica, creativa y estratégica; la adaptas, la personalizas y piensas en su ética. Eres referente: puedes inspirar y acompañar a otros colegas.",
-            },
-          ],
+          type: "callout",
+          title: "TU RESULTADO",
+          body: "Solo al completar el autodiagnóstico sabrás en qué estado te encuentras. No necesitas saberlo de antemano ni compararte con nadie: tus propias respuestas lo revelan.",
         },
         {
           type: "callout",
