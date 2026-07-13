@@ -49,13 +49,46 @@ export const STAGE_2: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Aquí te acercas a herramientas, plataformas y aplicaciones de IA con potencial educativo: exploras cómo funcionan, qué beneficios ofrecen, cuáles son sus limitaciones y qué implicaciones éticas conllevan. El propósito no es dominarlas todas, sino reconocer cuáles son útiles y pertinentes para tu contexto y tus objetivos pedagógicos.",
+            "¿Qué herramienta puede ayudarte realmente a mejorar una actividad de aprendizaje? Aquí te acercas a herramientas, plataformas y aplicaciones de IA con potencial educativo: exploras cómo funcionan, qué beneficios ofrecen, cuáles son sus limitaciones y qué implicaciones éticas conllevan. El propósito no es dominarlas todas, sino reconocer cuáles son útiles y pertinentes para tu contexto y tus objetivos pedagógicos.",
+          ],
+        },
+        {
+          type: "action-cards",
+          cards: [
+            {
+              icon: "1",
+              title: "Identifica una actividad",
+              description: "La actividad de tu clase que quieres mejorar o transformar con apoyo de IA.",
+            },
+            {
+              icon: "2",
+              title: "Explora herramientas",
+              description: "Qué herramientas de IA podrían apoyar esa actividad específica.",
+            },
+            {
+              icon: "3",
+              title: "Compara con criterio",
+              description: "Cuál se ajusta mejor a tu contexto, tus estudiantes y tus objetivos de aprendizaje.",
+            },
           ],
         },
         {
           type: "infographic",
           mediaKey: mediaKey("stage2.criteriaInfographic"),
           caption: "Mirar una herramienta con criterio: seis aspectos para evaluar cada posibilidad de IA",
+        },
+        {
+          type: "bullets",
+          title: "Los seis criterios de la Matriz de Pugh",
+          variant: "list",
+          items: [
+            "Apropiación docente — si puedes usarla con confianza.",
+            "Idoneidad pedagógica — si aporta a la actividad y al aprendizaje.",
+            "Ética y datos — si cuida la privacidad y el uso responsable.",
+            "Razonamiento crítico — si favorece el análisis, el contraste y la reflexión.",
+            "Accesibilidad — si distintos estudiantes pueden comprenderla y usarla.",
+            "Integración y costo — si es viable en tu contexto real de uso.",
+          ],
         },
         {
           type: "infographic",
@@ -73,8 +106,8 @@ export const STAGE_2: Stage = {
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
-    message: "Tómate un momento para este resumen. Reúne lo esencial sobre cómo mirar las herramientas de IA con criterio.",
+    title: "Tu elección con criterio",
+    message: "Tómate un momento para este resumen. Reúne lo esencial para elegir una herramienta de IA con criterio, no por moda.",
     question: "¿Qué posibilidad de uso de la IA resulta más pertinente para tu contexto y tus objetivos?",
     summaryVideo: mediaKey("stage2.summaryVideo"),
     laiaAvatar: mediaKey("laia.pose.holo"),

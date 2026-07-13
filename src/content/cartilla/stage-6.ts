@@ -51,13 +51,25 @@ export const STAGE_6: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Esta reflexión crítica no solo mejora tus futuras implementaciones: genera conocimiento valioso que puede inspirar y orientar a otros colegas en la integración de la IA en la educación.",
+            "¿Qué aprendimos de esta experiencia y cómo podemos mejorarla? Esta reflexión crítica no solo mejora tus futuras implementaciones: genera conocimiento valioso que puede inspirar y orientar a otros colegas en la integración de la IA en la educación.",
           ],
         },
         {
           type: "infographic",
           mediaKey: mediaKey("stage6.evaluationDimensions"),
           caption: "Evaluar no es solo calificar: dimensiones pedagógica, técnica, ética, emocional y cognitiva",
+        },
+        {
+          type: "bullets",
+          title: "Las dimensiones de la evaluación",
+          variant: "list",
+          items: [
+            "Pedagógica — si se cumplieron los objetivos de aprendizaje.",
+            "Técnica — si las herramientas funcionaron y fueron accesibles.",
+            "Ética — si las reglas de uso se respetaron y protegieron a los estudiantes.",
+            "Cognitiva — si se desarrolló pensamiento crítico, no solo un producto entregado.",
+            "Emocional — cómo se sintieron docente y estudiantes durante la experiencia.",
+          ],
         },
         {
           type: "infographic",
@@ -72,11 +84,16 @@ export const STAGE_6: Stage = {
           label: "Descargar PDF ↓",
         },
         { type: "narrative-video", mediaKey: mediaKey("stage6.newLoopVideo") },
+        {
+          type: "callout",
+          title: "DE HALLAZGO A MEJORA",
+          body: "Un hallazgo solo se vuelve útil cuando produce una decisión: si hubo uso acrítico de la IA, puede faltar una pausa de verificación; si falló el acceso a la herramienta, quizá haya que mejorar el alistamiento.",
+        },
       ],
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
+    title: "Lo que aprendiste esta vuelta",
     message: "Cerramos con este resumen. Reúne lo esencial de la reflexión que transforma tu próxima vuelta en la espiral.",
     question: "Si repitieras esta experiencia, ¿qué cambiarías en el próximo ciclo?",
     summaryVideo: mediaKey("stage6.summaryVideo"),

@@ -42,6 +42,12 @@ export const STAGE_4: Stage = {
       title: "Todo listo antes de empezar",
       blocks: [
         {
+          type: "paragraphs",
+          paragraphs: [
+            "¿Qué necesitas dejar listo para que la experiencia no se vuelva confusa o improvisada? Preparar el terreno significa revisar más que la herramienta: también instrucciones, expectativas, reglas de uso y acompañamiento.",
+          ],
+        },
+        {
           type: "action-cards",
           cards: [
             { icon: "⚙", title: "Configura las herramientas", description: "Cuentas, accesos y pruebas previas de cada tecnología que usarás." },
@@ -61,6 +67,18 @@ export const STAGE_4: Stage = {
           caption: "Checklist de preparación: verifica cada elemento antes de usar la IA en tu clase",
         },
         {
+          type: "bullets",
+          title: "Qué revisa el Canvas de alistamiento",
+          variant: "list",
+          items: [
+            "Herramienta — que la tecnología de IA funcione y esté disponible para todos.",
+            "Instrucciones — que la actividad tenga consignas claras sobre cómo y para qué usar la IA.",
+            "Reglas de uso — límites éticos claros y el nivel de autonomía que permitirás.",
+            "Plan B — una alternativa sin IA para fallas técnicas o estudiantes que prefieran no usarla.",
+            "Acompañamiento — cómo darás seguimiento y retroalimentación durante la experiencia.",
+          ],
+        },
+        {
           type: "download",
           mediaKey: mediaKey("stage4.readinessCanvas"),
           title: "Canvas de alistamiento",
@@ -71,7 +89,7 @@ export const STAGE_4: Stage = {
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
+    title: "Todo listo para el aula",
     message: "Antes de avanzar, revisa este resumen. Recoge lo esencial del alistamiento para llegar al aula con confianza.",
     question: "¿Qué necesitas preparar aún antes de llevar tu experiencia al aula?",
     summaryVideo: mediaKey("stage4.summaryVideo"),

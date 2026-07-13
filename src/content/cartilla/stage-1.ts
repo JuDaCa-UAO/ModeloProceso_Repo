@@ -77,6 +77,41 @@ export const STAGE_1: Stage = {
           ],
         },
         {
+          type: "bullets",
+          title: "Qué explora tu autodiagnóstico",
+          variant: "list",
+          items: [
+            "Conocimiento de IA — qué tanto conoces sus posibilidades y sus límites.",
+            "Uso pedagógico — si ya la has llevado a tu práctica de aula.",
+            "Criterio ético — qué tan atento estás a sus riesgos y responsabilidades.",
+            "Pensamiento crítico — si verificas y cuestionas lo que la IA produce.",
+            "Disposición al cambio — qué tan dispuesto estás a experimentar.",
+          ],
+        },
+        {
+          type: "state-cards",
+          items: [
+            {
+              hierarchy: "Inicial",
+              title: "Aprendiendo sin miedo",
+              description:
+                "Estás dando tus primeros pasos con la GenAI y es natural sentir incertidumbre. El objetivo no es saberlo todo, sino familiarizarte, perder el miedo y ganar confianza con acompañamiento y formación básica.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "Explorando con propósito",
+              description:
+                "Ya integras herramientas de GenAI en tu día a día: creas materiales, actividades o retroalimentación. El reto es seguir explorando con intención hacia un uso más estratégico y creativo.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "Innovando e inspirando",
+              description:
+                "Usas la GenAI de forma crítica, creativa y estratégica; la adaptas, la personalizas y piensas en su ética. Eres referente: puedes inspirar y acompañar a otros colegas.",
+            },
+          ],
+        },
+        {
           type: "callout",
           title: "RECUERDA",
           body: "No es un examen ni una etiqueta fija: es un punto de referencia que puede cambiar con cada vuelta de la espiral.",
@@ -92,8 +127,8 @@ export const STAGE_1: Stage = {
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
-    message: "Antes de continuar, te invito a ver este breve resumen. Te ayudará a reconocer lo más importante de tu punto de partida.",
+    title: "Tu punto de partida",
+    message: "Antes de continuar, un resumen breve: te ayuda a reconocer tu punto de partida y a saber qué fortalecer antes de avanzar.",
     question: "¿Qué reconociste sobre tu relación actual con la IA en tu práctica docente?",
     summaryVideo: mediaKey("stage1.summaryVideo"),
     laiaAvatar: mediaKey("laia.pose.explaining"),

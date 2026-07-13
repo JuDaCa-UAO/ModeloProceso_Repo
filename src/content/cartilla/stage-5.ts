@@ -44,7 +44,7 @@ export const STAGE_5: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Durante el despliegue, tu rol es de mediador: guías el uso de la IA, motivas la participación y documentas lo que ocurre para enriquecer tu práctica y generar aprendizajes compartidos con otros docentes.",
+            "¿Cómo acompañas a tus estudiantes para que usen la IA como apoyo para aprender, no como atajo para evitar pensar? Durante el despliegue, tu rol es de mediador: guías el uso de la IA, motivas la participación y documentas lo que ocurre para enriquecer tu práctica y generar aprendizajes compartidos con otros docentes.",
           ],
         },
         { type: "narrative-video", mediaKey: mediaKey("stage5.classroomSimulation") },
@@ -53,6 +53,11 @@ export const STAGE_5: Stage = {
           type: "infographic",
           mediaKey: mediaKey("stage5.teacherAsMediatorInfographic"),
           caption: "El docente como mediador: guía, observa, aclara, interviene y protege el propósito de la experiencia",
+        },
+        {
+          type: "bullets",
+          variant: "pills",
+          items: ["Guía", "Observa", "Aclara", "Interviene", "Retroalimenta", "Documenta"],
         },
         {
           type: "infographic",
@@ -65,18 +70,43 @@ export const STAGE_5: Stage = {
           description:
             "Mientras la experiencia ocurre, documenta lo que pasa. Estas cinco evidencias serán el insumo de tu reflexión en la Etapa 6.",
           panels: [
-            { id: "evidencia-1", label: "Dudas de estudiantes", mediaKey: mediaKey("stage5.rail.1") },
-            { id: "evidencia-2", label: "Prompts usados", mediaKey: mediaKey("stage5.rail.2") },
-            { id: "evidencia-3", label: "Productos generados", mediaKey: mediaKey("stage5.rail.3") },
-            { id: "evidencia-4", label: "Comentarios y errores", mediaKey: mediaKey("stage5.rail.4") },
-            { id: "evidencia-5", label: "Ajustes y decisiones", mediaKey: mediaKey("stage5.rail.5") },
+            {
+              id: "evidencia-1",
+              label: "Dudas de estudiantes",
+              description: "Qué preguntaron y en qué momentos se trabaron.",
+              mediaKey: mediaKey("stage5.rail.1"),
+            },
+            {
+              id: "evidencia-2",
+              label: "Prompts usados",
+              description: "Qué le pidieron a la IA y cómo formularon la instrucción.",
+              mediaKey: mediaKey("stage5.rail.2"),
+            },
+            {
+              id: "evidencia-3",
+              label: "Productos generados",
+              description: "Qué entregó la IA y qué hizo el estudiante con ese resultado.",
+              mediaKey: mediaKey("stage5.rail.3"),
+            },
+            {
+              id: "evidencia-4",
+              label: "Comentarios y errores",
+              description: "Qué falló, qué generó dudas o qué respuesta resultó poco confiable.",
+              mediaKey: mediaKey("stage5.rail.4"),
+            },
+            {
+              id: "evidencia-5",
+              label: "Ajustes y decisiones",
+              description: "Qué cambiaste sobre la marcha y por qué.",
+              mediaKey: mediaKey("stage5.rail.5"),
+            },
           ],
         },
       ],
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
+    title: "Tu acompañamiento en el aula",
     message: "Te dejo este resumen de tu rol durante la experiencia. Un repaso rápido antes de continuar.",
     question: "¿Qué observarás y documentarás mientras tus estudiantes usan la IA en el aula?",
     summaryVideo: mediaKey("stage5.summaryVideo"),

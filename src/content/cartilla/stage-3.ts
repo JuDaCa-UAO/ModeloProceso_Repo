@@ -42,6 +42,12 @@ export const STAGE_3: Stage = {
       title: "Tu meta: una experiencia con sentido",
       blocks: [
         {
+          type: "paragraphs",
+          paragraphs: [
+            "¿Cómo usar la IA para que tus estudiantes aprendan mejor y piensen con más criterio, sin delegar su trabajo en la herramienta? Diseñar con propósito significa organizar una experiencia de aprendizaje donde la IA tenga un papel claro, útil y pedagógicamente justificado.",
+          ],
+        },
+        {
           type: "action-cards",
           cards: [
             {
@@ -67,6 +73,20 @@ export const STAGE_3: Stage = {
           caption: "Canvas de diseño: la guía para estructurar tu experiencia mediada por GenAI",
         },
         {
+          type: "bullets",
+          title: "Qué organiza el Canvas de diseño",
+          variant: "list",
+          items: [
+            "Objetivo y propuesta de valor — qué quieres lograr y qué aporta la IA a esa meta pedagógica.",
+            "Actividades académicas — qué harán tus estudiantes y con qué estrategia didáctica.",
+            "Soluciones de GenAI seleccionadas — qué herramienta usarás, para qué y con qué nivel de uso permitido.",
+            "Razonamiento crítico y mediaciones — qué preguntas plantearás sobre lo que produce la IA.",
+            "Consideraciones éticas y de diseño responsable — qué reglas de uso comunicarás a tus estudiantes.",
+            "Evaluación y retroalimentación — cómo medirás el aprendizaje, no solo el producto entregado.",
+            "Seguimiento y mejora continua — cómo verificarás el progreso y apoyarás a quien lo necesite.",
+          ],
+        },
+        {
           type: "download",
           mediaKey: mediaKey("stage3.designCanvas"),
           title: "Canvas de diseño",
@@ -77,7 +97,7 @@ export const STAGE_3: Stage = {
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
+    title: "Tu experiencia con propósito",
     message: "Este breve video resume lo clave del diseño con propósito. Míralo antes de seguir; te ayudará a afianzar la idea.",
     question: "¿Cómo aporta la IA al propósito pedagógico de la experiencia que quieres diseñar?",
     summaryVideo: mediaKey("stage3.summaryVideo"),
