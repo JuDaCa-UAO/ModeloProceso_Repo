@@ -7,7 +7,7 @@ import MiniSpiralViewer from "@/components/mini-spiral-viewer/MiniSpiralViewer";
 import StageViewer from "@/components/stage/StageViewer";
 import YouTubeNarrativePlayer from "@/components/youtube-narrative-player/YouTubeNarrativePlayer";
 import { VIDEO_REGISTRY } from "@/content/shared/video-registry";
-import { N8N_CONFIG } from "@/infrastructure/n8n/n8n.config";
+import { N8N_AUTODIAGNOSTIC_FORM_URL } from "@/infrastructure/n8n/n8n.config";
 import {
   F6_LAIA_STEPS,
   F7_LAIA_STEPS,
@@ -257,7 +257,7 @@ export default function Stage1Frames({
 
               <div className={styles.embedViewport}>
                 <iframe
-                  src={N8N_CONFIG.forms.autodiagnostic || undefined}
+                  src={N8N_AUTODIAGNOSTIC_FORM_URL}
                   title="Autodiagnóstico Etapa 1"
                   className={styles.embedIframe}
                   loading="lazy"

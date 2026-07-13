@@ -1,4 +1,5 @@
 import type { NextConfig } from "next";
+import { N8N_HOST } from "./src/infrastructure/n8n/n8n.config";
 
 // Host externo de multimedia (infografías SVG, Matriz de Pugh PDF, videos de etapa).
 // Vacío hasta definirse; al configurarlo se habilita en el CSP automáticamente.
@@ -15,9 +16,9 @@ const ContentSecurityPolicy = [
   // MEDIA_BASE for hosted stage videos
   `media-src 'self' ${MEDIA_BASE}`,
   // youtube-nocookie.com for the privacy-enhanced YouTube embed iframe
-  `frame-src 'self' ${process.env.NEXT_PUBLIC_N8N_BASE_URL ?? ""} https://www.youtube-nocookie.com`,
+  `frame-src 'self' ${N8N_HOST} https://www.youtube-nocookie.com`,
   // YouTube may issue XHR/fetch requests; MEDIA_BASE for fetching hosted assets
-  `connect-src 'self' ${process.env.NEXT_PUBLIC_N8N_BASE_URL ?? ""} ${MEDIA_BASE} https://www.youtube.com https://www.youtube-nocookie.com`,
+  `connect-src 'self' ${N8N_HOST} ${MEDIA_BASE} https://www.youtube.com https://www.youtube-nocookie.com`,
 ].join("; ");
 
 const securityHeaders = [
