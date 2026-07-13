@@ -2,7 +2,7 @@ import AppShell from "@/presentation/shell/AppShell";
 import IntroPortada from "@/presentation/sections/IntroPortada";
 import LaiaStepper from "@/presentation/laia/LaiaStepper";
 import ContentSection from "@/presentation/content/ContentSection";
-import TeaserEtapasSection from "@/presentation/sections/TeaserEtapasSection";
+import EtapasSpiralNavSection from "@/presentation/sections/EtapasSpiralNavSection";
 import TransitionAnimation from "@/presentation/video/TransitionAnimation";
 import StageChapter from "@/presentation/stage/StageChapter";
 import FactoresRectoresSection from "@/presentation/sections/FactoresRectoresSection";
@@ -50,7 +50,7 @@ export default function Page() {
       {cartilla.introSections.map((section) => (
         <ContentSection key={section.id} section={section} resolver={resolver} />
       ))}
-      <TeaserEtapasSection stages={cartilla.stages} />
+      <EtapasSpiralNavSection stages={cartilla.stages} />
       {cartilla.introTransition && introTransitionMedia ? (
         <TransitionAnimation
           url={introTransitionMedia.available ? introTransitionMedia.url : null}
