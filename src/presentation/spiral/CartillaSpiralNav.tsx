@@ -14,9 +14,11 @@
  * solo gira sobre su propio eje (auto-spin vía `useFrame`, mismo patrón que
  * `RotatingSpiral` en `StageViewer.tsx`) y expone los orbes como botones
  * clicables que navegan a cada etapa. Al no haber cámara arrastrable, no
- * existe conflicto posible entre "girar" y "hacer clic".
+ * existe conflicto posible entre "girar" y "hacer clic". El giro se pausa
+ * mientras el puntero está sobre un orbe, para poder leer la etiqueta y
+ * apuntar el clic sin que el objetivo siga moviéndose.
  */
-import React, { Suspense, useCallback, useEffect, useMemo, useRef, useState } from "react";
+import React, { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer, Bounds } from "@react-three/drei";
 import type * as THREE from "three";
@@ -24,14 +26,6 @@ import SpiralModel from "@/components/InteractiveSpiral/SpiralModel";
 import { STAGE_META } from "@/content/stages";
 import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
 import styles from "./CartillaSpiralNav.module.css";
-
-/** `#etapa-3` → 3. Solo las etapas 1–6 tienen orbe (índice 0 = introducción). */
-function hashToStageIndex(hash: string): number | null {
-  const id = hash.startsWith("#") ? hash.slice(1) : hash;
-  if (!id) return null;
-  const idx = STAGE_META.findIndex((s) => s.id === id);
-  return idx > 0 ? idx : null;
-}
 
 /** Gira el grupo sobre su eje Y a velocidad constante; inmóvil con `enabled=false`. */
 function AutoSpin({ enabled, children }: { enabled: boolean; children: React.ReactNode }) {
@@ -46,17 +40,8 @@ function AutoSpin({ enabled, children }: { enabled: boolean; children: React.Rea
 export default function CartillaSpiralNav() {
   const reduced = usePrefersReducedMotion();
   const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
-  const [activeStageIndex, setActiveStageIndex] = useState<number | null>(null);
 
   const hoveredStageData = hoveredStageIndex !== null ? STAGE_META[hoveredStageIndex] : null;
-
-  // Refleja en la espiral la etapa apuntada por el hash actual (pulso "aquí estás").
-  useEffect(() => {
-    const sync = () => setActiveStageIndex(hashToStageIndex(window.location.hash));
-    sync();
-    window.addEventListener("hashchange", sync);
-    return () => window.removeEventListener("hashchange", sync);
-  }, []);
 
   const handleSelectStage = useCallback((stageIndex: number) => {
     const stage = STAGE_META[stageIndex];
@@ -110,13 +95,12 @@ export default function CartillaSpiralNav() {
         {environment}
 
         <Suspense fallback={null}>
-          <Bounds fit clip observe margin={1.1}>
-            <AutoSpin enabled={!reduced}>
-              <SpiralModel
-                activeStageIndex={activeStageIndex ?? undefined}
-                onHoverStageChange={setHoveredStageIndex}
-                onSelectStage={handleSelectStage}
-              />
+          {/* Sin `observe`: el encuadre se calcula una sola vez al montar (la
+              caja del modelo no cambia después, ya que no hay pulso "activo"
+              ni cámara arrastrable que deba reencuadrarse). */}
+          <Bounds fit clip margin={1.1}>
+            <AutoSpin enabled={!reduced && hoveredStageIndex === null}>
+              <SpiralModel onHoverStageChange={setHoveredStageIndex} onSelectStage={handleSelectStage} />
             </AutoSpin>
           </Bounds>
         </Suspense>
