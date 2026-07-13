@@ -11,6 +11,7 @@
 import { mediaKey } from "@domain/content/value-objects/MediaKey";
 import { OFFICIAL_STAGE_NAMES } from "@domain/content/value-objects/StageId";
 import type { Stage } from "@domain/content/Stage";
+import { N8N_AUTODIAGNOSTIC_FORM_URL } from "@/infrastructure/n8n/n8n.config";
 
 export const STAGE_1: Stage = {
   id: "etapa-1",
@@ -122,6 +123,7 @@ export const STAGE_1: Stage = {
           description:
             "El cuestionario se realiza dentro del aplicativo. Al terminar, recibirás tu estado inicial y podrás continuar con la Etapa 2.",
           ctaLabel: "Comenzar →",
+          formUrl: N8N_AUTODIAGNOSTIC_FORM_URL,
         },
       ],
     },

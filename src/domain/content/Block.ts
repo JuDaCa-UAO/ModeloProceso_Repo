@@ -63,4 +63,4 @@ export type Block =
         description: string;
       }[];
     }
-  | { type: "autodiagnostic"; title: string; description: string; ctaLabel: string };
+  | { type: "autodiagnostic"; title: string; description: string; ctaLabel: string; formUrl: string };
