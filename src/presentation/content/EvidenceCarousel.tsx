@@ -22,6 +22,7 @@ import styles from "./EvidenceCarousel.module.css";
 export interface ResolvedCarouselPanel {
   id: string;
   label: string;
+  description?: string;
   imageUrl: string | null;
   imageAlt: string;
   fallback: string;
@@ -83,6 +84,7 @@ export default function EvidenceCarousel({ panels }: { panels: ResolvedCarouselP
           </div>
         ))}
       </div>
+      {current.description ? <p className={styles.slideDescription}>{current.description}</p> : null}
       <div className={styles.controls}>
         <button
           type="button"

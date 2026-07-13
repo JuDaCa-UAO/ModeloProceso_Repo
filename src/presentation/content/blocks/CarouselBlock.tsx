@@ -15,6 +15,7 @@ export default function CarouselBlock({
     return {
       id: panel.id,
       label: panel.label,
+      description: panel.description,
       imageUrl: media.available ? media.url : null,
       imageAlt: media.description ?? panel.label,
       fallback: media.fallback,

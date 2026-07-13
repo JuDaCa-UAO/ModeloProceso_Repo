@@ -52,7 +52,7 @@ export type Block =
       type: "carousel";
       title: string;
       description?: string;
-      panels: { id: string; label: string; mediaKey: MediaKey }[];
+      panels: { id: string; label: string; description?: string; mediaKey: MediaKey }[];
     }
   | { type: "spiral"; activeStage: number; instructions?: string; variant?: "default" | "compact" }
   | {
