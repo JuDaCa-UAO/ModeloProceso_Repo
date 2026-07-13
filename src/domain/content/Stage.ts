@@ -35,6 +35,8 @@ export interface Stage {
   officialName: string;
   accent: Accent;
   cover: StageCover;
+  /** Video de apertura ("abrebocas") reproducido tras la portada, antes de LaIA. Opcional. */
+  abrebocas?: MediaKey;
   sections: Section[];
   laia: LaiaMessage[];
   closing: StageClosing;

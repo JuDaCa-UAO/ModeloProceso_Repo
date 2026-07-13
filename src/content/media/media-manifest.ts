@@ -498,6 +498,71 @@ export const MEDIA_MANIFEST = {
     playback: SUMMARY_VIDEO_PLAYBACK,
   },
 
+  // ── Abrebocas (apertura de etapa) — videos cortos entregados por el usuario
+  // en `public/media/abrebocas/etapa-N.mp4`. Se muestran tras la portada, antes
+  // de LaIA, con reproducción MANUAL (mismo reproductor que el video-resumen).
+  // `provider: "local"` temporal, igual que los resúmenes/transiciones.
+  [mediaKey("stage1.abrebocas")]: {
+    key: mediaKey("stage1.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-1.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 1.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage2.abrebocas")]: {
+    key: mediaKey("stage2.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-2.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 2.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage3.abrebocas")]: {
+    key: mediaKey("stage3.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-3.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 3.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage4.abrebocas")]: {
+    key: mediaKey("stage4.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-4.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 4.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage5.abrebocas")]: {
+    key: mediaKey("stage5.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-5.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 5.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage6.abrebocas")]: {
+    key: mediaKey("stage6.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-6.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 6.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+
   // ── Audios de LaIA (Fase 9 — espacio reservado, PENDIENTE de archivos) ────
   // Convención para cuando el usuario entregue los audios reales: un archivo
   // por mensaje de LaIA, en `public/media/audio/laia/<stageId>/<messageId>.mp3`

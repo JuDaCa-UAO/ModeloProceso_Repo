@@ -17,6 +17,7 @@ export const STAGE_1: Stage = {
   order: 1,
   officialName: OFFICIAL_STAGE_NAMES["etapa-1"],
   accent: { main: "var(--uao-stage-1-accent)", chip: "var(--uao-stage-1-chip)" },
+  abrebocas: mediaKey("stage1.abrebocas"),
   cover: {
     badgeLabel: "ETAPA 1",
     chapterLabel: "CAPÍTULO 1 DE 6",

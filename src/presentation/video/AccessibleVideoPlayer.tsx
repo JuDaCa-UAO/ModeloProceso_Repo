@@ -24,9 +24,15 @@ export interface AccessibleVideoPlayerProps {
   accent: string;
   borderColor?: string;
   captionsAvailable?: boolean;
+  /**
+   * Pie del reproductor. `undefined` (omitido) → pie por defecto
+   * ("Video-resumen opcional · …"). Pásalo explícitamente —incluido `null`—
+   * para reemplazarlo u ocultarlo (p. ej. el abrebocas no lleva pie).
+   */
+  caption?: React.ReactNode;
 }
 
-export default function AccessibleVideoPlayer({ url, accent, borderColor, captionsAvailable }: AccessibleVideoPlayerProps) {
+export default function AccessibleVideoPlayer({ url, accent, borderColor, captionsAvailable, caption }: AccessibleVideoPlayerProps) {
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const wrapRef = useRef<HTMLDivElement | null>(null);
   const [playing, setPlaying] = useState(false);
@@ -153,9 +159,13 @@ export default function AccessibleVideoPlayer({ url, accent, borderColor, captio
           </button>
         </div>
       </div>
-      <p className={styles.caption}>
-        Video-resumen opcional · reproducción manual · <strong>{formatTime(duration)}</strong>
-      </p>
+      {caption === undefined ? (
+        <p className={styles.caption}>
+          Video-resumen opcional · reproducción manual · <strong>{formatTime(duration)}</strong>
+        </p>
+      ) : (
+        caption
+      )}
     </div>
   );
 }
