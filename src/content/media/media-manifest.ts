@@ -261,11 +261,9 @@ export const MEDIA_MANIFEST = {
     kind: "image",
     provider: "local",
     ref: "/media/etapa-5/Etapa_5_2.webp",
-    // El archivo NO existe en disco todavía (nunca se extrajo del export de
-    // Design) — marcado "pending" para mostrar el fallback en vez de una
-    // imagen rota (404). Al conseguir el archivo: colocarlo en esa ruta,
-    // volver a "available" y añadir width/height.
-    availability: "pending",
+    availability: "available",
+    width: 2560,
+    height: 2207,
     description:
       "Infografía: momentos críticos durante la experiencia — dificultades cognitivas, dilemas éticos, uso acrítico, fallas técnicas e instrucciones poco claras.",
     fallback: "La infografía de momentos críticos estará disponible próximamente.",
