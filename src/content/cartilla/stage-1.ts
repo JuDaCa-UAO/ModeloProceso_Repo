@@ -79,21 +79,58 @@ export const STAGE_1: Stage = {
           ],
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "Tu nivel de apropiación define el enfoque del diagnóstico y la ruta recomendada:",
           items: [
-            "Presentación: Fundamentos del modelo de proceso — Explica detalladamente qué es el modelo, por qué se estructura en forma de espiral y aclara tres ideas clave: que el avance es progresivo (no hay que dominar la IA al inicio), que existen niveles de apropiación (M1, M2, M3) y que el uso de IA exige reflexión pedagógica, ética y crítica, no solo habilidades técnicas.",
-            "Formulario de autodiagnóstico — Instrumento interactivo estructurado con preguntas tipo escala Likert para evaluar tu relación real con la IA en base a conocimiento técnico-conceptual, uso pedagógico en aula, criterio ético, pensamiento crítico y actitud emocional ante el cambio.",
-            "Agente de IA para el autodiagnóstico — Asistente conversacional que acompaña la resolución del formulario para aclarar preguntas, dar pautas personalizadas y ayudar a interpretar los enunciados de manera comprensible.",
-            "Resultado del nivel docente — Calificación resultante que te sitúa en: M1 Inicial (conoce poco y requiere conceptos básicos, ejemplos sencillos y apoyo), M2 Intermedio (ya usa herramientas con intención pedagógica pero busca fortalecer criterios de diseño y evaluación) o M3 Avanzado (diseña experiencias complejas con autonomía y puede guiar a otros docentes).",
-            "Recomendaciones personalizadas — Pautas de acción específicas según tu nivel de madurez: iniciar con actividades simples y una sola herramienta para M1, comparar con la Matriz de Pugh para M2, o experimentar con diseños avanzados y socializar prácticas para M3.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "El diagnóstico te ayuda a reconocer que necesitas empezar por lo básico: comprender qué es la IA generativa, qué puede y no puede hacer, y cuáles son sus riesgos sin sentirte abrumado. Te orienta hacia la comprensión elemental.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Te ayuda a identificar vacíos específicos (criterios éticos, evaluación de procesos o promoción de pensamiento crítico) para estructurar y dar un uso más intencional a lo que ya vienes haciendo.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Sirve para consolidar tus fortalezas y detectar áreas de mejora estratégica, orientándote hacia retos más complejos, como la personalización de asistentes, el coliderazgo con pares y la innovación pedagógica.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Fundamentos",
+              description: "Explica detalladamente la estructura progresiva en espiral, los niveles (M1, M2, M3) y la IA como práctica pedagógica, ética y crítica, no solo técnica.",
+            },
+            {
+              title: "Formulario de autodiagnóstico",
+              description: "Instrumento interactivo con preguntas Likert sobre conocimiento técnico, aplicaciones en aula, criterios éticos, razonamiento crítico y actitud al cambio.",
+            },
+            {
+              title: "Agente de IA de apoyo",
+              description: "Tutor virtual que te acompaña conversacionalmente durante el formulario para resolver dudas y interpretar enunciados de forma guiada.",
+            },
+            {
+              title: "Resultado de nivel docente",
+              description: "Determina si tu perfil es: M1 Inicial (requiere bases), M2 Intermedio (fortalecer diseño y evaluación) o M3 Avanzado (autonomía y guía a colegas).",
+            },
+            {
+              title: "Recomendaciones personalizadas",
+              description: "Pautas de acción a medida: comenzar simple con una herramienta para M1, comparar opciones para M2, o socializar prácticas y coliderar para M3.",
+            },
           ],
         },
         {
           type: "callout",
           title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "El Perfil Inicial del Docente: un diagnóstico completo de tu nivel de madurez de partida (M1, M2 o M3), detallando tus fortalezas pedagógicas actuales, aspectos específicos por mejorar y recomendaciones personalizadas para arrancar tu proceso.",
+          body: "El Perfil Inicial del Docente: un diagnóstico interactivo de tu nivel de madurez de partida (M1, M2 o M3) que integra tus fortalezas pedagógicas actuales, los aspectos específicos a mejorar y recomendaciones personalizadas para continuar el recorrido.",
         },
         {
           type: "callout",

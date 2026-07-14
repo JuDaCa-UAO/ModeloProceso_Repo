@@ -85,19 +85,68 @@ export const STAGE_4: Stage = {
           ],
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "La profundidad y el tipo de preparación técnica y operativa se modifican según tu nivel de partida:",
           items: [
-            "Presentación: Alistamiento de la experiencia de aprendizaje con GenAI — Explica cómo garantizar las condiciones técnicas, pedagógicas, éticas y emocionales para el éxito de la actividad, guiando al docente sobre el acceso a cuentas, el acompañamiento en tiempo real y la recolección de evidencias de aula.",
-            "Modelo Canvas para el alistamiento — Herramienta que convierte el diseño pedagógico en un plan operativo para el aula, respondiendo a la pregunta: ¿qué debo dejar listo para que la experiencia funcione? Estructura la verificación de guías, accesos a herramientas, simulación previa de interacción y el Plan B de contingencia.",
-            "Lista de acciones esenciales y recomendadas — Checklist operativo y de control. Define las acciones esenciales (mínimo obligatorio para garantizar seguridad, accesibilidad y claridad) y las acciones recomendadas (mejoras didácticas avanzadas que enriquecen progresivamente la actividad según la madurez del docente).",
-            "Guía de actividad para estudiantes — Formato estructurado paso a paso que se entrega al estudiante para reducir su ansiedad y orientar su trabajo en clase, indicando claramente la herramienta autorizada, los tiempos, los entregables esperados, la forma de evaluar y los límites de la IA.",
-            "Ejemplos y contraejemplos — Banco didáctico de buenas y malas prácticas (ej. prompts estructurados vs. vagos, co-creación responsable vs. copia directa y no declarada, verificación crítica de alucinaciones vs. aceptación ciega) para educar en el uso constructivo de la tecnología.",
-            "Reglas éticas de uso de IA — Pautas claras de comportamiento: qué está autorizado hacer y qué no en la actividad, cómo citar los aportes de la IA, qué información sensible está prohibido subir por privacidad y las consecuencias de un uso inadecuado.",
-            "Rúbrica de evaluación — Criterios e indicadores para valorar el proceso del estudiante y no solo el entregable final. Premia aspectos como la contrastación de datos, la originalidad de ideas propias frente al aporte de la IA, el pensamiento crítico y la ética de uso.",
-            "Ejemplo de configuración de un asistente de IA — Demostración y guía práctica de cómo programar las instrucciones de sistema (prompts de sistema) de un tutor virtual para que actúe como un facilitador reflexivo (que formula preguntas y guía análisis) en lugar de un generador de respuestas rápidas.",
-            "Asistente de IA para el alistamiento — Agente de soporte que revisa tus guías, rúbricas y reglas éticas de uso, sugiriendo mejoras de claridad pedagógica y comprobando la robustez de tu Plan B ante contingencias.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "Tu prioridad absoluta es asegurar que las condiciones mínimas funcionen para evitar la improvisación. Te enfocas en verificar accesos básicos de herramientas, redactar instrucciones sencillas para la guía, establecer reglas éticas elementales y estructurar un Plan B de contingencia sumamente simple.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Llevas a cabo un alistamiento más exhaustivo. Simulas la actividad en rol de estudiante, preparas tutoriales de apoyo, elaboras una rúbrica detallada que distinga el proceso del producto final y diseñas bitácoras de prompts o plantillas para que tus estudiantes registren sus interacciones.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Tu alistamiento contempla configuraciones tecnológicas avanzadas y protocolos de control robustos. Configuras asistentes de IA personalizados con instrucciones de comportamiento específicas, gestionas las políticas de privacidad y datos institucionales, diseñas indicadores avanzados de seguimiento y creas alternativas equivalentes sin IA.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Alistamiento",
+              description: "Pautas para estructurar las condiciones operativas (técnicas, pedagógicas, éticas y emocionales) antes del día de clase.",
+            },
+            {
+              title: "Canvas de alistamiento",
+              description: "Herramienta que operativiza el diseño respondiendo a '¿qué debo dejar listo para que funcione?', estructurando accesos, simulación y contingencias.",
+            },
+            {
+              title: "Lista de acciones",
+              description: "Checklist de control que separa las acciones esenciales (mínimo técnico y de seguridad de aula) de las recomendadas (optimizaciones progresivas).",
+            },
+            {
+              title: "Guía de la actividad",
+              description: "Instrucciones directas para el estudiante que detallan tiempos, entregables, rúbrica de evaluación, comportamiento de la IA y límites de coautoría.",
+            },
+            {
+              title: "Ejemplos y contraejemplos",
+              description: "Muestras de prompts estructurados vs. vagos y contrastación de alucinaciones para educar en el uso correcto de las herramientas.",
+            },
+            {
+              title: "Reglas éticas de aula",
+              description: "Pautas de comportamiento sobre privacidad de datos (qué no subir a la IA), transparencia en citación y sesgos de la información.",
+            },
+            {
+              title: "Rúbrica de evaluación",
+              description: "Valora el proceso del estudiante (pensamiento crítico, originalidad, contrastación de datos, ética) y no solo el producto del software.",
+            },
+            {
+              title: "Configuración del asistente",
+              description: "Instrucciones (prompts de sistema) para programar un asistente como un tutor pedagógico interactivo que cuestiona en lugar de dar la respuesta.",
+            },
+            {
+              title: "Asistente de alistamiento",
+              description: "Tutor virtual que audita tus guías, rúbricas, Plan B y reglas de uso ético, asegurando que todo esté listo antes de entrar al aula.",
+            },
           ],
         },
         {

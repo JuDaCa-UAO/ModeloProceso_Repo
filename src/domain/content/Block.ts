@@ -57,6 +57,9 @@ export type Block =
   | { type: "spiral"; activeStage: number; instructions?: string; variant?: "default" | "compact" }
   | {
       type: "state-cards";
+      layout?: "grid" | "rows";
+      title?: string;
+      description?: string;
       items: {
         hierarchy: "Inicial" | "Intermedio" | "Avanzado";
         title: string;

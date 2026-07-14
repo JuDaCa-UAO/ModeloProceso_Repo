@@ -97,21 +97,58 @@ export const STAGE_2: Stage = {
           caption: "Ejemplo demostrativo de comparación: tres posibilidades de IA para el mismo propósito en clase",
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "La forma en la que exploras y comparas tecnologías varía según tu nivel de partida:",
           items: [
-            "Presentación: Exploración de herramientas de GenAI — Introduce los diversos tipos de herramientas de IA generativa (generación de texto, imagen, ideas, simulaciones) y hace hincapié en una regla de oro: la herramienta no se elige primero; primero debes definir tu propósito pedagógico preguntándote qué dificultad o resultado de aprendizaje quieres fortalecer.",
-            "Asistente de IA para explorar herramientas — Un tutor virtual interactivo que recomienda posibles herramientas de IA según la necesidad planteada por el docente (ej. retroalimentar rápido, promover debate, guiar análisis de datos) y advierte sobre sus limitaciones para evitar perderse entre tantas opciones.",
-            "Matriz de Pugh — El recurso central comparativo. Permite evaluar estructuradamente herramientas asignando ponderaciones (con mayor peso en apropiación docente e idoneidad pedagógica) para responder si la herramienta sirve, es ética, promueve el razonamiento crítico y es viable en tu universidad.",
-            "Banco o catálogo de herramientas — Compendio de herramientas recomendadas clasificadas por propósito de uso (redacción, ideación, evaluación, simulación), estructuradas en fichas breves que detallan su nombre, función, nivel recomendado y riesgos pedagógicos.",
-            "Registro de selección de herramientas — Formato para documentar formalmente la IA elegida, para qué actividad se utilizará, su justificación pedagógica, los riesgos identificados, las reglas éticas de uso para tus estudiantes y la alternativa en caso de falla.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "Exploras pocas herramientas, sencillas y de bajo riesgo (ej. IAs de texto básicas para generar ideas o borradores). Realizas tareas puntuales como identificar una actividad de clase, probar una sola herramienta y registrar dudas iniciales usando fichas informativas y una matriz de Pugh simplificada.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Comparas dos o tres herramientas con criterio e intención pedagógica empleando la Matriz de Pugh completa. Evalúas de forma argumentada la idoneidad didáctica, los riesgos de privacidad, la accesibilidad de tus estudiantes y el fomento de su razonamiento crítico.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Exploras herramientas con una visión estratégica y de integración institucional. Consideras la privacidad avanzada, la escalabilidad, la personalización de asistentes mediante prompts de sistema y documentas tus propios criterios y guías de uso para apoyar a otros colegas.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Exploración",
+              description: "Panorama de herramientas de GenAI (texto, imagen, simulación, ideas). Enfatiza definir el propósito pedagógico (la actividad a transformar) antes de elegir el software.",
+            },
+            {
+              title: "Asistente de IA para explorar",
+              description: "Tutor virtual interactivo que sugiere alternativas tecnológicas según tu área y tus objetivos pedagógicos, indicando ventajas y limitaciones específicas.",
+            },
+            {
+              title: "Matriz de Pugh",
+              description: "Recurso central para ponderar y comparar herramientas en base a 6 criterios de idoneidad, apropiación docente, ética, crítica, accesibilidad e integración.",
+            },
+            {
+              title: "Banco de herramientas",
+              description: "Catálogo estructurado por propósitos educativos (escribir, simular, retroalimentar) con fichas cortas de nombre, función, nivel y recomendaciones.",
+            },
+            {
+              title: "Registro de selección",
+              description: "Bitácora donde documentas formalmente tu elección: para qué actividad es, por qué sirve, qué riesgos tiene, pautas de aula y alternativas (Plan B).",
+            },
           ],
         },
         {
           type: "callout",
           title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "Una herramienta de IA seleccionada y pedagógicamente justificada: terminarás la etapa sabiendo con precisión qué herramienta usarás en tu diseño, por qué la elegiste para tus estudiantes y qué cuidados específicos y alternativos debes contemplar.",
+          body: "Una herramienta de IA seleccionada y pedagógicamente justificada: sabrás con total claridad técnica y ética qué tecnología usarás, por qué se adapta a tus estudiantes y qué cuidados específicos debes contemplar.",
         },
         {
           type: "download",

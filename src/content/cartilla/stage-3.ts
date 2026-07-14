@@ -93,16 +93,56 @@ export const STAGE_3: Stage = {
           ],
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "El alcance y la complejidad del diseño de tu experiencia de aula varían de acuerdo a tu nivel de apropiación:",
           items: [
-            "Presentación: Diseño de experiencias de aprendizaje con GenAI — Explica cómo estructurar una experiencia de aprendizaje mediada por IA que sea activa, profunda y alineada con los resultados esperados del curso, evitando que el estudiante delegue ciegamente su esfuerzo cognitivo en el sistema.",
-            "Plantilla de mapa de experiencia — Recurso visual para estructurar paso a paso el recorrido del estudiante en fases (inicio, exploración, interacción con IA, análisis crítico, producción propia, co-evaluación). Permite mapear qué hace el docente, qué hace el estudiante, qué hace la IA y qué evidencias se generan en cada momento.",
-            "Modelo Canvas para el diseño de la experiencia — El recurso más importante de la etapa. Una estructura de una sola página que integra en bloques lógicos: la propuesta pedagógica, actividades, la solución de IA elegida, dinámicas de razonamiento crítico, reglas éticas de aula, rúbrica de evaluación y plan de seguimiento.",
-            "Escala de uso de IA — Guía para regular la permisibilidad de uso de la IA en la actividad académica. Evita la dicotomía de 'permitir o prohibir' al delimitar escenarios: fases libres de IA (donde no se permite), uso limitado (lluvia de ideas/borradores) o uso guiado integrado (donde se permite evaluar y refinar con criterio).",
-            "Asistente de IA para diseño — Tutor conversacional que ayuda al docente a afinar objetivos, estructurar consignas, formular preguntas que exijan análisis crítico y revisar la alineación pedagógica de la actividad.",
-            "Plantillas de apoyo descargables — Formatos de trabajo listos para redactar las pautas de ética del aula, estructurar el rol y tareas de la IA, diseñar preguntas críticas y confeccionar la rúbrica inicial.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "Diseñas una experiencia pequeña, puntual y controlada (una sola actividad sencilla con un objetivo concreto, límites claros y rúbrica básica). Buscas un diseño simple y seguro mediante un Canvas guiado, ejemplos resueltos, escala simple de uso y un banco básico de preguntas de aula.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Diseñas una secuencia más estructurada y completa que integra varias fases en el mapa de experiencia (introducción, interacción guiada, análisis, socialización y retorno). Defines rúbricas detalladas para calificar tanto el proceso reflexivo como el producto final, aplicando la escala de uso con rigor.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Diseñas experiencias robustas, complejas y potencialmente escalables, posiblemente articuladas a toda una trayectoria formativa o programa académico. Integras múltiples herramientas, configuras asistentes interactivos con prompts de sistema especializados y documentas tu diseño como un caso de estudio replicable.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Diseño",
+              description: "Estrategias didácticas para diseñar actividades profundas que fortalezcan la intención formativa y el pensamiento reflexivo, evitando que la IA reemplace el esfuerzo cognitivo.",
+            },
+            {
+              title: "Mapa de experiencia",
+              description: "Ordenador visual para secuenciar la actividad (inicio, exploración, interacción con IA, producción, cierre), definiendo los roles del docente, del estudiante y de la tecnología.",
+            },
+            {
+              title: "Canvas de diseño",
+              description: "El recurso central de la etapa. Plantilla visual en una sola página para integrar la propuesta de valor, nivel de uso permitido, dinámicas críticas, ética y evaluación.",
+            },
+            {
+              title: "Escala de uso de IA",
+              description: "Directrices para regular el nivel de autonomía y permisibilidad (escenario sin IA, IA solo para ideación, para co-edición de textos o uso colaborativo total).",
+            },
+            {
+              title: "Asistente de IA para diseño",
+              description: "Tutor virtual que te ayuda a formular objetivos coherentes, estructurar las consignas de tu actividad escolar y planificar los indicadores de evaluación.",
+            },
+            {
+              title: "Plantillas de apoyo",
+              description: "Formatos descargables para estructurar las pautas éticas del aula, definir preguntas críticas de contrastación y estructurar la rúbrica de proceso.",
+            },
           ],
         },
         {

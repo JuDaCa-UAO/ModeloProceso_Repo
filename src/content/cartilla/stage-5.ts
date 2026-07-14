@@ -37,7 +37,7 @@ export const STAGE_5: Stage = {
     },
     {
       id: "e5-laia-3",
-      text: "Registra en tu bitácora las cinco evidencias del proceso para que las analicemos en la Etapa 6. ¡Sigue bajando!",
+      text: "Registra en tu bitácora las 5 evidencias del proceso para que las analicemos en la Etapa 6. ¡Sigue bajando!",
       avatarKey: mediaKey("laia.pose.triumphant"),
     },
   ],
@@ -119,19 +119,68 @@ export const STAGE_5: Stage = {
           ],
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "La autonomía pedagógica y la complejidad didáctica durante la clase varían según tu nivel de madurez:",
           items: [
-            "Presentación: Despliegue y gestión académica de la experiencia — Explica detalladamente cómo llevar a cabo la mediación didáctica en el aula de clase. Orienta al docente sobre cómo resolver atascos conceptuales, promover dinámicas grupales y evitar que los estudiantes recurran a un uso mecánico e irreflexivo de las herramientas.",
-            "Guía de la actividad de aprendizaje — Hoja de ruta secuencial (preparada en el alistamiento) que sirve de brújula a los estudiantes en clase, detallando las reglas de coautoría, el rol asignado a la IA y los entregables a producir.",
-            "Recursos de acceso a herramientas — Enlaces de acceso directo, manuales técnicos de inicio rápido, cuentas asignadas y recomendaciones técnicas para resolver incidencias de conectividad de los estudiantes.",
-            "Banco de preguntas críticas — Cuestionamientos clave diseñados para dinamizar el razonamiento crítico del estudiante en clase, obligándole a cuestionar la veracidad del contenido generado (ej. ¿cuál es la fuente de este dato?, ¿cómo adaptas esto a nuestro entorno?, ¿dónde está tu idea original?).",
-            "Reglas éticas de uso visibles — Recordatorios y pautas éticas proyectadas o impresas (citación obligatoria, no compartir datos sensibles, declarar el uso del prompt) que deben mantenerse visibles durante la sesión de clase.",
-            "Instrumentos de documentación del estudiante — Plantillas rápidas para recopilar evidencias en tiempo real como capturas del chat, listados de prompts ensayados y bocetos de trabajo reflexivo de los estudiantes.",
-            "Recursos de soporte y acompañamiento en aula — Foros de soporte técnico rápido en clase, tutorías breves presenciales, canales de comunicación y la puesta en marcha del Plan B pedagógico en caso de fallas tecnológicas.",
-            "Rúbrica y retroalimentación formativa — Criterios de evaluación utilizados por el docente de forma formativa durante la actividad para dar retorno inmediato y guiar a los estudiantes en su proceso de aprendizaje antes de la calificación.",
-            "Registro de observaciones docentes — Bitácora ágil para que el docente tome nota de manera sincrónica sobre qué dinámicas funcionaron, qué preguntas de la IA provocaron alucinaciones, qué desvíos éticos surgieron y qué ajustes de emergencia realizó.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "Implementas una actividad breve, muy guiada y en un entorno controlado para ganar confianza. Acompañas paso a paso, explicas el propósito, recuerdas pautas éticas básicas y recopilas un único tipo de evidencia sencilla de la clase.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Gestionas una sesión estructurada por fases (introducción, uso regulado, análisis de información y plenaria). Eres capaz de brindar soporte técnico ágil, resolver dudas específicas sobre las respuestas de la IA y guiar a los estudiantes a contrastar los datos.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Facilitas experiencias complejas, altamente reflexivas y flexibles que incorporan co-creación avanzada o dilemas éticos reales surgidos en clase. Realizas adaptaciones al diseño en tiempo real y sistematizas el desarrollo de la sesión como una buena práctica compartible.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Despliegue",
+              description: "Pautas metodológicas para orientar la mediación pedagógica en aula: resolviendo bloqueos, guíando el análisis de datos y previniendo la copia irreflexiva.",
+            },
+            {
+              title: "Guía de la actividad",
+              description: "Consignas didácticas que los estudiantes siguen para la interacción, especificando reglas éticas de uso y entregables parciales.",
+            },
+            {
+              title: "Acceso a herramientas",
+              description: "Enlaces, tutoriales cortos, instructivos de configuración técnica de las herramientas de GenAI y cuentas para los estudiantes.",
+            },
+            {
+              title: "Banco de preguntas críticas",
+              description: "Preguntas didácticas diseñadas para activar el análisis crítico del estudiante (ej. ¿cuál es la fuente?, ¿dónde está tu razonamiento original?, ¿qué errores tiene?).",
+            },
+            {
+              title: "Reglas éticas visibles",
+              description: "Recordatorios gráficos visibles en el aula sobre transparencia de coautoría, declaración del prompt y restricciones de datos sensibles.",
+            },
+            {
+              title: "Documentación de aula",
+              description: "Formatos rápidos para registrar capturas de pantalla, bitácoras de prompts y borradores parciales del proceso.",
+            },
+            {
+              title: "Acompañamiento y soporte",
+              description: "Canales rápidos de dudas en clase, foros y la aplicación del Plan B (contingencia pedagógica sin IA) si la tecnología falla.",
+            },
+            {
+              title: "Rúbrica y retorno",
+              description: "Evaluación formativa del docente en tiempo real para guiar al estudiante sobre cómo mejorar antes de la entrega final.",
+            },
+            {
+              title: "Observaciones del docente",
+              description: "Bitácora ágil para que el docente registre la usabilidad de las herramientas, atascos pedagógicos y adaptaciones realizadas.",
+            },
           ],
         },
         {

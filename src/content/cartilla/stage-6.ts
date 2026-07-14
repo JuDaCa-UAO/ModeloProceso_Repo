@@ -89,19 +89,68 @@ export const STAGE_6: Stage = {
           ],
         },
         {
-          type: "bullets",
-          title: "Recursos que contiene esta etapa",
-          variant: "list",
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "La profundidad y el alcance de tu reflexión final y sistematización se adaptan según tu nivel de partida:",
           items: [
-            "Presentación: Evaluación docente-estudiante de la experiencia — Explica detalladamente cómo conducir una autoevaluación formal y rigurosa. Guía la recolección de dos miradas cruzadas (la del docente y la de los estudiantes) considerando cinco dimensiones: pedagógica, técnica, ética, cognitiva y afectiva (emocional).",
-            "Modelo Canvas para la evaluación — El recurso de síntesis de la etapa. Diseñado en total correspondencia con los Canvas de diseño y alistamiento, permite contrastar de forma visual lo que habías planeado, lo que preparaste en el kit, lo que ocurrió realmente en el aula y qué aprendizajes surgen.",
-            "Lista de acciones esenciales y recomendadas — Checklist evaluativo para el docente. Detalla las acciones esenciales (contrastar objetivos con resultados de evidencias, documentar lecciones obvias) y recomendadas (analizar la respuesta emocional del docente, comparar indicadores con implementaciones previas).",
-            "Instrumento de retroalimentación estudiantil — Cuestionario estructurado (encuesta/conversatorio) diseñado para recoger de los estudiantes su nivel de agrado, los problemas de acceso, su percepción de autonomía frente a la IA y los aprendizajes sobre el uso ético y de autoría.",
-            "Diario o registro reflexivo docente — Cuaderno de bitácora guiado con preguntas específicas para la autocrítica profesional sobre la pertinencia de las consignas dadas, el tiempo programado y la calidad del rol de mediación.",
-            "Revisión de evidencias recopiladas — Metodología de análisis cualitativo para interpretar los prompts, entregables finales y bitácoras reunidas en clase, evaluando el grado de rigor argumentativo y originalidad del estudiante.",
-            "Documento de lecciones aprendidas — Formato de sistematización docente enfocado a generar conocimiento pedagógico transferible: qué repetir en la próxima versión, qué prácticas evitar, qué herramientas recomendar y sugerencias útiles para otros colegas.",
-            "Plan de ajustes — Cronograma específico de rediseño técnico y pedagógico de la experiencia (modificar la herramienta de IA, reformular pautas éticas, ajustar la rúbrica) para retroalimentar la espiral.",
-            "Instrumento de evaluación del modelo de proceso — Formulario para que el docente evalúe el propio modelo de espiral en el taller, valorando su claridad metodológica, viabilidad de aplicación y pertinencia en su desarrollo profesional.",
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "Llevas a cabo una autoevaluación sencilla y focalizada en responder preguntas básicas: ¿funcionó la actividad?, ¿los estudiantes comprendieron el rol de la IA?, ¿qué falló y qué cambiaría en el próximo ciclo? Utilizas formularios breves, diarios reflexivos simples y plantillas básicas de lecciones.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Realizas una evaluación más profunda analizando la bitácora de prompts y productos generados por los estudiantes. Identificas dilemas éticos reales, mides el desarrollo del pensamiento crítico y refinas la rúbrica de evaluación didáctica con base en el Canvas de evaluación.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Evalúas con fines de escalabilidad, innovación y transferencia de conocimiento. Analizas datos cualitativos y cuantitativos, comparas resultados con cohortes anteriores, sistematizas la experiencia en formato de caso de estudio para coliderar con pares y propones mejoras al propio modelo de proceso.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Evaluación",
+              description: "Directrices para conducir la autoevaluación formal considerando cinco dimensiones: pedagógica, técnica, ética, cognitiva y afectiva (emocional).",
+            },
+            {
+              title: "Canvas de evaluación",
+              description: "Recurso estructurado en consistencia con el diseño y alistamiento, permitiendo contrastar de forma visual lo planeado frente al despliegue real.",
+            },
+            {
+              title: "Lista de acciones",
+              description: "Checklist de autoevaluación: acciones esenciales (verificar objetivos vs. evidencias) y recomendadas (analizar usabilidad y la experiencia emocional).",
+            },
+            {
+              title: "Retroalimentación estudiantil",
+              description: "Cuestionario o conversatorio diseñado para recoger la percepción del estudiante sobre la claridad, la motivación y la autonomía frente a la IA.",
+            },
+            {
+              title: "Registro reflexivo docente",
+              description: "Bitácora con preguntas guiadas para la autocrítica profesional del docente sobre las consignas dadas, tiempos y calidad de mediación didáctica.",
+            },
+            {
+              title: "Revisión de evidencias",
+              description: "Metodología cualitativa para valorar los prompts, entregables finales y bitácoras reunidas en clase, identificando debilidades cognitivas.",
+            },
+            {
+              title: "Lecciones aprendidas",
+              description: "Formato de sistematización enfocado a generar conocimiento transferible sobre qué mantener, qué evitar y qué compartir con otros colegas.",
+            },
+            {
+              title: "Plan de ajustes",
+              description: "Cronograma de rediseño (reajustar consignas, cambiar de herramienta, afinar rúbrica) para retroalimentar la siguiente vuelta de la espiral.",
+            },
+            {
+              title: "Evaluación del modelo",
+              description: "Instrumento para valorar la utilidad, viabilidad y pertinencia metodológica del propio modelo de espiral en tu práctica real.",
+            },
           ],
         },
         {
