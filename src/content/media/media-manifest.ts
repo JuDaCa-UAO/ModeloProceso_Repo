@@ -261,11 +261,9 @@ export const MEDIA_MANIFEST = {
     kind: "image",
     provider: "local",
     ref: "/media/etapa-5/Etapa_5_2.webp",
-    // El archivo NO existe en disco todavía (nunca se extrajo del export de
-    // Design) — marcado "pending" para mostrar el fallback en vez de una
-    // imagen rota (404). Al conseguir el archivo: colocarlo en esa ruta,
-    // volver a "available" y añadir width/height.
-    availability: "pending",
+    availability: "available",
+    width: 2560,
+    height: 2207,
     description:
       "Infografía: momentos críticos durante la experiencia — dificultades cognitivas, dilemas éticos, uso acrítico, fallas técnicas e instrucciones poco claras.",
     fallback: "La infografía de momentos críticos estará disponible próximamente.",
@@ -495,6 +493,71 @@ export const MEDIA_MANIFEST = {
     availability: "available",
     description: "Video-resumen de cierre de la Etapa 6.",
     fallback: "Video-resumen — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+
+  // ── Abrebocas (apertura de etapa) — videos cortos entregados por el usuario
+  // en `public/media/abrebocas/etapa-N.mp4`. Se muestran tras la portada, antes
+  // de LaIA, con reproducción MANUAL (mismo reproductor que el video-resumen).
+  // `provider: "local"` temporal, igual que los resúmenes/transiciones.
+  [mediaKey("stage1.abrebocas")]: {
+    key: mediaKey("stage1.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-1.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 1.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage2.abrebocas")]: {
+    key: mediaKey("stage2.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-2.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 2.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage3.abrebocas")]: {
+    key: mediaKey("stage3.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-3.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 3.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage4.abrebocas")]: {
+    key: mediaKey("stage4.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-4.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 4.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage5.abrebocas")]: {
+    key: mediaKey("stage5.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-5.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 5.",
+    fallback: "Video de apertura — próximamente.",
+    playback: SUMMARY_VIDEO_PLAYBACK,
+  },
+  [mediaKey("stage6.abrebocas")]: {
+    key: mediaKey("stage6.abrebocas"),
+    kind: "video",
+    provider: "local",
+    ref: "/media/abrebocas/etapa-6.mp4",
+    availability: "available",
+    description: "Abrebocas de apertura de la Etapa 6.",
+    fallback: "Video de apertura — próximamente.",
     playback: SUMMARY_VIDEO_PLAYBACK,
   },
 

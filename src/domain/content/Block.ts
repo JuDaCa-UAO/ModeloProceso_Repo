@@ -52,15 +52,18 @@ export type Block =
       type: "carousel";
       title: string;
       description?: string;
-      panels: { id: string; label: string; mediaKey: MediaKey }[];
+      panels: { id: string; label: string; description?: string; mediaKey: MediaKey }[];
     }
   | { type: "spiral"; activeStage: number; instructions?: string; variant?: "default" | "compact" }
   | {
       type: "state-cards";
+      layout?: "grid" | "rows";
+      title?: string;
+      description?: string;
       items: {
         hierarchy: "Inicial" | "Intermedio" | "Avanzado";
         title: string;
         description: string;
       }[];
     }
-  | { type: "autodiagnostic"; title: string; description: string; ctaLabel: string };
+  | { type: "autodiagnostic"; title: string; description: string; ctaLabel: string; formUrl: string };

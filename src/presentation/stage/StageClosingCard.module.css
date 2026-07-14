@@ -38,7 +38,7 @@
 
 .body {
   display: grid;
-  grid-template-columns: 170px minmax(0, 1fr);
+  grid-template-columns: 200px minmax(0, 1fr);
   gap: 26px;
   align-items: start;
 }
@@ -59,8 +59,8 @@
 
 .avatarFrame {
   position: relative;
-  width: 150px;
-  height: 150px;
+  width: 180px;
+  height: 180px;
   border-radius: var(--uao-radius-lg);
   border: 2px solid var(--accent, var(--uao-color-coral));
   background: var(--uao-color-white);
@@ -128,27 +128,4 @@
   color: rgba(255, 255, 255, 0.9);
 }
 
-.continueRow {
-  margin-top: 24px;
-  display: flex;
-  justify-content: flex-end;
-  gap: 12px;
-  flex-wrap: wrap;
-}
 
-.continueButton {
-  border: 1px solid var(--accent, var(--uao-color-coral));
-  background: var(--accent, var(--uao-color-coral));
-  color: var(--uao-color-white);
-  border-radius: var(--uao-radius-md);
-  padding: 13px 26px;
-  font-family: var(--uao-font-sans);
-  font-weight: 800;
-  font-size: 16px;
-  text-decoration: none;
-  white-space: nowrap;
-}
-
-.continueButton:hover {
-  opacity: 0.9;
-}

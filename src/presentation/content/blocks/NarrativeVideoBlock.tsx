@@ -19,11 +19,7 @@ export default function NarrativeVideoBlock({
   const media = resolver.resolve(block.mediaKey);
 
   if (!media.available || !media.url) {
-    return (
-      <div className={styles.videoPending}>
-        <span className={styles.videoPendingLabel}>{media.fallback}</span>
-      </div>
-    );
+    return null;
   }
 
   return (

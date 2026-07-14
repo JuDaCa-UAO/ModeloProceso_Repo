@@ -11,18 +11,20 @@
 import { mediaKey } from "@domain/content/value-objects/MediaKey";
 import { OFFICIAL_STAGE_NAMES } from "@domain/content/value-objects/StageId";
 import type { Stage } from "@domain/content/Stage";
+import { N8N_AUTODIAGNOSTIC_FORM_URL } from "@/infrastructure/n8n/n8n.config";
 
 export const STAGE_1: Stage = {
   id: "etapa-1",
   order: 1,
   officialName: OFFICIAL_STAGE_NAMES["etapa-1"],
   accent: { main: "var(--uao-stage-1-accent)", chip: "var(--uao-stage-1-chip)" },
+  abrebocas: mediaKey("stage1.abrebocas"),
   cover: {
     badgeLabel: "ETAPA 1",
     chapterLabel: "CAPÍTULO 1 DE 6",
     title: OFFICIAL_STAGE_NAMES["etapa-1"],
     description:
-      "Detente a mirarte con honestidad: ¿qué tanto conoces y usas la IA en tu práctica docente? Aquí identificas tu punto de partida para elegir la ruta más adecuada para ti.",
+      "Esta etapa es el punto de partida. Aquí te miras a ti mismo y reconoces qué tanto sabes, usas y comprendes la inteligencia artificial generativa en tu práctica educativa.",
     tags: ["Individual", "Confidencial", "No es un examen"],
     laiaAvatar: mediaKey("laia.pose.explaining"),
   },
@@ -34,7 +36,7 @@ export const STAGE_1: Stage = {
     },
     {
       id: "e1-laia-2",
-      text: "Harás un autodiagnóstico individual y confidencial. Tranquilo/a: no es una evaluación ni te pone una nota. Es tu punto de referencia.",
+      text: "Harás un autodiagnóstico individual y confidencial. No se trata de calificarte ni juzgarte, sino de ayudarte a identificar tu nivel inicial (M1), intermedio (M2) o avanzado (M3).",
       avatarKey: mediaKey("laia.pose.explaining"),
     },
     {
@@ -51,7 +53,8 @@ export const STAGE_1: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Esta etapa es una pausa para reconocer tu relación actual con la IA. A través de un autodiagnóstico individual y confidencial identificas tu estado de partida. No hay respuestas buenas ni malas: solo un mapa honesto de dónde estás hoy.",
+            "Esta etapa es el punto de partida. Aquí el docente se mira a sí mismo y reconoce qué tanto sabe, usa y comprende la inteligencia artificial generativa en su práctica educativa. No se trata de calificarlo ni de juzgarlo. Se trata de ayudarle a identificar desde dónde empieza: si está en un nivel inicial, intermedio o avanzado.",
+            "Para esto, el docente realiza un autodiagnóstico individual y confidencial sobre su relación actual con la IA. Responderá preguntas clave tipo escala Likert para evaluar su conocimiento de la IA, su uso pedagógico en el aula, su criterio ético frente a riesgos, su capacidad para analizar críticamente las respuestas de la IA y su disposición emocional frente al cambio tecnológico.",
           ],
         },
         {
@@ -60,39 +63,94 @@ export const STAGE_1: Stage = {
             {
               icon: "1",
               title: "Responde el autodiagnóstico",
-              description: "Un ejercicio breve sobre qué tanto conoces y usas la IA en tu docencia. Tus respuestas son solo tuyas.",
+              description: "Preguntas tipo escala Likert sobre conocimiento de la IA, uso pedagógico, criterios éticos, análisis crítico y disposición emocional frente al cambio.",
             },
             {
               icon: "2",
-              title: "Descubre tu estado",
+              title: "Descubre tu nivel de madurez",
               description:
-                "El resultado te ubica en uno de los tres estados: aprendiendo sin miedo, explorando con propósito o innovando e inspirando.",
+                "Identifica si te encuentras en un nivel M1 inicial, M2 intermedio o M3 avanzado. Este nivel no es una etiqueta fija, sino una orientación sobre el acompañamiento que necesitas.",
             },
             {
               icon: "3",
               title: "Elige tu ruta",
-              description: "Con tu punto de partida claro, la espiral te propone un recorrido a tu ritmo, con tus propias necesidades.",
+              description: "Con tu punto de partida claro, la espiral te propone un recorrido a tu ritmo para saber qué aspectos fortalecer antes de avanzar.",
+            },
+          ],
+        },
+        {
+          type: "state-cards",
+          layout: "rows",
+          title: "Cómo influye tu estado inicial en esta etapa",
+          description: "Tu nivel de apropiación define el enfoque del diagnóstico y la ruta recomendada:",
+          items: [
+            {
+              hierarchy: "Inicial",
+              title: "M1 Inicial",
+              description: "El diagnóstico te ayuda a reconocer que necesitas empezar por lo básico: comprender qué es la IA generativa, qué puede y no puede hacer, y cuáles son sus riesgos sin sentirte abrumado. Te orienta hacia la comprensión elemental.",
+            },
+            {
+              hierarchy: "Intermedio",
+              title: "M2 Intermedio",
+              description: "Te ayuda a identificar vacíos específicos (criterios éticos, evaluación de procesos o promoción de pensamiento crítico) para estructurar y dar un uso más intencional a lo que ya vienes haciendo.",
+            },
+            {
+              hierarchy: "Avanzado",
+              title: "M3 Avanzado",
+              description: "Sirve para consolidar tus fortalezas y detectar áreas de mejora estratégica, orientándote hacia retos más complejos, como la personalización de asistentes, el coliderazgo con pares y la innovación pedagógica.",
+            },
+          ],
+        },
+        {
+          type: "action-cards",
+          title: "Recursos que contiene esta etapa",
+          cards: [
+            {
+              title: "Presentación: Fundamentos",
+              description: "Explica detalladamente la estructura progresiva en espiral, los niveles (M1, M2, M3) y la IA como práctica pedagógica, ética y crítica, no solo técnica.",
+            },
+            {
+              title: "Formulario de autodiagnóstico",
+              description: "Instrumento interactivo con preguntas Likert sobre conocimiento técnico, aplicaciones en aula, criterios éticos, razonamiento crítico y actitud al cambio.",
+            },
+            {
+              title: "Agente de IA de apoyo",
+              description: "Tutor virtual que te acompaña conversacionalmente durante el formulario para resolver dudas y interpretar enunciados de forma guiada.",
+            },
+            {
+              title: "Resultado de nivel docente",
+              description: "Determina si tu perfil es: M1 Inicial (requiere bases), M2 Intermedio (fortalecer diseño y evaluación) o M3 Avanzado (autonomía y guía a colegas).",
+            },
+            {
+              title: "Recomendaciones personalizadas",
+              description: "Pautas de acción a medida: comenzar simple con una herramienta para M1, comparar opciones para M2, o socializar prácticas y coliderar para M3.",
             },
           ],
         },
         {
           type: "callout",
+          title: "PRODUCTO QUE DEJA ESTA ETAPA",
+          body: "El Perfil Inicial del Docente: un diagnóstico interactivo de tu nivel de madurez de partida (M1, M2 o M3) que integra tus fortalezas pedagógicas actuales, los aspectos específicos a mejorar y recomendaciones personalizadas para continuar el recorrido.",
+        },
+        {
+          type: "callout",
           title: "RECUERDA",
-          body: "No es un examen ni una etiqueta fija: es un punto de referencia que puede cambiar con cada vuelta de la espiral.",
+          body: "El nivel obtenido no es una etiqueta fija: es una orientación inicial que se actualiza con cada nueva vuelta en la espiral de aprendizaje.",
         },
         {
           type: "autodiagnostic",
           title: "Haz tu autodiagnóstico",
           description:
-            "El cuestionario se realiza dentro del aplicativo. Al terminar, recibirás tu estado inicial y podrás continuar con la Etapa 2.",
+            "El cuestionario se realiza de manera integrada. Al terminar, recibirás resultados detallados por dimensiones y podrás continuar con la Etapa 2.",
           ctaLabel: "Comenzar →",
+          formUrl: N8N_AUTODIAGNOSTIC_FORM_URL,
         },
       ],
     },
   ],
   closing: {
-    title: "Lo esencial de esta etapa",
-    message: "Antes de continuar, te invito a ver este breve resumen. Te ayudará a reconocer lo más importante de tu punto de partida.",
+    title: "Tu punto de partida",
+    message: "Antes de continuar, un resumen breve: te ayuda a reconocer tu punto de partida y a saber qué fortalecer antes de avanzar.",
     question: "¿Qué reconociste sobre tu relación actual con la IA en tu práctica docente?",
     summaryVideo: mediaKey("stage1.summaryVideo"),
     laiaAvatar: mediaKey("laia.pose.explaining"),

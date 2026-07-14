@@ -1,0 +1,58 @@
+.canvasContainer {
+  position: relative;
+  width: 100%;
+  height: clamp(360px, 52vh, 520px);
+  border-radius: var(--uao-radius-md);
+  overflow: hidden;
+  /* El arrastre debe girar el modelo (OrbitControls), no seleccionar texto. */
+  user-select: none;
+}
+
+.fixedLabelContainer {
+  position: absolute;
+  top: 16px;
+  left: 50%;
+  transform: translateX(-50%);
+  z-index: 10;
+  pointer-events: none;
+}
+
+.labelContainer {
+  display: flex;
+  align-items: center;
+  gap: 0.75rem;
+  padding: 0.5rem 1rem;
+  background-color: var(--uao-color-white, #ffffff);
+  border: 1.5px solid var(--uao-color-coral, #ff836c);
+  border-radius: var(--uao-radius-md, 0.875rem);
+  box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
+  pointer-events: none;
+  white-space: nowrap;
+  animation: fadeIn 0.2s ease-out;
+  transform: translate3d(0, 0, 0);
+}
+
+.labelOrder {
+  font-family: var(--font-tech), monospace;
+  font-size: 0.875rem;
+  color: var(--uao-color-red-primary, #ff051e);
+  font-weight: bold;
+}
+
+.labelName {
+  font-size: 0.95rem;
+  color: var(--uao-color-text-primary, #0f172b);
+  font-weight: 600;
+  letter-spacing: 0.02em;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: scale(0.95);
+  }
+  to {
+    opacity: 1;
+    transform: scale(1);
+  }
+}

@@ -110,8 +110,8 @@
 
 .avatarCircle {
   position: relative;
-  width: 230px;
-  height: 230px;
+  width: 280px;
+  height: 280px;
   border-radius: 50%;
   border: 2px solid rgba(255, 255, 255, 0.35);
   background: rgba(255, 255, 255, 0.08);

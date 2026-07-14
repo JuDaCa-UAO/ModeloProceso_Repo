@@ -9,6 +9,7 @@
 import type { Stage } from "@domain/content/Stage";
 import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
 import StageCover from "./StageCover";
+import StageAbrebocas from "./StageAbrebocas";
 import StageClosingCard from "./StageClosingCard";
 import ContentSection from "@/presentation/content/ContentSection";
 import LaiaStepper from "@/presentation/laia/LaiaStepper";
@@ -26,11 +27,15 @@ export default function StageChapter({ stage, resolver }: { stage: Stage; resolv
   });
 
   const transitionMedia = stage.transition ? resolver.resolve(stage.transition.mediaKey) : null;
+  const abrebocas = stage.abrebocas ? resolver.resolve(stage.abrebocas) : null;
   const stageNumber = String(stage.order).padStart(2, "0");
 
   return (
     <>
       <StageCover stage={stage} resolver={resolver} />
+      {abrebocas?.available && abrebocas.url ? (
+        <StageAbrebocas url={abrebocas.url} accent={stage.accent.main} />
+      ) : null}
       <LaiaStepper steps={laiaSteps} />
       {stage.sections.map((section) => (
         <ContentSection key={section.id} section={section} resolver={resolver} />

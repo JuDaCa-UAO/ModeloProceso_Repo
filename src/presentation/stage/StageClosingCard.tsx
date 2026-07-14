@@ -8,7 +8,7 @@
 import type { StageClosing } from "@domain/content/StageClosing";
 import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
 import AccessibleVideoPlayer from "@/presentation/video/AccessibleVideoPlayer";
-import ReflectionPrompt from "@/presentation/reflection/ReflectionPrompt";
+import ReflectionAndContinue from "@/presentation/reflection/ReflectionAndContinue";
 import styles from "./StageClosingCard.module.css";
 
 export default function StageClosingCard({
@@ -38,7 +38,7 @@ export default function StageClosingCard({
           <div className={styles.avatarFrame}>
             {avatar.available && avatar.url ? (
               // eslint-disable-next-line @next/next/no-img-element -- círculo con object-fit:contain
-              <img src={avatar.url} alt="LaIA" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "8%" }} />
+              <img src={avatar.url} alt="LaIA" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0%" }} />
             ) : null}
           </div>
           <span className={styles.laiaBadge}>LaIA</span>
@@ -53,20 +53,14 @@ export default function StageClosingCard({
         </div>
       </div>
 
-      <ReflectionPrompt question={closing.question} accent={closing.accent.main} />
-
-      {closing.final ? (
-        <div className={styles.finalPanel}>
-          <h3 className={styles.finalTitle}>La espiral da una nueva vuelta</h3>
-          <p className={styles.finalNote}>{closing.finalNote}</p>
-        </div>
-      ) : null}
-
-      <div className={styles.continueRow}>
-        <a className={styles.continueButton} href={closing.continueHref}>
-          {closing.continueLabel}
-        </a>
-      </div>
+      <ReflectionAndContinue question={closing.question} accent={closing.accent.main} stageNumber={stageNumber}>
+        {closing.final ? (
+          <div className={styles.finalPanel}>
+            <h3 className={styles.finalTitle}>La espiral da una nueva vuelta</h3>
+            <p className={styles.finalNote}>{closing.finalNote}</p>
+          </div>
+        ) : null}
+      </ReflectionAndContinue>
     </section>
   );
 }
