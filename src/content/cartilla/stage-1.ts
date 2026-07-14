@@ -24,7 +24,7 @@ export const STAGE_1: Stage = {
     chapterLabel: "CAPÍTULO 1 DE 6",
     title: OFFICIAL_STAGE_NAMES["etapa-1"],
     description:
-      "Detente a mirarte con honestidad: ¿qué tanto conoces y usas la IA en tu práctica docente? Aquí identificas tu punto de partida para elegir la ruta más adecuada para ti.",
+      "Esta etapa es el punto de partida. Aquí te miras a ti mismo y reconoces qué tanto sabes, usas y comprendes la inteligencia artificial generativa en tu práctica educativa.",
     tags: ["Individual", "Confidencial", "No es un examen"],
     laiaAvatar: mediaKey("laia.pose.explaining"),
   },
@@ -36,7 +36,7 @@ export const STAGE_1: Stage = {
     },
     {
       id: "e1-laia-2",
-      text: "Harás un autodiagnóstico individual y confidencial. Tranquilo/a: no es una evaluación ni te pone una nota. Es tu punto de referencia.",
+      text: "Harás un autodiagnóstico individual y confidencial. No se trata de calificarte ni juzgarte, sino de ayudarte a identificar tu nivel inicial (M1), intermedio (M2) o avanzado (M3).",
       avatarKey: mediaKey("laia.pose.explaining"),
     },
     {
@@ -53,7 +53,8 @@ export const STAGE_1: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Esta etapa es una pausa para reconocer tu relación actual con la IA. A través de un autodiagnóstico individual y confidencial identificas tu estado de partida. No hay respuestas buenas ni malas: solo un mapa honesto de dónde estás hoy.",
+            "Esta etapa es el punto de partida. Aquí el docente se mira a sí mismo y reconoce qué tanto sabe, usa y comprende la inteligencia artificial generativa en su práctica educativa. No se trata de calificarlo ni de juzgarlo. Se trata de ayudarle a identificar desde dónde empieza: si está en un nivel inicial, intermedio o avanzado.",
+            "Para esto, el docente realiza un autodiagnóstico individual y confidencial sobre su relación actual con la IA. Responderá preguntas clave tipo escala Likert para evaluar su conocimiento de la IA, su uso pedagógico en el aula, su criterio ético frente a riesgos, su capacidad para analizar críticamente las respuestas de la IA y su disposición emocional frente al cambio tecnológico.",
           ],
         },
         {
@@ -62,48 +63,48 @@ export const STAGE_1: Stage = {
             {
               icon: "1",
               title: "Responde el autodiagnóstico",
-              description: "Un ejercicio breve sobre qué tanto conoces y usas la IA en tu docencia. Tus respuestas son solo tuyas.",
+              description: "Preguntas tipo escala Likert sobre conocimiento de la IA, uso pedagógico, criterios éticos, análisis crítico y disposición emocional frente al cambio.",
             },
             {
               icon: "2",
-              title: "Descubre tu estado",
+              title: "Descubre tu nivel de madurez",
               description:
-                "El resultado te ubica en uno de los tres estados: aprendiendo sin miedo, explorando con propósito o innovando e inspirando.",
+                "Identifica si te encuentras en un nivel M1 inicial, M2 intermedio o M3 avanzado. Este nivel no es una etiqueta fija, sino una orientación sobre el acompañamiento que necesitas.",
             },
             {
               icon: "3",
               title: "Elige tu ruta",
-              description: "Con tu punto de partida claro, la espiral te propone un recorrido a tu ritmo, con tus propias necesidades.",
+              description: "Con tu punto de partida claro, la espiral te propone un recorrido a tu ritmo para saber qué aspectos fortalecer antes de avanzar.",
             },
           ],
         },
         {
           type: "bullets",
-          title: "Qué explora tu autodiagnóstico",
+          title: "Recursos que contiene esta etapa",
           variant: "list",
           items: [
-            "Conocimiento de IA — qué tanto conoces sus posibilidades y sus límites.",
-            "Uso pedagógico — si ya la has llevado a tu práctica de aula.",
-            "Criterio ético — qué tan atento estás a sus riesgos y responsabilidades.",
-            "Pensamiento crítico — si verificas y cuestionas lo que la IA produce.",
-            "Disposición al cambio — qué tan dispuesto estás a experimentar.",
+            "Presentación: Fundamentos del modelo de proceso — Explica detalladamente qué es el modelo, por qué se estructura en forma de espiral y aclara tres ideas clave: que el avance es progresivo (no hay que dominar la IA al inicio), que existen niveles de apropiación (M1, M2, M3) y que el uso de IA exige reflexión pedagógica, ética y crítica, no solo habilidades técnicas.",
+            "Formulario de autodiagnóstico — Instrumento interactivo estructurado con preguntas tipo escala Likert para evaluar tu relación real con la IA en base a conocimiento técnico-conceptual, uso pedagógico en aula, criterio ético, pensamiento crítico y actitud emocional ante el cambio.",
+            "Agente de IA para el autodiagnóstico — Asistente conversacional que acompaña la resolución del formulario para aclarar preguntas, dar pautas personalizadas y ayudar a interpretar los enunciados de manera comprensible.",
+            "Resultado del nivel docente — Calificación resultante que te sitúa en: M1 Inicial (conoce poco y requiere conceptos básicos, ejemplos sencillos y apoyo), M2 Intermedio (ya usa herramientas con intención pedagógica pero busca fortalecer criterios de diseño y evaluación) o M3 Avanzado (diseña experiencias complejas con autonomía y puede guiar a otros docentes).",
+            "Recomendaciones personalizadas — Pautas de acción específicas según tu nivel de madurez: iniciar con actividades simples y una sola herramienta para M1, comparar con la Matriz de Pugh para M2, o experimentar con diseños avanzados y socializar prácticas para M3.",
           ],
         },
         {
           type: "callout",
-          title: "TU RESULTADO",
-          body: "Solo al completar el autodiagnóstico sabrás en qué estado te encuentras. No necesitas saberlo de antemano ni compararte con nadie: tus propias respuestas lo revelan.",
+          title: "PRODUCTO QUE DEJA ESTA ETAPA",
+          body: "El Perfil Inicial del Docente: un diagnóstico completo de tu nivel de madurez de partida (M1, M2 o M3), detallando tus fortalezas pedagógicas actuales, aspectos específicos por mejorar y recomendaciones personalizadas para arrancar tu proceso.",
         },
         {
           type: "callout",
           title: "RECUERDA",
-          body: "No es un examen ni una etiqueta fija: es un punto de referencia que puede cambiar con cada vuelta de la espiral.",
+          body: "El nivel obtenido no es una etiqueta fija: es una orientación inicial que se actualiza con cada nueva vuelta en la espiral de aprendizaje.",
         },
         {
           type: "autodiagnostic",
           title: "Haz tu autodiagnóstico",
           description:
-            "El cuestionario se realiza dentro del aplicativo. Al terminar, recibirás tu estado inicial y podrás continuar con la Etapa 2.",
+            "El cuestionario se realiza de manera integrada. Al terminar, recibirás resultados detallados por dimensiones y podrás continuar con la Etapa 2.",
           ctaLabel: "Comenzar →",
           formUrl: N8N_AUTODIAGNOSTIC_FORM_URL,
         },

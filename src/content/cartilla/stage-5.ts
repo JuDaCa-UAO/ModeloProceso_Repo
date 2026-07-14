@@ -20,8 +20,8 @@ export const STAGE_5: Stage = {
     chapterLabel: "CAPÍTULO 5 DE 6",
     title: OFFICIAL_STAGE_NAMES["etapa-5"],
     description:
-      "Pon en práctica tu diseño: acompaña a tus estudiantes, gestiona los recursos y articula la experiencia con el currículo.",
-    tags: ["Guiar", "Motivar", "Documentar"],
+      "Lleva la experiencia al aula y realiza un acompañamiento activo: la IA no te reemplaza, potencia tu rol como mediador.",
+    tags: ["Guiar", "Acompañar", "Documentar"],
     laiaAvatar: mediaKey("laia.pose.triumphant"),
   },
   laia: [
@@ -32,7 +32,12 @@ export const STAGE_5: Stage = {
     },
     {
       id: "e5-laia-2",
-      text: "Tu papel es guiar, motivar y documentar el proceso, articulando la experiencia con el currículo y otras actividades formativas.",
+      text: "Tu rol es clave: guías el uso, formulas preguntas críticas, recuerdas los límites éticos y observas si los estudiantes realmente aprenden.",
+      avatarKey: mediaKey("laia.pose.explaining"),
+    },
+    {
+      id: "e5-laia-3",
+      text: "Registra en tu bitácora las cinco evidencias del proceso para que las analicemos en la Etapa 6. ¡Sigue bajando!",
       avatarKey: mediaKey("laia.pose.triumphant"),
     },
   ],
@@ -44,7 +49,8 @@ export const STAGE_5: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "¿Cómo acompañas a tus estudiantes para que usen la IA como apoyo para aprender, no como atajo para evitar pensar? Durante el despliegue, tu rol es de mediador: guías el uso de la IA, motivas la participación y documentas lo que ocurre para enriquecer tu práctica y generar aprendizajes compartidos con otros docentes.",
+            "Esta etapa es la puesta en práctica del diseño. El docente lleva la experiencia al aula y acompaña a los estudiantes mientras interactúan con la IA. Aquí la tecnología no reemplaza al docente; al contrario, el docente se vuelve más importante porque guía, observa, pregunta, aclara, interviene y ayuda a que los estudiantes usen la IA con criterio.",
+            "La pregunta central del despliegue pedagógico es: ¿cómo acompaño a mis estudiantes para que usen la IA como apoyo para aprender, y no como un atajo fácil para evitar el pensamiento reflexivo?",
           ],
         },
         { type: "narrative-video", mediaKey: mediaKey("stage5.classroomSimulation") },
@@ -56,8 +62,18 @@ export const STAGE_5: Stage = {
         },
         {
           type: "bullets",
+          title: "Acciones clave de mediación docente",
           variant: "pills",
-          items: ["Guía", "Observa", "Aclara", "Interviene", "Retroalimenta", "Documenta"],
+          items: [
+            "Explicar propósito",
+            "Entregar guía",
+            "Aclarar límites de la IA",
+            "Verificar acceso técnico",
+            "Formular preguntas críticas",
+            "Promover ética de aula",
+            "Retroalimentar en tiempo real",
+            "Registrar evidencias",
+          ],
         },
         {
           type: "infographic",
@@ -66,41 +82,62 @@ export const STAGE_5: Stage = {
         },
         {
           type: "carousel",
-          title: "Evidencias para mejorar",
+          title: "Evidencias para documentar",
           description:
-            "Mientras la experiencia ocurre, documenta lo que pasa. Estas cinco evidencias serán el insumo de tu reflexión en la Etapa 6.",
+            "Mientras la experiencia pedagógica ocurre en el aula, documenta lo que pasa. Estas cinco evidencias constituirán el insumo clave para la autoevaluación en la Etapa 6:",
           panels: [
             {
               id: "evidencia-1",
               label: "Dudas de estudiantes",
-              description: "Qué preguntaron y en qué momentos se trabaron.",
+              description: "Qué dudas expresaron los estudiantes y en qué momentos o conceptos de la actividad se trabaron.",
               mediaKey: mediaKey("stage5.rail.1"),
             },
             {
               id: "evidencia-2",
-              label: "Prompts usados",
-              description: "Qué le pidieron a la IA y cómo formularon la instrucción.",
+              label: "Prompts formulados",
+              description: "Qué indicaciones y prompts le escribieron a la IA, y si fueron refinando su instrucción.",
               mediaKey: mediaKey("stage5.rail.2"),
             },
             {
               id: "evidencia-3",
               label: "Productos generados",
-              description: "Qué entregó la IA y qué hizo el estudiante con ese resultado.",
+              description: "Qué resultados o textos arrojó la IA y qué modificaciones o aportes propios les hizo el estudiante.",
               mediaKey: mediaKey("stage5.rail.3"),
             },
             {
               id: "evidencia-4",
-              label: "Comentarios y errores",
-              description: "Qué falló, qué generó dudas o qué respuesta resultó poco confiable.",
+              label: "Errores y alucinaciones",
+              description: "Qué fallas del sistema ocurrieron, qué sesgos se detectaron o qué respuestas falsas (alucinaciones) dio la IA.",
               mediaKey: mediaKey("stage5.rail.4"),
             },
             {
               id: "evidencia-5",
-              label: "Ajustes y decisiones",
-              description: "Qué cambiaste sobre la marcha y por qué.",
+              label: "Ajustes del docente",
+              description: "Qué decisiones y cambios de planes (Plan B) tomaste sobre la marcha de la clase y por qué razones.",
               mediaKey: mediaKey("stage5.rail.5"),
             },
           ],
+        },
+        {
+          type: "bullets",
+          title: "Recursos que contiene esta etapa",
+          variant: "list",
+          items: [
+            "Presentación: Despliegue y gestión académica de la experiencia — Explica detalladamente cómo llevar a cabo la mediación didáctica en el aula de clase. Orienta al docente sobre cómo resolver atascos conceptuales, promover dinámicas grupales y evitar que los estudiantes recurran a un uso mecánico e irreflexivo de las herramientas.",
+            "Guía de la actividad de aprendizaje — Hoja de ruta secuencial (preparada en el alistamiento) que sirve de brújula a los estudiantes en clase, detallando las reglas de coautoría, el rol asignado a la IA y los entregables a producir.",
+            "Recursos de acceso a herramientas — Enlaces de acceso directo, manuales técnicos de inicio rápido, cuentas asignadas y recomendaciones técnicas para resolver incidencias de conectividad de los estudiantes.",
+            "Banco de preguntas críticas — Cuestionamientos clave diseñados para dinamizar el razonamiento crítico del estudiante en clase, obligándole a cuestionar la veracidad del contenido generado (ej. ¿cuál es la fuente de este dato?, ¿cómo adaptas esto a nuestro entorno?, ¿dónde está tu idea original?).",
+            "Reglas éticas de uso visibles — Recordatorios y pautas éticas proyectadas o impresas (citación obligatoria, no compartir datos sensibles, declarar el uso del prompt) que deben mantenerse visibles durante la sesión de clase.",
+            "Instrumentos de documentación del estudiante — Plantillas rápidas para recopilar evidencias en tiempo real como capturas del chat, listados de prompts ensayados y bocetos de trabajo reflexivo de los estudiantes.",
+            "Recursos de soporte y acompañamiento en aula — Foros de soporte técnico rápido en clase, tutorías breves presenciales, canales de comunicación y la puesta en marcha del Plan B pedagógico en caso de fallas tecnológicas.",
+            "Rúbrica y retroalimentación formativa — Criterios de evaluación utilizados por el docente de forma formativa durante la actividad para dar retorno inmediato y guiar a los estudiantes en su proceso de aprendizaje antes de la calificación.",
+            "Registro de observaciones docentes — Bitácora ágil para que el docente tome nota de manera sincrónica sobre qué dinámicas funcionaron, qué preguntas de la IA provocaron alucinaciones, qué desvíos éticos surgieron y qué ajustes de emergencia realizó.",
+          ],
+        },
+        {
+          type: "callout",
+          title: "PRODUCTO QUE DEJA ESTA ETAPA",
+          body: "La Experiencia de Aula Implementada y Documentada: el desarrollo de la actividad con estudiantes reales enriquecido con el banco empírico de evidencias (dudas, prompts, productos de IA, incidencias y bitácora del docente) para su posterior autoevaluación.",
         },
       ],
     },
