@@ -31,7 +31,7 @@ export default function LaiaStepper({ steps, badge = "LaIA" }: { steps: Resolved
     <div className={styles.panel} data-reveal>
       <div className={styles.avatarFrame}>
         {step.avatarUrl ? (
-          <Image src={step.avatarUrl} alt="LaIA" fill sizes="120px" className={styles.avatarImg} />
+          <Image src={step.avatarUrl} alt="LaIA" fill sizes="170px" className={styles.avatarImg} />
         ) : (
           <span aria-hidden>{step.avatarFallback}</span>
         )}

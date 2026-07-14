@@ -38,7 +38,7 @@ export default function StageCover({ stage, resolver }: { stage: Stage; resolver
               <img
                 src={avatar.url}
                 alt="LaIA"
-                style={{ width: "100%", height: "100%", objectFit: "contain", padding: "6%" }}
+                style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0%" }}
               />
             ) : null}
           </div>

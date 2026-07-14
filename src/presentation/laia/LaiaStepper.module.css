@@ -7,7 +7,7 @@
   box-shadow: var(--uao-shadow-soft);
   padding: 22px 26px;
   display: grid;
-  grid-template-columns: 120px 1fr;
+  grid-template-columns: 170px 1fr;
   gap: 22px;
   align-items: center;
 }
@@ -22,8 +22,8 @@
 
 .avatarFrame {
   position: relative;
-  width: 120px;
-  height: 120px;
+  width: 170px;
+  height: 170px;
   border-radius: var(--uao-radius-md);
   border: 2px solid var(--uao-color-coral);
   background: var(--uao-color-cream);
@@ -32,7 +32,7 @@
 
 .avatarImg {
   object-fit: contain;
-  padding: 6%;
+  padding: 0%;
 }
 
 .body {

@@ -38,7 +38,7 @@ export default function StageClosingCard({
           <div className={styles.avatarFrame}>
             {avatar.available && avatar.url ? (
               // eslint-disable-next-line @next/next/no-img-element -- círculo con object-fit:contain
-              <img src={avatar.url} alt="LaIA" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "8%" }} />
+              <img src={avatar.url} alt="LaIA" style={{ width: "100%", height: "100%", objectFit: "contain", padding: "0%" }} />
             ) : null}
           </div>
           <span className={styles.laiaBadge}>LaIA</span>
