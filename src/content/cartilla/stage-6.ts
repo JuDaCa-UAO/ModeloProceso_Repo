@@ -96,17 +96,17 @@ export const STAGE_6: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "Llevas a cabo una autoevaluación sencilla y focalizada en responder preguntas básicas: ¿funcionó la actividad?, ¿los estudiantes comprendieron el rol de la IA?, ¿qué falló y qué cambiaría en el próximo ciclo? Utilizas formularios breves, diarios reflexivos simples y plantillas básicas de lecciones.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Realizas una evaluación más profunda analizando la bitácora de prompts y productos generados por los estudiantes. Identificas dilemas éticos reales, mides el desarrollo del pensamiento crítico y refinas la rúbrica de evaluación didáctica con base en el Canvas de evaluación.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Evalúas con fines de escalabilidad, innovación y transferencia de conocimiento. Analizas datos cualitativos y cuantitativos, comparas resultados con cohortes anteriores, sistematizas la experiencia en formato de caso de estudio para coliderar con pares y propones mejoras al propio modelo de proceso.",
             },
           ],

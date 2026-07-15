@@ -126,17 +126,17 @@ export const STAGE_5: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "Implementas una actividad breve, muy guiada y en un entorno controlado para ganar confianza. Acompañas paso a paso, explicas el propósito, recuerdas pautas éticas básicas y recopilas un único tipo de evidencia sencilla de la clase.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Gestionas una sesión estructurada por fases (introducción, uso regulado, análisis de información y plenaria). Eres capaz de brindar soporte técnico ágil, resolver dudas específicas sobre las respuestas de la IA y guiar a los estudiantes a contrastar los datos.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Facilitas experiencias complejas, altamente reflexivas y flexibles que incorporan co-creación avanzada o dilemas éticos reales surgidos en clase. Realizas adaptaciones al diseño en tiempo real y sistematizas el desarrollo de la sesión como una buena práctica compartible.",
             },
           ],

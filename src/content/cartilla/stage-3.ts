@@ -100,17 +100,17 @@ export const STAGE_3: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "Diseñas una experiencia pequeña, puntual y controlada (una sola actividad sencilla con un objetivo concreto, límites claros y rúbrica básica). Buscas un diseño simple y seguro mediante un Canvas guiado, ejemplos resueltos, escala simple de uso y un banco básico de preguntas de aula.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Diseñas una secuencia más estructurada y completa que integra varias fases en el mapa de experiencia (introducción, interacción guiada, análisis, socialización y retorno). Defines rúbricas detalladas para calificar tanto el proceso reflexivo como el producto final, aplicando la escala de uso con rigor.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Diseñas experiencias robustas, complejas y potencialmente escalables, posiblemente articuladas a toda una trayectoria formativa o programa académico. Integras múltiples herramientas, configuras asistentes interactivos con prompts de sistema especializados y documentas tu diseño como un caso de estudio replicable.",
             },
           ],

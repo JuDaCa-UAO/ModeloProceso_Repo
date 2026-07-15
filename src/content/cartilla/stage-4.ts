@@ -92,17 +92,17 @@ export const STAGE_4: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "Tu prioridad absoluta es asegurar que las condiciones mínimas funcionen para evitar la improvisación. Te enfocas en verificar accesos básicos de herramientas, redactar instrucciones sencillas para la guía, establecer reglas éticas elementales y estructurar un Plan B de contingencia sumamente simple.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Llevas a cabo un alistamiento más exhaustivo. Simulas la actividad en rol de estudiante, preparas tutoriales de apoyo, elaboras una rúbrica detallada que distinga el proceso del producto final y diseñas bitácoras de prompts o plantillas para que tus estudiantes registren sus interacciones.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Tu alistamiento contempla configuraciones tecnológicas avanzadas y protocolos de control robustos. Configuras asistentes de IA personalizados con instrucciones de comportamiento específicas, gestionas las políticas de privacidad y datos institucionales, diseñas indicadores avanzados de seguimiento y creas alternativas equivalentes sin IA.",
             },
           ],

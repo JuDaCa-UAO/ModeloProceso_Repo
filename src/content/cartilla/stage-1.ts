@@ -24,7 +24,7 @@ export const STAGE_1: Stage = {
     chapterLabel: "CAPÍTULO 1 DE 6",
     title: OFFICIAL_STAGE_NAMES["etapa-1"],
     description:
-      "Esta etapa es el punto de partida. Aquí te miras a ti mismo y reconoces qué tanto sabes, usas y comprendes la inteligencia artificial generativa en tu práctica educativa.",
+      "Esta etapa es el punto de partida. Aquí te miras a ti mismo y reconoces qué tanto sabes, usas y comprendes la GenAI en tu práctica educativa.",
     tags: ["Individual", "Confidencial", "No es un examen"],
     laiaAvatar: mediaKey("laia.pose.explaining"),
   },
@@ -36,7 +36,7 @@ export const STAGE_1: Stage = {
     },
     {
       id: "e1-laia-2",
-      text: "Harás un autodiagnóstico individual y confidencial. No se trata de calificarte ni juzgarte, sino de ayudarte a identificar tu nivel inicial (M1), intermedio (M2) o avanzado (M3).",
+      text: "Harás un autodiagnóstico individual y confidencial. No se trata de calificarte ni juzgarte, sino de ayudarte a identificar tu nivel inicial, intermedio o avanzado.",
       avatarKey: mediaKey("laia.pose.explaining"),
     },
     {
@@ -53,7 +53,7 @@ export const STAGE_1: Stage = {
         {
           type: "paragraphs",
           paragraphs: [
-            "Esta etapa es el punto de partida. Aquí el docente se mira a sí mismo y reconoce qué tanto sabe, usa y comprende la inteligencia artificial generativa en su práctica educativa. No se trata de calificarlo ni de juzgarlo. Se trata de ayudarle a identificar desde dónde empieza: si está en un nivel inicial, intermedio o avanzado.",
+            "Esta etapa es el punto de partida. Aquí el docente se mira a sí mismo y reconoce qué tanto sabe, usa y comprende la GenAI en su práctica educativa. No se trata de calificarlo ni de juzgarlo. Se trata de ayudarle a identificar desde dónde empieza: si está en un nivel inicial, intermedio o avanzado.",
             "Para esto, el docente realiza un autodiagnóstico individual y confidencial sobre su relación actual con la IA. Responderá preguntas clave tipo escala Likert para evaluar su conocimiento de la IA, su uso pedagógico en el aula, su criterio ético frente a riesgos, su capacidad para analizar críticamente las respuestas de la IA y su disposición emocional frente al cambio tecnológico.",
           ],
         },
@@ -69,7 +69,7 @@ export const STAGE_1: Stage = {
               icon: "2",
               title: "Descubre tu nivel de madurez",
               description:
-                "Identifica si te encuentras en un nivel M1 inicial, M2 intermedio o M3 avanzado. Este nivel no es una etiqueta fija, sino una orientación sobre el acompañamiento que necesitas.",
+                "Identifica si te encuentras en un nivel inicial, intermedio o avanzado. Este nivel no es una etiqueta fija, sino una orientación sobre el acompañamiento que necesitas.",
             },
             {
               icon: "3",
@@ -86,17 +86,17 @@ export const STAGE_1: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "El diagnóstico te ayuda a reconocer que necesitas empezar por lo básico: comprender qué es la IA generativa, qué puede y no puede hacer, y cuáles son sus riesgos sin sentirte abrumado. Te orienta hacia la comprensión elemental.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Te ayuda a identificar vacíos específicos (criterios éticos, evaluación de procesos o promoción de pensamiento crítico) para estructurar y dar un uso más intencional a lo que ya vienes haciendo.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Sirve para consolidar tus fortalezas y detectar áreas de mejora estratégica, orientándote hacia retos más complejos, como la personalización de asistentes, el coliderazgo con pares y la innovación pedagógica.",
             },
           ],
@@ -107,7 +107,7 @@ export const STAGE_1: Stage = {
           cards: [
             {
               title: "Presentación: Fundamentos",
-              description: "Explica detalladamente la estructura progresiva en espiral, los niveles (M1, M2, M3) y la IA como práctica pedagógica, ética y crítica, no solo técnica.",
+              description: "Explica detalladamente la estructura progresiva en espiral, los niveles (inicial, intermedio, avanzado) y la IA como práctica pedagógica, ética y crítica, no solo técnica.",
             },
             {
               title: "Formulario de autodiagnóstico",
@@ -119,18 +119,18 @@ export const STAGE_1: Stage = {
             },
             {
               title: "Resultado de nivel docente",
-              description: "Determina si tu perfil es: M1 Inicial (requiere bases), M2 Intermedio (fortalecer diseño y evaluación) o M3 Avanzado (autonomía y guía a colegas).",
+              description: "Determina si tu perfil es: Inicial (requiere bases), Intermedio (fortalecer diseño y evaluación) o Avanzado (autonomía y guía a colegas).",
             },
             {
               title: "Recomendaciones personalizadas",
-              description: "Pautas de acción a medida: comenzar simple con una herramienta para M1, comparar opciones para M2, o socializar prácticas y coliderar para M3.",
+              description: "Pautas de acción a medida: comenzar simple con una herramienta para el nivel Inicial, comparar opciones para el nivel Intermedio, o socializar prácticas y coliderar para el nivel Avanzado.",
             },
           ],
         },
         {
           type: "callout",
           title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "El Perfil Inicial del Docente: un diagnóstico interactivo de tu nivel de madurez de partida (M1, M2 o M3) que integra tus fortalezas pedagógicas actuales, los aspectos específicos a mejorar y recomendaciones personalizadas para continuar el recorrido.",
+          body: "El Perfil Inicial del Docente: un diagnóstico interactivo de tu nivel de madurez de partida (inicial, intermedio o avanzado) que integra tus fortalezas pedagógicas actuales, los aspectos específicos a mejorar y recomendaciones personalizadas para continuar el recorrido.",
         },
         {
           type: "callout",

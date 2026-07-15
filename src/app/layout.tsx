@@ -12,9 +12,9 @@ const dmSans = DM_Sans({
 
 export const metadata: Metadata = {
   title:
-    "Cartilla Web: modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de inteligencia artificial generativa",
+    "Cartilla Web: modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de GenAI",
   description:
-    "Cartilla Web y modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de inteligencia artificial generativa. Universidad Autónoma de Occidente.",
+    "Cartilla Web y modelo de proceso para la alfabetización digital de docentes en el uso y apropiación de GenAI. Universidad Autónoma de Occidente.",
 };
 
 export default function RootLayout({ children }: { children: React.ReactNode }) {

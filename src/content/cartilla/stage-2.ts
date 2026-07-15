@@ -104,17 +104,17 @@ export const STAGE_2: Stage = {
           items: [
             {
               hierarchy: "Inicial",
-              title: "M1 Inicial",
+              title: "Inicial",
               description: "Exploras pocas herramientas, sencillas y de bajo riesgo (ej. IAs de texto básicas para generar ideas o borradores). Realizas tareas puntuales como identificar una actividad de clase, probar una sola herramienta y registrar dudas iniciales usando fichas informativas y una matriz de Pugh simplificada.",
             },
             {
               hierarchy: "Intermedio",
-              title: "M2 Intermedio",
+              title: "Intermedio",
               description: "Comparas dos o tres herramientas con criterio e intención pedagógica empleando la Matriz de Pugh completa. Evalúas de forma argumentada la idoneidad didáctica, los riesgos de privacidad, la accesibilidad de tus estudiantes y el fomento de su razonamiento crítico.",
             },
             {
               hierarchy: "Avanzado",
-              title: "M3 Avanzado",
+              title: "Avanzado",
               description: "Exploras herramientas con una visión estratégica y de integración institucional. Consideras la privacidad avanzada, la escalabilidad, la personalización de asistentes mediante prompts de sistema y documentas tus propios criterios y guías de uso para apoyar a otros colegas.",
             },
           ],

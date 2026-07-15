@@ -24,11 +24,11 @@ import type { IntroCover } from "@domain/content/Cartilla";
 import type { StageTransition } from "@domain/content/Stage";
 
 export const INTRO_COVER: IntroCover = {
-  title: "Modelo en espiral para integrar la GenAI en tu docencia",
+  title: "Modelo en espiral para integrar la IA generativa en tu docencia",
   quote: "No tengo ningún talento especial. Solo soy apasionadamente curioso.",
   quoteAuthor: "Albert Einstein",
   description:
-    "Un recorrido de descubrimiento, reflexión y transformación para llevar la Inteligencia Artificial Generativa al aula de forma crítica, creativa y responsable.",
+    "Un recorrido de descubrimiento, reflexión y transformación para llevar la GenAI (Inteligencia artificial generativa) al aula de forma crítica, creativa y responsable.",
 };
 
 // ─── Diálogo de LaIA (verbatim del `.dc.html`, propiedad `steps`) ────────────
@@ -66,7 +66,7 @@ export const INTRO_SECTIONS: Section[] = [
       {
         type: "paragraphs",
         paragraphs: [
-          "Como docentes, la curiosidad es una de nuestras mayores fuerzas: nos lleva a explorar, aprender y transformar lo que hacemos en el aula. Frente a lo nuevo —como la Inteligencia Artificial Generativa (GenAI)— es normal sentir incertidumbre, pero también sorpresa y motivación por descubrir su potencial.",
+          "Como docentes, la curiosidad es una de nuestras mayores fuerzas: nos lleva a explorar, aprender y transformar lo que hacemos en el aula. Frente a lo nuevo —como la GenAI— es normal sentir incertidumbre, pero también sorpresa y motivación por descubrir su potencial.",
           "Este modelo no da respuestas cerradas ni impone un único camino. Es una invitación a recorrer, desde tu propio punto de partida y en comunidad, un trayecto para integrar la GenAI de manera crítica, creativa y responsable en tu práctica docente.",
         ],
       },
