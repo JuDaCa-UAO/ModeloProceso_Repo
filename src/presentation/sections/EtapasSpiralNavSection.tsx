@@ -16,7 +16,12 @@ export default function EtapasSpiralNavSection({ stages }: { stages: Stage[] }) 
   const ordered = [...stages].sort((a, b) => a.order - b.order);
 
   return (
-    <section data-reveal data-screen-label="Navegación por etapas" className={styles.section}>
+    <section
+      id="navegacion-etapas"
+      data-reveal
+      data-screen-label="Navegación por etapas"
+      className={styles.section}
+    >
       <div className={styles.panel}>
         <div className={styles.header}>
           <h2 className={styles.title}>Explora las seis etapas</h2>

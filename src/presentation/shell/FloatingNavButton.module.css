@@ -1,0 +1,96 @@
+.button {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  z-index: 100;
+
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 18px;
+
+  background: linear-gradient(135deg, var(--uao-color-burgundy) 0%, var(--uao-color-wine) 100%);
+  color: var(--uao-color-white);
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: var(--uao-radius-pill);
+  box-shadow: var(--uao-shadow-panel), 0 4px 12px rgba(138, 20, 40, 0.25);
+
+  text-decoration: none;
+  font-family: var(--uao-font-sans);
+  font-size: 14px;
+  font-weight: 700;
+
+  opacity: 0;
+  transform: translateY(16px) scale(0.95);
+  pointer-events: none;
+  transition:
+    opacity 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    transform 0.4s cubic-bezier(0.16, 1, 0.3, 1),
+    background 0.2s ease,
+    box-shadow 0.2s ease,
+    border-color 0.2s ease;
+}
+
+.visible {
+  opacity: 1;
+  transform: translateY(0) scale(1);
+  pointer-events: auto;
+}
+
+.iconWrapper {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.spiralIcon {
+  transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+}
+
+/* Efectos en Hover */
+.button:hover,
+.button:focus-visible {
+  background: linear-gradient(135deg, var(--uao-color-red-primary) 0%, var(--uao-color-burgundy) 100%);
+  border-color: rgba(255, 255, 255, 0.3);
+  box-shadow: var(--uao-shadow-panel), 0 6px 18px rgba(255, 5, 30, 0.35);
+  transform: translateY(-4px) scale(1.03);
+}
+
+.button:hover .spiralIcon {
+  transform: rotate(180deg);
+}
+
+.button:active {
+  transform: translateY(-2px) scale(0.98);
+}
+
+/* Foco de accesibilidad para teclado */
+.button:focus-visible {
+  outline: 3px solid var(--uao-color-coral);
+  outline-offset: 3px;
+}
+
+/* Vista responsiva: En celulares se muestra como botón circular sin texto */
+@media (max-width: 640px) {
+  .button {
+    padding: 12px;
+    bottom: 20px;
+    right: 20px;
+  }
+
+  .text {
+    display: none;
+  }
+}
+
+/* Soporte para preferencias de movimiento reducido */
+@media (prefers-reduced-motion: reduce) {
+  .button {
+    transition: opacity 0.2s ease, background 0.1s ease;
+    transform: none !important;
+  }
+
+  .button:hover .spiralIcon {
+    transform: none;
+  }
+}

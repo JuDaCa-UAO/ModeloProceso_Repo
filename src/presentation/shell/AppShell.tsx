@@ -1,5 +1,6 @@
 import UaoArcBackground from "@/components/uao-arc-background/UaoArcBackground";
 import CartillaScroll from "./CartillaScroll";
+import FloatingNavButton from "./FloatingNavButton";
 
 /**
  * Composición raíz de la nueva Cartilla (documento único de scroll continuo).
@@ -11,6 +12,7 @@ export default function AppShell({ children }: { children: React.ReactNode }) {
     <>
       <UaoArcBackground />
       <CartillaScroll>{children}</CartillaScroll>
+      <FloatingNavButton />
     </>
   );
 }
