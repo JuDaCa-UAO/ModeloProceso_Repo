@@ -127,16 +127,7 @@ export const STAGE_1: Stage = {
             },
           ],
         },
-        {
-          type: "callout",
-          title: "Producto que deja esta etapa",
-          body: "El estado inicial del docente: un diagnóstico interactivo de tu nivel de madurez de partida (inicial, intermedio o avanzado) que integra tus fortalezas pedagógicas actuales, los aspectos específicos a mejorar y recomendaciones personalizadas para continuar el recorrido.",
-        },
-        {
-          type: "callout",
-          title: "Recuerda",
-          body: "El nivel obtenido no es una etiqueta fija: es una orientación inicial que se actualiza con cada nueva vuelta en la espiral de aprendizaje.",
-        },
+
         {
           type: "autodiagnostic",
           title: "Haz tu autodiagnóstico",

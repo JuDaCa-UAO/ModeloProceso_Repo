@@ -141,11 +141,7 @@ export const STAGE_3: Stage = {
             },
           ],
         },
-        {
-          type: "callout",
-          title: "Producto que deja esta etapa",
-          body: "El canvas de diseño de la experiencia de aprendizaje mediada por IA: una planeación didáctica completa, coherente y detallada que especifica la actividad, el rol de la IA, el nivel de uso permitido, las pautas éticas y la rúbrica de evaluación.",
-        },
+
         {
           type: "download",
           mediaKey: mediaKey("stage3.designCanvas"),

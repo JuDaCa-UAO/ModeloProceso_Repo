@@ -145,11 +145,7 @@ export const STAGE_2: Stage = {
             },
           ],
         },
-        {
-          type: "callout",
-          title: "Producto que deja esta etapa",
-          body: "Una herramienta de IA seleccionada y pedagógicamente justificada: sabrás con total claridad técnica y ética qué tecnología usarás, por qué se adapta a tus estudiantes y qué cuidados específicos debes contemplar.",
-        },
+
         {
           type: "download",
           mediaKey: mediaKey("stage2.pughMatrix"),
