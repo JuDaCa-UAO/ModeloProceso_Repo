@@ -5,18 +5,7 @@ export default function BulletsBlock({ block }: { block: Extract<Block, { type: 
   const title = block.title ? <h3 className={styles.blockTitle}>{block.title}</h3> : null;
 
   if (block.variant === "pills") {
-    return (
-      <div>
-        {title}
-        <ul className={styles.pillsRow}>
-          {block.items.map((item) => (
-            <li key={item} className={styles.pill}>
-              {item}
-            </li>
-          ))}
-        </ul>
-      </div>
-    );
+    return null;
   }
 
   return (

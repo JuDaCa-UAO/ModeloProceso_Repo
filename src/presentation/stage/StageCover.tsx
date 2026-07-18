@@ -23,13 +23,6 @@ export default function StageCover({ stage, resolver }: { stage: Stage; resolver
           </div>
           <h1 className={styles.title}>{stage.cover.title}</h1>
           <p className={styles.description}>{stage.cover.description}</p>
-          <div className={styles.tags}>
-            {stage.cover.tags.map((tag) => (
-              <span key={tag} className={styles.tag}>
-                {tag}
-              </span>
-            ))}
-          </div>
         </div>
         <div className={styles.avatarWrap}>
           <div className={styles.avatarCircle}>
