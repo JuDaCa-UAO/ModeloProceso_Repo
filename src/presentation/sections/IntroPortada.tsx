@@ -20,6 +20,7 @@ interface IntroPortadaProps {
 export default function IntroPortada({ cover, heroBackgroundUrl, logoUrl }: IntroPortadaProps) {
   return (
     <section id="inicio" className={styles.hero}>
+      <div className={styles.spine} aria-hidden />
       {heroBackgroundUrl ? (
         <Image src={heroBackgroundUrl} alt="" fill sizes="100vw" className={styles.heroBackground} priority />
       ) : null}
@@ -30,7 +31,7 @@ export default function IntroPortada({ cover, heroBackgroundUrl, logoUrl }: Intr
           ) : null}
           <div className={styles.eyebrow}>
             <span className={styles.badge}>CARTILLA</span>
-            <span className={styles.chapterLabel}>CAPÍTULO 0 · INTRODUCCIÓN</span>
+            <span className={styles.chapterLabel}>INTRODUCCIÓN</span>
           </div>
           <h1 className={styles.title}>{cover.title}</h1>
           <blockquote className={styles.quote}>

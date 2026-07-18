@@ -1,10 +1,11 @@
 .frame {
   position: relative;
   height: 360px;
-  border-radius: var(--uao-radius-md);
-  border: 1px solid var(--uao-border-soft);
-  background: var(--uao-color-cream);
+  border-radius: var(--uao-radius-lg);
+  border: 2px solid var(--uao-color-wine);
+  background: var(--uao-color-white);
   overflow: hidden;
+  box-shadow: inset 0 2px 8px rgba(0, 0, 0, 0.05);
 }
 
 .caption {
