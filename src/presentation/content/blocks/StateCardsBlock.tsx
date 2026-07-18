@@ -30,7 +30,6 @@ export default function StateCardsBlock({ block }: { block: Extract<Block, { typ
             {isRows ? (
               <>
                 <div className={styles.stateRowHeader}>
-                  <span className={styles.stateLabel}>{HIERARCHY_LABEL[item.hierarchy]}</span>
                   <h3 className={styles.stateRowTitle}>{item.title}</h3>
                 </div>
                 <p className={styles.stateDescription} style={{ margin: 0 }}>
@@ -39,7 +38,6 @@ export default function StateCardsBlock({ block }: { block: Extract<Block, { typ
               </>
             ) : (
               <>
-                <span className={styles.stateLabel}>{HIERARCHY_LABEL[item.hierarchy]}</span>
                 <h3 className={styles.stateTitle}>{item.title}</h3>
                 <p className={styles.stateDescription}>{item.description}</p>
               </>

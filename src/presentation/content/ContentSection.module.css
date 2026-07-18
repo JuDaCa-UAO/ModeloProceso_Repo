@@ -374,7 +374,7 @@
   font-family: var(--uao-font-sans);
   font-size: 20px;
   font-weight: 800;
-  color: var(--uao-color-text-primary);
+  color: var(--state-accent, var(--uao-color-coral));
 }
 
 .stateDescription {
@@ -415,7 +415,7 @@
   font-family: var(--uao-font-sans);
   font-size: 18px;
   font-weight: 800;
-  color: var(--uao-color-text-primary);
+  color: var(--state-accent, var(--uao-color-coral));
 }
 
 @media (max-width: 640px) {

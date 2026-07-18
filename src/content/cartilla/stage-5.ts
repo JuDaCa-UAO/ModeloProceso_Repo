@@ -185,8 +185,8 @@ export const STAGE_5: Stage = {
         },
         {
           type: "callout",
-          title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "La Experiencia de Aula Implementada y Documentada: el desarrollo de la actividad con estudiantes reales enriquecido con el banco empírico de evidencias (dudas, prompts, productos de IA, incidencias y bitácora del docente) para su posterior autoevaluación.",
+          title: "Producto que deja esta etapa",
+          body: "La experiencia de aula implementada y documentada: el desarrollo de la actividad con estudiantes reales enriquecido con el banco empírico de evidencias (dudas, prompts, productos de IA, incidencias y bitácora del docente) para su posterior autoevaluación.",
         },
       ],
     },

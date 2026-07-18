@@ -155,8 +155,8 @@ export const STAGE_6: Stage = {
         },
         {
           type: "callout",
-          title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "La Evaluación y Sistematización Documentada de la Experiencia: la recopilación de lecciones aprendidas transferibles y el Plan de Ajustes de diseño listo y optimizado para una nueva iteración o ciclo en la espiral de acompañamiento.",
+          title: "Producto que deja esta etapa",
+          body: "La evaluación y sistematización documentada de la experiencia: la recopilación de lecciones aprendidas transferibles y el plan de ajustes de diseño listo y optimizado para una nueva iteración o ciclo en la espiral de acompañamiento.",
         },
         {
           type: "narrative-video",
@@ -165,7 +165,7 @@ export const STAGE_6: Stage = {
         },
         {
           type: "callout",
-          title: "DE HALLAZGO A MEJORA",
+          title: "De hallazgo a mejora",
           body: "Un hallazgo solo se vuelve útil cuando produce una decisión: si hubo uso acrítico de la IA, puede faltar una pausa de verificación; si falló el acceso a la herramienta, quizá haya que mejorar el alistamiento.",
         },
       ],

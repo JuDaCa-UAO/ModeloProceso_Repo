@@ -151,8 +151,8 @@ export const STAGE_4: Stage = {
         },
         {
           type: "callout",
-          title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "El Kit de Implementación listo para el aula: la articulación de la guía del estudiante, las pautas éticas visibles de uso, la rúbrica de proceso de aprendizaje, las cuentas técnicas verificadas y el Plan B estructurado ante imprevistos técnicos.",
+          title: "Producto que deja esta etapa",
+          body: "El kit de implementación listo para el aula: la articulación de la guía del estudiante, las pautas éticas visibles de uso, la rúbrica de proceso de aprendizaje, las cuentas técnicas verificadas y el plan B estructurado ante imprevistos técnicos.",
         },
         {
           type: "download",

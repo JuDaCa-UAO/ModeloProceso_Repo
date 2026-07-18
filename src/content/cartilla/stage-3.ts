@@ -73,11 +73,7 @@ export const STAGE_3: Stage = {
             },
           ],
         },
-        {
-          type: "infographic",
-          mediaKey: mediaKey("stage3.designCanvasPreview"),
-          caption: "Canvas de diseño: la guía para estructurar tu experiencia mediada por GenAI",
-        },
+
         {
           type: "bullets",
           title: "Qué organiza el Canvas de diseño",
@@ -147,8 +143,8 @@ export const STAGE_3: Stage = {
         },
         {
           type: "callout",
-          title: "PRODUCTO QUE DEJA ESTA ETAPA",
-          body: "El Canvas de diseño de la experiencia de aprendizaje mediada por IA: una planeación didáctica completa, coherente y detallada que especifica la actividad, el rol de la IA, el nivel de uso permitido, las pautas éticas y la rúbrica de evaluación.",
+          title: "Producto que deja esta etapa",
+          body: "El canvas de diseño de la experiencia de aprendizaje mediada por IA: una planeación didáctica completa, coherente y detallada que especifica la actividad, el rol de la IA, el nivel de uso permitido, las pautas éticas y la rúbrica de evaluación.",
         },
         {
           type: "download",
