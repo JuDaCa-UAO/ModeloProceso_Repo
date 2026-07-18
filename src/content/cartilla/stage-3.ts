@@ -64,7 +64,7 @@ export const STAGE_3: Stage = {
             {
               icon: "2",
               title: "Determina el nivel de uso",
-              description: "Decide si la IA se restringe en partes, si se permite solo para lluvia de ideas, co-creación o uso total.",
+              description: "Decide si la IA se restringe en partes, si se permite solo para lluvia de ideas, cocreación o uso total.",
             },
             {
               icon: "3",
@@ -129,7 +129,7 @@ export const STAGE_3: Stage = {
             },
             {
               title: "Escala de uso de IA",
-              description: "Directrices para regular el nivel de autonomía y permisibilidad (escenario sin IA, IA solo para ideación, para co-edición de textos o uso colaborativo total).",
+              description: "Directrices para regular el nivel de autonomía y permisibilidad (escenario sin IA, IA solo para ideación, para coedición de textos o uso colaborativo total).",
             },
             {
               title: "Asistente de IA para diseño",

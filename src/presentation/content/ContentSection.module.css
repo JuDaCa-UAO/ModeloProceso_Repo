@@ -73,7 +73,7 @@
 /* ── action-cards ───────────────────────────────────────────────────────── */
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(210px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
   gap: var(--uao-space-4);
 }
 
@@ -84,11 +84,39 @@
   padding: 20px;
 }
 
+.interactiveCard {
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease;
+  outline: none;
+}
+
+.interactiveCard:hover,
+.interactiveCard:focus-visible {
+  border-color: var(--uao-color-red-primary);
+  box-shadow: 0 4px 12px rgba(224, 0, 52, 0.08);
+  transform: translateY(-2px);
+}
+
+.cardHeader {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: 100%;
+}
+
+.cardTitleContainer {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  flex: 1;
+  gap: 8px;
+}
+
 .cardIcon {
   font-size: 26px;
   font-weight: 800;
   color: var(--uao-color-red-primary);
-  margin-bottom: 8px;
+  flex-shrink: 0;
 }
 
 .cardIconBadge {
@@ -101,22 +129,62 @@
   border-radius: 50%;
   background: var(--uao-color-red-primary);
   color: var(--uao-color-white);
+  flex-shrink: 0;
 }
 
 .cardTitle {
-  margin: 0 0 6px;
+  margin: 0;
   font-family: var(--uao-font-sans);
   font-size: 16px;
   font-weight: 700;
   color: var(--uao-color-text-primary);
+  transition: color 0.2s ease;
+}
+
+.interactiveCard:hover .cardTitle,
+.interactiveCard:focus-visible .cardTitle {
+  color: var(--uao-color-red-primary);
+}
+
+.expandChevron {
+  font-size: 10px;
+  color: var(--uao-color-text-secondary);
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.interactiveCard:hover .expandChevron {
+  color: var(--uao-color-red-primary);
+}
+
+.cardExpanded .expandChevron {
+  transform: rotate(180deg);
+}
+
+.cardDescriptionContainer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease-out;
+  overflow: hidden;
+}
+
+.cardDescriptionContainer.show {
+  grid-template-rows: 1fr;
 }
 
 .cardDescription {
+  min-height: 0;
   margin: 0;
   font-family: var(--uao-font-sans);
   font-size: 14px;
   line-height: 1.55;
   color: var(--uao-color-text-secondary);
+  padding-top: 0;
+  transition: padding-top 0.2s ease-out;
+}
+
+.cardDescriptionContainer.show .cardDescription {
+  padding-top: 10px;
 }
 
 /* ── infographic ────────────────────────────────────────────────────────── */
@@ -423,4 +491,101 @@
     grid-template-columns: 1fr;
     gap: 12px;
   }
+}
+
+/* ── concept-cards (interactive bullets) ────────────────────────────────── */
+.conceptGrid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: var(--uao-space-3);
+  width: 100%;
+}
+
+.conceptCard {
+  background: var(--uao-color-white);
+  border: 1px solid var(--uao-border-default);
+  border-left: 4px solid transparent;
+  border-radius: var(--uao-radius-md);
+  padding: 16px 20px;
+  cursor: pointer;
+  transition: transform 0.2s ease, box-shadow 0.2s ease, border-color 0.2s ease, border-left-color 0.2s ease;
+  outline: none;
+}
+
+.conceptCard:hover,
+.conceptCard:focus-visible {
+  border-color: var(--uao-border-soft);
+  border-left-color: var(--uao-color-red-primary);
+  box-shadow: 0 4px 10px rgba(0, 0, 0, 0.04);
+  transform: translateY(-2px);
+}
+
+.conceptCardExpanded {
+  border-color: var(--uao-border-soft);
+  border-left-color: var(--uao-color-wine);
+  background: var(--uao-color-cream);
+}
+
+.conceptHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 12px;
+  width: 100%;
+}
+
+.conceptTitle {
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 15.5px;
+  font-weight: 700;
+  color: var(--uao-color-text-primary);
+  transition: color 0.2s ease;
+}
+
+.conceptCard:hover .conceptTitle,
+.conceptCard:focus-visible .conceptTitle {
+  color: var(--uao-color-red-primary);
+}
+
+.conceptChevron {
+  font-size: 9px;
+  color: var(--uao-color-text-secondary);
+  transition: transform 0.2s ease, color 0.2s ease;
+  flex-shrink: 0;
+}
+
+.conceptCard:hover .conceptChevron {
+  color: var(--uao-color-red-primary);
+}
+
+.conceptCardExpanded .conceptChevron {
+  transform: rotate(180deg);
+  color: var(--uao-color-wine);
+}
+
+.conceptDescriptionContainer {
+  display: grid;
+  grid-template-rows: 0fr;
+  transition: grid-template-rows 0.2s ease-out;
+  overflow: hidden;
+}
+
+.conceptDescriptionContainer.show {
+  grid-template-rows: 1fr;
+}
+
+.conceptDescription {
+  min-height: 0;
+  margin: 0;
+  font-family: var(--uao-font-sans);
+  font-size: 14.2px;
+  line-height: 1.6;
+  color: var(--uao-color-text-secondary);
+  padding-top: 0;
+  transition: padding-top 0.2s ease-out;
+}
+
+.conceptDescriptionContainer.show .conceptDescription {
+  padding-top: 8px;
 }

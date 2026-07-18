@@ -115,7 +115,7 @@ export const STAGE_1: Stage = {
             },
             {
               title: "Agente de IA de apoyo",
-              description: "Tutor virtual que te acompaña conversacionalmente durante el formulario para resolver dudas y interpretar enunciados de forma guiada.",
+              description: "Tutor virtual que te acompaña conversacionalmente durante el formulario para resolver dudas e interpretar enunciados de forma guiada.",
             },
             {
               title: "Resultado de nivel docente",

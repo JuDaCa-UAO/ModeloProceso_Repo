@@ -88,7 +88,7 @@ export const STAGE_2: Stage = {
             "Ética y protección de datos — si la herramienta respeta la privacidad y promueve un uso responsable.",
             "Razonamiento crítico — si fomenta la verificación de información, el análisis crítico y la argumentación.",
             "Accesibilidad — si los estudiantes pueden usarla considerando posibles barreras económicas, técnicas o de capacidades.",
-            "Integración y costo — si es viable financieramente y se integra bien con el contexto institucional de la institución.",
+            "Integración y costo — si es viable financieramente y se integra bien con el contexto de la institución.",
           ],
         },
         {

@@ -137,7 +137,7 @@ export const STAGE_5: Stage = {
             {
               hierarchy: "Avanzado",
               title: "Avanzado",
-              description: "Facilitas experiencias complejas, altamente reflexivas y flexibles que incorporan co-creación avanzada o dilemas éticos reales surgidos en clase. Realizas adaptaciones al diseño en tiempo real y sistematizas el desarrollo de la sesión como una buena práctica compartible.",
+              description: "Facilitas experiencias complejas, altamente reflexivas y flexibles que incorporan cocreación avanzada o dilemas éticos reales surgidos en clase. Realizas adaptaciones al diseño en tiempo real y sistematizas el desarrollo de la sesión como una buena práctica compartible.",
             },
           ],
         },
@@ -147,7 +147,7 @@ export const STAGE_5: Stage = {
           cards: [
             {
               title: "Presentación: Despliegue",
-              description: "Pautas metodológicas para orientar la mediación pedagógica en aula: resolviendo bloqueos, guíando el análisis de datos y previniendo la copia irreflexiva.",
+              description: "Pautas metodológicas para orientar la mediación pedagógica en aula: resolviendo bloqueos, guiando el análisis de datos y previniendo la copia irreflexiva.",
             },
             {
               title: "Guía de la actividad",
