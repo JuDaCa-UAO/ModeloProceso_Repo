@@ -1,7 +1,7 @@
 .canvasContainer {
   position: relative;
   width: 100%;
-  height: clamp(360px, 52vh, 520px);
+  height: clamp(280px, 40vh, 400px);
   border-radius: var(--uao-radius-md);
   overflow: hidden;
   /* El arrastre debe girar el modelo (OrbitControls), no seleccionar texto. */
