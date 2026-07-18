@@ -1,5 +1,7 @@
 import type { Stage } from "@domain/content/Stage";
-import CartillaSpiralNav from "@/presentation/spiral/CartillaSpiralNav";
+import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
+import { mediaKey } from "@domain/content/value-objects/MediaKey";
+import EtapasSpiralNavPanel from "./EtapasSpiralNavPanel";
 import styles from "./EtapasSpiralNavSection.module.css";
 
 /**
@@ -12,8 +14,24 @@ import styles from "./EtapasSpiralNavSection.module.css";
  * como respaldo para teclado, lectores de pantalla y `prefers-reduced-motion`,
  * ya que un canvas WebGL no es navegable por esos medios.
  */
-export default function EtapasSpiralNavSection({ stages }: { stages: Stage[] }) {
-  const ordered = [...stages].sort((a, b) => a.order - b.order);
+export default function EtapasSpiralNavSection({ stages, resolver }: { stages: Stage[]; resolver: IMediaResolver }) {
+  const avatar1 = resolver.resolve(mediaKey("laia.pose.explaining"));
+  const avatar2 = resolver.resolve(mediaKey("laia.pose.triumphant"));
+
+  const navigationSteps = [
+    {
+      id: "nav-laia-1",
+      text: "¡Hola! Con este modelo en espiral interactivo puedes explorar y dirigirte a cualquiera de las 6 etapas de inmediato. Solo arrastra la espiral para girarla y haz clic en la etapa que desees explorar.",
+      avatarUrl: avatar1.available ? avatar1.url : null,
+      avatarFallback: avatar1.fallback,
+    },
+    {
+      id: "nav-laia-2",
+      text: "Además, si estás leyendo una etapa y deseas volver a este menú rápidamente, puedes presionar el botón 'Seleccionar una etapa distinta' que siempre verás abajo a la derecha de tu pantalla.",
+      avatarUrl: avatar2.available ? avatar2.url : null,
+      avatarFallback: avatar2.fallback,
+    },
+  ];
 
   return (
     <section
@@ -22,37 +40,7 @@ export default function EtapasSpiralNavSection({ stages }: { stages: Stage[] }) 
       data-screen-label="Navegación por etapas"
       className={styles.section}
     >
-      <div className={styles.panel}>
-        <div className={styles.header}>
-          <h2 className={styles.title}>Explora las seis etapas</h2>
-          <span className={styles.eyebrow}>gira el modelo y elige una etapa</span>
-        </div>
-
-        <CartillaSpiralNav />
-
-        <nav className={styles.linksNav} aria-label="Ir directamente a una etapa">
-          <p className={styles.linksHint}>¿Prefieres ir directo? Elige una etapa:</p>
-          <ul className={styles.grid}>
-            {ordered.map((stage) => (
-              <li key={stage.id}>
-                <a
-                  href={`#${stage.id}`}
-                  className={styles.card}
-                  style={{ "--stage-accent": stage.accent.main } as React.CSSProperties}
-                >
-                  <span className={styles.cardNumber}>{stage.order}</span>
-                  <span className={styles.cardName}>{stage.officialName}</span>
-                </a>
-              </li>
-            ))}
-          </ul>
-        </nav>
-
-        <p className={styles.description}>
-          Cada etapa se acompaña de cinco factores rectores —propósito, razonamiento crítico, ética, herramientas y
-          reflexión— que conocerás al final del recorrido.
-        </p>
-      </div>
+      <EtapasSpiralNavPanel stages={stages} navigationSteps={navigationSteps} />
     </section>
   );
 }

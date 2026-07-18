@@ -10,6 +10,8 @@ import styles from "./FloatingNavButton.module.css";
  */
 export default function FloatingNavButton() {
   const [isVisible, setIsVisible] = useState(false);
+  const [isHighlighted, setIsHighlighted] = useState(false);
+  const [forceVisible, setForceVisible] = useState(false);
 
   useEffect(() => {
     const handleScroll = () => {
@@ -21,12 +23,27 @@ export default function FloatingNavButton() {
       }
     };
 
+    const handleHighlightStart = () => {
+      setIsHighlighted(true);
+      setForceVisible(true);
+    };
+
+    const handleHighlightStop = () => {
+      setIsHighlighted(false);
+      setForceVisible(false);
+    };
+
     window.addEventListener("scroll", handleScroll, { passive: true });
+    window.addEventListener("laia-nav-highlight-start", handleHighlightStart);
+    window.addEventListener("laia-nav-highlight-stop", handleHighlightStop);
+
     // Ejecutar inmediatamente en caso de recarga a mitad de página
     handleScroll();
 
     return () => {
       window.removeEventListener("scroll", handleScroll);
+      window.removeEventListener("laia-nav-highlight-start", handleHighlightStart);
+      window.removeEventListener("laia-nav-highlight-stop", handleHighlightStop);
     };
   }, []);
 
@@ -49,7 +66,9 @@ export default function FloatingNavButton() {
     <a
       href="#navegacion-etapas"
       onClick={handleClick}
-      className={`${styles.button} ${isVisible ? styles.visible : ""}`}
+      className={`${styles.button} ${isVisible || forceVisible ? styles.visible : ""} ${
+        isHighlighted ? styles.highlighted : ""
+      }`}
       aria-label="Volver al menú de etapas"
       title="Volver al menú de etapas"
     >
@@ -57,8 +76,8 @@ export default function FloatingNavButton() {
         {/* SVG Espiral abstracta */}
         <svg
           viewBox="0 0 24 24"
-          width="20"
-          height="20"
+          width="22"
+          height="22"
           fill="none"
           stroke="currentColor"
           strokeWidth="2.5"

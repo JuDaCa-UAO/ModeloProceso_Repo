@@ -7,7 +7,7 @@
   display: flex;
   align-items: center;
   gap: 8px;
-  padding: 10px 18px;
+  padding: 12px 22px;
 
   background: linear-gradient(135deg, var(--uao-color-burgundy) 0%, var(--uao-color-wine) 100%);
   color: var(--uao-color-white);
@@ -17,7 +17,7 @@
 
   text-decoration: none;
   font-family: var(--uao-font-sans);
-  font-size: 14px;
+  font-size: 16px;
   font-weight: 700;
 
   opacity: 0;
@@ -92,5 +92,28 @@
 
   .button:hover .spiralIcon {
     transform: none;
+  }
+
+  .highlighted {
+    animation: none !important;
+    border-color: var(--uao-color-red-primary) !important;
+    box-shadow: var(--uao-shadow-panel), 0 0 16px var(--uao-color-red-primary) !important;
+  }
+}
+
+.highlighted {
+  animation: pulseBlink 1.4s infinite ease-in-out;
+  border-color: var(--uao-color-coral) !important;
+}
+
+@keyframes pulseBlink {
+  0%, 100% {
+    transform: translateY(0) scale(1);
+    box-shadow: var(--uao-shadow-panel), 0 0 8px var(--uao-color-coral);
+  }
+  50% {
+    transform: translateY(-6px) scale(1.06);
+    box-shadow: var(--uao-shadow-panel), 0 0 24px var(--uao-color-red-primary);
+    border-color: var(--uao-color-red-primary) !important;
   }
 }

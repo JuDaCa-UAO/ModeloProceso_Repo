@@ -18,7 +18,17 @@ export interface ResolvedLaiaStep {
   avatarFallback: string;
 }
 
-export default function LaiaStepper({ steps, badge = "LaIA" }: { steps: ResolvedLaiaStep[]; badge?: string }) {
+export default function LaiaStepper({
+  steps,
+  badge = "LaIA",
+  onStepChange,
+  onFinish,
+}: {
+  steps: ResolvedLaiaStep[];
+  badge?: string;
+  onStepChange?: (index: number) => void;
+  onFinish?: () => void;
+}) {
   const [index, setIndex] = useState(0);
   const total = steps.length;
   const step = steps[index];
@@ -48,7 +58,11 @@ export default function LaiaStepper({ steps, badge = "LaIA" }: { steps: Resolved
           <button
             type="button"
             className={styles.buttonSecondary}
-            onClick={() => setIndex((i) => Math.max(0, i - 1))}
+            onClick={() => {
+              const nextIdx = Math.max(0, index - 1);
+              setIndex(nextIdx);
+              onStepChange?.(nextIdx);
+            }}
             disabled={atStart}
           >
             ← Anterior
@@ -56,8 +70,15 @@ export default function LaiaStepper({ steps, badge = "LaIA" }: { steps: Resolved
           <button
             type="button"
             className={styles.buttonPrimary}
-            onClick={() => setIndex((i) => Math.min(total - 1, i + 1))}
-            disabled={atEnd}
+            onClick={() => {
+              if (atEnd) {
+                onFinish?.();
+              } else {
+                const nextIdx = Math.min(total - 1, index + 1);
+                setIndex(nextIdx);
+                onStepChange?.(nextIdx);
+              }
+            }}
           >
             {atEnd ? "¡Entendido! ✓" : "Siguiente →"}
           </button>

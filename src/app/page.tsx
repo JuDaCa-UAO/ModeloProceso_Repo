@@ -50,7 +50,7 @@ export default function Page() {
       {cartilla.introSections.map((section) => (
         <ContentSection key={section.id} section={section} resolver={resolver} />
       ))}
-      <EtapasSpiralNavSection stages={cartilla.stages} />
+      <EtapasSpiralNavSection stages={cartilla.stages} resolver={resolver} />
       {cartilla.introTransition && introTransitionMedia ? (
         <TransitionAnimation
           url={introTransitionMedia.available ? introTransitionMedia.url : null}
