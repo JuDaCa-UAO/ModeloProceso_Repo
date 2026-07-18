@@ -61,13 +61,13 @@ export const INTRO_LAIA_MESSAGES: LaiaMessage[] = [
 export const INTRO_SECTIONS: Section[] = [
   {
     id: "intro-curiosidad",
-    title: "La curiosidad nos mueve",
+    title: "¿Por qué integrar la IA en tu práctica docente?",
     blocks: [
       {
         type: "paragraphs",
         paragraphs: [
-          "Como docentes, la curiosidad es una de nuestras mayores fuerzas: nos lleva a explorar, aprender y transformar lo que hacemos en el aula. Frente a lo nuevo —como la GenAI— es normal sentir incertidumbre, pero también sorpresa y motivación por descubrir su potencial.",
-          "Este modelo no da respuestas cerradas ni impone un único camino. Es una invitación a recorrer, desde tu propio punto de partida y en comunidad, un trayecto para integrar la GenAI de manera crítica, creativa y responsable en tu práctica docente.",
+          "¿Qué tareas de tu labor podrían ser más ágiles, creativas o significativas con el apoyo de la inteligencia artificial? Más que incorporar una herramienta por tendencia, se trata de descubrir cómo puede ayudarte a planear actividades, generar materiales, explorar nuevas formas de explicar un tema y ofrecer respuestas más ajustadas a las necesidades de tus estudiantes.",
+          "La IA no reemplaza tu experiencia ni tu criterio pedagógico. Puede convertirse en una aliada para ahorrar tiempo, ampliar tus posibilidades y concentrarte en lo que realmente aporta valor: acompañar, orientar y diseñar mejores experiencias de aprendizaje. La pregunta no es solo qué puede hacer la IA, sino qué podrías lograr tú con ella al utilizarla de manera crítica, creativa y responsable.",
         ],
       },
       {
