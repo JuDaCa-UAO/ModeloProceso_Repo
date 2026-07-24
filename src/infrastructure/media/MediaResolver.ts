@@ -32,6 +32,7 @@ export class MediaResolver implements IMediaResolver {
       kind: asset.kind,
       available: false,
       url: null,
+      alt: asset.alt,
       description: asset.description,
       fallback: asset.fallback,
       playback: asset.kind === "video" ? asset.playback : undefined,

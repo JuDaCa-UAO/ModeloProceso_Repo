@@ -13,9 +13,8 @@
  *   inline con `<figcaption>` — nunca detrás de un botón que abre modal. Se
  *   simplifica a `{ mediaKey, caption }`, sin `openLabel`/`modalTitle`/
  *   `modalBadge`/`guideId` (herencia del motor viejo, sin uso real).
- * - `download`: el diseño siempre es una tarjeta directa (título+descripción+
- *   botón `<a download>`), sin confirmación ni preview embebido. Se
- *   simplifica a `{ mediaKey, title, description, label }`.
+ * - `download`: tarjeta de recurso pedagógico con PDF, preview y acciones
+ *   accesibles. Las URLs siguen viviendo en el manifiesto multimedia.
  * - `design-canvas`, `checklist`, `scenario`: **eliminados**. Ninguna etapa
  *   del diseño real los usa — E3 (antes "design-canvas") es solo
  *   `action-cards` + `infographic` + `download`; E4 (antes "checklist"/
@@ -38,10 +37,19 @@ import type { MediaKey } from "./value-objects/MediaKey";
 export type Block =
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "callout"; title?: string; body: string }
-  | { type: "bullets"; title?: string; items: string[]; variant?: "list" | "pills" }
+  | { type: "bullets"; title?: string; items: string[]; variant?: "list" | "ordered" | "pills" }
   | { type: "infographic"; mediaKey: MediaKey; caption: string }
   | { type: "narrative-video"; mediaKey: MediaKey; caption?: string }
-  | { type: "download"; mediaKey: MediaKey; title: string; description: string; label: string }
+  | {
+      type: "download";
+      mediaKey: MediaKey;
+      previewMediaKey: MediaKey;
+      title: string;
+      description: string;
+      information: string;
+      stageLabel: string;
+      resourceType: string;
+    }
   | {
       type: "action-cards";
       title?: string;

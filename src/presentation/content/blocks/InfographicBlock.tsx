@@ -26,7 +26,7 @@ export default function InfographicBlock({
         <Image
           className={styles.figureImage}
           src={media.url}
-          alt={media.description ?? block.caption}
+          alt={media.alt ?? media.description ?? block.caption}
           width={media.width ?? 1600}
           height={media.height ?? 1000}
           sizes="(max-width: 820px) 92vw, 800px"

@@ -51,6 +51,35 @@ const nextConfig: NextConfig = {
     // caché larga en Vercel para no re-optimizar en cada visita.
     minimumCacheTTL: 31536000,
   },
+  async redirects() {
+    return [
+      {
+        source: "/media/etapa-2/Matriz-de-Pugh.pdf",
+        destination: "/media/descargables/etapa-2/matriz-pugh/matriz-pugh.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/etapa-3/Canvas-de-diseno.pdf",
+        destination: "/media/descargables/etapa-3/canvas-diseno/canvas-etapa-3-diseno.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/etapa-3/Canvas_etapa3.png",
+        destination: "/media/descargables/etapa-3/canvas-diseno/preview-canvas-etapa-3-diseno.png",
+        permanent: true,
+      },
+      {
+        source: "/media/etapa-4/descargas/Canvas-de-alistamiento-GenAI.pdf",
+        destination: "/media/descargables/etapa-4/canvas-alistamiento/canvas-etapa-4-alistamiento.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/etapa-6/descargas/Canvas-de-evaluacion-GenAI.pdf",
+        destination: "/media/descargables/etapa-6/canvas-evaluacion/canvas-etapa-6-evaluacion.pdf",
+        permanent: true,
+      },
+    ];
+  },
   async headers() {
     return [
       {
