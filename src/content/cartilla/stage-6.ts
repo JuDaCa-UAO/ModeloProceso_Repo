@@ -56,6 +56,16 @@ export const STAGE_6: Stage = {
           ],
         },
         {
+          type: "download",
+          mediaKey: mediaKey("stage6.evaluationCanvas"),
+          previewMediaKey: mediaKey("stage6.evaluationCanvasPreview"),
+          title: "Canvas de evaluación",
+          description: "Contrasta lo planeado con lo vivido y recoge las miradas docente y estudiantil sobre los resultados, la herramienta, la ética y las mejoras necesarias.",
+          information: "El Canvas etapa 6: Evaluación docente-estudiante de la experiencia mediada por IA corresponde a la Etapa 6: Evaluación o Consolidación. Este recurso permite valorar la experiencia después de su implementación, tanto desde la perspectiva docente como desde la respuesta de los estudiantes. Sus preguntas orientan la revisión de los aprendizajes alcanzados, el valor real aportado por la GenAI, la claridad de las actividades, el funcionamiento de las herramientas, el desarrollo del razonamiento crítico, el cumplimiento de criterios éticos, la calidad de la retroalimentación y las oportunidades de mejora. Su función es cerrar el ciclo de la experiencia, identificando qué funcionó, qué debe ajustarse y qué decisiones pueden orientar futuras implementaciones. En la Cartilla Web, este canvas debe aparecer como un descargable fundamental de la etapa final, especialmente porque permite transformar la evaluación en mejora continua.",
+          stageLabel: "Etapa 6 · Evaluación",
+          resourceType: "Canvas de reflexión",
+        },
+        {
           type: "infographic",
           mediaKey: mediaKey("stage6.evaluationDimensions"),
           caption: "Evaluar no es solo calificar: dimensiones pedagógica, técnica, ética, emocional y cognitiva",
@@ -152,17 +162,6 @@ export const STAGE_6: Stage = {
               description: "Instrumento para valorar la utilidad, viabilidad y pertinencia metodológica del propio modelo de espiral en tu práctica real.",
             },
           ],
-        },
-
-        {
-          type: "download",
-          mediaKey: mediaKey("stage6.evaluationCanvas"),
-          previewMediaKey: mediaKey("stage6.evaluationCanvasPreview"),
-          title: "Canvas de evaluación",
-          description: "Contrasta lo planeado con lo vivido y recoge las miradas docente y estudiantil sobre los resultados, la herramienta, la ética y las mejoras necesarias.",
-          information: "El Canvas etapa 6: Evaluación docente-estudiante de la experiencia mediada por IA corresponde a la Etapa 6: Evaluación o Consolidación. Este recurso permite valorar la experiencia después de su implementación, tanto desde la perspectiva docente como desde la respuesta de los estudiantes. Sus preguntas orientan la revisión de los aprendizajes alcanzados, el valor real aportado por la GenAI, la claridad de las actividades, el funcionamiento de las herramientas, el desarrollo del razonamiento crítico, el cumplimiento de criterios éticos, la calidad de la retroalimentación y las oportunidades de mejora. Su función es cerrar el ciclo de la experiencia, identificando qué funcionó, qué debe ajustarse y qué decisiones pueden orientar futuras implementaciones. En la Cartilla Web, este canvas debe aparecer como un descargable fundamental de la etapa final, especialmente porque permite transformar la evaluación en mejora continua.",
-          stageLabel: "Etapa 6 · Evaluación",
-          resourceType: "Canvas de reflexión",
         },
 
         {
