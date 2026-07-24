@@ -80,7 +80,7 @@ export default function LaiaStepper({
               }
             }}
           >
-            {atEnd ? "¡Entendido! ✓" : "Siguiente →"}
+            {atEnd ? "Entendido" : "Leer más"}
           </button>
         </div>
       </div>

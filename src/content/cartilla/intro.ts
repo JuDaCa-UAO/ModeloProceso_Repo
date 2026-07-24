@@ -8,10 +8,9 @@
  * resto de contenido/etapas viejas NO se toman en cuenta como fuente de
  * texto — se descartan y se reemplazan por completo con el diseño.
  *
- * - **Diálogo de LaIA** (`INTRO_LAIA_MESSAGES`): las 4 líneas literales del
- *   arreglo `steps` en el `<script>` del `.dc.html` (clase `Component`,
- *   propiedad `steps = [...]`), en su orden original. `audioKey` se omite a
- *   propósito: los audios nuevos de LaIA son la Fase 9.
+ * - **Diálogo de LaIA** (`INTRO_LAIA_MESSAGES`): las líneas aprobadas para la
+ *   introducción, sin instrucciones de interacción con el modelo 3D superior.
+ *   `audioKey` se omite a propósito: los audios nuevos de LaIA son la Fase 9.
  * - **Secciones de contenido** (`INTRO_SECTIONS`): texto estático del cuerpo
  *   del `.dc.html` (fuera de cualquier `{{ }}`/`DCLogic`), transcrito sin
  *   parafrasear.
@@ -31,12 +30,12 @@ export const INTRO_COVER: IntroCover = {
     "Un recorrido de descubrimiento, reflexión y transformación para llevar la GenAI (Inteligencia artificial generativa) al aula de forma crítica, creativa y responsable.",
 };
 
-// ─── Diálogo de LaIA (verbatim del `.dc.html`, propiedad `steps`) ────────────
+// ─── Diálogo de LaIA ─────────────────────────────────────────────────────────
 
 export const INTRO_LAIA_MESSAGES: LaiaMessage[] = [
   {
     id: "intro-laia-1",
-    text: "¡Hola! Soy LaIA, tu asistente en esta aventura de aprendizaje. Te acompañaré a lo largo de toda la cartilla para que integres la GenAI en tu práctica docente.",
+    text: "¡Hola! Soy LaIA, tu asistente en esta aventura de aprendizaje. Esta cartilla informativa presenta el modelo de proceso en espiral para integrar la IA generativa en tu docencia, y te acompañaré paso a paso para llevar la GenAI a tu práctica docente.",
     avatarKey: mediaKey("laia.pose.neutral"),
   },
   {
@@ -46,11 +45,6 @@ export const INTRO_LAIA_MESSAGES: LaiaMessage[] = [
   },
   {
     id: "intro-laia-3",
-    text: "Arriba puedes explorar el modelo 3D de la espiral: gíralo con el mouse. Cada anillo representa una vuelta de tu proceso de aprendizaje.",
-    avatarKey: mediaKey("laia.pose.explaining"),
-  },
-  {
-    id: "intro-laia-4",
     text: "¡Perfecto! Sigue desplazándote hacia abajo y descubre por qué hablamos de una espiral. Nos vemos en las siguientes secciones.",
     avatarKey: mediaKey("laia.pose.triumphant"),
   },
