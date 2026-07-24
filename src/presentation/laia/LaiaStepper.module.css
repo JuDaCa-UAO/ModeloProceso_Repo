@@ -46,6 +46,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .badge {
@@ -55,28 +56,29 @@
   padding: 4px 10px;
   font-family: var(--uao-font-sans);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13.5px;
 }
 
 .stepCounter {
   font-family: var(--uao-font-sans);
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--uao-color-text-secondary);
 }
 
 .text {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 17px;
-  line-height: 1.55;
+  font-size: 18.5px;
+  line-height: 1.6;
   color: var(--uao-color-text-primary);
-  min-height: 78px;
+  min-height: 90px;
 }
 
 .actions {
   display: flex;
   gap: 10px;
   align-items: center;
+  flex-wrap: wrap;
 }
 
 .buttonSecondary {
@@ -87,7 +89,7 @@
   padding: 9px 18px;
   font-family: var(--uao-font-sans);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15.5px;
   cursor: pointer;
 }
 
@@ -104,7 +106,7 @@
   padding: 9px 20px;
   font-family: var(--uao-font-sans);
   font-weight: 600;
-  font-size: 14px;
+  font-size: 15.5px;
   cursor: pointer;
 }
 

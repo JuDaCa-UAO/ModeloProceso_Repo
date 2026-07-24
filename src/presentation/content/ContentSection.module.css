@@ -10,9 +10,10 @@
 .title {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: clamp(24px, 3vw, 34px);
+  font-size: clamp(27px, 3.2vw, 38px);
   font-weight: 800;
   color: var(--uao-color-burgundy);
+  overflow-wrap: anywhere;
 }
 
 .blocks {
@@ -26,8 +27,8 @@
   margin: 0;
   max-width: 48rem;
   font-family: var(--uao-font-sans);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 18.5px;
+  line-height: 1.68;
   color: var(--uao-color-text-primary);
 }
 
@@ -35,9 +36,10 @@
 .blockTitle {
   margin: 0 0 10px;
   font-family: var(--uao-font-sans);
-  font-size: 16px;
+  font-size: 17.5px;
   font-weight: 800;
   color: var(--uao-color-burgundy);
+  overflow-wrap: anywhere;
 }
 
 .bulletsList {
@@ -65,7 +67,7 @@
   border-radius: var(--uao-radius-pill);
   padding: 8px 16px;
   font-family: var(--uao-font-sans);
-  font-size: 14px;
+  font-size: 15.5px;
   font-weight: 600;
   color: var(--uao-color-wine);
 }
@@ -73,7 +75,7 @@
 /* ── action-cards ───────────────────────────────────────────────────────── */
 .cardsGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 260px), 1fr));
   gap: var(--uao-space-4);
   align-items: start;
 }
@@ -111,10 +113,11 @@
   justify-content: space-between;
   flex: 1;
   gap: 8px;
+  min-width: 0;
 }
 
 .cardIcon {
-  font-size: 26px;
+  font-size: 28px;
   font-weight: 800;
   color: var(--uao-color-red-primary);
   flex-shrink: 0;
@@ -126,7 +129,7 @@
   display: flex;
   align-items: center;
   justify-content: center;
-  font-size: 16px;
+  font-size: 17.5px;
   border-radius: 50%;
   background: var(--uao-color-red-primary);
   color: var(--uao-color-white);
@@ -136,10 +139,11 @@
 .cardTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 16px;
+  font-size: 17.5px;
   font-weight: 700;
   color: var(--uao-color-text-primary);
   transition: color 0.2s ease;
+  overflow-wrap: anywhere;
 }
 
 .interactiveCard:hover .cardTitle,
@@ -148,7 +152,7 @@
 }
 
 .expandChevron {
-  font-size: 10px;
+  font-size: 11px;
   color: var(--uao-color-text-secondary);
   transition: transform 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
@@ -177,8 +181,8 @@
   min-height: 0;
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 14px;
-  line-height: 1.55;
+  font-size: 15.5px;
+  line-height: 1.6;
   color: var(--uao-color-text-secondary);
   padding-top: 0;
   transition: padding-top 0.2s ease-out;
@@ -206,7 +210,7 @@
 
 .figcaption {
   font-family: var(--uao-font-sans);
-  font-size: 13px;
+  font-size: 14.5px;
   color: var(--uao-color-text-secondary);
   text-align: center;
 }
@@ -242,7 +246,7 @@
 
 .videoPendingLabel {
   font-family: ui-monospace, Menlo, monospace;
-  font-size: 12px;
+  font-size: 13.5px;
   color: var(--uao-color-wine);
   background: var(--uao-color-white);
   border: 1px solid var(--uao-border-default);
@@ -272,7 +276,7 @@
 .downloadTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 19px;
+  font-size: 20.5px;
   font-weight: 800;
   color: var(--uao-color-burgundy);
 }
@@ -280,8 +284,8 @@
 .downloadDescription {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 14.5px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--uao-color-text-secondary);
 }
 
@@ -293,9 +297,9 @@
   padding: 12px 22px;
   font-family: var(--uao-font-sans);
   font-weight: 700;
-  font-size: 14px;
+  font-size: 15.5px;
   text-decoration: none;
-  white-space: nowrap;
+  text-align: center;
   cursor: pointer;
 }
 
@@ -340,7 +344,7 @@
 
 .autodiagnosticHeaderTitle {
   font-family: var(--uao-font-sans);
-  font-size: 15px;
+  font-size: 16.5px;
   font-weight: 800;
   color: var(--uao-color-burgundy);
 }
@@ -349,7 +353,7 @@
   border: none;
   background: none;
   color: var(--uao-color-text-secondary);
-  font-size: 18px;
+  font-size: 19.5px;
   line-height: 1;
   cursor: pointer;
   padding: 6px;
@@ -400,22 +404,22 @@
   padding: 5px 10px;
   font-family: var(--uao-font-sans);
   font-weight: 700;
-  font-size: 12px;
+  font-size: 13.5px;
   flex: none;
 }
 
 .calloutBody {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 14.5px;
-  line-height: 1.55;
+  font-size: 16px;
+  line-height: 1.6;
   color: var(--uao-color-text-secondary);
 }
 
 /* ── state-cards ────────────────────────────────────────────────────────── */
 .stateGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 280px), 1fr));
   gap: var(--uao-space-4);
 }
 
@@ -432,7 +436,7 @@
 
 .stateLabel {
   font-family: var(--uao-font-sans);
-  font-size: 12px;
+  font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
   color: var(--state-accent, var(--uao-color-coral));
@@ -441,7 +445,7 @@
 .stateTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 20px;
+  font-size: 22px;
   font-weight: 800;
   color: var(--state-accent, var(--uao-color-coral));
 }
@@ -449,8 +453,8 @@
 .stateDescription {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 14.5px;
-  line-height: 1.6;
+  font-size: 16px;
+  line-height: 1.65;
   color: var(--uao-color-text-secondary);
 }
 
@@ -468,7 +472,7 @@
   border-radius: var(--uao-radius-md);
   padding: 20px 24px;
   display: grid;
-  grid-template-columns: 180px 1fr;
+  grid-template-columns: minmax(170px, 210px) minmax(0, 1fr);
   gap: 24px;
   align-items: center;
 }
@@ -482,7 +486,7 @@
 .stateRowTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 18px;
+  font-size: 19.5px;
   font-weight: 800;
   color: var(--state-accent, var(--uao-color-coral));
 }
@@ -497,7 +501,7 @@
 /* ── concept-cards (interactive bullets) ────────────────────────────────── */
 .conceptGrid {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fit, minmax(min(100%, 300px), 1fr));
   gap: var(--uao-space-3);
   width: 100%;
   align-items: start;
@@ -539,7 +543,7 @@
 .conceptTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 15.5px;
+  font-size: 17px;
   font-weight: 700;
   color: var(--uao-color-text-primary);
   transition: color 0.2s ease;
@@ -551,7 +555,7 @@
 }
 
 .conceptChevron {
-  font-size: 9px;
+  font-size: 10px;
   color: var(--uao-color-text-secondary);
   transition: transform 0.2s ease, color 0.2s ease;
   flex-shrink: 0;
@@ -581,8 +585,8 @@
   min-height: 0;
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 14.2px;
-  line-height: 1.6;
+  font-size: 15.75px;
+  line-height: 1.65;
   color: var(--uao-color-text-secondary);
   padding-top: 0;
   transition: padding-top 0.2s ease-out;

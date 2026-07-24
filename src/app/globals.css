@@ -28,6 +28,15 @@ body {
 body {
   margin: 0;
   font-family: var(--font-tech), "Segoe UI", Tahoma, sans-serif;
+  font-size: 18px;
+  line-height: 1.5;
   background-color: var(--uao-color-cream, #fbf5ec);
   color: var(--uao-color-text-primary, #0f172b);
+}
+
+button,
+input,
+textarea,
+select {
+  font: inherit;
 }

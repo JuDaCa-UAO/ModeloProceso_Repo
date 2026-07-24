@@ -27,23 +27,25 @@
   border-radius: var(--uao-radius-md, 0.875rem);
   box-shadow: 0 4px 14px rgba(0, 0, 0, 0.12);
   pointer-events: none;
-  white-space: nowrap;
+  max-width: min(360px, calc(100vw - 48px));
+  white-space: normal;
   animation: fadeIn 0.2s ease-out;
   transform: translate3d(0, 0, 0);
 }
 
 .labelOrder {
   font-family: var(--font-tech), monospace;
-  font-size: 0.875rem;
+  font-size: 1rem;
   color: var(--uao-color-red-primary, #ff051e);
   font-weight: bold;
 }
 
 .labelName {
-  font-size: 0.95rem;
+  font-size: 1.05rem;
   color: var(--uao-color-text-primary, #0f172b);
   font-weight: 600;
   letter-spacing: 0.02em;
+  overflow-wrap: anywhere;
 }
 
 @keyframes fadeIn {

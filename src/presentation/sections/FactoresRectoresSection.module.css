@@ -17,16 +17,17 @@
 .title {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: clamp(24px, 3vw, 34px);
+  font-size: clamp(27px, 3.2vw, 38px);
   font-weight: 800;
   color: var(--uao-color-burgundy);
+  overflow-wrap: anywhere;
 }
 
 .description {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 17px;
-  line-height: 1.65;
+  font-size: 18.5px;
+  line-height: 1.68;
   color: var(--uao-color-text-primary);
   max-width: 760px;
 }
@@ -49,7 +50,7 @@
 
 .cardId {
   font-family: var(--uao-font-sans);
-  font-size: 13px;
+  font-size: 14.5px;
   font-weight: 800;
   color: var(--uao-color-red-primary);
   letter-spacing: 0.06em;
@@ -58,7 +59,7 @@
 .cardName {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 16px;
+  font-size: 17.5px;
   font-weight: 800;
   color: var(--uao-color-text-primary);
 }
@@ -66,7 +67,7 @@
 .cardQuestion {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 13.5px;
-  line-height: 1.5;
+  font-size: 15px;
+  line-height: 1.55;
   color: var(--uao-color-text-secondary);
 }

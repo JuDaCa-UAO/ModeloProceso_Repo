@@ -49,6 +49,12 @@
   }
 }
 
+@media (max-width: 560px) {
+  .card {
+    padding: 38px 26px;
+  }
+}
+
 .textCol {
   display: flex;
   flex-direction: column;
@@ -64,6 +70,7 @@
   display: flex;
   align-items: center;
   gap: 10px;
+  flex-wrap: wrap;
 }
 
 .badge {
@@ -73,7 +80,7 @@
   padding: 5px 12px;
   font-family: var(--uao-font-sans);
   font-weight: 700;
-  font-size: 13px;
+  font-size: 14.5px;
   letter-spacing: 0.08em;
 }
 
@@ -81,14 +88,14 @@
   color: var(--uao-color-burgundy);
   font-family: var(--uao-font-sans);
   font-weight: 600;
-  font-size: 13px;
+  font-size: 14.5px;
   letter-spacing: 0.08em;
 }
 
 .title {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: clamp(30px, 4vw, 46px);
+  font-size: clamp(34px, 4.4vw, 52px);
   line-height: 1.08;
   font-weight: 800;
   color: var(--uao-color-burgundy);
@@ -101,8 +108,8 @@
   background: var(--uao-color-white);
   border-radius: 0 var(--uao-radius-md) var(--uao-radius-md) 0;
   font-family: var(--uao-font-sans);
-  font-size: 18px;
-  line-height: 1.5;
+  font-size: 19.5px;
+  line-height: 1.55;
   color: var(--uao-color-text-secondary);
 }
 
@@ -114,8 +121,8 @@
 .description {
   margin: 0;
   font-family: var(--uao-font-sans);
-  font-size: 17px;
-  line-height: 1.6;
+  font-size: 18.5px;
+  line-height: 1.65;
   color: var(--uao-color-text-secondary);
 }
 
@@ -131,7 +138,7 @@
   color: var(--uao-color-burgundy);
   font-family: var(--uao-font-sans);
   font-weight: 600;
-  font-size: 18px;
+  font-size: 19.5px;
 }
 
 .scrollArrow {
