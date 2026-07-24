@@ -74,6 +74,24 @@ export const STAGE_2: Stage = {
           ],
         },
         {
+          type: "callout",
+          title: "¿Qué es la Matriz de Pugh?",
+          body: "La Matriz de Pugh es una herramienta de decisión multicriterio que permite comparar varias alternativas frente a una referencia. En esta Cartilla Web se utiliza para analizar herramientas de GenAI antes de incorporarlas a una actividad de aprendizaje. La comparación se realiza mediante criterios como apropiación docente, idoneidad pedagógica, ética y datos, razonamiento crítico, accesibilidad e inclusión, e integración/costo. Su propósito no es elegir la herramienta «más novedosa», sino justificar cuál aporta mayor valor pedagógico y menor riesgo para una experiencia concreta.",
+        },
+        {
+          type: "bullets",
+          title: "Cómo usarla",
+          variant: "ordered",
+          items: [
+            "Define una actividad de aprendizaje real.",
+            "Elige una referencia de comparación, por ejemplo la práctica actual sin GenAI o una herramienta ya conocida.",
+            "Lista hasta tres herramientas candidatas.",
+            "Evalúa cada alternativa frente a los criterios de la matriz.",
+            "Usa los pesos y el total ponderado como apoyo para justificar la decisión.",
+            "Complementa el resultado con una reflexión pedagógica, ética y de viabilidad.",
+          ],
+        },
+        {
           type: "infographic",
           mediaKey: mediaKey("stage2.criteriaInfographic"),
           caption: "Mirar una herramienta con criterio: seis aspectos para evaluar cada posibilidad de IA",
@@ -149,9 +167,12 @@ export const STAGE_2: Stage = {
         {
           type: "download",
           mediaKey: mediaKey("stage2.pughMatrix"),
+          previewMediaKey: mediaKey("stage2.pughMatrixPreview"),
           title: "Matriz de Pugh",
           description: "Descarga la plantilla para comparar y ponderar las herramientas de GenAI con criterio pedagógico y ético.",
-          label: "Descargar PDF ↓",
+          information: "La Matriz Pugh para análisis de herramientas de GenAI corresponde a la Etapa 2: Exploración. Este recurso descargable permite comparar distintas herramientas de inteligencia artificial generativa frente a una referencia común, como una herramienta ya conocida, una solución institucional o la práctica actual sin IA. La matriz organiza criterios como apropiación docente, idoneidad pedagógica, ética y datos, razonamiento crítico, accesibilidad e inclusión, e integración/costo. Su propósito es ayudar al docente a tomar una decisión informada, evitando elegir una herramienta solo por moda, popularidad o disponibilidad inmediata. En la Cartilla Web, este recurso sirve para orientar la selección crítica de tecnologías GenAI según el propósito pedagógico, las condiciones del curso y los posibles riesgos de uso.",
+          stageLabel: "Etapa 2 · Exploración",
+          resourceType: "Matriz comparativa",
         },
       ],
     },

@@ -13,6 +13,19 @@ export default function BulletsBlock({ block }: { block: Extract<Block, { type: 
     return null;
   }
 
+  if (block.variant === "ordered") {
+    return (
+      <div>
+        {title}
+        <ol className={styles.bulletsList}>
+          {block.items.map((item) => (
+            <li key={item}>{item}</li>
+          ))}
+        </ol>
+      </div>
+    );
+  }
+
   // Regex to check if all items follow "Concepto — Explicación"
   const isConceptList = block.variant === "list" && block.items.every((item) => /\s+[\u2014\u2013-]\s+/.test(item));
 

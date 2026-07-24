@@ -1,6 +1,6 @@
 import type { Block } from "@domain/content/Block";
 import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
-import styles from "../ContentSection.module.css";
+import DownloadableCard from "../downloads/DownloadableCard";
 
 export default function DownloadBlock({
   block,
@@ -10,20 +10,17 @@ export default function DownloadBlock({
   resolver: IMediaResolver;
 }) {
   const media = resolver.resolve(block.mediaKey);
+  const preview = resolver.resolve(block.previewMediaKey);
 
   return (
-    <div className={styles.downloadCard}>
-      <div>
-        <h3 className={styles.downloadTitle}>{block.title}</h3>
-        <p className={styles.downloadDescription}>{block.description}</p>
-      </div>
-      {media.available && media.url ? (
-        <a className={styles.downloadButton} href={media.url} download={media.downloadName}>
-          {block.label}
-        </a>
-      ) : (
-        <span className={styles.videoPendingLabel}>{media.fallback}</span>
-      )}
-    </div>
+    <DownloadableCard
+      title={block.title}
+      description={block.description}
+      information={block.information}
+      stageLabel={block.stageLabel}
+      resourceType={block.resourceType}
+      pdf={media}
+      preview={preview}
+    />
   );
 }

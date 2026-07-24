@@ -120,7 +120,7 @@ export const STAGE_3: Stage = {
               description: "Estrategias didácticas para diseñar actividades profundas que fortalezcan la intención formativa y el pensamiento reflexivo, evitando que la IA reemplace el esfuerzo cognitivo.",
             },
             {
-              title: "Mapa de experiencia",
+              title: "Matriz de la experiencia",
               description: "Ordenador visual para secuenciar la actividad (inicio, exploración, interacción con IA, producción, cierre), definiendo los roles del docente, del estudiante y de la tecnología.",
             },
             {
@@ -145,9 +145,22 @@ export const STAGE_3: Stage = {
         {
           type: "download",
           mediaKey: mediaKey("stage3.designCanvas"),
+          previewMediaKey: mediaKey("stage3.designCanvasPreview"),
           title: "Canvas de diseño",
           description: "Descarga la plantilla para diseñar tu propia experiencia de aprendizaje paso a paso.",
-          label: "Descargar PDF ↓",
+          information: "El Canvas etapa 3: Diseño de la experiencia de aprendizaje mediada por IA también corresponde a la Etapa 3: Diseño. Este recurso permite estructurar de manera integral la propuesta pedagógica de la experiencia. Incluye componentes como objetivo y propuesta de valor, actividades académicas, soluciones de GenAI seleccionadas, razonamiento crítico y mediaciones, consideraciones éticas y de diseño responsable, mecanismos de evaluación y retroalimentación, y mecanismos de seguimiento y mejora continua. Su utilidad está en convertir una intención inicial en una experiencia de aprendizaje coherente, donde la GenAI tenga un rol explícito y justificado. En la Cartilla Web, este canvas debe ayudar al docente a responder no solo qué herramienta usará, sino por qué la usará, en qué momento, con qué límites y con qué sentido pedagógico.",
+          stageLabel: "Etapa 3 · Diseño",
+          resourceType: "Canvas pedagógico",
+        },
+        {
+          type: "download",
+          mediaKey: mediaKey("stage3.experienceMatrix"),
+          previewMediaKey: mediaKey("stage3.experienceMatrixPreview"),
+          title: "Matriz de la experiencia",
+          description: "Mapea el antes, durante y después de la experiencia, cruzando acciones del estudiante, acciones docentes, recursos y tiempos.",
+          information: "La Matriz de la experiencia, también presentada como Mapeo de la experiencia, corresponde principalmente a la Etapa 3: Diseño. Este recurso ayuda a organizar la experiencia de aprendizaje en tres momentos: antes, durante y después. En cada momento se identifican las acciones del estudiante, las acciones del docente, los recursos y herramientas necesarios, y los tiempos requeridos. Su función es permitir que el docente visualice la experiencia completa antes de implementarla, de modo que pueda anticipar qué debe preparar, cómo se desarrollará la actividad y qué apoyos serán necesarios. Aunque puede servir como insumo para el alistamiento y el despliegue, su ubicación principal debe ser la etapa de diseño, porque allí se define la estructura de la experiencia mediada por GenAI.",
+          stageLabel: "Etapa 3 · Diseño",
+          resourceType: "Mapa de experiencia",
         },
       ],
     },

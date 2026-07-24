@@ -153,9 +153,12 @@ export const STAGE_4: Stage = {
         {
           type: "download",
           mediaKey: mediaKey("stage4.readinessCanvas"),
+          previewMediaKey: mediaKey("stage4.readinessCanvasPreview"),
           title: "Canvas de alistamiento",
           description: "La lista de chequeo indispensable para verificar la viabilidad integral de tu actividad mediada por IA.",
-          label: "Descargar PDF ↓",
+          information: "El Canvas etapa 4: Alistamiento de la experiencia de aprendizaje mediada por IA corresponde a la Etapa 4: Alistamiento. Este recurso funciona como una guía de preparación antes de llevar la experiencia al aula. Incluye acciones como confirmar el alineamiento curricular, crear una guía clara de instrucciones, verificar acceso y licenciamiento de herramientas, simular la experiencia completa, definir un plan B, preparar preguntas guía, establecer reglas éticas, diseñar una rúbrica simple y definir mecanismos de observación. Su propósito es reducir la improvisación y asegurar que la experiencia diseñada pueda implementarse de forma viable, clara y responsable. En la Cartilla Web, este recurso debe presentarse como una herramienta práctica para revisar si la experiencia está lista antes del despliegue con estudiantes.",
+          stageLabel: "Etapa 4 · Alistamiento",
+          resourceType: "Canvas de preparación",
         },
       ],
     },
