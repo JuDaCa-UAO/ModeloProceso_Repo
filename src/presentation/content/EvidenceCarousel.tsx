@@ -17,6 +17,7 @@
  */
 import { useCallback, useState } from "react";
 import Image from "next/image";
+import { CONTENT_IMAGE_QUALITY } from "@/presentation/media/image-quality";
 import styles from "./EvidenceCarousel.module.css";
 
 export interface ResolvedCarouselPanel {
@@ -75,6 +76,7 @@ export default function EvidenceCarousel({ panels }: { panels: ResolvedCarouselP
                 alt={p.imageAlt}
                 fill
                 sizes="(max-width: 620px) 90vw, 560px"
+                quality={CONTENT_IMAGE_QUALITY}
                 className={styles.slideImage}
                 priority={i === 0}
               />

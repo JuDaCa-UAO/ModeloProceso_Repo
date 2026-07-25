@@ -9,6 +9,7 @@
  */
 import { useState } from "react";
 import Image from "next/image";
+import { PHOTOGRAPHIC_IMAGE_QUALITY } from "@/presentation/media/image-quality";
 import styles from "./LaiaStepper.module.css";
 
 export interface ResolvedLaiaStep {
@@ -41,7 +42,14 @@ export default function LaiaStepper({
     <div className={styles.panel} data-reveal>
       <div className={styles.avatarFrame}>
         {step.avatarUrl ? (
-          <Image src={step.avatarUrl} alt="LaIA" fill sizes="170px" className={styles.avatarImg} />
+          <Image
+            src={step.avatarUrl}
+            alt="LaIA"
+            fill
+            sizes="170px"
+            quality={PHOTOGRAPHIC_IMAGE_QUALITY}
+            className={styles.avatarImg}
+          />
         ) : (
           <span aria-hidden>{step.avatarFallback}</span>
         )}

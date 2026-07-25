@@ -8,6 +8,7 @@
  */
 import Image from "next/image";
 import type { IntroCover } from "@domain/content/Cartilla";
+import { PHOTOGRAPHIC_IMAGE_QUALITY } from "@/presentation/media/image-quality";
 import IntroSpiralViewer from "@/presentation/spiral/IntroSpiralViewer";
 import styles from "./IntroPortada.module.css";
 
@@ -22,7 +23,15 @@ export default function IntroPortada({ cover, heroBackgroundUrl, logoUrl }: Intr
     <section id="inicio" className={styles.hero}>
       <div className={styles.spine} aria-hidden />
       {heroBackgroundUrl ? (
-        <Image src={heroBackgroundUrl} alt="" fill sizes="100vw" className={styles.heroBackground} priority />
+        <Image
+          src={heroBackgroundUrl}
+          alt=""
+          fill
+          sizes="100vw"
+          quality={PHOTOGRAPHIC_IMAGE_QUALITY}
+          className={styles.heroBackground}
+          priority
+        />
       ) : null}
       <div className={styles.card}>
         <div className={styles.textCol}>

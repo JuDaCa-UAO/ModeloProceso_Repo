@@ -31,6 +31,9 @@ const nextConfig: NextConfig = {
   images: {
     // AVIF primero (más pequeño que webp); Next cae a webp si el navegador no lo soporta.
     formats: ["image/avif", "image/webp"],
+    // Las piezas editoriales contienen texto fino; estas son las únicas
+    // calidades permitidas por los componentes de presentación.
+    qualities: [90, 95],
     // Las variantes optimizadas son inmutables (dependen de la URL fuente):
     // caché larga en Vercel para no re-optimizar en cada visita.
     minimumCacheTTL: 31536000,

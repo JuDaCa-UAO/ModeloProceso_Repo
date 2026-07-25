@@ -1,6 +1,7 @@
 import Image from "next/image";
 import type { Block } from "@domain/content/Block";
 import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
+import { CONTENT_IMAGE_QUALITY } from "@/presentation/media/image-quality";
 import styles from "../ContentSection.module.css";
 
 /**
@@ -29,7 +30,8 @@ export default function InfographicBlock({
           alt={media.alt ?? media.description ?? block.caption}
           width={media.width ?? 1600}
           height={media.height ?? 1000}
-          sizes="(max-width: 820px) 92vw, 800px"
+          sizes="(max-width: 820px) calc(100vw - 48px), 1152px"
+          quality={CONTENT_IMAGE_QUALITY}
         />
       ) : (
         <div className={styles.videoPending}>

@@ -4,6 +4,7 @@ import Image from "next/image";
 import { CircleAlert } from "lucide-react";
 import { useCallback, useId, useState } from "react";
 import type { ResolvedMedia } from "@domain/media/ResolvedMedia";
+import { CONTENT_IMAGE_QUALITY } from "@/presentation/media/image-quality";
 import AccessibleDialog from "../AccessibleDialog";
 import styles from "./DownloadableCard.module.css";
 
@@ -57,6 +58,7 @@ export default function DownloadableCard({
             width={imageWidth}
             height={imageHeight}
             sizes="(max-width: 720px) 92vw, 360px"
+            quality={CONTENT_IMAGE_QUALITY}
             className={styles.previewImage}
           />
         ) : (
@@ -120,6 +122,7 @@ export default function DownloadableCard({
             width={imageWidth}
             height={imageHeight}
             sizes="(max-width: 720px) 92vw, 880px"
+            quality={CONTENT_IMAGE_QUALITY}
             className={styles.dialogImage}
           />
         ) : (
