@@ -130,11 +130,22 @@ export const STAGE_1: Stage = {
 
         {
           type: "autodiagnostic",
-          title: "Haz tu autodiagnóstico",
+          title: "Haz tu autodiagnóstico docente",
           description:
             "El cuestionario se realiza de manera integrada. Al terminar, recibirás resultados detallados por dimensiones y podrás continuar con la Etapa 2.",
-          ctaLabel: "Comenzar →",
+          ctaLabel: "Comenzar autodiagnóstico",
           formUrl: N8N_AUTODIAGNOSTIC_FORM_URL,
+          privacyNotice: {
+            title: "Antes de comenzar: uso de tu información",
+            purpose:
+              "Tus respuestas se utilizarán únicamente para orientar tu recorrido dentro de esta experiencia y ofrecerte recomendaciones acordes con tu punto de partida.",
+            confidentiality:
+              "El ejercicio es individual y confidencial. No constituye una evaluación administrativa ni un mecanismo de clasificación institucional.",
+            legalReference:
+              "El tratamiento de la información se realiza conforme a la Ley 1581 de 2012 y el Decreto 1377 de 2013.",
+            consentLabel:
+              "He leído esta información y autorizo el tratamiento de mis datos personales para realizar el autodiagnóstico y orientar mi recorrido en la cartilla.",
+          },
         },
       ],
     },

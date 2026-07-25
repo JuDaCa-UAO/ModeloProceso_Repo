@@ -25,7 +25,7 @@ export default function CarouselBlock({
   return (
     <div>
       <div className={styles.blocks}>
-        <h3 className={styles.downloadTitle}>{block.title}</h3>
+        <h3 className={styles.contentTitle}>{block.title}</h3>
         {block.description ? <p className={styles.paragraph}>{block.description}</p> : null}
       </div>
       <EvidenceCarousel panels={panels} />

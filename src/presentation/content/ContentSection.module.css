@@ -255,64 +255,12 @@
   text-align: center;
 }
 
-/* ── download ───────────────────────────────────────────────────────────── */
-.downloadCard {
-  background: var(--uao-color-white);
-  border: 1px solid var(--uao-border-default);
-  border-radius: var(--uao-radius-lg);
-  padding: 24px 28px;
-  display: grid;
-  grid-template-columns: 1fr auto;
-  gap: 20px;
-  align-items: center;
-}
-
-@media (max-width: 560px) {
-  .downloadCard {
-    grid-template-columns: 1fr;
-  }
-}
-
-.downloadTitle {
+.contentTitle {
   margin: 0;
   font-family: var(--uao-font-sans);
   font-size: 20.5px;
   font-weight: 800;
   color: var(--uao-color-burgundy);
-}
-
-.downloadDescription {
-  margin: 0;
-  font-family: var(--uao-font-sans);
-  font-size: 16px;
-  line-height: 1.65;
-  color: var(--uao-color-text-secondary);
-}
-
-.downloadButton {
-  border: 1px solid var(--uao-color-red-primary);
-  background: var(--uao-color-red-primary);
-  color: var(--uao-color-white);
-  border-radius: var(--uao-radius-md);
-  padding: 12px 22px;
-  font-family: var(--uao-font-sans);
-  font-weight: 700;
-  font-size: 15.5px;
-  text-decoration: none;
-  text-align: center;
-  cursor: pointer;
-}
-
-.downloadButton:hover {
-  background: var(--uao-color-wine);
-  border-color: var(--uao-color-wine);
-}
-
-.autodiagnosticIframe {
-  display: block;
-  width: 100%;
-  min-height: min(70vh, 680px);
-  border: none;
 }
 
 /* ── callout ────────────────────────────────────────────────────────────── */

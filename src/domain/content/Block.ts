@@ -8,6 +8,21 @@
 
 import type { MediaKey } from "./value-objects/MediaKey";
 
+export type AutodiagnosticBlock = {
+  type: "autodiagnostic";
+  title: string;
+  description: string;
+  ctaLabel: string;
+  formUrl: string;
+  privacyNotice: {
+    title: string;
+    purpose: string;
+    confidentiality: string;
+    legalReference: string;
+    consentLabel: string;
+  };
+};
+
 export type Block =
   | { type: "paragraphs"; paragraphs: string[] }
   | { type: "callout"; title?: string; body: string }
@@ -47,4 +62,4 @@ export type Block =
         description: string;
       }[];
     }
-  | { type: "autodiagnostic"; title: string; description: string; ctaLabel: string; formUrl: string };
+  | AutodiagnosticBlock;
