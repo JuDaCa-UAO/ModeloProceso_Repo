@@ -35,7 +35,7 @@ export default function EtapasSpiralNavPanel({ stages, navigationSteps }: Etapas
     <div className={styles.panel}>
       <div className={styles.header}>
         <h2 className={styles.title}>Explora las seis etapas</h2>
-        <span className={styles.eyebrow}>gira el modelo y elige una etapa</span>
+        <span className={styles.eyebrow}>observa el modelo y elige una etapa</span>
       </div>
 
       {showLaia ? (
