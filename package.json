@@ -8,6 +8,7 @@
     "start": "next start",
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
+    "audit:architecture": "node scripts/audit-architecture.mjs",
     "test:e2e": "playwright test"
   },
   "dependencies": {
@@ -19,7 +20,6 @@
     "next": "16.1.6",
     "react": "19.2.3",
     "react-dom": "19.2.3",
-    "react-icons": "^5.6.0",
     "three": "^0.182.0"
   },
   "devDependencies": {

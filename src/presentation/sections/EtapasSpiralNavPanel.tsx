@@ -41,7 +41,7 @@ export default function EtapasSpiralNavPanel({ stages, navigationSteps }: Etapas
       {showLaia ? (
         <div className={styles.splitRow}>
           <div className={styles.spiralCol}>
-            <CartillaSpiralNav />
+            <CartillaSpiralNav stages={ordered} />
           </div>
           <div className={styles.laiaCol}>
             <LaiaStepper
@@ -53,7 +53,7 @@ export default function EtapasSpiralNavPanel({ stages, navigationSteps }: Etapas
         </div>
       ) : (
         <div className={styles.fullWidthRow}>
-          <CartillaSpiralNav />
+          <CartillaSpiralNav stages={ordered} />
         </div>
       )}
 

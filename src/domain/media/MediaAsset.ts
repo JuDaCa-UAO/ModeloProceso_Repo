@@ -2,21 +2,18 @@
  * DOMAIN — Entity
  *
  * Describe un recurso multimedia en el manifiesto, independiente de cómo se
- * entrega finalmente (ver `MediaProvider`). Reemplaza a `MediaEntry` de
- * `content/shared/media-registry.ts`, que hoy vive en la capa de contenido y
- * lee `process.env` directamente — ambas violaciones se cierran aquí.
+ * entrega finalmente (ver `MediaProvider`).
  */
 import type { MediaKey } from "@domain/content/value-objects/MediaKey";
 import type { MediaProvider } from "./MediaProvider";
 
-export type MediaKind = "image" | "svg" | "video" | "download" | "audio" | "caption" | "model";
+export type MediaKind = "image" | "svg" | "video" | "download";
 
 /**
  * - "available": el proveedor puede resolverlo ya (local presente, o remoto ya subido).
- * - "hosted": depende de que el proveedor esté configurado (p. ej. falta una URL base/cuenta).
  * - "pending": el recurso todavía no existe en ningún proveedor (p. ej. video-resumen no producido).
  */
-export type Availability = "available" | "hosted" | "pending";
+export type Availability = "available" | "pending";
 
 export interface MediaCaption {
   key: MediaKey;
@@ -55,7 +52,7 @@ export const SUMMARY_VIDEO_PLAYBACK: VideoPlayback = {
 interface MediaAssetBase {
   key: MediaKey;
   provider: MediaProvider;
-  /** Ruta local, clave de objeto R2, UID de Stream, o ID de Images — según `provider`. */
+  /** Ruta local o ruta relativa dentro del host multimedia, según `provider`. */
   ref: string;
   availability: Availability;
   /** Texto visible cuando el recurso no está disponible. Nunca hay enlaces rotos. */
@@ -93,26 +90,6 @@ export interface DownloadAsset extends MediaAssetBase {
   downloadName?: string;
 }
 
-export interface AudioAsset extends MediaAssetBase {
-  kind: "audio";
-  durationSec?: number;
-}
-
-export interface CaptionAsset extends MediaAssetBase {
-  kind: "caption";
-  lang: string;
-}
-
-export interface ModelAsset extends MediaAssetBase {
-  kind: "model";
-}
-
-export type MediaAsset =
-  | ImageAsset
-  | VideoAsset
-  | DownloadAsset
-  | AudioAsset
-  | CaptionAsset
-  | ModelAsset;
+export type MediaAsset = ImageAsset | VideoAsset | DownloadAsset;
 
 export type MediaManifest = Record<string, MediaAsset>;

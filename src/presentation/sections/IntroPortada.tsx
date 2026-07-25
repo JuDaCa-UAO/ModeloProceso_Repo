@@ -2,8 +2,8 @@
  * PRESENTATION — Server Component
  *
  * Portada de la Cartilla (Capítulo 0): hero con logo UAO, título, cita de
- * Einstein y el visor 3D de la espiral. Las URLs de medios llegan YA
- * resueltas desde `app/cartilla/page.tsx` — este componente no conoce
+ * Einstein y el visor 3D de la espiral. Las URLs de medios llegan
+ * resueltas desde `app/page.tsx`; este componente no conoce
  * `MediaKey` ni proveedores.
  */
 import Image from "next/image";

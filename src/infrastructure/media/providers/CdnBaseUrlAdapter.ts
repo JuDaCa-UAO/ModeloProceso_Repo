@@ -1,9 +1,8 @@
 /**
  * INFRASTRUCTURE — Adapter
  *
- * CDN genérico detrás de una única URL base (hoy: `NEXT_PUBLIC_MEDIA_BASE_URL`,
- * la misma variable que ya usaba `content/shared/media-registry.ts`). `ref`
- * es la ruta relativa dentro de ese host.
+ * CDN genérico detrás de `NEXT_PUBLIC_MEDIA_BASE_URL`. `ref` es la ruta
+ * relativa dentro de ese host.
  */
 import type { MediaAsset } from "@domain/media/MediaAsset";
 import type { MediaProviderAdapter } from "./MediaProviderAdapter";

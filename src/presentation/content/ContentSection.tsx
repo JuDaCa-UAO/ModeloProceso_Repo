@@ -2,12 +2,9 @@
  * PRESENTATION — Server Component
  *
  * Despacha cada `Block` de una `Section` al componente que lo renderiza.
- * Mismo principio que el `BLOCK_REGISTRY` del motor viejo (`engine/blocks.tsx`),
- * pero Server-first y sin gating: no hay frames, no hay progreso, todo el
- * contenido está visible (el revelado progresivo lo hace `CartillaScroll` vía
- * `[data-reveal]`, no este componente).
+ * Es Server-first y el revelado visual corresponde a `CartillaScroll`.
  *
- * `resolver` se recibe como prop desde `app/cartilla/page.tsx` (único
+ * `resolver` se recibe como prop desde `app/page.tsx` (único
  * composition root) y se reenvía a los bloques que necesitan resolver
  * medios — ningún bloque importa `infrastructure/` directamente.
  */

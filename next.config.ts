@@ -7,18 +7,15 @@ const MEDIA_BASE = process.env.NEXT_PUBLIC_MEDIA_BASE_URL ?? "";
 
 const ContentSecurityPolicy = [
   `default-src 'self'`,
-  // youtube.com needed for the IFrame API script (iframe_api.js)
-  `script-src 'self' 'unsafe-eval' 'unsafe-inline' https://www.youtube.com`,
+  `script-src 'self' 'unsafe-eval' 'unsafe-inline'`,
   `style-src 'self' 'unsafe-inline' https://fonts.googleapis.com`,
   `font-src 'self' https://fonts.gstatic.com`,
-  // i.ytimg.com for YouTube thumbnails; MEDIA_BASE for hosted infographics (SVG/img)
-  `img-src 'self' blob: data: https://i.ytimg.com ${MEDIA_BASE}`,
+  // MEDIA_BASE habilita infografías alojadas fuera de la aplicación.
+  `img-src 'self' blob: data: ${MEDIA_BASE}`,
   // MEDIA_BASE for hosted stage videos
   `media-src 'self' ${MEDIA_BASE}`,
-  // youtube-nocookie.com for the privacy-enhanced YouTube embed iframe
-  `frame-src 'self' ${N8N_HOST} https://www.youtube-nocookie.com`,
-  // YouTube may issue XHR/fetch requests; MEDIA_BASE for fetching hosted assets
-  `connect-src 'self' ${N8N_HOST} ${MEDIA_BASE} https://www.youtube.com https://www.youtube-nocookie.com`,
+  `frame-src 'self' ${N8N_HOST}`,
+  `connect-src 'self' ${N8N_HOST} ${MEDIA_BASE}`,
 ].join("; ");
 
 const securityHeaders = [
@@ -28,19 +25,6 @@ const securityHeaders = [
   { key: "Referrer-Policy", value: "strict-origin-when-cross-origin" },
   { key: "Permissions-Policy", value: "camera=(), microphone=(), geolocation=()" },
   { key: "Content-Security-Policy", value: ContentSecurityPolicy.replace(/\n/g, "") },
-  // Instruye al browser para abrir conexiones con YouTube antes de parsear el HTML.
-  // Llega antes que cualquier <link> del <head>, reduciendo la latencia del primer frame.
-  {
-    // Solo preconnect/dns-prefetch (sin preload): el preload del iframe_api se
-    // disparaba en todas las rutas y avisaba "preloaded but not used" donde no hay
-    // reproductor de YouTube. El IFrame API se sigue cargando bajo demanda.
-    key: "Link",
-    value: [
-      "<https://www.youtube-nocookie.com>; rel=preconnect",
-      "<https://www.youtube.com>; rel=preconnect; crossorigin",
-      "<https://i.ytimg.com>; rel=dns-prefetch",
-    ].join(", "),
-  },
 ];
 
 const nextConfig: NextConfig = {
@@ -54,28 +38,78 @@ const nextConfig: NextConfig = {
   async redirects() {
     return [
       {
+        source: "/media/descargables/etapa-2/matriz-pugh/matriz-pugh.pdf",
+        destination: "/media/etapa-2/descargables/matriz-pugh/matriz-pugh.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-2/matriz-pugh/preview-matriz-pugh.png",
+        destination: "/media/etapa-2/descargables/matriz-pugh/vista-previa.png",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-3/canvas-diseno/canvas-etapa-3-diseno.pdf",
+        destination: "/media/etapa-3/descargables/canvas-diseno/canvas-diseno.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-3/canvas-diseno/preview-canvas-etapa-3-diseno.png",
+        destination: "/media/etapa-3/descargables/canvas-diseno/vista-previa.png",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-3/matriz-experiencia/matriz-de-la-experiencia.pdf",
+        destination: "/media/etapa-3/descargables/matriz-experiencia/matriz-experiencia.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-3/matriz-experiencia/preview-matriz-de-la-experiencia.png",
+        destination: "/media/etapa-3/descargables/matriz-experiencia/vista-previa.png",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-4/canvas-alistamiento/canvas-etapa-4-alistamiento.pdf",
+        destination: "/media/etapa-4/descargables/canvas-alistamiento/canvas-alistamiento.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-4/canvas-alistamiento/preview-canvas-etapa-4-alistamiento.png",
+        destination: "/media/etapa-4/descargables/canvas-alistamiento/vista-previa.png",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-6/canvas-evaluacion/canvas-etapa-6-evaluacion.pdf",
+        destination: "/media/etapa-6/descargables/canvas-evaluacion/canvas-evaluacion.pdf",
+        permanent: true,
+      },
+      {
+        source: "/media/descargables/etapa-6/canvas-evaluacion/preview-canvas-etapa-6-evaluacion.png",
+        destination: "/media/etapa-6/descargables/canvas-evaluacion/vista-previa.png",
+        permanent: true,
+      },
+      {
         source: "/media/etapa-2/Matriz-de-Pugh.pdf",
-        destination: "/media/descargables/etapa-2/matriz-pugh/matriz-pugh.pdf",
+        destination: "/media/etapa-2/descargables/matriz-pugh/matriz-pugh.pdf",
         permanent: true,
       },
       {
         source: "/media/etapa-3/Canvas-de-diseno.pdf",
-        destination: "/media/descargables/etapa-3/canvas-diseno/canvas-etapa-3-diseno.pdf",
+        destination: "/media/etapa-3/descargables/canvas-diseno/canvas-diseno.pdf",
         permanent: true,
       },
       {
         source: "/media/etapa-3/Canvas_etapa3.png",
-        destination: "/media/descargables/etapa-3/canvas-diseno/preview-canvas-etapa-3-diseno.png",
+        destination: "/media/etapa-3/descargables/canvas-diseno/vista-previa.png",
         permanent: true,
       },
       {
         source: "/media/etapa-4/descargas/Canvas-de-alistamiento-GenAI.pdf",
-        destination: "/media/descargables/etapa-4/canvas-alistamiento/canvas-etapa-4-alistamiento.pdf",
+        destination: "/media/etapa-4/descargables/canvas-alistamiento/canvas-alistamiento.pdf",
         permanent: true,
       },
       {
         source: "/media/etapa-6/descargas/Canvas-de-evaluacion-GenAI.pdf",
-        destination: "/media/descargables/etapa-6/canvas-evaluacion/canvas-etapa-6-evaluacion.pdf",
+        destination: "/media/etapa-6/descargables/canvas-evaluacion/canvas-evaluacion.pdf",
         permanent: true,
       },
     ];

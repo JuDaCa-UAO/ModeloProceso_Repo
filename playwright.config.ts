@@ -22,7 +22,7 @@ export default defineConfig({
     ? {}
     : {
         webServer: {
-          command: "npm.cmd run start -- -p 3010",
+          command: "node ./node_modules/next/dist/bin/next start -p 3010",
           url: "http://localhost:3010",
           reuseExistingServer: !process.env.CI,
           timeout: 60_000,

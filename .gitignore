@@ -1,79 +1,51 @@
-# See https://help.github.com/articles/ignoring-files/ for more about ignoring files.
-
-# dependencies
-/node_modules
+# Dependencias y caches de gestores
+/node_modules/
+/.pnpm-store/
 /.pnp
 .pnp.*
-.yarn/*
-!.yarn/patches
-!.yarn/plugins
-!.yarn/releases
-!.yarn/versions
-AGENTS_claude_stage1.md
-# testing
-/coverage
+/.yarn/
 
-# next.js
+# Salidas de Next.js, TypeScript y pruebas
 /.next/
 /out/
+/build/
+/coverage/
+/playwright-report/
+/test-results/
+*.tsbuildinfo
+next-env.d.ts
 
-# production
-/build
+# Variables locales
+.env
+.env.local
+.env.*.local
 
-# misc
-.DS_Store
-*.pem
-
-# debug
+# Caches y archivos temporales
+/.cache/
+*.log
 npm-debug.log*
 yarn-debug.log*
 yarn-error.log*
 .pnpm-debug.log*
 
-
-# env files (can opt-in for committing if needed)
-.env
-
-# vercel
-.vercel
-
-# typescript
-*.tsbuildinfo
-next-env.d.ts
-*.md
-
-.vscode/ 
-*.md
-AGENTS_claude_stage1.md
-.env.local
-.agents
+# Herramientas y editores locales
+/.vscode/
+/.vercel/
+/.agents/
+/.claude/
 skills-lock.json
+.DS_Store
+*.pem
 
-# designs
-/disenos/
-
+# Material de trabajo fuera del producto
 /contexto/
-
-# Diseños locales para consulta del agente
-/contexto/disenos/**
-!/contexto/disenos/.gitkeep
-
-# Cachés y renderizados
-/contexto/.cache/
-/contexto/tmp/
-/contexto/renderizados/
-/contexto/contact-sheets/
-
-# Exportaciones multimedia de trabajo
-/public/media/_source/
-/public/media/_temp/
-/public/media/_exports/
-/public/mano/Mano izq apunta.svg
-manual-identidad.pdf
-uao-next-template (1)
-
-# Export del proyecto Claude Design (masters/raw, no se versiona; ver contexto/context.md Fase 0)
-/*.zip
-
-# Entrega local de videos-resumen (masters ya copiados a public/media/resumenes/)
+/disenos/
+/docs/*
+!/docs/adr/
+!/docs/adr/*.md
 /Animaciones por etapa/
+/manual-identidad.pdf
+/Guia.md
+/AGENTS_claude_stage1.md
+/uao-next-template (1)/
+/*.zip

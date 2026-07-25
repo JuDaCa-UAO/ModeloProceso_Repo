@@ -12,14 +12,10 @@ import { getMediaResolver } from "@infra/media/createMediaResolver";
 import { mediaKey } from "@domain/content/value-objects/MediaKey";
 
 /**
- * Raíz "/" de la aplicación: la nueva Cartilla (documento único de scroll
- * continuo). Composition root — única pieza que llama al caso de uso de
+ * Raíz "/" de la aplicación: Cartilla como documento único de scroll
+ * continuo. Composition root: única pieza que llama al caso de uso de
  * contenido y al resolver de medios; ningún componente de `presentation/`
- * importa `infrastructure/` directamente (patrón RSC del rework §5.1/§6).
- *
- * La app anterior (/inicio, /etapas/*, /modelo, /opciones) sigue disponible
- * como respaldo, pero ya no es la entrada: '/' es la Cartilla. Pendientes:
- * audios nuevos de LaIA y autodiagnóstico n8n real (hoy CTA estático).
+ * importa `infrastructure/` directamente.
  */
 export default function Page() {
   const cartilla = getCartillaContentUseCase().execute();

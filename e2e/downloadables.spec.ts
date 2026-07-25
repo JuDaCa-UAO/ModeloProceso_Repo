@@ -8,29 +8,33 @@ const DOWNLOADABLES: Array<{
   oldPreviewPath?: string;
 }> = [
   {
-    path: "/media/descargables/etapa-2/matriz-pugh/matriz-pugh.pdf",
-    previewPath: "/media/descargables/etapa-2/matriz-pugh/preview-matriz-pugh.png",
-    oldPath: "/media/etapa-2/Matriz-de-Pugh.pdf",
+    path: "/media/etapa-2/descargables/matriz-pugh/matriz-pugh.pdf",
+    previewPath: "/media/etapa-2/descargables/matriz-pugh/vista-previa.png",
+    oldPath: "/media/descargables/etapa-2/matriz-pugh/matriz-pugh.pdf",
   },
   {
-    path: "/media/descargables/etapa-3/canvas-diseno/canvas-etapa-3-diseno.pdf",
-    previewPath: "/media/descargables/etapa-3/canvas-diseno/preview-canvas-etapa-3-diseno.png",
-    oldPath: "/media/etapa-3/Canvas-de-diseno.pdf",
-    oldPreviewPath: "/media/etapa-3/Canvas_etapa3.png",
+    path: "/media/etapa-3/descargables/canvas-diseno/canvas-diseno.pdf",
+    previewPath: "/media/etapa-3/descargables/canvas-diseno/vista-previa.png",
+    oldPath: "/media/descargables/etapa-3/canvas-diseno/canvas-etapa-3-diseno.pdf",
+    oldPreviewPath: "/media/descargables/etapa-3/canvas-diseno/preview-canvas-etapa-3-diseno.png",
   },
   {
-    path: "/media/descargables/etapa-3/matriz-experiencia/matriz-de-la-experiencia.pdf",
-    previewPath: "/media/descargables/etapa-3/matriz-experiencia/preview-matriz-de-la-experiencia.png",
+    path: "/media/etapa-3/descargables/matriz-experiencia/matriz-experiencia.pdf",
+    previewPath: "/media/etapa-3/descargables/matriz-experiencia/vista-previa.png",
+    oldPath: "/media/descargables/etapa-3/matriz-experiencia/matriz-de-la-experiencia.pdf",
+    oldPreviewPath: "/media/descargables/etapa-3/matriz-experiencia/preview-matriz-de-la-experiencia.png",
   },
   {
-    path: "/media/descargables/etapa-4/canvas-alistamiento/canvas-etapa-4-alistamiento.pdf",
-    previewPath: "/media/descargables/etapa-4/canvas-alistamiento/preview-canvas-etapa-4-alistamiento.png",
-    oldPath: "/media/etapa-4/descargas/Canvas-de-alistamiento-GenAI.pdf",
+    path: "/media/etapa-4/descargables/canvas-alistamiento/canvas-alistamiento.pdf",
+    previewPath: "/media/etapa-4/descargables/canvas-alistamiento/vista-previa.png",
+    oldPath: "/media/descargables/etapa-4/canvas-alistamiento/canvas-etapa-4-alistamiento.pdf",
+    oldPreviewPath: "/media/descargables/etapa-4/canvas-alistamiento/preview-canvas-etapa-4-alistamiento.png",
   },
   {
-    path: "/media/descargables/etapa-6/canvas-evaluacion/canvas-etapa-6-evaluacion.pdf",
-    previewPath: "/media/descargables/etapa-6/canvas-evaluacion/preview-canvas-etapa-6-evaluacion.png",
-    oldPath: "/media/etapa-6/descargas/Canvas-de-evaluacion-GenAI.pdf",
+    path: "/media/etapa-6/descargables/canvas-evaluacion/canvas-evaluacion.pdf",
+    previewPath: "/media/etapa-6/descargables/canvas-evaluacion/vista-previa.png",
+    oldPath: "/media/descargables/etapa-6/canvas-evaluacion/canvas-etapa-6-evaluacion.pdf",
+    oldPreviewPath: "/media/descargables/etapa-6/canvas-evaluacion/preview-canvas-etapa-6-evaluacion.png",
   },
 ];
 
@@ -45,12 +49,17 @@ test.describe("Descargables pedagógicos", () => {
   test("explica la Matriz de Pugh y conserva el foco al cerrar la vista previa", async ({ page }) => {
     await page.goto("/#etapa-2", { waitUntil: "domcontentloaded" });
     const stage = await revealStage(page, "etapa-2");
+    const card = stage.getByTestId("downloadable-card").filter({ hasText: "Matriz de Pugh" });
 
-    await expect(stage.getByText("¿Qué es la Matriz de Pugh?", { exact: true })).toBeVisible();
+    await expect(
+      card.getByText(
+        "Descarga la plantilla para comparar y ponderar las herramientas de GenAI con criterio pedagógico y ético.",
+        { exact: true }
+      )
+    ).toBeVisible();
     await expect(stage.getByRole("heading", { name: "Cómo usarla" })).toBeVisible();
     await expect(stage.locator("ol")).toHaveCount(1);
 
-    const card = stage.getByTestId("downloadable-card").filter({ hasText: "Matriz de Pugh" });
     const informationButton = card.getByRole("button", { name: /información de Matriz de Pugh/i });
     await expect(informationButton).toHaveAttribute("aria-expanded", "false");
     await informationButton.click();

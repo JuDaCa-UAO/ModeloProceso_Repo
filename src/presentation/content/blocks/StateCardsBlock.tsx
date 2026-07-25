@@ -1,12 +1,6 @@
 import type { Block } from "@domain/content/Block";
 import styles from "../ContentSection.module.css";
 
-const HIERARCHY_LABEL: Record<string, string> = {
-  Inicial: "ESTADO INICIAL",
-  Intermedio: "ESTADO INTERMEDIO",
-  Avanzado: "ESTADO AVANZADO",
-};
-
 const HIERARCHY_ACCENT: Record<string, string> = {
   Inicial: "var(--uao-color-coral)",
   Intermedio: "var(--uao-color-burgundy)",

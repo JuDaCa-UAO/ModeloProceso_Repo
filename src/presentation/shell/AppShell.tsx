@@ -1,4 +1,4 @@
-import UaoArcBackground from "@/components/uao-arc-background/UaoArcBackground";
+import UaoArcBackground from "./UaoArcBackground";
 import CartillaScroll from "./CartillaScroll";
 import FloatingNavButton from "./FloatingNavButton";
 

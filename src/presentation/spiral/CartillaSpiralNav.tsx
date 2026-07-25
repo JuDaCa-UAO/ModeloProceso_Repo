@@ -4,15 +4,13 @@
  * PRESENTATION — Client Component
  *
  * Navegación por la espiral 3D dentro de la Cartilla single-page. Reutiliza
- * `SpiralModel` (mismo motor/orbes/GLB `/models/espiral.glb`) pero, en vez de
- * navegar por ruta (`router.push`), al hacer clic en una etapa muta
+ * `SpiralModel` (mismo motor/orbes/GLB) y, al hacer clic en una etapa, muta
  * `location.hash` a `#etapa-N`; el hook `useHashNavigation` (montado en
  * `CartillaScroll`) hace el scroll suave al capítulo correspondiente.
  *
  * A propósito, esta espiral NO admite arrastre/zoom/pan de cámara (a
- * diferencia de `InteractiveSpiral`, usada en la app de respaldo `/etapas`):
- * solo gira sobre su propio eje (auto-spin vía `useFrame`, mismo patrón que
- * `RotatingSpiral` en `StageViewer.tsx`) y expone los orbes como botones
+ * diferencia del visor de portada): solo gira sobre su propio eje (auto-spin
+ * vía `useFrame`, mismo patrón que `RotatingSpiral` en `StageViewer.tsx`) y expone los orbes como botones
  * clicables que navegan a cada etapa. Al no haber cámara arrastrable, no
  * existe conflicto posible entre "girar" y "hacer clic". El giro se pausa
  * mientras el puntero está sobre un orbe, para poder leer la etiqueta y
@@ -22,9 +20,9 @@ import React, { Suspense, useCallback, useMemo, useRef, useState } from "react";
 import { Canvas, useFrame } from "@react-three/fiber";
 import { Environment, Lightformer, Bounds } from "@react-three/drei";
 import type * as THREE from "three";
-import SpiralModel from "@/components/InteractiveSpiral/SpiralModel";
-import { STAGE_META } from "@/content/stages";
-import { usePrefersReducedMotion } from "@/lib/usePrefersReducedMotion";
+import type { Stage } from "@domain/content/Stage";
+import SpiralModel from "./SpiralModel";
+import { usePrefersReducedMotion } from "@/presentation/hooks/usePrefersReducedMotion";
 import styles from "./CartillaSpiralNav.module.css";
 
 /** Gira el grupo sobre su eje Y a velocidad constante; inmóvil con `enabled=false`. */
@@ -37,14 +35,15 @@ function AutoSpin({ enabled, children }: { enabled: boolean; children: React.Rea
   return <group ref={groupRef}>{children}</group>;
 }
 
-export default function CartillaSpiralNav() {
+export default function CartillaSpiralNav({ stages }: { stages: readonly Stage[] }) {
   const reduced = usePrefersReducedMotion();
   const [hoveredStageIndex, setHoveredStageIndex] = useState<number | null>(null);
+  const orderedStages = useMemo(() => [...stages].sort((a, b) => a.order - b.order), [stages]);
 
-  const hoveredStageData = hoveredStageIndex !== null ? STAGE_META[hoveredStageIndex] : null;
+  const hoveredStageData = hoveredStageIndex !== null ? orderedStages[hoveredStageIndex - 1] : null;
 
   const handleSelectStage = useCallback((stageIndex: number) => {
-    const stage = STAGE_META[stageIndex];
+    const stage = orderedStages[stageIndex - 1];
     if (!stage) return;
     // Mutar el hash dispara `hashchange` → useHashNavigation hace el scroll.
     // Si ya estamos en ese hash, forzamos el desplazamiento manualmente
@@ -54,7 +53,7 @@ export default function CartillaSpiralNav() {
     } else {
       window.location.hash = `#${stage.id}`;
     }
-  }, [reduced]);
+  }, [orderedStages, reduced]);
 
   // Memoizado con deps estables (`[]`): el HDRI sintético es 100% estático.
   // `Environment` con `children` propios recaptura el cubemap (operación de
@@ -81,7 +80,7 @@ export default function CartillaSpiralNav() {
         <div className={styles.fixedLabelContainer}>
           <div className={styles.labelContainer}>
             <div className={styles.labelOrder}>{String(hoveredStageData.order).padStart(2, "0")}</div>
-            <div className={styles.labelName}>{hoveredStageData.name}</div>
+            <div className={styles.labelName}>{hoveredStageData.officialName}</div>
           </div>
         </div>
       )}

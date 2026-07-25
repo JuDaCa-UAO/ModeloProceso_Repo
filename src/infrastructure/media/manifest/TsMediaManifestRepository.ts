@@ -6,7 +6,7 @@
  */
 import type { MediaManifest } from "@domain/media/MediaAsset";
 import type { IMediaManifestRepository } from "@application/media/ports/IMediaManifestRepository";
-import { MEDIA_MANIFEST } from "@/content/media/media-manifest";
+import { MEDIA_MANIFEST } from "./media-manifest";
 
 export class TsMediaManifestRepository implements IMediaManifestRepository {
   load(): MediaManifest {
