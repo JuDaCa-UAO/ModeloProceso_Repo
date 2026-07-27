@@ -26,6 +26,19 @@
   color: var(--uao-color-text-primary);
 }
 
+.notice {
+  margin: -2px 0 0;
+  padding: 9px 11px;
+  border-radius: var(--uao-radius-sm);
+  background: #f8fafc;
+  border: 1px solid var(--uao-border-soft);
+  font-family: var(--uao-font-sans);
+  font-size: 14.5px;
+  line-height: 1.45;
+  font-weight: 600;
+  color: var(--uao-color-text-secondary, var(--uao-color-text-primary));
+}
+
 .textarea {
   width: 100%;
   min-height: 70px;

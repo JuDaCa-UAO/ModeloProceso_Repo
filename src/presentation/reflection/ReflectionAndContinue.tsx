@@ -3,6 +3,8 @@
 import React, { useEffect, useState } from "react";
 import styles from "./ReflectionPrompt.module.css";
 
+const REFLECTION_NOTICE = "Tu respuesta es personal, voluntaria, local y no evaluativa.";
+
 interface ReflectionAndContinueProps {
   question: string;
   accent: string;
@@ -49,6 +51,7 @@ export default function ReflectionAndContinue({
         <div className={styles.box} style={{ "--accent": accent } as React.CSSProperties}>
           <span className={styles.label}>PAUSA PARA REFLEXIONAR</span>
           <p className={styles.question}>{question}</p>
+          <p className={styles.notice}>{REFLECTION_NOTICE}</p>
           <textarea
             className={styles.textarea}
             placeholder="Si quieres, anota aquí tu reflexión (opcional)"
@@ -74,6 +77,7 @@ export default function ReflectionAndContinue({
       <div className={styles.box} style={{ "--accent": accent } as React.CSSProperties}>
         <span className={styles.label}>PAUSA PARA REFLEXIONAR</span>
         <p className={styles.question}>{question}</p>
+        <p className={styles.notice}>{REFLECTION_NOTICE}</p>
         {isSaved ? (
           <div className={styles.savedContainer}>
             <p className={styles.savedText}>{reflectionText}</p>
