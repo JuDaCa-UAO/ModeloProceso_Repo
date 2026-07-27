@@ -7,7 +7,7 @@ import styles from "./EtapasSpiralNavSection.module.css";
 /**
  * Navegación por las 6 etapas mediante la espiral 3D interactiva (reemplaza el
  * antiguo teaser de tarjetas `TeaserEtapasSection`). La espiral es la
- * navegación primaria: girar el modelo y hacer clic en una etapa hace scroll a
+ * navegación primaria: seleccionar una etapa hace scroll a
  * `#etapa-N` en la misma página (vía `useHashNavigation`).
  *
  * Debajo se conserva una lista de enlaces accesibles (misma ancla `#etapa-N`)
@@ -21,7 +21,7 @@ export default function EtapasSpiralNavSection({ stages, resolver }: { stages: S
   const navigationSteps = [
     {
       id: "nav-laia-1",
-      text: "¡Hola! Con este modelo en espiral interactivo puedes explorar y dirigirte a cualquiera de las 6 etapas de inmediato. Solo arrastra la espiral para girarla y haz clic en la etapa que desees explorar.",
+      text: "¡Hola! Con este modelo en espiral puedes explorar y dirigirte a cualquiera de las 6 etapas de inmediato. Solo selecciona la etapa que desees explorar.",
       avatarUrl: avatar1.available ? avatar1.url : null,
       avatarFallback: avatar1.fallback,
     },
