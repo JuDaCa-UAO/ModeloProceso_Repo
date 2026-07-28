@@ -105,17 +105,16 @@ La experiencia incluye:
 
 ## Las seis etapas
 
-| Etapa | Nombre | Intención |
-|---:|---|---|
-| 1 | **Reconócete para avanzar** | Identificar el punto de partida y comprender el propósito del proceso. |
-| 2 | **Descubre nuevas posibilidades** | Explorar herramientas y posibilidades con criterios pedagógicos, críticos y éticos. |
-| 3 | **Diseña con propósito** | Concebir una experiencia de aprendizaje mediada por GenAI. |
-| 4 | **Prepara el terreno para el éxito** | Revisar condiciones pedagógicas, técnicas y éticas antes de la implementación. |
-| 5 | **Hazlo realidad en el aula** | Acompañar la experiencia y reconocer evidencias y momentos críticos. |
-| 6 | **Reflexiona, aprende y mejora** | Evaluar lo ocurrido y proyectar una nueva iteración del modelo. |
+| Etapa | Nombre                               | Intención                                                                           |
+| ----: | ------------------------------------ | ----------------------------------------------------------------------------------- |
+|     1 | **Reconócete para avanzar**          | Identificar el punto de partida y comprender el propósito del proceso.              |
+|     2 | **Descubre nuevas posibilidades**    | Explorar herramientas y posibilidades con criterios pedagógicos, críticos y éticos. |
+|     3 | **Diseña con propósito**             | Concebir una experiencia de aprendizaje mediada por GenAI.                          |
+|     4 | **Prepara el terreno para el éxito** | Revisar condiciones pedagógicas, técnicas y éticas antes de la implementación.      |
+|     5 | **Hazlo realidad en el aula**        | Acompañar la experiencia y reconocer evidencias y momentos críticos.                |
+|     6 | **Reflexiona, aprende y mejora**     | Evaluar lo ocurrido y proyectar una nueva iteración del modelo.                     |
 
 El cierre presenta cinco factores rectores: **propósito, razonamiento crítico, ética, herramientas y reflexión**.
-
 
 ## Arquitectura
 
@@ -134,13 +133,13 @@ flowchart LR
 
 ### Responsabilidades
 
-| Capa | Responsabilidad |
-|---|---|
-| `domain` | Entidades, value objects y contratos puros del modelo. |
-| `application` | Casos de uso y puertos requeridos por la aplicación. |
+| Capa             | Responsabilidad                                                                                             |
+| ---------------- | ----------------------------------------------------------------------------------------------------------- |
+| `domain`         | Entidades, value objects y contratos puros del modelo.                                                      |
+| `application`    | Casos de uso y puertos requeridos por la aplicación.                                                        |
 | `infrastructure` | Repositorios estáticos, contenido, manifiesto multimedia, adaptadores, configuración e integración externa. |
-| `presentation` | Componentes React, hooks, providers, navegación y elementos de interfaz. |
-| `app` | Composition root de Next.js: construye casos de uso, resuelve medios y conecta la presentación. |
+| `presentation`   | Componentes React, hooks, providers, navegación y elementos de interfaz.                                    |
+| `app`            | Composition root de Next.js: construye casos de uso, resuelve medios y conecta la presentación.             |
 
 Las decisiones principales están registradas en:
 
@@ -217,7 +216,6 @@ No deben crearse raíces paralelas como `src/components`, `src/content`, `src/co
 - **pnpm** como gestor de paquetes.
 - **Playwright** y `axe-core` para comprobaciones end-to-end y de accesibilidad en flujos críticos.
 
-
 ## Instalación y ejecución
 
 ### Requisitos
@@ -272,7 +270,6 @@ Para modificar contenido:
 5. Ejecuta las puertas de calidad.
 
 Agregar o modificar una etapa no requiere crear una página nueva: el repositorio estático entrega los datos y `StageChapter` los representa mediante el mismo motor de presentación.
-
 
 ## Gestión multimedia
 
@@ -398,7 +395,6 @@ Por esta razón:
 - no se sincroniza entre dispositivos;
 - no debe utilizarse para guardar información sensible.
 
-
 ## Calidad y pruebas
 
 ### Puertas de calidad
@@ -417,25 +413,6 @@ La auditoría arquitectónica comprueba:
 - raíces inesperadas bajo `src`;
 - archivos de `public` sin referencia;
 - claves del manifiesto sin consumidor.
-
-### Pruebas end-to-end disponibles
-
-```bash
-pnpm build
-pnpm test:e2e
-```
-
-La configuración de Playwright contempla proyectos de escritorio, tableta y móvil. Las pruebas existentes cubren flujos críticos como:
-
-- consentimiento y apertura del autodiagnóstico;
-- accesibilidad de la tarjeta de consentimiento;
-- adaptación sin desbordamiento;
-- presencia, vista previa y descarga de recursos;
-- redirección de rutas multimedia heredadas;
-- foco en diálogos;
-- comprobaciones con `axe-core`.
-
-Las pruebas de aceptación con docentes y los resultados del plan S10 se documentan por separado del código automatizado.
 
 ## Despliegue
 
