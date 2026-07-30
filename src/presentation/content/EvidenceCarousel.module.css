@@ -16,7 +16,8 @@
   font-family: var(--uao-font-sans);
   font-size: 14.5px;
   font-weight: 700;
-  color: var(--uao-color-orange);
+  /* El naranja base da 3.17:1 sobre el crema; el ink llega a 4.60:1. */
+  color: var(--uao-color-orange-ink);
 }
 
 .stage {
@@ -107,8 +108,8 @@
 }
 
 .navButtonPrimary {
-  border: 1px solid var(--uao-color-orange);
-  background: var(--uao-color-orange);
+  border: 1px solid var(--uao-color-orange-ink);
+  background: var(--uao-color-orange-ink);
   color: var(--uao-color-white);
   border-radius: var(--uao-radius-md);
   padding: 9px 20px;
@@ -129,16 +130,32 @@
   align-items: center;
 }
 
+/*
+ * WCAG 2.2 · 2.5.8 (Target Size, Minimum) exige 24×24 px de objetivo. El punto
+ * visible sigue midiendo 12 px, pero se dibuja como pseudo-elemento centrado
+ * dentro de un botón de 24×24 px: crece el área activa sin alterar el diseño.
+ * Con `gap: 8px` los centros quedan a 32 px, así que tampoco hay solapamiento.
+ */
 .dot {
-  width: 12px;
-  height: 12px;
-  border-radius: 50%;
-  border: 1.5px solid var(--uao-color-orange);
-  background: var(--uao-color-white);
+  width: 24px;
+  height: 24px;
+  display: grid;
+  place-items: center;
+  border: none;
+  background: none;
   cursor: pointer;
   padding: 0;
 }
 
-.dotActive {
-  background: var(--uao-color-orange);
+.dot::before {
+  content: "";
+  width: 12px;
+  height: 12px;
+  border-radius: 50%;
+  border: 1.5px solid var(--uao-color-orange-ink);
+  background: var(--uao-color-white);
+}
+
+.dotActive::before {
+  background: var(--uao-color-orange-ink);
 }
