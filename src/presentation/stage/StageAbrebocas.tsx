@@ -10,10 +10,19 @@
 import AccessibleVideoPlayer from "@/presentation/video/AccessibleVideoPlayer";
 import styles from "./StageAbrebocas.module.css";
 
-export default function StageAbrebocas({ url, accent }: { url: string; accent: string }) {
+export default function StageAbrebocas({
+  url,
+  accent,
+  description,
+}: {
+  url: string;
+  accent: string;
+  /** `description` del manifiesto: nombre accesible del video sin pie visible. */
+  description?: string;
+}) {
   return (
     <div className={styles.wrap}>
-      <AccessibleVideoPlayer url={url} accent={accent} caption={null} captionsAvailable={false} />
+      <AccessibleVideoPlayer url={url} accent={accent} caption={null} label={description} />
     </div>
   );
 }

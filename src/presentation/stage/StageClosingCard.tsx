@@ -52,7 +52,12 @@ export default function StageClosingCard({
         <div className={styles.mainCol}>
           <p className={styles.message}>{closing.message}</p>
           {video.available && video.url ? (
-            <AccessibleVideoPlayer url={video.url} accent={closing.accent.main} captionsAvailable={Boolean(video.captions?.length)} />
+            <AccessibleVideoPlayer
+              url={video.url}
+              accent={closing.accent.main}
+              captions={video.captions}
+              label={video.description}
+            />
           ) : (
             <p>{video.fallback}</p>
           )}

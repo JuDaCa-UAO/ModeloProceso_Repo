@@ -34,7 +34,7 @@ export default function StageChapter({ stage, resolver }: { stage: Stage; resolv
     <>
       <StageCover stage={stage} resolver={resolver} />
       {abrebocas?.available && abrebocas.url ? (
-        <StageAbrebocas url={abrebocas.url} accent={stage.accent.main} />
+        <StageAbrebocas url={abrebocas.url} accent={stage.accent.main} description={abrebocas.description} />
       ) : null}
       <LaiaStepper steps={laiaSteps} />
       {stage.sections.map((section) => (

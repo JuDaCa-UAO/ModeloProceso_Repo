@@ -5,7 +5,17 @@
  * Nunca contiene lógica de proveedor — solo la URL ya resuelta (o `null`).
  */
 import type { MediaKey } from "@domain/content/value-objects/MediaKey";
-import type { MediaKind, VideoPlayback, MediaCaption } from "./MediaAsset";
+import type { MediaKind, VideoPlayback } from "./MediaAsset";
+
+/**
+ * Pista de subtítulos ya resuelta a URL. La presentación monta un `<track>`
+ * por cada una; igual que con `url`, nunca ve claves ni proveedores.
+ */
+export interface ResolvedCaption {
+  url: string;
+  lang: string;
+  label: string;
+}
 
 export interface ResolvedMedia {
   key: MediaKey;
@@ -14,7 +24,8 @@ export interface ResolvedMedia {
   available: boolean;
   url: string | null;
   poster?: string | null;
-  captions?: MediaCaption[];
+  /** Solo las pistas que se pudieron resolver: nunca produce un `<track>` roto. */
+  captions?: ResolvedCaption[];
   playback?: VideoPlayback;
   downloadName?: string;
   alt?: string;

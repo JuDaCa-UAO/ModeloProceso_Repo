@@ -7,8 +7,8 @@
  * devuelve un `ResolvedMedia` con `available: false` y su `fallback`.
  */
 import type { MediaKey } from "@domain/content/value-objects/MediaKey";
-import type { MediaManifest } from "@domain/media/MediaAsset";
-import type { ResolvedMedia } from "@domain/media/ResolvedMedia";
+import type { MediaCaption, MediaManifest } from "@domain/media/MediaAsset";
+import type { ResolvedCaption, ResolvedMedia } from "@domain/media/ResolvedMedia";
 import type { IMediaResolver } from "@application/media/ports/IMediaResolver";
 import type { MediaProviderAdapter } from "./providers/MediaProviderAdapter";
 
@@ -36,7 +36,7 @@ export class MediaResolver implements IMediaResolver {
       description: asset.description,
       fallback: asset.fallback,
       playback: asset.kind === "video" ? asset.playback : undefined,
-      captions: asset.kind === "video" ? asset.captions : undefined,
+      captions: asset.kind === "video" ? this.resolveCaptions(asset.captions) : undefined,
       downloadName: asset.kind === "download" ? asset.downloadName : undefined,
       width: isImage ? asset.width : undefined,
       height: isImage ? asset.height : undefined,
@@ -56,5 +56,21 @@ export class MediaResolver implements IMediaResolver {
     const poster = asset.kind === "video" && asset.poster ? this.resolve(asset.poster).url ?? undefined : undefined;
 
     return { ...unavailable, available: true, url, poster };
+  }
+
+  /**
+   * Convierte las pistas declaradas en el manifiesto en pistas con URL, igual
+   * que se hace con el `poster`. Descarta las que no resuelven, de modo que la
+   * presentación nunca reciba un `<track>` apuntando a nada.
+   */
+  private resolveCaptions(captions: MediaCaption[] | undefined): ResolvedCaption[] | undefined {
+    if (!captions?.length) return undefined;
+
+    const resolved = captions.flatMap((caption) => {
+      const url = this.resolve(caption.key).url;
+      return url ? [{ url, lang: caption.lang, label: caption.label }] : [];
+    });
+
+    return resolved.length ? resolved : undefined;
   }
 }
