@@ -19,7 +19,7 @@ const REVEAL_SELECTOR = "[data-reveal]";
  * final directo, sin ScrollTrigger) en vez de solo desactivar la duración.
  */
 export default function CartillaScroll({ children }: { children: React.ReactNode }) {
-  const rootRef = useRef<HTMLDivElement>(null);
+  const rootRef = useRef<HTMLElement>(null);
 
   useHashNavigation();
 
@@ -66,5 +66,8 @@ export default function CartillaScroll({ children }: { children: React.ReactNode
     { scope: rootRef }
   );
 
-  return <div ref={rootRef}>{children}</div>;
+  // `<main>` y no `<div>`: sin este landmark, todo el contenido de la cartilla
+  // queda fuera de una región identificable (regla `region` de axe, 64 nodos) y
+  // los lectores de pantalla pierden el salto directo al contenido principal.
+  return <main ref={rootRef}>{children}</main>;
 }

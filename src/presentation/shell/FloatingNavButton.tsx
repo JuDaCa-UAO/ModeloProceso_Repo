@@ -63,32 +63,37 @@ export default function FloatingNavButton() {
   };
 
   return (
-    <a
-      href="#navegacion-etapas"
-      onClick={handleClick}
-      className={`${styles.button} ${isVisible || forceVisible ? styles.visible : ""} ${
-        isHighlighted ? styles.highlighted : ""
-      }`}
-      aria-label="Volver al menú de etapas"
-      title="Volver al menú de etapas"
-    >
-      <div className={styles.iconWrapper}>
-        {/* SVG Espiral abstracta */}
-        <svg
-          viewBox="0 0 24 24"
-          width="22"
-          height="22"
-          fill="none"
-          stroke="currentColor"
-          strokeWidth="2.5"
-          strokeLinecap="round"
-          strokeLinejoin="round"
-          className={styles.spiralIcon}
-        >
-          <path d="M12 3a9 9 0 1 0 9 9c0-3.5-2.5-6-6-6a4 4 0 1 0 4 4" />
-        </svg>
-      </div>
-      <span className={styles.text}>Seleccionar una etapa distinta</span>
-    </a>
+    // El enlace vive fuera de `<main>` (es persistente sobre todo el recorrido),
+    // así que necesita su propio landmark: sin él queda como contenido huérfano
+    // de región y un lector de pantalla no puede alcanzarlo navegando por hitos.
+    <nav aria-label="Navegación rápida">
+      <a
+        href="#navegacion-etapas"
+        onClick={handleClick}
+        className={`${styles.button} ${isVisible || forceVisible ? styles.visible : ""} ${
+          isHighlighted ? styles.highlighted : ""
+        }`}
+        aria-label="Volver al menú de etapas"
+        title="Volver al menú de etapas"
+      >
+        <div className={styles.iconWrapper}>
+          {/* SVG Espiral abstracta */}
+          <svg
+            viewBox="0 0 24 24"
+            width="22"
+            height="22"
+            fill="none"
+            stroke="currentColor"
+            strokeWidth="2.5"
+            strokeLinecap="round"
+            strokeLinejoin="round"
+            className={styles.spiralIcon}
+          >
+            <path d="M12 3a9 9 0 1 0 9 9c0-3.5-2.5-6-6-6a4 4 0 1 0 4 4" />
+          </svg>
+        </div>
+        <span className={styles.text}>Seleccionar una etapa distinta</span>
+      </a>
+    </nav>
   );
 }

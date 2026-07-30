@@ -50,8 +50,13 @@ export default function TransitionAnimation({ url, fallback, captionLabel, capti
     return () => observer.disconnect();
   }, [reduced]);
 
+  // Nombre accesible único por transición. Con solo `captionLabel`, las cinco
+  // transiciones entre etapas compartían el rótulo "Próximo capítulo:" y sus
+  // landmarks resultaban indistinguibles (regla `landmark-unique` de axe).
+  const accessibleName = `${captionLabel} ${captionStage}`;
+
   return (
-    <section data-reveal className={styles.section} aria-label={captionLabel}>
+    <section data-reveal className={styles.section} aria-label={accessibleName}>
       <div className={styles.frame}>
         {url ? (
           <video
@@ -63,7 +68,7 @@ export default function TransitionAnimation({ url, fallback, captionLabel, capti
             autoPlay={!reduced}
             preload="none"
             className={styles.video}
-            aria-label={captionLabel}
+            aria-label={accessibleName}
           />
         ) : (
           <div className={styles.pending}>
