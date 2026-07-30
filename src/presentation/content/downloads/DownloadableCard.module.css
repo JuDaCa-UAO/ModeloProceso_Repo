@@ -154,8 +154,10 @@
 }
 
 .primaryButton {
-  border: 1px solid var(--uao-color-red-primary);
-  background: var(--uao-color-red-primary);
+  /* Texto de 14px sobre el rojo: el ink lleva el par a 5.02:1 (el rojo base
+     da 3.97:1, insuficiente para texto que no es "grande"). */
+  border: 1px solid var(--uao-color-red-ink);
+  background: var(--uao-color-red-ink);
   color: var(--uao-color-white);
 }
 
@@ -188,7 +190,8 @@
 .secondaryButton:focus-visible,
 .ghostButton:focus-visible,
 .informationButton:focus-visible {
-  outline: 3px solid var(--uao-color-coral);
+  /* El coral no alcanza los 3:1 de WCAG 1.4.11 como indicador de foco. */
+  outline: 3px solid var(--uao-color-coral-ink);
   outline-offset: 2px;
 }
 

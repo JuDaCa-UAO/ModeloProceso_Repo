@@ -17,7 +17,8 @@
 }
 
 .badge {
-  background: var(--accent, var(--uao-color-coral));
+  /* Fondo con texto blanco: usa el ink, no el acento decorativo (WCAG 1.4.3). */
+  background: var(--accent-ink, var(--uao-color-coral-ink));
   color: var(--uao-color-white);
   border-radius: 0.6rem;
   padding: 6px 13px;
@@ -32,7 +33,7 @@
   font-family: var(--uao-font-sans);
   font-size: clamp(25px, 3vw, 34px);
   font-weight: 800;
-  color: var(--accent, var(--uao-color-coral));
+  color: var(--accent-ink, var(--uao-color-coral-ink));
   line-height: 1.1;
 }
 

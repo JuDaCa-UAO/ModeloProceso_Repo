@@ -27,7 +27,13 @@ export default function StageClosingCard({
     <section
       data-reveal
       className={styles.panel}
-      style={{ "--accent": closing.accent.main, "--soft": closing.accent.soft } as React.CSSProperties}
+      style={
+        {
+          "--accent": closing.accent.main,
+          "--soft": closing.accent.soft,
+          "--accent-ink": closing.accent.ink,
+        } as React.CSSProperties
+      }
     >
       <div className={styles.header}>
         <span className={styles.badge}>CIERRE · ETAPA {stageNumber}</span>
@@ -53,7 +59,12 @@ export default function StageClosingCard({
         </div>
       </div>
 
-      <ReflectionAndContinue question={closing.question} accent={closing.accent.main} stageNumber={stageNumber}>
+      <ReflectionAndContinue
+        question={closing.question}
+        accent={closing.accent.main}
+        accentInk={closing.accent.ink}
+        stageNumber={stageNumber}
+      >
         {closing.final ? (
           <div className={styles.finalPanel}>
             <h3 className={styles.finalTitle}>La espiral da una nueva vuelta</h3>

@@ -207,10 +207,11 @@
   align-items: center;
   justify-content: center;
   gap: 9px;
-  border: 1px solid var(--uao-color-red-primary);
+  /* CTA de 15px/800: necesita 4.5:1, así que el fondo usa el ink. */
+  border: 1px solid var(--uao-color-red-ink);
   border-radius: var(--uao-radius-md);
   padding: 13px 20px;
-  background: var(--uao-color-red-primary);
+  background: var(--uao-color-red-ink);
   color: var(--uao-color-white);
   font-family: var(--uao-font-sans);
   font-size: 15px;
@@ -227,7 +228,7 @@
 }
 
 .cta:focus-visible {
-  outline: 3px solid var(--uao-color-coral);
+  outline: 3px solid var(--uao-color-coral-ink);
   outline-offset: 3px;
 }
 

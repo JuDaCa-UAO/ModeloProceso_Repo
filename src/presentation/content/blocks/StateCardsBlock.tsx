@@ -1,10 +1,22 @@
 import type { Block } from "@domain/content/Block";
 import styles from "../ContentSection.module.css";
 
+/** Color decorativo de la tarjeta (borde superior o lateral). */
 const HIERARCHY_ACCENT: Record<string, string> = {
   Inicial: "var(--uao-color-coral)",
   Intermedio: "var(--uao-color-burgundy)",
   Avanzado: "var(--uao-color-red-primary)",
+};
+
+/**
+ * Color del texto de la tarjeta (rótulo y título). Va aparte del decorativo
+ * porque el coral y el rojo institucional no alcanzan 4.5:1 sobre blanco;
+ * el burgundy sí (7.37:1) y por eso se conserva igual.
+ */
+const HIERARCHY_INK: Record<string, string> = {
+  Inicial: "var(--uao-color-coral-ink)",
+  Intermedio: "var(--uao-color-burgundy)",
+  Avanzado: "var(--uao-color-red-ink)",
 };
 
 export default function StateCardsBlock({ block }: { block: Extract<Block, { type: "state-cards" }> }) {
@@ -19,7 +31,12 @@ export default function StateCardsBlock({ block }: { block: Extract<Block, { typ
           <div
             key={item.hierarchy}
             className={isRows ? styles.stateRow : styles.stateCard}
-            style={{ "--state-accent": HIERARCHY_ACCENT[item.hierarchy] } as React.CSSProperties}
+            style={
+              {
+                "--state-accent": HIERARCHY_ACCENT[item.hierarchy],
+                "--state-ink": HIERARCHY_INK[item.hierarchy],
+              } as React.CSSProperties
+            }
           >
             {isRows ? (
               <>

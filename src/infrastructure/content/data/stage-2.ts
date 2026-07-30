@@ -180,7 +180,11 @@ export const STAGE_2: Stage = {
     laiaAvatar: mediaKey("laia.pose.holo"),
     continueLabel: "Continuar a la Etapa 3 →",
     continueHref: "#etapa-3",
-    accent: { main: "var(--uao-stage-2-closing-accent)", soft: "var(--uao-stage-2-closing-soft)" },
+    accent: {
+      main: "var(--uao-stage-2-closing-accent)",
+      soft: "var(--uao-stage-2-closing-soft)",
+      ink: "var(--uao-stage-2-closing-ink)",
+    },
   },
   transition: {
     mediaKey: mediaKey("transitions.stage2ToStage3"),

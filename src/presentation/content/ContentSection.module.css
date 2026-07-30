@@ -131,7 +131,9 @@
   justify-content: center;
   font-size: 17.5px;
   border-radius: 50%;
-  background: var(--uao-color-red-primary);
+  /* Círculo con número blanco: 17.5px/800 no llega al umbral de texto grande,
+     así que el fondo debe cumplir 4.5:1 y usa el ink. */
+  background: var(--uao-color-red-ink);
   color: var(--uao-color-white);
   flex-shrink: 0;
 }
@@ -316,7 +318,7 @@
   font-size: 13.5px;
   font-weight: 700;
   letter-spacing: 0.1em;
-  color: var(--state-accent, var(--uao-color-coral));
+  color: var(--state-ink, var(--uao-color-coral-ink));
 }
 
 .stateTitle {
@@ -324,7 +326,7 @@
   font-family: var(--uao-font-sans);
   font-size: 22px;
   font-weight: 800;
-  color: var(--state-accent, var(--uao-color-coral));
+  color: var(--state-ink, var(--uao-color-coral-ink));
 }
 
 .stateDescription {
@@ -365,7 +367,7 @@
   font-family: var(--uao-font-sans);
   font-size: 19.5px;
   font-weight: 800;
-  color: var(--state-accent, var(--uao-color-coral));
+  color: var(--state-ink, var(--uao-color-coral-ink));
 }
 
 @media (max-width: 640px) {

@@ -184,6 +184,10 @@ export const STAGE_6: Stage = {
       "Volver al inicio no significa repetir el mismo recorrido. Regresas a «Reconócete para avanzar» con más experiencia, claridad y confianza: cada vuelta te lleva más lejos.",
     continueLabel: "Iniciar un nuevo ciclo ↻",
     continueHref: "#inicio",
-    accent: { main: "var(--uao-stage-6-closing-accent)", soft: "var(--uao-stage-6-closing-soft)" },
+    accent: {
+      main: "var(--uao-stage-6-closing-accent)",
+      soft: "var(--uao-stage-6-closing-soft)",
+      ink: "var(--uao-stage-6-closing-ink)",
+    },
   },
 };

@@ -84,7 +84,8 @@
 .buttonSecondary {
   border: 1.5px solid var(--uao-color-red-primary);
   background: var(--uao-color-white);
-  color: var(--uao-color-red-primary);
+  /* Texto de 15.5px: necesita 4.5:1, y el rojo base sobre blanco solo da 3.97:1. */
+  color: var(--uao-color-red-ink);
   border-radius: var(--uao-radius-md);
   padding: 9px 18px;
   font-family: var(--uao-font-sans);
@@ -99,8 +100,8 @@
 }
 
 .buttonPrimary {
-  border: 1px solid var(--uao-color-red-primary);
-  background: var(--uao-color-red-primary);
+  border: 1px solid var(--uao-color-red-ink);
+  background: var(--uao-color-red-ink);
   color: var(--uao-color-white);
   border-radius: var(--uao-radius-md);
   padding: 9px 20px;

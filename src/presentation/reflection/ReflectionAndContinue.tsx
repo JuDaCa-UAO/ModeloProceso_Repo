@@ -8,6 +8,11 @@ const REFLECTION_NOTICE = "Tu respuesta es personal, voluntaria, local y no eval
 interface ReflectionAndContinueProps {
   question: string;
   accent: string;
+  /**
+   * Variante oscurecida de `accent` para los elementos con texto (rótulo,
+   * botones, borde de foco). `accent` se reserva a lo decorativo.
+   */
+  accentInk: string;
   stageNumber: string;
   children?: React.ReactNode;
 }
@@ -15,6 +20,7 @@ interface ReflectionAndContinueProps {
 export default function ReflectionAndContinue({
   question,
   accent,
+  accentInk,
   stageNumber,
   children,
 }: ReflectionAndContinueProps) {
@@ -23,6 +29,7 @@ export default function ReflectionAndContinue({
   const [hasMounted, setHasMounted] = useState(false);
 
   const storageKey = `reflection_stage_${stageNumber}`;
+  const accentVars = { "--accent": accent, "--accent-ink": accentInk } as React.CSSProperties;
 
   useEffect(() => {
     const saved = localStorage.getItem(storageKey);
@@ -48,7 +55,7 @@ export default function ReflectionAndContinue({
   if (!hasMounted) {
     return (
       <>
-        <div className={styles.box} style={{ "--accent": accent } as React.CSSProperties}>
+        <div className={styles.box} style={accentVars}>
           <span className={styles.label}>PAUSA PARA REFLEXIONAR</span>
           <p className={styles.question}>{question}</p>
           <p className={styles.notice}>{REFLECTION_NOTICE}</p>
@@ -62,7 +69,7 @@ export default function ReflectionAndContinue({
           <button
             type="button"
             className={styles.saveButton}
-            style={{ "--accent": accent } as React.CSSProperties}
+            style={accentVars}
             disabled
           >
             Guardar reflexión
@@ -74,7 +81,7 @@ export default function ReflectionAndContinue({
 
   return (
     <>
-      <div className={styles.box} style={{ "--accent": accent } as React.CSSProperties}>
+      <div className={styles.box} style={accentVars}>
         <span className={styles.label}>PAUSA PARA REFLEXIONAR</span>
         <p className={styles.question}>{question}</p>
         <p className={styles.notice}>{REFLECTION_NOTICE}</p>
@@ -84,7 +91,7 @@ export default function ReflectionAndContinue({
             <button
               type="button"
               className={styles.editButton}
-              style={{ "--accent": accent } as React.CSSProperties}
+              style={accentVars}
               onClick={handleEdit}
             >
               Modificar respuesta
@@ -107,7 +114,7 @@ export default function ReflectionAndContinue({
           <button
             type="button"
             className={styles.saveButton}
-            style={{ "--accent": accent } as React.CSSProperties}
+            style={accentVars}
             onClick={handleSave}
             disabled={!reflectionText.trim()}
           >

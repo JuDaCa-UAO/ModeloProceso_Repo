@@ -65,7 +65,12 @@ export default function EtapasSpiralNavPanel({ stages, navigationSteps }: Etapas
               <a
                 href={`#${stage.id}`}
                 className={styles.card}
-                style={{ "--stage-accent": stage.accent.main } as React.CSSProperties}
+                style={
+                  {
+                    "--stage-accent": stage.accent.main,
+                    "--stage-chip": stage.accent.chip,
+                  } as React.CSSProperties
+                }
               >
                 <span className={styles.cardNumber}>{stage.order}</span>
                 <span className={styles.cardName}>{stage.officialName}</span>

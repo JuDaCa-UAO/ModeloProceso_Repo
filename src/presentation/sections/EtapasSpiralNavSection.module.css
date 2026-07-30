@@ -35,7 +35,8 @@
 .eyebrow {
   font-family: var(--uao-font-sans);
   font-size: 14.5px;
-  color: var(--uao-color-coral);
+  /* Fondo vino: aquí el coral hay que ACLARARLO, no oscurecerlo (3.94 → 4.63:1). */
+  color: var(--uao-color-coral-on-wine);
   font-weight: 600;
 }
 
@@ -126,7 +127,10 @@
 .cardNumber {
   font-size: 24px;
   font-weight: 800;
-  color: var(--stage-accent);
+  /* La tarjeta es translúcida sobre el fondo vino, así que aquí va el tinte
+     claro (-chip) y no el acento pleno: los acentos de las etapas 2, 3 y 5
+     quedaban entre 1.71:1 y 2.63:1 contra ese fondo. */
+  color: var(--stage-chip);
 }
 
 .cardName {

@@ -52,7 +52,8 @@
   font-family: var(--uao-font-sans);
   font-size: 14.5px;
   font-weight: 800;
-  color: var(--uao-color-red-primary);
+  /* Sobre el crema de la tarjeta, el rojo base da 3.66:1 y el ink 4.63:1. */
+  color: var(--uao-color-red-ink);
   letter-spacing: 0.06em;
 }
 

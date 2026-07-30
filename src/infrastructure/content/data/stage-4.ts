@@ -171,7 +171,11 @@ export const STAGE_4: Stage = {
     laiaAvatar: mediaKey("laia.pose.explaining"),
     continueLabel: "Continuar a la Etapa 5 →",
     continueHref: "#etapa-5",
-    accent: { main: "var(--uao-stage-4-closing-accent)", soft: "var(--uao-stage-4-closing-soft)" },
+    accent: {
+      main: "var(--uao-stage-4-closing-accent)",
+      soft: "var(--uao-stage-4-closing-soft)",
+      ink: "var(--uao-stage-4-closing-ink)",
+    },
   },
   transition: {
     mediaKey: mediaKey("transitions.stage4ToStage5"),

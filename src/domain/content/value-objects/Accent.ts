@@ -18,8 +18,15 @@ export interface Accent {
 }
 
 export interface ClosingAccent {
-  /** var(--uao-stage-N-closing-accent) — badge y acentos de CierreEtapa. */
+  /** var(--uao-stage-N-closing-accent) — bordes y acentos decorativos de CierreEtapa. */
   main: string;
   /** var(--uao-stage-N-closing-soft) — fondo suave del panel de cierre. */
   soft: string;
+  /**
+   * var(--uao-stage-N-closing-ink) — variante de `main` oscurecida para los
+   * elementos del cierre que llevan texto (badge, título, rótulo y botón de la
+   * reflexión). Existe porque `main` está calibrado como color decorativo y no
+   * alcanza el contraste que WCAG 1.4.3 exige al texto.
+   */
+  ink: string;
 }

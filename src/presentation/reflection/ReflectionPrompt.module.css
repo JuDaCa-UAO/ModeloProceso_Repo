@@ -14,7 +14,7 @@
   font-size: 14.5px;
   font-weight: 800;
   letter-spacing: 0.08em;
-  color: var(--accent, var(--uao-color-coral));
+  color: var(--accent-ink, var(--uao-color-coral-ink));
 }
 
 .question {
@@ -55,7 +55,8 @@
 }
 
 .textarea:focus {
-  border-color: var(--accent, var(--uao-color-coral));
+  /* Indicador de foco: el ink garantiza los 3:1 de WCAG 1.4.11 contra el blanco. */
+  border-color: var(--accent-ink, var(--uao-color-coral-ink));
 }
 
 .savedContainer {
@@ -80,8 +81,8 @@
 .editButton {
   align-self: flex-end;
   background: transparent;
-  border: 1px solid var(--accent, var(--uao-color-coral));
-  color: var(--accent, var(--uao-color-coral));
+  border: 1px solid var(--accent-ink, var(--uao-color-coral-ink));
+  color: var(--accent-ink, var(--uao-color-coral-ink));
   padding: 6px 14px;
   border-radius: var(--uao-radius-sm);
   font-family: var(--uao-font-sans);
@@ -92,7 +93,7 @@
 }
 
 .editButton:hover {
-  background: var(--accent, var(--uao-color-coral));
+  background: var(--accent-ink, var(--uao-color-coral-ink));
   color: var(--uao-color-white);
 }
 
@@ -105,8 +106,10 @@
 }
 
 .saveButton {
-  border: 1px solid var(--accent, var(--uao-color-coral));
-  background: var(--accent, var(--uao-color-coral));
+  /* 17.5px/800 queda por debajo del umbral de "texto grande" (18.66px en
+     negrita), así que el fondo debe cumplir 4.5:1: se usa el ink. */
+  border: 1px solid var(--accent-ink, var(--uao-color-coral-ink));
+  background: var(--accent-ink, var(--uao-color-coral-ink));
   color: var(--uao-color-white);
   border-radius: var(--uao-radius-md);
   padding: 13px 26px;
