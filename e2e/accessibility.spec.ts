@@ -29,6 +29,7 @@ test.describe("Accesibilidad · axe-core", () => {
     await page.emulateMedia({ reducedMotion: "reduce" });
   });
 
+
   test("estado 1 · página inicial", async ({ page }) => {
     await page.goto("/", { waitUntil: "domcontentloaded" });
     await settle(page);
@@ -73,15 +74,22 @@ test.describe("Accesibilidad · axe-core", () => {
     expect(describeBlocking(blockingViolations(results)), `Hallazgos bloqueantes: ${report.totals.blocking}`).toEqual([]);
   });
 
-  test("estado 3 · etapa completa", async ({ page }) => {
-    await page.goto("/#etapa-1", { waitUntil: "domcontentloaded" });
-    await settle(page);
+  /*
+   * Un test por etapa en vez de un único test que recorra las seis. Además de
+   * dar un fallo por etapa en lugar de uno agregado, evita acumular seis
+   * análisis de axe sobre ámbitos grandes en la misma página: esa presión dejaba
+   * al proceso de Chromium tan cargado que la primera navegación del test
+   * siguiente se bloqueaba unos 80 segundos.
+   */
+  for (const [index, stageId] of STAGE_IDS.entries()) {
+    const stageNumber = index + 1;
+    const nextStageId = STAGE_IDS[index + 1] ?? null;
 
-    const blocking: string[] = [];
+    test(`estado 3 · etapa completa · Etapa ${stageNumber}`, async ({ page }) => {
+      await page.goto(`/#${stageId}`, { waitUntil: "domcontentloaded" });
+      await settle(page);
 
-    for (const [index, stageId] of STAGE_IDS.entries()) {
-      const nextStageId = STAGE_IDS[index + 1] ?? null;
-      const marker = `stage-${index + 1}`;
+      const marker = `stage-${stageNumber}`;
       const marked = await markStageScope(page, stageId, nextStageId, marker);
       expect(marked, `No se pudo acotar #${stageId}`).toBeGreaterThan(0);
 
@@ -91,24 +99,24 @@ test.describe("Accesibilidad · axe-core", () => {
       const results = await axe(page).include(`[data-axe-scope="${marker}"]`).analyze();
       const report = saveAxeReport(
         {
-          slug: `03-etapa-completa-${index + 1}`,
-          state: `Etapa completa · Etapa ${index + 1}`,
+          slug: `03-etapa-completa-${stageNumber}`,
+          state: `Etapa completa · Etapa ${stageNumber}`,
           url: `/#${stageId}`,
           scope: `Portada + LaIA + secciones de contenido + cierre de #${stageId} (${marked} secciones)`,
           notes:
-            index === 0
+            stageNumber === 1
               ? "Estado 3 del criterio de aceptación. Las etapas 2 a 6 se auditan con el mismo alcance como cobertura complementaria."
               : "Cobertura complementaria con el mismo alcance que la Etapa 1.",
         },
         results
       );
 
-      blocking.push(...describeBlocking(blockingViolations(results)).map((line) => `${stageId}: ${line}`));
-      expect(report.totals.violations, `Reporte generado para ${stageId}`).toBeGreaterThanOrEqual(0);
-    }
-
-    expect(blocking).toEqual([]);
-  });
+      expect(
+        describeBlocking(blockingViolations(results)),
+        `Hallazgos bloqueantes en ${stageId}: ${report.totals.blocking}`
+      ).toEqual([]);
+    });
+  }
 
   test("estado 4 · diálogo de recurso", async ({ page }) => {
     await page.goto("/#etapa-2", { waitUntil: "domcontentloaded" });

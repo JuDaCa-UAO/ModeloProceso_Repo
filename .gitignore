@@ -12,6 +12,7 @@
 /coverage/
 /playwright-report/
 /test-results/
+/axe-results/
 *.tsbuildinfo
 next-env.d.ts
 

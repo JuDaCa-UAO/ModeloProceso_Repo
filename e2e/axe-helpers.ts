@@ -3,8 +3,14 @@ import { resolve } from "node:path";
 import type { Page } from "@playwright/test";
 import type { AxeResults, ImpactValue, Result } from "axe-core";
 
-/** Directorio de artefactos JSON que alimenta el reporte en Markdown. */
-export const AXE_OUTPUT_DIR = resolve(process.cwd(), "test-results", "axe");
+/**
+ * Directorio de artefactos JSON que alimenta el reporte en Markdown.
+ *
+ * Deliberadamente FUERA de `test-results/`: Playwright vacía su `outputDir` al
+ * comenzar cada corrida, así que guardar aquí los informes haría que ejecutar
+ * un solo test con `-g` borrase los artefactos de los demás estados.
+ */
+export const AXE_OUTPUT_DIR = resolve(process.cwd(), "axe-results");
 
 /**
  * Etiquetas WCAG evaluadas: A y AA de WCAG 2.0/2.1/2.2 más las buenas
@@ -146,9 +152,19 @@ export async function markStageScope(page: Page, stageId: string, nextStageId: s
   return marked;
 }
 
-/** Espera a que GSAP haya revelado el contenido (con reduced-motion es inmediato). */
+/**
+ * Espera a que GSAP haya revelado el contenido (con reduced-motion es inmediato)
+ * y a que las tipografías estén listas, para que `color-contrast` mida sobre el
+ * texto ya renderizado con su fuente definitiva.
+ *
+ * El callback devuelve `undefined` a propósito: `document.fonts.ready` resuelve
+ * al propio `FontFaceSet`, que no es serializable, y devolverlo hace que
+ * Playwright intente convertir cada `FontFace` del conjunto.
+ */
 export async function settle(page: Page) {
   await page.waitForLoadState("domcontentloaded");
-  await page.evaluate(() => document.fonts?.ready);
+  await page.evaluate(async () => {
+    await document.fonts?.ready;
+  });
   await page.waitForTimeout(600);
 }

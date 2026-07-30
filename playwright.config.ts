@@ -6,12 +6,18 @@ export default defineConfig({
   forbidOnly: !!process.env.CI,
   retries: process.env.CI ? 2 : 0,
   workers: 1,
-  timeout: 90_000,
+  timeout: 120_000,
   reporter: [["list"]],
   use: {
     baseURL: process.env.PLAYWRIGHT_BASE_URL ?? "http://localhost:3010",
     trace: "on-first-retry",
-    video: "retain-on-failure",
+    /*
+     * `on-first-retry` y no `retain-on-failure`: este último graba TODOS los
+     * tests para descartar luego los que pasan, y el screencast de una página
+     * que monta 18 `<video>` encarece cada corrida sin aportar nada cuando
+     * todo va en verde.
+     */
+    video: "on-first-retry",
   },
   projects: [{ name: "desktop", use: { ...devices["Desktop Chrome"] } }],
   ...(process.env.PLAYWRIGHT_BASE_URL
