@@ -9,7 +9,8 @@
     "lint": "eslint",
     "typecheck": "tsc --noEmit",
     "audit:architecture": "node scripts/audit-architecture.mjs",
-    "test:e2e": "playwright test"
+    "test:e2e": "playwright test",
+    "test:contrast": "node e2e/measure-composited-contrast.mjs"
   },
   "dependencies": {
     "@gsap/react": "^2.1.2",
