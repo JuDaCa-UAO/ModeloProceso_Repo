@@ -206,9 +206,20 @@
   color: var(--uao-color-text-secondary);
 }
 
+/*
+ * La vista previa se limita también por alto para que la imagen Y los botones
+ * de descarga quepan en el diálogo sin scroll interno. El panel llega al 90vh,
+ * de los que la cabecera, el relleno del cuerpo y la fila de acciones consumen
+ * unos 14rem; el resto es para la imagen.
+ */
 .dialogImage {
-  width: 100%;
+  max-width: 100%;
+  max-height: calc(90vh - 14rem);
+  max-height: calc(90svh - 14rem);
+  width: auto;
   height: auto;
+  margin-inline: auto;
+  object-fit: contain;
   display: block;
   border: 1px solid var(--uao-border-soft);
   border-radius: var(--uao-radius-md);

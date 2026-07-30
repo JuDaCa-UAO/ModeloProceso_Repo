@@ -199,12 +199,31 @@
   margin: 0;
   display: flex;
   flex-direction: column;
+  /* `stretch` (el valor por defecto) forzaría el ancho de la imagen al del
+     contenedor y anularía el límite de alto, deformándola. */
+  align-items: center;
   gap: 8px;
 }
 
+/*
+ * La infografía se limita al ANCHO del contenedor y al ALTO de la ventana, así
+ * que se ve completa de una sola vez sin que el docente tenga que alejar el
+ * zoom con ctrl + scroll. Antes solo se limitaba el ancho: una infografía casi
+ * cuadrada se estiraba a 1152 px de ancho y superaba el alto de pantalla
+ * (medido: hasta el 139 % en un viewport de 720 px).
+ *
+ * El margen reservado deja aire para el pie de figura y evita que la imagen
+ * toque los bordes de la ventana. `svh` es el alto estable en móviles (no
+ * cambia al ocultarse la barra del navegador); la línea previa es el respaldo
+ * para navegadores que no lo soportan.
+ */
 .figureImage {
-  width: 100%;
+  max-width: 100%;
+  max-height: calc(100vh - 7rem);
+  max-height: calc(100svh - 7rem);
+  width: auto;
   height: auto;
+  object-fit: contain;
   border-radius: var(--uao-radius-md);
   border: 1px solid var(--uao-border-soft);
   display: block;
